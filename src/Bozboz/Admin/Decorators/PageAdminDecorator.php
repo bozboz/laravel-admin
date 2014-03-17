@@ -1,7 +1,6 @@
 <?php namespace Bozboz\Admin\Decorators;
 
 use Bozboz\Admin\Models\Page;
-use ArrayAccess;
 
 class PageAdminDecorator extends ModelAdminDecorator
 {
