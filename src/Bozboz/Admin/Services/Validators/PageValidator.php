@@ -4,10 +4,7 @@ class PageValidator extends Validator
 {
 	protected $rules = array(
 		'title' => 'required',
-		'slug' => 'unique:pages'
-	);
-
-	protected $storeRules = array(
-		'password' => 'required'
+		'slug' => 'required|unique:pages',
+		'description' => 'required'
 	);
 }
