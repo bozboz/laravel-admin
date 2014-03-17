@@ -1,5 +1,21 @@
 # Admin package
 
+## Installation
+
+1. Add package to `composer.json` requirements
+
+```js
+"require": {
+	"bozboz/admin": "~0.1.0"
+}
+```
+
+2. Optionally, update `phpunit.xml` to hit package tests
+
+```xml
+<directory>./vendor/bozboz/admin/tests</directory>
+```
+
 ## Controllers
 
 Most packages will contain a FooController and a FooAdminController. The FooAdminController should extend the abstract ModelAdminController class and should - as a bare minimum - define a constructor specifying that particular controller's dependency - a ModelAdminDecorator subclass.
