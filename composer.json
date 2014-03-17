@@ -21,5 +21,10 @@
    	        "Bozboz\\Admin\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "extra": {
+        "branch-alias": {
+            "dev-develop": "0.1.0@dev"
+        }
+    }
 }
