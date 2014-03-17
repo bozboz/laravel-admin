@@ -32,6 +32,18 @@ All models within this package need to extend Bozboz\Admin\Models\Base unless yo
 
 Instead of storing validation rules on the actual models we have decided to create a Validator service. Base functionality resides in Bozboz\Admin\Services\Validators\Validator. It is the responsiblity of a model wishing to be validated to define its own Validator subtype (e.g. User model utilises the UserValidator class) in which it defines the validation rules to be used. Furthermore the Base type has an abstract "getValidator" method in which the model returns an instance of its Validator subtype.
 
+### "rules" property
+
+These are rules that should be applied in all validation instances.
+
+### "storeRules" property
+
+Rules that should only be applied when creating a new model instance. Will be merged with the "rules" property.
+
+### "editRules" property
+
+Rules that should only be applied when updating an existing model instance. Will be merged with the "rules" property.
+
 ## Decorators
 
 Decorators contain information about how a model is displayed in the Admin area. If you have a model that should be accessed in the Admin area, it needs an associated decorator and controller subclass. The abstract ModelAdminDecorator class currently contains a couple of abstract methods - getColumns and getLabel - as well as a few defaults getModel, getListingModels and getFields. Similarly to ModelAdminController subclasses, subclasses of ModelAdminDecorator must, as a minimum, define their own constructor, type-hinting an Eloquent model as its argument:
