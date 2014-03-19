@@ -10,7 +10,6 @@
 	<h2>@yield('heading')</h2>
 
 	@foreach($fields as $field)
-		{{ $field(array('class' => 'form-control')) }}
 	 <div class="form-group{{{ ($field->getErrors($errors)) ? ' bs-callout bs-callout-danger' : '' }}}">
 		{{ $field->getLabel(array('for' => $field->title)) }}
 		{{ $field->getInput(array('class' => 'form-control', 'id' => $field->title)) }}

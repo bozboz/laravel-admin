@@ -5,12 +5,11 @@ class Mapper
 	public function getFields(Array $fields)
 	{
 		$fieldInstances = array();
-		foreach($fields as $params) {
+		foreach($fields as $attr => $params) {
 			$params['name'] = $attr;
-			$fieldInstances[] = new Field(array(
-				'method' => array_shift($params),
-				'args' => $params
-			));
+			$className = __NAMESPACE__ . '\\Fields\\' . $params['type'];
+			unset($params['type']);
+			$fieldInstances[] = new $className($params);
 		}
 
 		return $fieldInstances;
