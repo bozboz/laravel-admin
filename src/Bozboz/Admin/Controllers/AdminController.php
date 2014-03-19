@@ -21,7 +21,7 @@ class AdminController extends \BaseController
 		{
 			return Redirect::to('admin');
 		} 
-		return Redirect::back()->withInput()->with('message','Login Failed');
+		return Redirect::back()->withInput()->with('error','<p><b>Email & Password combination not recognised</b></p><p>Please try again or <a href="/admin/password/remind">reset your password</a>');
 	}
 
 	public function getLogout()

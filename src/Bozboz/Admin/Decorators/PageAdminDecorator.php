@@ -5,18 +5,9 @@ use Bozboz\Admin\Models\Page;
 class PageAdminDecorator extends ModelAdminDecorator
 {
 	protected static $fields = array(
-		'title' => array(
-			'label' => 'Title',
-			'type' => 'text',
-		),
-		'slug' => array(
-			'label' => 'Slug',
-			'type' => 'text',
-		),
-		'description' => array(
-			'label' => 'Description',
-			'type' => 'textarea'
-		)
+		'title' => array('text', 'Title'),
+		'slug' => array('text', 'Slug'),
+		'description' => array('textarea', 'Description')
 	);
 
 	public function __construct(Page $page)
@@ -35,5 +26,14 @@ class PageAdminDecorator extends ModelAdminDecorator
 	public function getLabel($instance)
 	{
 		return $instance->getAttribute('title');
+	}
+
+	public function getFields()
+	{
+		$fields = array();
+		$fields['title'] = function($params) {
+			return Form::text('Title', $params)
+		};
+		return $fields;
 	}
 }

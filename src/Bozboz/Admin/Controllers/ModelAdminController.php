@@ -12,23 +12,12 @@ abstract class ModelAdminController extends \BaseController
 {
 	protected $decorator;
 	protected $listingView = 'admin::overview';
-	protected $formView = 'admin::form';
+	protected $editView = 'admin::edit';
+	protected $createView = 'admin::create';
 
 	public function __construct(ModelAdminDecorator $decorator)
 	{
 		$this->decorator = $decorator;
-	}
-
-	/** 
-	 * Temporary method that resolves the route based inspecting current route
-	 * name and action.
-	 */
-	protected function getResourceRouteName($action = null)
-	{
-		$parts = explode('@', Route::currentRouteAction());
-		$actionName = array_pop($parts);
-		$currentRouteName = Route::currentRouteName();
-		return str_replace($actionName, '', $currentRouteName) . $action;
 	}
 
 	protected function getColumnsForInstances(\ArrayAccess $instances)
@@ -36,9 +25,8 @@ abstract class ModelAdminController extends \BaseController
 		$columns = array();
 		foreach($instances as $instance) {
 			$row = $this->decorator->getColumns($instance);
-			$editRoute = $this->getResourceRouteName('edit');
 			$label = $this->decorator->getLabel($instance);
-			$row['Edit'] = link_to_route($editRoute, $label, array($instance->id));
+			$row['Edit'] = link_to_action(get_class($this) . '@edit', $label, array($instance->id));
 			$columns[] = $row;
 		}
 		return $columns;
@@ -50,7 +38,7 @@ abstract class ModelAdminController extends \BaseController
 
 		return View::make($this->listingView, array(
 			'instances' => $instances,
-			'prefix' => $this->getResourceRouteName(),
+			'controller' => get_class($this),
 			'modelName' => class_basename(get_class($this->decorator->getModel())),
 			'columns' => $this->getColumnsForInstances($instances)
 		));
@@ -58,10 +46,10 @@ abstract class ModelAdminController extends \BaseController
 
 	public function create()
 	{
-		return View::make($this->formView, array(
+		return View::make($this->createView, array(
 			'model' => $this->decorator->getModel(),
 			'fields' => FieldMapper::getFields($this->decorator->getFields()),
-			'route' => $this->getResourceRouteName('store'),
+			'controller' => get_class($this),
 			'method' => 'POST'
 		));
 	}
@@ -75,7 +63,7 @@ abstract class ModelAdminController extends \BaseController
 		if ($validation->passesStore($input)) {
 			$modelInstance->fill($input);
 			$modelInstance->save();
-			$response = Redirect::route($this->getResourceRouteName('index'));
+			$response = Redirect::action(get_class($this) . '@index');
 		} else {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
@@ -87,10 +75,10 @@ abstract class ModelAdminController extends \BaseController
 	{
 		$instance = $this->decorator->getModel()->find($id);
 
-		return View::make($this->formView, array(
+		return View::make($this->editView, array(
 			'model' => $instance,
 			'fields' => FieldMapper::getFields($this->decorator->getFields()),
-			'route' => array($this->getResourceRouteName('update'), $instance->id),
+			'controller' => get_class($this),
 			'method' => 'PUT'
 		));
 	}
@@ -105,7 +93,7 @@ abstract class ModelAdminController extends \BaseController
 		if ($validation->passesEdit($input)) {
 			$modelInstance->fill($input);
 			$modelInstance->save();
-			$response = Redirect::route($this->getResourceRouteName('index'));
+			$response = Redirect::action(get_class($this) . '@index');
 		} else {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
@@ -118,7 +106,7 @@ abstract class ModelAdminController extends \BaseController
 		$instance = $this->decorator->getModel()->find($id);
 		$instance->delete();
 
-		return Redirect::route($this->getResourceRouteName('index'));
+		return Redirect::action(get_class($this) . '@index');
 	}
 
 }
