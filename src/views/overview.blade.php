@@ -17,11 +17,13 @@
 			<td>{{ $value }}</td>
 		@endforeach
 			<td class="no-wrap">
-	 	 		{{ Form::model($model, array('action' => array($controller . '@destroy', $model->id), 'method' => 'DELETE')) }}
-		 			<a class="btn btn-primary btn-sm" href="/admin/pages/{{ $model->id }}/edit"><i class="fa fa-pencil"></i> Edit</a>
-	 	 			<button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
-	 			{{ Form::close() }}
-		 	</td>
+				{{ Form::model($model, array('action' => array($controller . '@edit', $model->id), 'method' => 'GET')) }}
+					<button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-minus-square"></i> Edit</button>
+				{{ Form::close() }}
+				{{ Form::model($model, array('action' => array($controller . '@destroy', $model->id), 'method' => 'DELETE')) }}
+					<button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
+				{{ Form::close() }}
+			</td>
 		</tr>
 	@endforeach 
 	</table>
