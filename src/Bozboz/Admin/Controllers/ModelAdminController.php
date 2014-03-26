@@ -8,7 +8,7 @@ use Route;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Facades\FieldMapper as FieldMapper;
 
-abstract class ModelAdminController extends \BaseController
+abstract class ModelAdminController extends BaseController
 {
 	protected $decorator;
 	protected $listingView = 'admin::overview';
