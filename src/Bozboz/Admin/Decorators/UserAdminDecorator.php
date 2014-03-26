@@ -4,13 +4,6 @@ use Bozboz\Admin\Models\User;
 
 class UserAdminDecorator extends ModelAdminDecorator
 {
-	protected static $fields = array(
-		'username' => array('type' => 'TextField'),
-		'name' => array('type' => 'TextField'),
-		'email' => array('type' => 'EmailField'),
-		'password' => array('type' => 'PasswordField')
-	);
-
 	public function __construct(User $user)
 	{
 		parent::__construct($user);
@@ -26,5 +19,15 @@ class UserAdminDecorator extends ModelAdminDecorator
 	public function getLabel($instance)
 	{
 		return $instance->getAttribute('name');
+	}
+
+	public function getFields()
+	{
+		return array(
+			'username' => array('type' => 'text'),
+			'name' => array('type' => 'text'),
+			'email' => array('type' => 'email'),
+			'password' => array('type' => 'password')
+		);
 	}
 }

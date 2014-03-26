@@ -1,11 +1,9 @@
 <?php namespace Bozboz\Admin\Decorators;
 
 use Eloquent;
-use ArrayAccess;
 
 abstract class ModelAdminDecorator
 {
-	protected static $fields = array();
 	protected $model;
 
 	public function __construct(Eloquent $model)
@@ -17,6 +15,8 @@ abstract class ModelAdminDecorator
 
 	abstract public function getLabel($instance);
 
+	abstract public function getFields();
+
 	public function getModel()
 	{
 		return $this->model;
@@ -25,10 +25,5 @@ abstract class ModelAdminDecorator
 	public function getListingModels()
 	{
 		return $this->model->all();
-	}
-
-	public function getFields()
-	{
-		return static::$fields;
 	}
 }
