@@ -17,9 +17,11 @@
 			<td>{{ $value }}</td>
 		@endforeach
 			<td class="no-wrap">
-				{{ Form::model($model, array('action' => array($controller . '@edit', $model->id), 'method' => 'GET')) }}
-					<button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-minus-square"></i> Edit</button>
-				{{ Form::close() }}
+				<a href="{{ URL::action($controller . '@edit', array($model->id)) }}" class="btn btn-danger btn-sm" type="submit">
+					<i class="fa fa-minus-square"></i>
+					Edit
+				</a>
+
 				{{ Form::model($model, array('action' => array($controller . '@destroy', $model->id), 'method' => 'DELETE')) }}
 					<button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
 				{{ Form::close() }}

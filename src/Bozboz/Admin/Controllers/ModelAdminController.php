@@ -4,7 +4,6 @@ use View;
 use Input;
 use BaseController;
 use Redirect;
-use Route;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Facades\FieldMapper as FieldMapper;
 
@@ -26,7 +25,6 @@ abstract class ModelAdminController extends BaseController
 		foreach($instances as $instance) {
 			$row = $this->decorator->getColumns($instance);
 			$label = $this->decorator->getLabel($instance);
-			$row['Edit'] = link_to_action(get_class($this) . '@edit', $label, array($instance->id));
 			$columns[] = $row;
 		}
 		return $columns;
