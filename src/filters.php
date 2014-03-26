@@ -7,5 +7,5 @@ Route::filter('auth', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/');
+	if (Auth::check()) return Redirect::to('admin');
 });
