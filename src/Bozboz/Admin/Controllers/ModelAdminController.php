@@ -4,11 +4,10 @@ use View;
 use Input;
 use BaseController;
 use Redirect;
-use Route;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Facades\FieldMapper as FieldMapper;
 
-abstract class ModelAdminController extends \BaseController
+abstract class ModelAdminController extends BaseController
 {
 	protected $decorator;
 	protected $listingView = 'admin::overview';
@@ -26,7 +25,6 @@ abstract class ModelAdminController extends \BaseController
 		foreach($instances as $instance) {
 			$row = $this->decorator->getColumns($instance);
 			$label = $this->decorator->getLabel($instance);
-			$row['Edit'] = link_to_action(get_class($this) . '@edit', $label, array($instance->id));
 			$columns[] = $row;
 		}
 		return $columns;
@@ -48,6 +46,7 @@ abstract class ModelAdminController extends \BaseController
 	{
 		return View::make($this->createView, array(
 			'model' => $this->decorator->getModel(),
+			'modelName' => class_basename(get_class($this->decorator->getModel())),
 			'fields' => FieldMapper::getFields($this->decorator->getFields()),
 			'controller' => get_class($this),
 			'method' => 'POST'

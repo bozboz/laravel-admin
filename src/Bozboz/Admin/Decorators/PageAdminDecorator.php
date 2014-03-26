@@ -1,6 +1,7 @@
 <?php namespace Bozboz\Admin\Decorators;
 
 use Bozboz\Admin\Models\Page;
+use Illuminate\Support\Facades\HTML;
 
 class PageAdminDecorator extends ModelAdminDecorator
 {
@@ -28,7 +29,7 @@ class PageAdminDecorator extends ModelAdminDecorator
 	{
 		return array(
 			'id' => $instance->id,
-			'Front End URL' => link_to($instance->slug)
+			'Front End URL' => HTML::link($instance->slug)
 		);
 	}
 

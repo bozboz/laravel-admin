@@ -3,7 +3,7 @@
 class UserValidator extends Validator
 {
 	protected $rules = array(
-		'username' => 'required',
+		'username' => 'required|unique:users',
 		'email' => 'required|email|unique:users',
 		'name' => 'required'
 	);

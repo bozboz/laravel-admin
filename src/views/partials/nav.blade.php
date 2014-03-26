@@ -1,4 +1,3 @@
-<?php $user = Auth::user(); // I know this doesn't go here - but can't work out where it would go ?>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
