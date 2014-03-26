@@ -20,7 +20,10 @@
             "Bozboz\\Admin\\": "src/Bozboz/Admin",
             "Bozboz\\Admin\\Tests\\": "tests/",
             "Bozboz\\Admin\\Database\\": "database/"
-        }
+        },
+        "classmap": [
+            "src/migrations"
+        ]
     },
     "minimum-stability": "stable",
     "extra": {
