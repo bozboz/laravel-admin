@@ -1,10 +1,12 @@
 <?php namespace Bozboz\Admin\Tests\Controllers;
 
-use Mockery, Auth;
+use Mockery, Auth, Form;
 use Bozboz\Admin\Models\User;
 use Illuminate\Support\Collection;
+use Bozboz\Admin\Tests\TestCase;
+use Bozboz\Admin\Facades\FieldMapper;
 
-class ModelAdminControllerTest extends \TestCase
+class ModelAdminControllerTest extends TestCase
 {
 	private $pageMock;
 	private $pageClass = 'Bozboz\Admin\Models\Page';
@@ -61,11 +63,29 @@ class ModelAdminControllerTest extends \TestCase
 		$this->call('GET', 'admin/pages');
 		$this->assertResponseOK();
 		$this->assertViewHas('instances', $collection);
-		$this->assertViewHas('modelName', 'Page');
 
 		$this->assertViewHas('columns', array(array(
 			'id' => 1,
 			'Front End URL' => '<a href="http://localhost/test-slug">http://localhost/test-slug</a>'
 		)));
+	}
+
+	public function testCreateMethod()
+	{
+		Form::shouldReceive('model')->once()->andReturn('open form')
+		    ->shouldReceive('close')->once()->andReturn('form close');
+
+		$field = Mockery::mock('\Bozboz\Admin\FieldMapping\Fields\Field');
+		$field->shouldReceive('getLabel')->once();
+		$field->shouldReceive('getInput')->once();
+		$field->shouldReceive('getErrors')->times(2);
+		$field->shouldReceive('get')->times(2);
+
+		FieldMapper::shouldReceive('getFields')->andReturn(array($field));
+
+		$this->call('GET', 'admin/pages/create');
+		$this->assertResponseOK();
+		$this->assertViewHas('fields', array($field));
+		$this->assertViewHas('model', $this->pageMock);
 	}
 }
