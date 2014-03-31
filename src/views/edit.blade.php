@@ -1,3 +1,3 @@
 @extends('admin::form')
 
-@section('heading', 'Edit Model')
+@section('heading', 'Edit ' . $modelName)

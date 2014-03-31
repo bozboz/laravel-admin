@@ -10,4 +10,4 @@
 		<li><a href=""><i class="fa fa-desktop"></i> Save and preview</a></li>
 	</ul>
 </div>
-<a href="{{ action($controller . '@index') }}" class="pull-right btn btn-default"><i class="fa fa-list-alt"></i>Back to Listing</a>
+<a href="{{ action($listingAction) }}" class="pull-right btn btn-default"><i class="fa fa-list-alt"></i>Back to Listing</a>

@@ -2,9 +2,7 @@
 
 @section('main')
 @parent
-	{{ Form::open(array('method' => 'get', 'action' => $controller . '@create')) }}
-		<button class="btn btn-success pull-right" type="submit"><i class="fa fa-plus-square"></i>New {{ $modelName }}</button>
-	{{ Form::close() }}
+	@include('admin::partials.new')
 	<h1>{{ $modelName }}</h1>
 	<div class="table-responsive">
 		<table class="table table-striped">
@@ -30,7 +28,5 @@
 	@endforeach 
 	</table>
 </div>
-	{{ Form::open(array('method' => 'get', 'action' => $controller . '@create')) }}
-		<button class="btn btn-success pull-right match-heading" type="submit"><i class="fa fa-plus-square"></i>New {{ $modelName }}</button>
-	{{ Form::close() }}
+	@include('admin::partials.new')
 @stop

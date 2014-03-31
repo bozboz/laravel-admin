@@ -2,7 +2,7 @@
 
 @section('main')
 @parent
-{{ Form::model($model, array('method' => $method, 'action' => $controller . '@store', 'role' => 'form')) }}
+{{ Form::model($model, array('method' => $method, 'action' => $action, 'role' => 'form', 'files' => true)) }}
 	<div class="form-row discrete">
 		@include('admin::partials.save')
 	</div>
