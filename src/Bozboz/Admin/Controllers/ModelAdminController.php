@@ -5,7 +5,6 @@ use Input;
 use BaseController;
 use Redirect;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
-use Bozboz\Admin\Facades\FieldMapper as FieldMapper;
 
 abstract class ModelAdminController extends BaseController
 {
