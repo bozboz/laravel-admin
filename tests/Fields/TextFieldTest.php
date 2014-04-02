@@ -1,6 +1,6 @@
-<?php namespace Bozboz\Admin\Tests\FieldMapping\Fields;
+<?php namespace Bozboz\Admin\Tests\Fields;
 
-use Bozboz\Admin\FieldMapping\Fields\TextField;
+use Bozboz\Admin\Fields\TextField;
 use TestCase;
 
 class TextFieldTest extends TestCase

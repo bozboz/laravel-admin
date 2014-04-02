@@ -47,7 +47,7 @@ abstract class ModelAdminController extends BaseController
 		return View::make($this->createView, array(
 			'model' => $this->decorator->getModel(),
 			'modelName' => class_basename(get_class($this->decorator->getModel())),
-			'fields' => FieldMapper::getFields($this->decorator->getFields()),
+			'fields' => $this->decorator->getFields(),
 			'method' => 'POST',
 			'action' => get_class($this) . '@store',
 			'listingAction' => get_class($this) . '@index'
@@ -78,7 +78,7 @@ abstract class ModelAdminController extends BaseController
 		return View::make($this->editView, array(
 			'model' => $instance,
 			'modelName' => class_basename(get_class($this->decorator->getModel())),
-			'fields' => FieldMapper::getFields($this->decorator->getFields()),
+			'fields' => $this->decorator->getFields(),
 			'action' => array(get_class($this) . '@update', $instance->id),
 			'listingAction' => get_class($this) . '@index',
 			'method' => 'PUT'

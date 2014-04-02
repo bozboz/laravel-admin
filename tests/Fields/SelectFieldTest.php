@@ -1,6 +1,6 @@
-<?php namespace Bozboz\Admin\Tests\FieldMapping\Fields;
+<?php namespace Bozboz\Admin\Tests\Fields;
 
-use Bozboz\Admin\FieldMapping\Fields\SelectField;
+use Bozboz\Admin\Fields\SelectField;
 use TestCase;
 
 class SelectFieldTest extends TestCase

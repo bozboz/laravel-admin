@@ -9,7 +9,6 @@ class AdminServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$this->registerEvents();
-		$this->app->bind('field.mapper', 'Bozboz\Admin\FieldMapping\Mapper');
 	}
 
 	public function boot()

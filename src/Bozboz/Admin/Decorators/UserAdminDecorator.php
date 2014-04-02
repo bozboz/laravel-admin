@@ -24,10 +24,10 @@ class UserAdminDecorator extends ModelAdminDecorator
 	public function getFields()
 	{
 		return array(
-			'username' => array('type' => 'text'),
-			'name' => array('type' => 'text'),
-			'email' => array('type' => 'email'),
-			'password' => array('type' => 'password')
+			new \Bozboz\Admin\Fields\TextField(array('name' => 'name')),
+			new \Bozboz\Admin\Fields\TextField(array('name' => 'username')),
+			new \Bozboz\Admin\Fields\EmailField(array('name' => 'email')),
+			new \Bozboz\Admin\Fields\PasswordField(array('name' => 'password'))
 		);
 	}
 }

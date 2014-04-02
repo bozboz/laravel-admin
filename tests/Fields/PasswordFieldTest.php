@@ -1,6 +1,6 @@
-<?php namespace Bozboz\Admin\Tests\FieldMapping\Fields;
+<?php namespace Bozboz\Admin\Tests\Fields;
 
-use Bozboz\Admin\FieldMapping\Fields\PasswordField;
+use Bozboz\Admin\Fields\PasswordField;
 use TestCase;
 
 class PasswordFieldTest extends TestCase

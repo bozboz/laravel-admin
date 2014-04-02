@@ -26,18 +26,9 @@ class PageAdminDecorator extends ModelAdminDecorator
 	public function getFields()
 	{
 		return array(
-			'title' => array(
-				'label' => 'Title',
-				'type' => 'TextField',
-			),
-			'slug' => array(
-				'label' => 'Slug',
-				'type' => 'TextField',
-			),
-			'description' => array(
-				'label' => 'Description',
-				'type' => 'TextareaField'
-			)
+			new \Bozboz\Admin\Fields\TextField(array('name' => 'title')),
+			new \Bozboz\Admin\Fields\TextField(array('name' => 'slug')),
+			new \Bozboz\Admin\Fields\TextareaField(array('name' => 'description'))
 		);
 	}
 

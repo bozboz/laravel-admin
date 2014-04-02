@@ -1,4 +1,4 @@
-<?php namespace Bozboz\Admin\FieldMapping\Fields;
+<?php namespace Bozboz\Admin\Fields;
 
 use Illuminate\Support\Facades\Form;
 use Illuminate\Support\Fluent;
