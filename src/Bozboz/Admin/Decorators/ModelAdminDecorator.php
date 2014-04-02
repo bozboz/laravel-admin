@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Decorators;
 
-use Eloquent;
+use Eloquent, Event;
 
 abstract class ModelAdminDecorator
 {
@@ -25,5 +25,12 @@ abstract class ModelAdminDecorator
 	public function getListingModels()
 	{
 		return $this->model->all();
+	}
+
+	public function buildFields()
+	{
+		$fieldsObj = new \Illuminate\Support\Fluent($this->getFields());
+		Event::fire('admin.fields.built', array($fieldsObj, $this->getModel()));
+		return $fieldsObj->toArray();
 	}
 }
