@@ -183,3 +183,79 @@ input[type="password"] {
 .inline-form {
 	display: inline-block;
 }
+
+.sortable {
+	position: relative;
+}
+.sorting-handle {
+	color: #888;
+	.faux-table-row:hover & {
+		color: #000;
+	}
+}
+
+.cell-small {
+	width: 1%;
+}
+
+
+
+.faux-table {
+	margin-bottom: $gap;
+	display: table;
+	width: 100%;
+	border-bottom: 1px solid #ddd;
+}
+.faux-table-row {
+	width: 100%;
+	display: table-row;
+	&:nth-child(odd) {
+		background-color: #f9f9f9;
+	}
+}
+
+.placeholder {
+	height: 48px;
+	display: block;
+	&:after {
+		content: ' ';
+		position: absolute;
+		left: 0;
+		right: 0;
+		height: 48px;
+		background: #d9edf7;
+		border: 1px solid #bce8f1;
+	}
+}
+
+.faux-cell {
+	border-top: 1px solid #ddd;
+	vertical-align: middle;
+	display: table-cell;
+	padding: 8px;
+	line-height: 30px;
+
+	&:last-child {
+		text-align: right;
+	}
+}
+
+/* Sortable */
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+
+ol.example li.placeholder {
+  position: relative;
+  /** More li styles **/
+}
+ol.example li.placeholder:before {
+  position: absolute;
+  /** Define arrowhead **/
+}
