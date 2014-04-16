@@ -43,7 +43,7 @@ gulp.task('sass', function (){
 	))
 	.pipe(gulp.dest(paths.styles.dest))
 	.pipe(shell([
-		'cd ../../../ && php artisan asset:publish && cd -',
+		'cd ../../../ && php artisan asset:publish --path=/vendor/bozboz/admin/public && cd -',
 	]))
 });
 
