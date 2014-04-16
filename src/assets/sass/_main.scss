@@ -184,16 +184,6 @@ input[type="password"] {
 	display: inline-block;
 }
 
-.sortable {
-	position: relative;
-}
-.sorting-handle {
-	color: #888;
-	.faux-table-row:hover & {
-		color: #000;
-	}
-}
-
 .cell-small {
 	width: 1%;
 }
@@ -213,21 +203,6 @@ input[type="password"] {
 		background-color: #f9f9f9;
 	}
 }
-
-.placeholder {
-	height: 48px;
-	display: block;
-	&:after {
-		content: ' ';
-		position: absolute;
-		left: 0;
-		right: 0;
-		height: 48px;
-		background: #d9edf7;
-		border: 1px solid #bce8f1;
-	}
-}
-
 .faux-cell {
 	border-top: 1px solid #ddd;
 	vertical-align: middle;
@@ -250,12 +225,82 @@ body.dragging, body.dragging * {
   opacity: 0.5;
   z-index: 2000;
 }
+.sortable {
+	position: relative;
 
-ol.example li.placeholder {
-  position: relative;
-  /** More li styles **/
+	&-nested {
+		border-bottom: 1px solid #ddd;
+		margin-bottom: $gap;
+		ol {
+			padding-left: 30px;
+			position: relative;
+			padding-bottom: $gap;
+			li {
+				border-left: 3px solid #ddd;
+
+				&:last-child {
+					border-bottom: 1px solid #ddd;
+				}
+			}
+		}
+		li {
+			border-top: 1px solid #ddd;
+			overflow: hidden;
+			&:nth-child(odd) {
+				background-color: #f9f9f9;
+				li:nth-child(odd) {
+					background-color: #fff;
+					li:nth-child(odd) {
+						background-color: #f9f9f9;
+					}
+				}
+			}
+			&:nth-child(even) {
+				background-color: #fff;
+				li:nth-child(even) {
+					background-color: #f9f9f9;
+					li:nth-child(even) {
+						background-color: #fff;
+					}
+				}
+			}
+		}
+		.nested-value {
+			display: inline-block;
+			padding-right: $gap;
+		}
+		.actions {
+			float: right;
+		}
+	}
 }
-ol.example li.placeholder:before {
-  position: absolute;
-  /** Define arrowhead **/
+
+div.nested-group {
+	display: block;
+	padding: 8px;
+	height: 48px;
+	line-height: 32px;
+}
+
+.sorting-handle {
+	color: #888;
+	.faux-table-row:hover & {
+		color: #000;
+	}
+}
+
+li.placeholder {
+	border-top: 0px;
+	height: 48px;
+	display: block;
+	position: relative;
+	&:after {
+		content: '';
+		position: absolute;
+		right: 0;
+		left: 0;
+		height: 48px;
+		background: #d9edf7;
+		border: 1px solid #bce8f1;
+	}
 }
