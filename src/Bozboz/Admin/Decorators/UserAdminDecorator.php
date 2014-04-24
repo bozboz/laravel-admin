@@ -12,7 +12,8 @@ class UserAdminDecorator extends ModelAdminDecorator
 	public function getColumns($instance)
 	{
 		return array(
-			'id' => $instance->id
+			'id' => $instance->id,
+			'email' => $instance->email
 		);
 	}
 

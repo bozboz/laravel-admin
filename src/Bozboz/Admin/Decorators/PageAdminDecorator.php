@@ -1,7 +1,11 @@
 <?php namespace Bozboz\Admin\Decorators;
 
+use File;
 use Bozboz\Admin\Models\Page;
 use Illuminate\Support\Facades\HTML;
+use Bozboz\Admin\Fields\TextField;
+use Bozboz\Admin\Fields\TextareaField;
+use Bozboz\Admin\Fields\SelectField;
 
 class PageAdminDecorator extends ModelAdminDecorator
 {
@@ -14,6 +18,7 @@ class PageAdminDecorator extends ModelAdminDecorator
 	{
 		return array(
 			'id' => $instance->id,
+			'Title' => $this->getLabel($instance),
 			'Front End URL' => HTML::link($instance->slug)
 		);
 	}
@@ -26,10 +31,29 @@ class PageAdminDecorator extends ModelAdminDecorator
 	public function getFields()
 	{
 		return array(
-			new \Bozboz\Admin\Fields\TextField(array('name' => 'title')),
-			new \Bozboz\Admin\Fields\TextField(array('name' => 'slug')),
-			new \Bozboz\Admin\Fields\TextareaField(array('name' => 'description'))
+			new TextField(array('name' => 'title')),
+			new TextField(array('name' => 'slug')),
+			new TextareaField(array('name' => 'description')),
+			new SelectField(array('name' => 'template', 'options' => $this->getTemplateOptions()))
 		);
+	}
+
+	private function getTemplateOptions()
+	{
+		$options = array('' => 'Default');
+
+		$files = File::files(app_path() . '/views/pages');
+		foreach($files as $file) {
+			$key = str_replace(array('.blade', '.php'), '', basename($file));
+			$options[$key] = basename($file);
+		}
+
+		return $options;
+	}
+
+	public function getListingModels()
+	{
+		return $this->model->orderBy($this->model->sortBy())->get();
 	}
 
 }

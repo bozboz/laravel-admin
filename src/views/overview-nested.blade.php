@@ -3,32 +3,19 @@
 @section('main')
 @parent
 	@include('admin::partials.new')
-	<h1>{{ $modelName }}</h1>
+	<h1>{{ Str::plural($modelName) }}</h1>
+
+	<div class="js-save-notification alert alert-info" style="display: none">
+		You changed the sort order
+		<button class="btn pull-right btn-sm btn-danger" id="cancel-new-order">Cancel</button>
+		<button class="btn pull-right btn-sm" id="save-new-order">Save Order</button>
+	</div>
+
 	<div class="table-responsive">
 		<ol class="secret-list sortable sortable-nested">
-	@foreach ($instances as $i => $model)
-			<li>
-				<div class="nested-group">
-					<div class="actions">
-						<a href="{{ URL::action($controller . '@edit', array($model->id)) }}" class="btn btn-info btn-sm" type="submit">
-							<i class="fa fa-pencil"></i>
-							Edit
-						</a>
-
-						{{ Form::model($model, array('class' => 'inline-form', 'action' => array($controller . '@destroy', $model->id), 'method' => 'DELETE')) }}
-							<button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
-						{{ Form::close() }}
-					</div>
-					<div class="nested-value">
-						<i class="fa fa-sort sorting-handle"></i>
-					</div>
-				@foreach ($columns[$i] as $name => $value)
-					<div class="nested-value">{{ $value }}</div>
-				@endforeach
-				</div>
-				<ol></ol>
-			</li>
-	@endforeach
+		@foreach ($report->getRows() as $row)
+			@include('admin::partials.nested-item')
+		@endforeach
 	</ol>
 </div>
 	@include('admin::partials.new')
@@ -36,8 +23,7 @@
 
 @section('scripts')
     @parent
-<script src="/packages/bozboz/admin/js/jquery-sortable.js"></script>
-<script>
-$('.sortable').sortable();
+	<script src="/packages/bozboz/admin/js/jquery-sortable.js"></script>
+	<script src="/packages/bozboz/admin/js/sort.js"></script>
 </script>
 @stop

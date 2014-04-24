@@ -1,15 +1,13 @@
 <?php namespace Bozboz\Admin\Controllers;
 
-use View;
-use Input;
+use View, Input, Redirect;
 use BaseController;
-use Redirect;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
+use Bozboz\Admin\Reports\Report;
 
 abstract class ModelAdminController extends BaseController
 {
 	protected $decorator;
-	protected $listingView = 'admin::overview';
 	protected $editView = 'admin::edit';
 	protected $createView = 'admin::create';
 
@@ -18,27 +16,10 @@ abstract class ModelAdminController extends BaseController
 		$this->decorator = $decorator;
 	}
 
-	protected function getColumnsForInstances(\ArrayAccess $instances)
-	{
-		$columns = array();
-		foreach($instances as $instance) {
-			$row = $this->decorator->getColumns($instance);
-			$label = $this->decorator->getLabel($instance);
-			$columns[] = $row;
-		}
-		return $columns;
-	}
-
 	public function index()
 	{
-		$instances = $this->decorator->getListingModels();
-
-		return View::make($this->listingView, array(
-			'instances' => $instances,
-			'controller' => get_class($this),
-			'modelName' => class_basename(get_class($this->decorator->getModel())),
-			'columns' => $this->getColumnsForInstances($instances)
-		));
+		$report = new Report($this->decorator);
+		return $report->render(array('controller' => get_class($this)));
 	}
 
 	public function create()

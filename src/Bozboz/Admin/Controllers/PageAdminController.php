@@ -1,13 +1,31 @@
 <?php namespace Bozboz\Admin\Controllers;
 
 use Bozboz\Admin\Decorators\PageAdminDecorator;
+use Bozboz\Admin\Services\Sorter;
+use Bozboz\Admin\Reports\NestedReport;
+use Input;
 
 class PageAdminController extends ModelAdminController
 {
-	protected $listingView = 'admin::overview-nested';
+	private $sorter;
 
-	public function __construct(PageAdminDecorator $page)
+	public function __construct(PageAdminDecorator $page, Sorter $sorter)
 	{
+		$this->sorter = $sorter;
 		parent::__construct($page);
+	}
+
+	public function index()
+	{
+		$report = new NestedReport($this->decorator);
+		return $report->render(array('controller' => get_class($this)));
+	}
+
+	public function postReorder()
+	{
+		$model = $this->decorator->getModel();
+		$items = Input::get('items');
+
+		$this->sorter->sort($model, $items);
 	}
 }

@@ -18,10 +18,12 @@ Route::group(array('namespace' => 'Bozboz\Admin\Controllers'), function() {
 
 		Route::group(array('before' => 'auth'), function() {
 			Route::resource('pages', 'PageAdminController');
+			Route::post('pages/reorder', 'PageAdminController@postReorder');
 			Route::resource('users', 'UserAdminController');
 
 			Route::get('/', 'AdminController@getIndex');
 			Route::get('logout', 'AdminController@getLogout');
+			Route::post('reorder', 'AdminController@reOrder');
 		});
 
 		Route::group(array('before' => 'guest'), function() {
@@ -31,6 +33,6 @@ Route::group(array('namespace' => 'Bozboz\Admin\Controllers'), function() {
 
 	});
 
-	Route::any('{slug}', 'PageController@show')->where('slug', '.*');
+//	Route::any('{slug}', 'PageController@show')->where('slug', '.*');
 
 });

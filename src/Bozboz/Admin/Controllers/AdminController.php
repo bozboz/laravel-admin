@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Controllers;
 
-use Redirect, Auth, View;
+use Redirect, Auth, View, Input;
 
 class AdminController extends \BaseController
 {

@@ -8,6 +8,8 @@ class PageController extends \Controller
 	public function show($slug)
 	{
 		$page = Page::where('slug', $slug)->firstOrFail();
-		return View::make('admin::pages.page', compact('page'));
+		$view = $page->template? 'pages.' . $page->template : 'admin::pages.page';
+
+		return View::make($view, compact('page'));
 	}
 }
