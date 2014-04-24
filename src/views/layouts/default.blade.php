@@ -6,8 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>@yield('page_title', 'CMS')</title>
-	<!-- Bootstrap core CSS -->
+
+	@section('styles')
 	{{ HTML::style('packages/bozboz/admin/css/style.css') }}
+	@show
 </head>
 
 <body>
