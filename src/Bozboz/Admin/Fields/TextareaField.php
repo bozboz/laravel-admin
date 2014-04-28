@@ -6,6 +6,6 @@ class TextareaField extends Field
 {
 	public function getInput($params = array())
 	{
-		return Form::textarea($this->get('name'), null, $params);
+		return Form::textarea($this->get('name'), null, array_merge($this->attributes, $params));
 	}
 }
