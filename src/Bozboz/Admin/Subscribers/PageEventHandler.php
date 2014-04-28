@@ -1,6 +1,7 @@
 <?php namespace Bozboz\Admin\Subscribers;
 
 use Bozboz\Admin\Components\Menu;
+use Bozboz\Admin\Models\Page;
 
 class PageEventHandler {
 
@@ -12,6 +13,13 @@ class PageEventHandler {
         $menu['Pages'] = route('admin.pages.index');
     }
 
+    public function saving($page)
+    {
+        $sortField = $page->sortBy();
+        $highestSortingValue = Page::where('parent_id', $page->parent_id)->max($sortField);
+        dd($highestSortingValue);
+    }
+
     public function subscribe($events)
     {
         $events->listen(
@@ -19,5 +27,4 @@ class PageEventHandler {
             get_class($this) . '@onRenderMenu'
         );
     }
-
 }
