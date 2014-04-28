@@ -82,15 +82,26 @@ class User extends Base implements UserInterface, RemindableInterface
 		return $this->email;
 	}
 
-	/*
-	 * NOTE:
-	 * This will hash before validation occurs, rendering validation pointless.
-	 * Need to solve.
-	 */
 	public function setPasswordAttribute($value)
 	{
 		if (!empty($value)) {
 			$this->attributes['password'] = Hash::make($value);
 		}
 	}
+
+	public function getRememberToken()
+	{
+	return $this->remember_token;
+	}
+
+	public function setRememberToken($value)
+	{
+		$this->remember_token = $value;
+	}
+
+	public function getRememberTokenName()
+	{
+		return 'remember_token';
+	}
+
 }
