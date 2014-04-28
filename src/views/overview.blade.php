@@ -3,9 +3,17 @@
 @section('main')
 @parent
 	@include('admin::partials.new')
-	<h1>{{ $modelName }}</h1>
+	<h1>{{ Str::plural($modelName) }}</h1>
 	<div class="table-responsive">
 		<ol class="secret-list sortable faux-table">
+
+			<li class="faux-table-row faux-table-heading">
+				<div class="faux-cell cell-small"></div>
+			@foreach ($report->getHeadings() as $heading)
+				<div class="faux-cell">{{ $heading }}</div>
+			@endforeach
+				<div class="no-wrap faux-cell"></div>
+			</li>
 
 		@foreach ($report->getRows() as $row)
 			<li class="faux-table-row">
@@ -30,8 +38,4 @@
 		</ol>
 	</div>
 	@include('admin::partials.new')
-@stop
-
-@section('scripts')
-    
 @stop

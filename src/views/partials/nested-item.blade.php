@@ -23,5 +23,7 @@
 							@include('admin::partials.nested-item')
 						@endforeach
 					</ol>
+				@else
+					<ol></ol>
 				@endif
 			</li>

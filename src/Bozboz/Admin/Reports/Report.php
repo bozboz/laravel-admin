@@ -13,12 +13,22 @@ class Report
 		$this->decorator = $decorator;
 	}
 
+	public function overrideView($view)
+	{
+		$this->view = $view;
+	}
+
+	public function getHeadings()
+	{
+		return array_keys($this->decorator->getColumns($this->decorator->getModel()));
+	}
+
 	public function getRows()
 	{
 		$rows = array();
 		$instances = $this->decorator->getListingModels();
 		foreach($instances as $row) {
-			$rows[] = new Row($row, $this->decorator->getColumns($row));
+			$rows[] = new Row($row->id, $row, $this->decorator->getColumns($row));
 		}
 		return $rows;
 	}
