@@ -1,7 +1,8 @@
 @import "variables";
-@import "../../../../../../vendor/bozboz/luigi/luigi";
-@import "custom-bootstrap";
-@import "font-awesome/font-awesome";
+@import "../../../bower_components/Luigi/luigi";
+// @import "../../../bower_components/bootstrap/dist/css/bootstrap.min.css";
+@import "../../../bower_components/font-awesome/scss/font-awesome";
+// @import "../../../bower_components/summernote/dist/summernote.css";
 @import "base";
 @import "layout";
 @import "main";

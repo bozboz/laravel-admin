@@ -1,0 +1,23 @@
+{
+  "name": "admin",
+  "version": "0.0.0",
+  "authors": [
+    "Mike Street <mike.street@bozboz.co.uk>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "luigi": "~1.3.0",
+    "summernote": "~0.5.1",
+    "jquery": "~2.1.0",
+    "bootstrap": "~3.1.1",
+    "font-awesome": "~4.0.3"
+  }
+}

@@ -227,51 +227,50 @@ body.dragging, body.dragging * {
 }
 .sortable {
 	position: relative;
-
-	&-nested {
-		border-bottom: 1px solid #ddd;
-		margin-bottom: $gap;
-		ol {
-			padding-left: 30px;
-			position: relative;
-			padding-bottom: $gap;
-			li {
-				border-left: 3px solid #ddd;
-
-				&:last-child {
-					border-bottom: 1px solid #ddd;
-				}
-			}
-		}
+}
+.sortable-nested {
+	border-bottom: 1px solid #ddd;
+	margin-bottom: $gap;
+	ol {
+		padding-left: 30px;
+		position: relative;
+		padding-bottom: $gap;
 		li {
-			border-top: 1px solid #ddd;
-			overflow: hidden;
-			&:nth-child(odd) {
-				background-color: #f9f9f9;
-				li:nth-child(odd) {
-					background-color: #fff;
-					li:nth-child(odd) {
-						background-color: #f9f9f9;
-					}
-				}
+			border-left: 3px solid #ddd;
+
+			&:last-child {
+				border-bottom: 1px solid #ddd;
 			}
-			&:nth-child(even) {
+		}
+	}
+	li {
+		border-top: 1px solid #ddd;
+		overflow: hidden;
+		&:nth-child(odd) {
+			background-color: #f9f9f9;
+			li:nth-child(odd) {
 				background-color: #fff;
-				li:nth-child(even) {
+				li:nth-child(odd) {
 					background-color: #f9f9f9;
-					li:nth-child(even) {
-						background-color: #fff;
-					}
 				}
 			}
 		}
-		.nested-value {
-			display: inline-block;
-			padding-right: $gap;
+		&:nth-child(even) {
+			background-color: #fff;
+			li:nth-child(even) {
+				background-color: #f9f9f9;
+				li:nth-child(even) {
+					background-color: #fff;
+				}
+			}
 		}
-		.actions {
-			float: right;
-		}
+	}
+	.nested-value {
+		display: inline-block;
+		padding-right: $gap;
+	}
+	.actions {
+		float: right;
 	}
 }
 

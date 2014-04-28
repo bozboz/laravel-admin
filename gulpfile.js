@@ -2,7 +2,10 @@ var gulp = require('gulp');
 
 var sass = require('gulp-ruby-sass');
 var prefix = require('gulp-autoprefixer');
-var shell = require('gulp-shell')
+var shell = require('gulp-shell');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var rename = require('gulp-rename');
 
 var paths = {
 
@@ -12,7 +15,6 @@ var paths = {
 	}
 
 }
-
 
 var displayError = function(error) {
 
@@ -42,9 +44,33 @@ gulp.task('sass', function (){
 		'last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'
 	))
 	.pipe(gulp.dest(paths.styles.dest))
+});
+
+gulp.task('css', ['sass'], function(){
+	gulp.src([
+		'./bower_components/bootstrap/dist/css/bootstrap.min.css',
+		'./bower_components/summernote/dist/summernote.css',
+		paths.styles.dest + 'style.css'
+	])
+	.pipe(concat('style.css'))
+	.pipe(gulp.dest(paths.styles.dest))
 	.pipe(shell([
-		'cd ../../../ && php artisan asset:publish --path=/vendor/bozboz/admin/public && cd -',
-	]))
+		'cd ../../../ && php artisan asset:publish && cd -',
+	]));
+});
+
+gulp.task('scripts', function(){
+	gulp.src([
+		'./bower_components/jquery/dist/jquery.min.js',
+		'./bower_components/bootstrap/dist/js/bootstrap.min.js',
+		'./bower_components/summernote/dist/summernote.min.js',
+		'./src/assets/js/scripts.js',
+	])
+	.pipe(concat('admin.js'))
+    .pipe(gulp.dest('./public/js/'))
+    .pipe(rename('admin.min.js'))
+    .pipe(uglify({outSourceMap: true}))
+    .pipe(gulp.dest('./public/js/'))
 });
 
 gulp.task('watch', ['sass'], function(){
@@ -56,4 +82,4 @@ gulp.task('watch', ['sass'], function(){
 	});
 })
 
-gulp.task('default', ['sass']);
+gulp.task('default', ['scripts', 'sass', 'css']);
