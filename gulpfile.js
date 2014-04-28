@@ -1,38 +1,37 @@
 var gulp = require('gulp');
+var plugins = require("gulp-load-plugins")({
+	replaceString: /\bgulp[\-.]/
+});
 
-var sass = require('gulp-ruby-sass');
-var prefix = require('gulp-autoprefixer');
-var shell = require('gulp-shell');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
-
+var basePaths = {
+	public: './public/',
+	src: './src/assets/',
+	bower: './bower_components/',
+}
 var paths = {
-
 	styles: {
-		src: './src/assets/sass/*.scss',
-		dest: './public/css/'
+		src: basePaths.src + 'sass/*.scss',
+		dest: basePaths.public + 'css/'
+	},
+	scripts: {
+		src: basePaths.src + 'js/',
+		dest: basePaths.public + 'js/'
 	}
-
 }
 
 var displayError = function(error) {
-
 	var errorString = '[' + error.plugin + ']';
 	errorString += ' ' + error.message.replace("\n",'');
-
 	if(error.fileName)
 		errorString += ' in ' + error.fileName;
-
 	if(error.lineNumber)
 		errorString += ' on line ' + error.lineNumber;
-
 	console.error(errorString);
 }
 
 gulp.task('sass', function (){
 	gulp.src(paths.styles.src)
-	.pipe(sass({
+	.pipe(plugins.rubySass({
 		style: 'compressed',
 		sourcemap: true,
 		precision: 2
@@ -40,7 +39,7 @@ gulp.task('sass', function (){
 	.on('error', function(err){
 		displayError(err);
 	})
-	.pipe(prefix(
+	.pipe(plugins.autoprefixer(
 		'last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'
 	))
 	.pipe(gulp.dest(paths.styles.dest))
@@ -48,33 +47,34 @@ gulp.task('sass', function (){
 
 gulp.task('css', ['sass'], function(){
 	gulp.src([
-		'./bower_components/bootstrap/dist/css/bootstrap.min.css',
-		'./bower_components/summernote/dist/summernote.css',
+		basePaths.bower + 'bootstrap/dist/css/bootstrap.min.css',
+		basePaths.bower + 'summernote/dist/summernote.css',
 		paths.styles.dest + 'style.css'
 	])
-	.pipe(concat('style.css'))
+	.pipe(plugins.concat('style.css'))
 	.pipe(gulp.dest(paths.styles.dest))
-	.pipe(shell([
-		'cd ../../../ && php artisan asset:publish && cd -',
+	.pipe(plugins.shell([
+		'cd ../../../ && php artisan asset:publish bozboz/admin',
 	]));
 });
 
 gulp.task('scripts', function(){
 	gulp.src([
-		'./bower_components/jquery/dist/jquery.min.js',
-		'./bower_components/bootstrap/dist/js/bootstrap.min.js',
-		'./bower_components/summernote/dist/summernote.min.js',
-		'./src/assets/js/scripts.js',
+		basePaths.bower + 'jquery/dist/jquery.min.js',
+		basePaths.bower + 'bootstrap/dist/js/bootstrap.min.js',
+		basePaths.bower + 'summernote/dist/summernote.min.js',
+		basePaths.bower + 'jquery-sortable/source/js/jquery-sortable-min.js',
+		paths.scripts.src + 'scripts.js'
 	])
-	.pipe(concat('admin.js'))
-    .pipe(gulp.dest('./public/js/'))
-    .pipe(rename('admin.min.js'))
-    .pipe(uglify({outSourceMap: true}))
-    .pipe(gulp.dest('./public/js/'))
+	.pipe(plugins.concat('admin.js'))
+    .pipe(gulp.dest(paths.scripts.dest))
+    .pipe(plugins.rename('admin.min.js'))
+    .pipe(plugins.uglify({outSourceMap: true}))
+    .pipe(gulp.dest(paths.scripts.dest))
 });
 
-gulp.task('watch', ['sass'], function(){
-	gulp.watch(paths.styles.src, ['sass'])
+gulp.task('watch', ['css'], function(){
+	gulp.watch(paths.styles.src, ['css'])
 	.on('change', function(evt) {
 		console.log(
 			'[watcher] File ' + evt.path.replace(/.*(?=sass)/,'') + ' was ' + evt.type + ', compiling...'
@@ -82,4 +82,7 @@ gulp.task('watch', ['sass'], function(){
 	});
 })
 
-gulp.task('default', ['scripts', 'sass', 'css']);
+gulp.task('default', ['scripts', 'css']);
+gulp.task('debug', function(){
+	console.log(plugins.concat);
+});

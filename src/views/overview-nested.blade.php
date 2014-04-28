@@ -23,7 +23,6 @@
 
 @section('scripts')
     @parent
-	<script src="/packages/bozboz/admin/js/jquery-sortable.js"></script>
 	<script src="/packages/bozboz/admin/js/sort.js"></script>
 </script>
 @stop
