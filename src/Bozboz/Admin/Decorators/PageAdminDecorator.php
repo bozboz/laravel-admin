@@ -17,7 +17,6 @@ class PageAdminDecorator extends ModelAdminDecorator
 	public function getColumns($instance)
 	{
 		return array(
-			'id' => $instance->id,
 			'Title' => $this->getLabel($instance),
 			'Front End URL' => HTML::link($instance->slug)
 		);
