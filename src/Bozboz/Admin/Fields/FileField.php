@@ -7,7 +7,12 @@ class FileField extends Field
 {
 	public function getInput($params = array())
 	{
-		return Form::file($this->get('name'), $params);
+		$html = '';
+		if ($filename = Form::getValueAttribute('filename')) {
+			$html .= sprintf('<img src="/images/thumb/media/image/%s" style="margin-bottom: 5px; display: block">', $filename);
+		}
+		$html .= Form::file($this->get('name'), $params);
+		return $html;
 	}
 }
 
