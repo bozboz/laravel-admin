@@ -31,4 +31,14 @@ getContainerGroup:function(a){var b=d.data(this.items[a],"subContainers");if(b==
 !1})},disable:function(){this.traverse(function(a){a.disabled=!0})},serialize:function(){return this._serialize(this.el,!0)},refresh:function(){this.traverse(function(a){a._clearDimensions()})},destroy:function(){this.traverse(function(a){a._destroy()})}};d.extend(q.prototype,r);d.fn[k]=function(a){var b=Array.prototype.slice.call(arguments,1);return this.map(function(){var c=d(this),e=c.data(k);if(e&&r[a])return r[a].apply(e,b)||this;!e&&(a===j||"object"===typeof a)&&c.data(k,new q(c,a));return this})}}(jQuery,
 window,"sortable");
 
-$('textarea').summernote();
+$('textarea').summernote({
+  toolbar: [
+	// ['style', ['style']],
+	['font', ['bold', 'italic', 'underline', 'clear']],
+	['para', ['ul', 'ol', 'paragraph']],
+	['table', ['table']],
+	['insert', ['link', 'picture', 'video']],
+	['view', ['fullscreen', 'codeview']],
+	['help', ['help']]
+  ]
+});

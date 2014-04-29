@@ -19,11 +19,11 @@
 	<div class="container-fluid">
 		<div class="row">
 
-	<div class="col-sm-12 col-md-12 main">
-		@section('main')
-		@show
-	</div>
+			<div class="col-sm-12 col-md-12 main">
+				@section('main')
+				@show
 			</div>
+		</div>
 	</div>
 	@section('scripts')
 		<script src="/packages/bozboz/admin/js/admin.min.js"></script>
