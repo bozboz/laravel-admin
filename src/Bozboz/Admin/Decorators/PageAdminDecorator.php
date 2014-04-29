@@ -32,9 +32,22 @@ class PageAdminDecorator extends ModelAdminDecorator
 		return array(
 			new TextField(array('name' => 'title')),
 			new TextField(array('name' => 'slug')),
+			new SelectField(array('name' => 'redirect_to_id', 'label' => 'Redirect To Page', 'options' => $this->getRedirectOptions())),
 			new TextareaField(array('name' => 'description')),
 			new SelectField(array('name' => 'template', 'options' => $this->getTemplateOptions()))
 		);
+	}
+
+	private function getRedirectOptions()
+	{
+		$options = array('' => 'No redirect');
+
+		$listing = $this->getListingModels();
+		foreach($listing as $page) {
+			$options[$page->id] = $page->slug;
+		}
+
+		return $options;
 	}
 
 	private function getTemplateOptions()

@@ -5,7 +5,7 @@ use Bozboz\Admin\Models\Sortable;
 
 class Page extends Base implements Sortable
 {
-	protected $fillable = array('title', 'slug', 'description', 'template', 'parent_id');
+	protected $fillable = array('title', 'slug', 'description', 'template', 'parent_id', 'redirect_to_id');
 
 	public function getValidator()
 	{
