@@ -60,7 +60,8 @@ gulp.task('css', ['sass'], function(){
 	gulp.src([
 		basePaths.bower + 'bootstrap/dist/css/bootstrap.min.css',
 		basePaths.bower + 'summernote/dist/summernote.css',
-		paths.styles.dest + 'style.css'
+		paths.styles.dest + 'style.css',
+		'../media-library/public/css/media-library.css' // Temporary measure
 	])
 	.pipe(plugins.concat('admin.min.css'))
 	.pipe(gulp.dest(paths.styles.dest))
@@ -68,11 +69,15 @@ gulp.task('css', ['sass'], function(){
 
 gulp.task('scripts', function(){
 	gulp.src([
+
 		basePaths.bower + 'jquery/dist/jquery.min.js',
 		basePaths.bower + 'bootstrap/dist/js/bootstrap.min.js',
 		basePaths.bower + 'summernote/dist/summernote.min.js',
 		basePaths.bower + 'jquery-sortable/source/js/jquery-sortable-min.js',
-		paths.scripts.src + 'scripts.js'
+		basePaths.bower + 'imagesloaded/imagesloaded.pkgd.min.js',
+		basePaths.bower + 'masonry/dist/masonry.pkgd.min.js',
+
+		paths.scripts.src + 'scripts.js',
 	])
 	.pipe(plugins.concat('admin.js'))
     .pipe(gulp.dest(paths.scripts.dest))
@@ -81,7 +86,7 @@ gulp.task('scripts', function(){
     .pipe(gulp.dest(paths.scripts.dest))
 });
 
-gulp.task('watch', ['scripts', 'css'], function(){
+gulp.task('watch', ['scripts', 'css', 'publish'], function(){
 	gulp.watch(paths.styles.src, ['css', 'publish'])
 	.on('change', function(evt) {
 		changeEvent(evt)

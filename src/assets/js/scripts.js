@@ -9,3 +9,8 @@ $('textarea').summernote({
 	['help', ['help']]
   ]
 });
+
+var masonryContainer = $('.js-mason').masonry({ "columnWidth": 187, "itemSelector": ".masonry-item" });
+masonryContainer.imagesLoaded( function() {
+  masonryContainer.masonry();
+});
