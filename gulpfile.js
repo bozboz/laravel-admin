@@ -6,7 +6,7 @@ var plugins = require("gulp-load-plugins")({
 var basePaths = {
 	public: './public/',
 	src: './src/assets/',
-	bower: './bower_components/',
+	bower: './bower_components/'
 }
 var paths = {
 	styles: {
@@ -28,6 +28,17 @@ var displayError = function(error) {
 		errorString += ' on line ' + error.lineNumber;
 	console.error(errorString);
 }
+
+var changeEvent = function(evt) {
+	console.log(
+		'[watcher] File ' + evt.path.replace(/.*(?=assets)/,'') + ' was ' + evt.type + ', compiling...'
+	);
+}
+
+gulp.task('publish', plugins.shell.task([
+		'cd ../../../ && php artisan asset:publish bozboz/admin',
+	])
+)
 
 gulp.task('sass', function (){
 	gulp.src(paths.styles.src)
@@ -53,9 +64,6 @@ gulp.task('css', ['sass'], function(){
 	])
 	.pipe(plugins.concat('admin.min.css'))
 	.pipe(gulp.dest(paths.styles.dest))
-	.pipe(plugins.shell([
-		'cd ../../../ && php artisan asset:publish bozboz/admin',
-	]));
 });
 
 gulp.task('scripts', function(){
@@ -73,13 +81,15 @@ gulp.task('scripts', function(){
     .pipe(gulp.dest(paths.scripts.dest))
 });
 
-gulp.task('watch', ['css'], function(){
-	gulp.watch(paths.styles.src, ['css'])
+gulp.task('watch', ['scripts', 'css'], function(){
+	gulp.watch(paths.styles.src, ['css', 'publish'])
 	.on('change', function(evt) {
-		console.log(
-			'[watcher] File ' + evt.path.replace(/.*(?=sass)/,'') + ' was ' + evt.type + ', compiling...'
-		);
+		changeEvent(evt)
+	});
+	gulp.watch(paths.scripts.src + '*.js', ['scripts', 'publish'])
+	.on('change', function(evt) {
+		changeEvent(evt)
 	});
 })
 
-gulp.task('default', ['scripts', 'css']);
+gulp.task('default', ['scripts', 'css', 'publish']);
