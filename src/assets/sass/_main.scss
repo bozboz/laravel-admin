@@ -156,7 +156,8 @@
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+select.form-control {
 	max-width: 700px;
 }
 .form-group,
