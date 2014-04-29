@@ -154,6 +154,10 @@
   border-color: #d0e3f0;
 }
 
+label {
+	display: block;
+}
+
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -189,6 +193,15 @@ select.form-control {
 	width: 1%;
 }
 
+.checkbox {
+	font-weight: 100;
+	width: 25%;
+	float: left;
+	margin-top: 0;
+}
+.checkbox+.checkbox {
+	margin-top: 0;
+}
 
 
 .faux-table {

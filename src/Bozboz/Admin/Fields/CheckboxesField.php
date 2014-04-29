@@ -15,20 +15,20 @@ class CheckboxesField extends Field
 
 	public function getInput($params = array())
 	{
-		$html = '<br>';
-		$html .= Form::hidden($this->get('name') . '[]');
+		$html = Form::hidden($this->get('name') . '[]');
 
 		$currentValues = $this->getCurrentValues();
-		
+
 		foreach($this->options as $option) {
 			$id = $this->get('name') . '[' . $option->id . ']';
-			$html .= Form::label($id, $option->name);
-			$html .= Form::checkbox(
+			$checkbox = Form::checkbox(
 				$this->get('name') . '[]',
 				$option->id,
 				in_array($option->id, $currentValues),
 				array('id' => $id)
-			) . ' ';
+			);
+			$html .= '<label class="checkbox">' . $checkbox . ' ' . $option->name . '</label>';
+
 		}
 
 		return $html;
