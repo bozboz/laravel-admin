@@ -77,3 +77,16 @@ class PageAdminDecorator extends ModelAdminDecorator
 ```
 
 Controllers will generally do all its communicating of models through a decorator - they won't deal directly with a model instance.
+
+
+# Editing Admin Theme
+
+The admin theme uses *gulp* and *bower* for download and compiling assets for the theme. To be able to compile the assets you need to run:
+
+```
+$ npm install
+$ bower install
+```
+
+From there, a simple `gulp` will compile all css and js - however, during development a `gulp watch` can be run
+
