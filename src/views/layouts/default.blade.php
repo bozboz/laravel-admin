@@ -8,7 +8,7 @@
 	<title>@yield('page_title', 'CMS')</title>
 
 	@section('styles')
-	{{ HTML::style('packages/bozboz/admin/css/style.css') }}
+	{{ HTML::style('packages/bozboz/admin/css/admin.min.css') }}
 	@show
 </head>
 

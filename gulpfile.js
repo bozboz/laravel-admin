@@ -51,7 +51,7 @@ gulp.task('css', ['sass'], function(){
 		basePaths.bower + 'summernote/dist/summernote.css',
 		paths.styles.dest + 'style.css'
 	])
-	.pipe(plugins.concat('style.css'))
+	.pipe(plugins.concat('admin.min.css'))
 	.pipe(gulp.dest(paths.styles.dest))
 	.pipe(plugins.shell([
 		'cd ../../../ && php artisan asset:publish bozboz/admin',
@@ -83,6 +83,3 @@ gulp.task('watch', ['css'], function(){
 })
 
 gulp.task('default', ['scripts', 'css']);
-gulp.task('debug', function(){
-	console.log(plugins.concat);
-});
