@@ -248,7 +248,6 @@ body.dragging, body.dragging * {
 	ol {
 		padding-left: 30px;
 		position: relative;
-		padding-bottom: $gap;
 		li {
 			border-left: 3px solid #ddd;
 
@@ -256,6 +255,7 @@ body.dragging, body.dragging * {
 				border-bottom: 1px solid #ddd;
 			}
 		}
+
 	}
 	li {
 		border-top: 1px solid #ddd;
@@ -278,7 +278,15 @@ body.dragging, body.dragging * {
 				}
 			}
 		}
+		&:last-child {
+			margin-bottom: $gap;
+		}
 	}
+
+	> li:last-child {
+		margin-bottom: 0;
+	}
+
 	.nested-value {
 		display: inline-block;
 		padding-right: $gap;
