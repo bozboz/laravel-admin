@@ -1,5 +1,6 @@
 @extends('admin::layouts.bare')
 @section('body_class', 'login')
+@section('page_title', 'Admin Login')
 
 @section('main')
 	<img class="client-logo" src="/packages/bozboz/admin/images/logo.png">
