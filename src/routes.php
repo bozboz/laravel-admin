@@ -23,7 +23,6 @@ Route::group(array('namespace' => 'Bozboz\Admin\Controllers'), function() {
 
 			Route::get('/', 'AdminController@getIndex');
 			Route::get('logout', 'AdminController@getLogout');
-			Route::post('reorder', 'AdminController@reOrder');
 		});
 
 		Route::group(array('before' => 'guest'), function() {
@@ -32,7 +31,5 @@ Route::group(array('namespace' => 'Bozboz\Admin\Controllers'), function() {
 		});
 
 	});
-
-//	Route::any('{slug}', 'PageController@show')->where('slug', '.*');
 
 });
