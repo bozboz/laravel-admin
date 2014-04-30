@@ -11,7 +11,6 @@
 			<a class="navbar-brand" href="#">CMS</a>
 		</div>
 
-		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-left">
 				<li class="active"><a href="{{URL::to('/admin')}}"><i class="fa fa-home"></i> Home</a></li>
@@ -23,7 +22,6 @@
 				        @endforeach
 					</ul>
 				</li>
-				<li><a href="{{URL::to('/')}}"><i class="fa fa-cogs"></i> Settings</a></li>
 				<li><a href="{{URL::to('/admin/users')}}"><i class="fa fa-user"></i> Users</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -37,6 +35,6 @@
 					</ul>
 				</li>
 			</ul>
-		</div><!-- /.navbar-collapse -->
-	</div><!-- /.container-fluid -->
+		</div>
+	</div>
 </div>
