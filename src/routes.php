@@ -17,9 +17,9 @@ Route::group(array('namespace' => 'Bozboz\Admin\Controllers'), function() {
 		View::composer('admin::partials.nav', 'Bozboz\Admin\Composers\Nav');
 
 		Route::group(array('before' => 'auth'), function() {
-			Route::resource('pages', 'PageAdminController');
+			Route::resource('pages', 'PageAdminController', array('except' => array('show')));
 			Route::post('pages/reorder', 'PageAdminController@postReorder');
-			Route::resource('users', 'UserAdminController');
+			Route::resource('users', 'UserAdminController', array('except' => array('show')));
 
 			Route::get('/', 'AdminController@getIndex');
 			Route::get('logout', 'AdminController@getLogout');
