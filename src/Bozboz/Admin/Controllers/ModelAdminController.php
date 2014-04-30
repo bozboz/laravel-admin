@@ -13,6 +13,7 @@ abstract class ModelAdminController extends BaseController
 
 	public function __construct(ModelAdminDecorator $decorator)
 	{
+		$this->beforeFilter('auth');
 		$this->decorator = $decorator;
 	}
 

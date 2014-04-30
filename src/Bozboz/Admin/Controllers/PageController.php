@@ -10,7 +10,7 @@ class PageController extends \Controller
 		$page = Page::where('slug', $slug)->firstOrFail();
 
 		if ($page->redirect_to_id) {
-			return $this->redirectTo(Page::findOrFail($page->redirect_to_id));
+			return $this->redirectTo($page->redirectToPage);
 		} else {
 			return $this->serveView($page);
 		}
