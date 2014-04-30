@@ -26,7 +26,6 @@
 	background: none;
 }
 .masonry-item-inline-media label {
-
 	cursor: pointer;
 	display: block;
 	padding: 10px;
@@ -34,7 +33,13 @@
 }
 
 .icons {
-	padding-top: 15px;
+	padding-top: 10px;
+	margin-bottom: 0;
+	font-weight: 100;
+}
+p.icons, .icons p {
+	font-size: 12px;
+	overflow: hidden;
 }
 
 .media-is-used {
