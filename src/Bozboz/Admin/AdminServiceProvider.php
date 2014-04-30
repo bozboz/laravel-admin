@@ -21,6 +21,5 @@ class AdminServiceProvider extends ServiceProvider
 	protected function registerEvents()
 	{
 		Event::subscribe(new Subscribers\PageEventHandler);
-		Event::subscribe(new Subscribers\UserEventHandler);
 	}
 }
