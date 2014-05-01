@@ -5,13 +5,13 @@ use InvalidArgumentException;
 
 class FileField extends Field
 {
-	public function getInput($params = array())
+	public function getInput()
 	{
 		$html = '';
 		if ($filename = Form::getValueAttribute('filename')) {
 			$html .= sprintf('<img src="/images/thumb/media/image/%s" style="margin-bottom: 5px; display: block">', $filename);
 		}
-		$html .= Form::file($this->get('name'), $params);
+		$html .= Form::file($this->get('name'), $this->attributes);
 		return $html;
 	}
 }
