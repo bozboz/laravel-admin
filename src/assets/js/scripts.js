@@ -1,4 +1,4 @@
-$('textarea').summernote({
+$('textarea.html-editor').summernote({
 	height: 230,
 	toolbar: [
 		// ['style', ['style']],

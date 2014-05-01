@@ -5,6 +5,7 @@ use Bozboz\Admin\Models\Page;
 use Illuminate\Support\Facades\HTML;
 use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Fields\TextareaField;
+use Bozboz\Admin\Fields\HTMLEditorField;
 use Bozboz\Admin\Fields\SelectField;
 
 class PageAdminDecorator extends ModelAdminDecorator
@@ -33,7 +34,7 @@ class PageAdminDecorator extends ModelAdminDecorator
 			new TextField(array('name' => 'title')),
 			new TextField(array('name' => 'slug')),
 			new SelectField(array('name' => 'redirect_to_id', 'label' => 'Redirect To Page', 'options' => $this->getRedirectOptions())),
-			new TextareaField(array('name' => 'description')),
+			new HTMLEditorField(array('name' => 'description')),
 			new SelectField(array('name' => 'template', 'options' => $this->getTemplateOptions()))
 		);
 	}
