@@ -1,6 +1,7 @@
 <?php namespace Bozboz\Admin\Reports;
 
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
+use Bozboz\Admin\Models\Sortable;
 
 class NestedReport extends Report
 {

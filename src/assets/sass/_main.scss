@@ -217,6 +217,9 @@ select.form-control {
 		background-color: #f9f9f9;
 	}
 }
+.faux-table-heading {
+	font-weight: bold;
+}
 .faux-cell {
 	border-top: 1px solid #ddd;
 	vertical-align: middle;
@@ -242,7 +245,7 @@ body.dragging, body.dragging * {
 .sortable {
 	position: relative;
 }
-.sortable-nested {
+.nested {
 	border-bottom: 1px solid #ddd;
 	margin-bottom: $gap;
 	ol {
@@ -305,8 +308,12 @@ div.nested-group {
 
 .sorting-handle {
 	color: #888;
+	visibility: hidden;
 	.faux-table-row:hover & {
 		color: #000;
+	}
+	.sortable & {
+		visibility: visible;
 	}
 }
 

@@ -4,8 +4,11 @@
 @parent
 	@include('admin::partials.new')
 	<h1>{{ Str::plural($modelName) }}</h1>
+
+	@include('admin::partials.sort-alert')
+
 	<div class="table-responsive">
-		<ol class="secret-list sortable faux-table">
+		<ol class="secret-list faux-table{{ $sortableClass }}" data-model="{{ $fullModelName }}">
 
 			<li class="faux-table-row faux-table-heading">
 				<div class="faux-cell cell-small"></div>
@@ -16,7 +19,7 @@
 			</li>
 
 		@foreach ($report->getRows() as $row)
-			<li class="faux-table-row">
+			<li class="faux-table-row" data-id="{{ $row->getId() }}">
 				<div class="faux-cell cell-small">
 					<i class="fa fa-sort sorting-handle"></i>
 				</div>
