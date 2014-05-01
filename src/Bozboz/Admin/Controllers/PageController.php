@@ -1,5 +1,6 @@
 <?php namespace Bozboz\Admin\Controllers;
 
+use Bozboz\Admin\Meta\Provider as Meta;
 use Bozboz\Admin\Models\Page;
 use View, Redirect;
 
@@ -24,6 +25,7 @@ class PageController extends \Controller
 	protected function serveView(Page $page)
 	{
 		$view = $page->template? 'pages.' . $page->template : 'admin::pages.page';
-		return View::make($view, compact('page'));
+		$meta = Meta::forPage($page);
+		return View::make($view, compact('page', 'meta'));
 	}
 }
