@@ -60,8 +60,7 @@ gulp.task('css', ['sass'], function(){
 	gulp.src([
 		basePaths.bower + 'bootstrap/dist/css/bootstrap.min.css',
 		basePaths.bower + 'summernote/dist/summernote.css',
-		paths.styles.dest + 'style.css',
-		'../media-library/public/css/media-library.css' // Temporary measure
+		paths.styles.dest + 'style.css'
 	])
 	.pipe(plugins.concat('admin.min.css'))
 	.pipe(gulp.dest(paths.styles.dest))
