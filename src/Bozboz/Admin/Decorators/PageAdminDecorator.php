@@ -32,6 +32,8 @@ class PageAdminDecorator extends ModelAdminDecorator
 	{
 		return array(
 			new TextField(array('name' => 'title')),
+			new TextField(array('name' => 'html_title', 'label' => 'HTML Title')),
+			new TextareaField(array('name' => 'meta_description')),
 			new TextField(array('name' => 'slug')),
 			new SelectField(array('name' => 'redirect_to_id', 'label' => 'Redirect To Page', 'options' => $this->getRedirectOptions())),
 			new HTMLEditorField(array('name' => 'description')),
