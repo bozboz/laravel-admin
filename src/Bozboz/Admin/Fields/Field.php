@@ -6,11 +6,15 @@ use Illuminate\Support\MessageBag;
 
 abstract class Field extends Fluent
 {
-	abstract public function getInput($params);
+	protected $attributes = array(
+		'class' => 'form-control'
+	);
 
-	public function getLabel($params = array())
+	abstract public function getInput();
+
+	public function getLabel()
 	{
-		return Form::label($this->get('name'), $this->get('label'), $params);
+		return Form::label($this->get('name'), $this->get('label'));
 	}
 
 	public function getErrors(MessageBag $errors)

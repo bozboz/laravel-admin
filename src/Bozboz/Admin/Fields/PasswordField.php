@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Form;
 
 class PasswordField extends Field
 {
-	public function getInput($params = array())
+	public function getInput()
 	{
-		 return Form::password($this->get('name'), $params);
+		 return Form::password($this->get('name'), $this->attributes);
 	}
 }

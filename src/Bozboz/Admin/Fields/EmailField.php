@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Form;
 
 class EmailField extends Field
 {
-	public function getInput($params = array())
+	public function getInput()
 	{
-		return Form::email($this->get('name'), $this->get('value'), $params);
+		return Form::email($this->get('name'), $this->get('value'), $this->attributes);
 	}
 }

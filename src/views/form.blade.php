@@ -11,8 +11,8 @@
 
 	@foreach($fields as $field)
 	 <div class="form-group{{{ ($field->getErrors($errors)) ? ' bs-callout bs-callout-danger' : '' }}}">
-		{{ $field->getLabel(array('for' => $field->title)) }}
-		{{ $field->getInput(array('class' => 'form-control', 'id' => $field->title)) }}
+		{{ $field->getLabel() }}
+		{{ $field->getInput() }}
 		{{ $field->getErrors($errors) }}
 	</div>
 

@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Form;
 
 class TextareaField extends Field
 {
-	public function getInput($params = array())
+	public function getInput()
 	{
-		return Form::textarea($this->get('name'), null, array_merge($this->attributes, $params));
+		return Form::textarea($this->get('name'), null, $this->attributes);
 	}
 }
