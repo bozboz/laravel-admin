@@ -10,7 +10,10 @@
 			<h1 class="login-heading">Login</h1>
 		</div>
 			@if(Session::has('error'))
-				<div class="alert alert-danger">{{ Session::get('error')  }}</div>
+				<div class="alert alert-danger">
+					<p><b>Email &amp; Password combination not recognised</b></p>
+					<p>Please try again or <a href="/admin/password/remind">reset your password</a></p>
+				</div>
 			@elseif(Session::has('message'))
 				<div class="alert alert-danger">{{ Session::get('message')  }}</div>
 			@endif
