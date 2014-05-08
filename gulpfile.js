@@ -75,6 +75,7 @@ gulp.task('scripts', function(){
 		basePaths.bower + 'jquery-sortable/source/js/jquery-sortable-min.js',
 		basePaths.bower + 'imagesloaded/imagesloaded.pkgd.min.js',
 		basePaths.bower + 'masonry/dist/masonry.pkgd.min.js',
+		basePaths.bower + 'handlebars/handlebars.min.js',
 
 		paths.scripts.src + 'scripts.js',
 	])
