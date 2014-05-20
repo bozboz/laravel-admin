@@ -28,7 +28,6 @@ var appFiles = {
 
 var vendorFiles = {
 	styles: [
-		basePaths.bower + 'bootstrap/dist/css/bootstrap.min.css',
 		basePaths.bower + 'summernote/dist/summernote.css'
 	],
 	scripts: [
@@ -41,6 +40,12 @@ var vendorFiles = {
 		basePaths.bower + 'masonry/dist/masonry.pkgd.min.js'
 	]
 };
+
+var publishAssets = function() {
+	shell.task([
+		'cd ../../../ && php artisan asset:publish bozboz/admin'
+	])
+}
 
 /*
 	Let the magic begin
@@ -72,12 +77,7 @@ var changeEvent = function(evt) {
 	gutil.log('File', gutil.colors.cyan(evt.path.replace(new RegExp('/.*(?=/' + basePaths.src + ')/'), '')), 'was', gutil.colors.magenta(evt.type));
 };
 
-gulp.task('publish', shell.task([
-		'cd ../../../ && php artisan asset:publish bozboz/admin'
-	])
-);
-
-gulp.task('css', function(){
+gulp.task('compile-css', function(){
 
 	var sassFiles = gulp.src(appFiles.styles)
 	.pipe(plugins.rubySass({
@@ -95,10 +95,12 @@ gulp.task('css', function(){
 		}) : gutil.noop())
 		.pipe(isProduction ? plugins.cssmin() : gutil.noop())
 		.pipe(plugins.size())
-		.pipe(gulp.dest(paths.styles.dest));
+		.pipe(gulp.dest(paths.styles.dest))
+		;
 });
+gulp.task('css', ['compile-css'], publishAssets());
 
-gulp.task('scripts', function(){
+gulp.task('compile-scripts', function(){
 
 	return es.concat(gulp.src(vendorFiles.scripts), gulp.src(appFiles.scripts))
 		.pipe(plugins.concat('admin.min.js'))
@@ -107,13 +109,13 @@ gulp.task('scripts', function(){
 		.pipe(plugins.size())
 		.pipe(gulp.dest(paths.scripts.dest));
 });
-
+gulp.task('scripts', ['compile-scripts'], publishAssets());
 
 gulp.task('watch', ['css', 'scripts'], function(){
-	gulp.watch(appFiles.styles, ['css', 'publish']).on('change', function(evt) {
+	gulp.watch(appFiles.styles, ['css']).on('change', function(evt) {
 		changeEvent(evt);
 	});
-	gulp.watch(paths.scripts.src + '*.js', ['scripts', 'publish']).on('change', function(evt) {
+	gulp.watch(paths.scripts.src + '*.js', ['scripts']).on('change', function(evt) {
 		changeEvent(evt);
 	});
 });
