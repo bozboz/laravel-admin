@@ -1,100 +1,125 @@
-var gulp = require('gulp');
-var plugins = require("gulp-load-plugins")({
-	replaceString: /\bgulp[\-.]/
-});
-
 var basePaths = {
-	public: './public/',
-	src: './src/assets/',
-	bower: './bower_components/'
-}
+	src: 'src/assets/',
+	dest: 'public/',
+	bower: 'bower_components/'
+};
 var paths = {
-	styles: {
-		src: basePaths.src + 'sass/*.scss',
-		dest: basePaths.public + 'css/'
+	images: {
+		src: basePaths.src + 'images/',
+		dest: basePaths.dest + 'images/min/'
 	},
 	scripts: {
 		src: basePaths.src + 'js/',
-		dest: basePaths.public + 'js/'
+		dest: basePaths.dest + 'js/'
+	},
+	styles: {
+		src: basePaths.src + 'sass/',
+		dest: basePaths.dest + 'css/'
+	},
+	sprite: {
+		src: basePaths.src + 'sprite/*'
 	}
-}
+};
 
-var displayError = function(error) {
-	var errorString = '[' + error.plugin + ']';
-	errorString += ' ' + error.message.replace("\n",'');
-	if(error.fileName)
-		errorString += ' in ' + error.fileName;
-	if(error.lineNumber)
-		errorString += ' on line ' + error.lineNumber;
-	console.error(errorString);
-}
+var appFiles = {
+	styles: paths.styles.src + '**/*.scss',
+	scripts: [paths.scripts.src + 'scripts.js']
+};
 
-var changeEvent = function(evt) {
-	console.log(
-		'[watcher] File ' + evt.path.replace(/.*(?=assets)/,'') + ' was ' + evt.type + ', compiling...'
-	);
-}
-
-gulp.task('publish', plugins.shell.task([
-		'cd ../../../ && php artisan asset:publish bozboz/admin',
-	])
-)
-
-gulp.task('sass', function (){
-	gulp.src(paths.styles.src)
-	.pipe(plugins.rubySass({
-		style: 'compressed',
-		sourcemap: true,
-		precision: 2
-	}))
-	.on('error', function(err){
-		displayError(err);
-	})
-	.pipe(plugins.autoprefixer(
-		'last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'
-	))
-	.pipe(gulp.dest(paths.styles.dest))
-});
-
-gulp.task('css', ['sass'], function(){
-	gulp.src([
+var vendorFiles = {
+	styles: [
 		basePaths.bower + 'bootstrap/dist/css/bootstrap.min.css',
-		basePaths.bower + 'summernote/dist/summernote.css',
-		paths.styles.dest + 'style.css'
-	])
-	.pipe(plugins.concat('admin.min.css'))
-	.pipe(gulp.dest(paths.styles.dest))
-});
-
-gulp.task('scripts', function(){
-	gulp.src([
+		basePaths.bower + 'summernote/dist/summernote.css'
+	],
+	scripts: [
 
 		basePaths.bower + 'jquery/dist/jquery.min.js',
 		basePaths.bower + 'bootstrap/dist/js/bootstrap.min.js',
 		basePaths.bower + 'summernote/dist/summernote.min.js',
 		basePaths.bower + 'jquery-sortable/source/js/jquery-sortable-min.js',
 		basePaths.bower + 'imagesloaded/imagesloaded.pkgd.min.js',
-		basePaths.bower + 'masonry/dist/masonry.pkgd.min.js',
-		basePaths.bower + 'handlebars/handlebars.min.js',
+		basePaths.bower + 'masonry/dist/masonry.pkgd.min.js'
+	]
+};
 
-		paths.scripts.src + 'scripts.js',
-	])
-	.pipe(plugins.concat('admin.js'))
-    .pipe(gulp.dest(paths.scripts.dest))
-    .pipe(plugins.rename('admin.min.js'))
-    .pipe(plugins.uglify({outSourceMap: true}))
-    .pipe(gulp.dest(paths.scripts.dest))
+/*
+	Let the magic begin
+*/
+
+var gulp = require('gulp');
+
+var es = require('event-stream');
+var gutil = require('gulp-util');
+var shell = require('gulp-shell');
+
+var plugins = require("gulp-load-plugins")({
+	pattern: ['gulp-*', 'gulp.*'],
+	replaceString: /\bgulp[\-.]/
 });
 
-gulp.task('watch', ['scripts', 'css', 'publish'], function(){
-	gulp.watch(paths.styles.src, ['css', 'publish'])
-	.on('change', function(evt) {
-		changeEvent(evt)
-	});
-	gulp.watch(paths.scripts.src + '*.js', ['scripts', 'publish'])
-	.on('change', function(evt) {
-		changeEvent(evt)
-	});
-})
+// Allows gulp --dev to be run for a more verbose output
+var isProduction = true;
+var sassStyle = 'compressed';
+var sourceMap = false;
 
-gulp.task('default', ['scripts', 'css', 'publish']);
+if(gutil.env.dev === true) {
+	sassStyle = 'expanded';
+	sourceMap = true;
+	isProduction = false;
+}
+
+var changeEvent = function(evt) {
+	gutil.log('File', gutil.colors.cyan(evt.path.replace(new RegExp('/.*(?=/' + basePaths.src + ')/'), '')), 'was', gutil.colors.magenta(evt.type));
+};
+
+gulp.task('publish', shell.task([
+		'cd ../../../ && php artisan asset:publish bozboz/admin'
+	])
+);
+
+gulp.task('css', function(){
+
+	var sassFiles = gulp.src(appFiles.styles)
+	.pipe(plugins.rubySass({
+		style: sassStyle, sourcemap: sourceMap, precision: 2
+	}))
+	.on('error', function(err){
+		new gutil.PluginError('CSS', err, {showStack: true});
+	});
+
+	return es.concat(gulp.src(vendorFiles.styles), sassFiles)
+		.pipe(plugins.concat('admin.min.css'))
+		.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+		.pipe(isProduction ? plugins.combineMediaQueries({
+			log: true
+		}) : gutil.noop())
+		.pipe(isProduction ? plugins.cssmin() : gutil.noop())
+		.pipe(plugins.size())
+		.pipe(gulp.dest(paths.styles.dest));
+});
+
+gulp.task('scripts', function(){
+
+	return es.concat(gulp.src(vendorFiles.scripts), gulp.src(appFiles.scripts))
+		.pipe(plugins.concat('admin.min.js'))
+		.pipe(gulp.dest(paths.scripts.dest))
+		.pipe(isProduction ? plugins.uglify() : gutil.noop())
+		.pipe(plugins.size())
+		.pipe(gulp.dest(paths.scripts.dest));
+});
+
+
+gulp.task('watch', ['css', 'scripts'], function(){
+	gulp.watch(appFiles.styles, ['css', 'publish']).on('change', function(evt) {
+		changeEvent(evt);
+	});
+	gulp.watch(paths.scripts.src + '*.js', ['scripts', 'publish']).on('change', function(evt) {
+		changeEvent(evt);
+	});
+});
+
+gulp.task('default', ['css', 'scripts']);
+gulp.task('debug', function(){
+	console.log(plugins)
+});
+
