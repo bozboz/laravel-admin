@@ -17,14 +17,11 @@
 	@section('top')
 		@include('admin::partials.nav')
 	@show
-	<div class="container-fluid">
-		<div class="row">
 
-			<div class="col-sm-12 col-md-12 main">
-				@section('main')
-				@show
-			</div>
-		</div>
+
+	<div class="main">
+		@section('main')
+		@show
 	</div>
 	@section('scripts')
 		<script src="/packages/bozboz/admin/js/admin.min.js"></script>
