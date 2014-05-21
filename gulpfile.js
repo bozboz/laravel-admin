@@ -43,11 +43,7 @@ var vendorFiles = {
 	]
 };
 
-var publishAssets = function() {
-	shell.task([
-		'cd ../../../ && php artisan asset:publish bozboz/admin'
-	])
-}
+
 
 /*
 	Let the magic begin
@@ -73,6 +69,12 @@ if(gutil.env.dev === true) {
 	sassStyle = 'expanded';
 	sourceMap = true;
 	isProduction = false;
+}
+
+var publishAssets = function() {
+	shell.task([
+		'cd ../../../ && php artisan asset:publish bozboz/admin'
+	])
 }
 
 var changeEvent = function(evt) {

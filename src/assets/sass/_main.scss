@@ -30,6 +30,14 @@
 	padding-right: 5px;
 }
 
+.alert-buttons {
+	overflow: hidden;
+	line-height: 34px;
+	.btn {
+		margin-left: 5px;
+	}
+}
+
 .login {
 	// padding: 80px 0;
 	.client-logo {
@@ -204,9 +212,15 @@ input.form-control-wide {
 	width: 25%;
 	float: left;
 	margin-top: 0;
+	padding-left: $gap;
+	border-left: 1px solid #ddd;
 }
 .checkbox+.checkbox {
 	margin-top: 0;
+}
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+	margin-left: 0;
+	margin-right: $gap;
 }
 
 
@@ -315,6 +329,8 @@ div.nested-group {
 .sorting-handle {
 	color: #888;
 	visibility: hidden;
+	padding: 10px 15px;
+	cursor: move;
 	.faux-table-row:hover & {
 		color: #000;
 	}
