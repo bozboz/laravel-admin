@@ -37,7 +37,9 @@ var vendorFiles = {
 		basePaths.bower + 'summernote/dist/summernote.min.js',
 		basePaths.bower + 'jquery-sortable/source/js/jquery-sortable-min.js',
 		basePaths.bower + 'imagesloaded/imagesloaded.pkgd.min.js',
-		basePaths.bower + 'masonry/dist/masonry.pkgd.min.js'
+		basePaths.bower + 'masonry/dist/masonry.pkgd.min.js',
+		basePaths.bower + 'handlebars/handlebars.min.js'
+
 	]
 };
 
@@ -102,12 +104,13 @@ gulp.task('css', ['compile-css'], publishAssets());
 
 gulp.task('compile-scripts', function(){
 
-	return es.concat(gulp.src(vendorFiles.scripts), gulp.src(appFiles.scripts))
+	gulp.src(vendorFiles.scripts.concat(appFiles.scripts))
 		.pipe(plugins.concat('admin.min.js'))
 		.pipe(gulp.dest(paths.scripts.dest))
-		.pipe(isProduction ? plugins.uglify() : gutil.noop())
+		.pipe(isProduction ? plugins.uglify({outSourceMap: true}) : gutil.noop())
 		.pipe(plugins.size())
 		.pipe(gulp.dest(paths.scripts.dest));
+
 });
 gulp.task('scripts', ['compile-scripts'], publishAssets());
 
