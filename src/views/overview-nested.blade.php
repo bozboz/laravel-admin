@@ -8,11 +8,15 @@
 	@include('admin::partials.sort-alert')
 
 	<div class="table-responsive">
+	@if ($report->hasRows())
 		<ol class="secret-list nested{{ $sortableClass }}" data-model="{{ $fullModelName }}">
 		@foreach ($report->getRows() as $row)
 			@include('admin::partials.nested-item')
 		@endforeach
-	</ol>
+		</ol>
+	@else
+		<p>Nothing here yet. Why not add something?</p>
+	@endif
 </div>
 	@include('admin::partials.new')
 @stop

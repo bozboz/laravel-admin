@@ -7,6 +7,7 @@ use View;
 class Report
 {
 	protected $decorator;
+	protected $rows;
 	protected $view = 'admin::overview';
 
 	public function __construct(ModelAdminDecorator $decorator)
@@ -24,10 +25,16 @@ class Report
 		return array_keys($this->decorator->getColumns($this->decorator->getModel()));
 	}
 
+	public function hasRows()
+	{
+		$this->rows = $this->decorator->getListingModels();
+		return count($this->rows) > 0;
+	}
+
 	public function getRows()
 	{
 		$rows = array();
-		$instances = $this->decorator->getListingModels();
+		$instances = $this->rows? $this->rows : $this->decorator->getListingModels();
 		foreach($instances as $row) {
 			$rows[] = new Row($row->id, $row, $this->decorator->getColumns($row));
 		}

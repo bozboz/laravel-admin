@@ -12,12 +12,12 @@ class NestedReport extends Report
 	{
 		$tree = array();
 
-		$instances = $this->decorator->getListingModels();
+		$instances = $this->rows? $this->rows : $this->decorator->getListingModels();
 		foreach($instances as $page) {
 			$this->tree[$page->parent_id][] = new Row($page->id, $page, $this->decorator->getColumns($page));
 		}
 
-		return $this->tree[0];
+		return count($tree)? $this->tree[0] : array();
 	}
 
 	public function isRowNested(Row $row)

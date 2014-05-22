@@ -8,6 +8,7 @@
 	@include('admin::partials.sort-alert')
 
 	<div class="table-responsive">
+	@if ($report->hasRows())
 		<ol class="secret-list faux-table{{ $sortableClass }}" data-model="{{ $fullModelName }}">
 
 			<li class="faux-table-row faux-table-heading">
@@ -39,6 +40,9 @@
 			</li>
 		@endforeach
 		</ol>
+	@else
+		<p>Nothing here yet. Why not add something?</p>
+	@endif
 	</div>
 	@include('admin::partials.new')
 @stop
