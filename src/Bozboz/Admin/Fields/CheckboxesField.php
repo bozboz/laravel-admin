@@ -15,7 +15,7 @@ class CheckboxesField extends Field
 
 	public function getInput($params = array())
 	{
-		$html = Form::hidden($this->get('name') . '[]');
+		$html = Form::hidden($this->get('name'));
 
 		$currentValues = $this->getCurrentValues();
 
