@@ -99,8 +99,7 @@ gulp.task('compile-css', function(){
 		}) : gutil.noop())
 		.pipe(isProduction ? plugins.cssmin() : gutil.noop())
 		.pipe(plugins.size())
-		.pipe(gulp.dest(paths.styles.dest))
-		;
+		.pipe(gulp.dest(paths.styles.dest));
 });
 gulp.task('css', ['compile-css'], publishAssets());
 
@@ -109,7 +108,7 @@ gulp.task('compile-scripts', function(){
 	gulp.src(vendorFiles.scripts.concat(appFiles.scripts))
 		.pipe(plugins.concat('admin.min.js'))
 		.pipe(gulp.dest(paths.scripts.dest))
-		.pipe(isProduction ? plugins.uglify({outSourceMap: true}) : gutil.noop())
+		.pipe(isProduction ? plugins.uglify({outSourceMap: false}) : gutil.noop())
 		.pipe(plugins.size())
 		.pipe(gulp.dest(paths.scripts.dest));
 
