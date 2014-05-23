@@ -17,7 +17,7 @@ class NestedReport extends Report
 			$this->tree[$page->parent_id][] = new Row($page->id, $page, $this->decorator->getColumns($page));
 		}
 
-		return count($tree)? $this->tree[0] : array();
+		return count($this->tree)? $this->tree[0] : array();
 	}
 
 	public function isRowNested(Row $row)
