@@ -31,6 +31,10 @@ $('#cancel-new-order').on('click', function() {
 	$('.js-save-notification').hide();
 });
 
+$('.btn[data-warn]').on('click', function() {
+	return confirm('Are you sure you want to delete');
+});
+
 var table = $('.sortable').sortable({
 	handle: '.sorting-handle',
 	onDrop: function ($item, container, _super) {
