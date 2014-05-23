@@ -1,8 +1,9 @@
 <?php namespace Bozboz\Admin\Decorators;
 
-use File;
 use Bozboz\Admin\Models\Page;
 use Illuminate\Support\Facades\HTML;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\File;
 use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Fields\HTMLEditorField;
 use Bozboz\Admin\Fields\SelectField;
@@ -18,7 +19,7 @@ class PageAdminDecorator extends ModelAdminDecorator
 	{
 		return array(
 			'Title' => $this->getLabel($instance),
-			'Front End URL' => HTML::link($instance->slug)
+			'Front End URL' => HTML::link($instance->slug, URL::route('page', array($instance->slug), false))
 		);
 	}
 
