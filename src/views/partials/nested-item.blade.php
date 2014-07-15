@@ -7,7 +7,7 @@
 						</a>
 
 						{{ Form::model($row->getModel(), array('class' => 'inline-form', 'action' => array($controller . '@destroy', $row->getModel()->id), 'method' => 'DELETE')) }}
-							<button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
+							<button class="btn btn-danger btn-sm" data-warn="true" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
 						{{ Form::close() }}
 					</div>
 					<div class="nested-value">
