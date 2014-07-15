@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Fields\HTMLEditorField;
 use Bozboz\Admin\Fields\SelectField;
+use Bozboz\Admin\Fields\CheckboxField;
 
 class PageAdminDecorator extends ModelAdminDecorator
 {
@@ -36,6 +37,7 @@ class PageAdminDecorator extends ModelAdminDecorator
 			new TextField(array('name' => 'meta_description', 'class' => 'form-control form-control-wide')),
 			new TextField(array('name' => 'slug')),
 			new SelectField(array('name' => 'redirect_to_id', 'label' => 'Redirect To Page', 'options' => $this->getRedirectOptions())),
+			new CheckboxField(array('name' => 'show_in_footer')),
 			new HTMLEditorField(array('name' => 'description')),
 			new SelectField(array('name' => 'template', 'options' => $this->getTemplateOptions()))
 		);
