@@ -1,12 +1,13 @@
 <?php namespace Bozboz\Admin\Decorators;
 
-use Eloquent, Event;
+use Event;
+use Bozboz\Admin\Models\Base;
 
 abstract class ModelAdminDecorator
 {
 	protected $model;
 
-	public function __construct(Eloquent $model)
+	public function __construct(Base $model)
 	{
 		$this->model = $model;
 	}
