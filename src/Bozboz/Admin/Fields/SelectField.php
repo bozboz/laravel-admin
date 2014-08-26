@@ -11,10 +11,9 @@ class SelectField extends Field
 			throw new InvalidArgumentException('You must define an "options" key mapping to an array');
 		}
 
-		$options = $this->options;
+		$attributes = $this->attributes;
+		unset($attributes['options']);
 
-		unset($this->options);
-
-		return Form::select($this->name, $options, null, $this->attributes);
+		return Form::select($this->name, $this->options, null, $attributes);
 	}
 }

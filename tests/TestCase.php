@@ -12,10 +12,6 @@ class TestCase extends \TestCase
 
 	private function prepareForTests()
 	{
-		$option = strpos(__DIR__, 'workbench') === false ? '--package' : '--bench';
-
-		Artisan::call('migrate', array($option => 'bozboz/admin'));
-		Artisan::call('db:seed');
 		Mail::pretend(true);
 	}
 }

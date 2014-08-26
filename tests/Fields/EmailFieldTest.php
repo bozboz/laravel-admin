@@ -11,7 +11,6 @@ class EmailFieldTest extends TestCase
 
 		$this->assertContains('some_field', $field->getInput());
 		$this->assertContains('foo@bar.com', $field->getInput());
-		$this->assertContains('class="foo_class"', $field->getInput(array('class' => 'foo_class')));
 	}
 
 	public function testNoValue()
@@ -19,6 +18,5 @@ class EmailFieldTest extends TestCase
 		$field = new EmailField(array('name' => 'some_field'));
 
 		$this->assertContains('some_field', $field->getInput());
-		$this->assertContains('class="foo_class"', $field->getInput(array('class' => 'foo_class')));
 	}
 }

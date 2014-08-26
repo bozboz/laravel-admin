@@ -24,6 +24,6 @@ class SelectFieldTest extends TestCase
 			$this->assertContains($option, $fieldHtml);
 		}
 
-		$this->assertContains('select', $field->getInput());
+		$this->assertContains('select', $fieldHtml);
 	}
 }

@@ -26,7 +26,6 @@ class ModelAdminControllerTest extends TestCase
 	private function registerPageMock()
 	{
 		$this->pageMock = Mockery::mock($this->pageClass);
-		$this->app->instance($this->pageClass, $this->pageMock);
 	}
 
 	public function tearDown()
@@ -36,37 +35,11 @@ class ModelAdminControllerTest extends TestCase
 		Auth::logOut();
 	}
 
-	public function testInstancesArePassedToViewInIndexMethod()
+	public function testViewHasReport()
 	{
-		$arrayAccessMock = Mockery::mock('ArrayAccess');
-
-		$this->pageMock->shouldReceive('all')->once()->andReturn($arrayAccessMock);
-
 		$this->call('GET', 'admin/pages');
 		$this->assertResponseOK();
-		$this->assertViewHas('instances', $arrayAccessMock);
-	}
-
-	public function testGetColumnsForInstances()
-	{
-		$pageInstanceMock = Mockery::mock($this->pageClass);
-		$pageInstanceMock
-			->shouldReceive('getAttribute')->times(3)->with('id')->andReturn(1)
-			->shouldReceive('getAttribute')->once()->with('slug')->andReturn('test-slug')
-			->shouldReceive('getAttribute')->once()->with('title')->andReturn('Test Title');
-
-		$collection = new Collection(array($pageInstanceMock));
-
-		$this->pageMock->shouldReceive('all')->once()->andReturn($collection);
-
-		$this->call('GET', 'admin/pages');
-		$this->assertResponseOK();
-		$this->assertViewHas('instances', $collection);
-
-		$this->assertViewHas('columns', array(array(
-			'id' => 1,
-			'Front End URL' => '<a href="http://localhost/test-slug">http://localhost/test-slug</a>'
-		)));
+		$this->assertViewHas('report');
 	}
 
 	public function testCreateMethod()
@@ -78,7 +51,6 @@ class ModelAdminControllerTest extends TestCase
 		$field->shouldReceive('getLabel')->once();
 		$field->shouldReceive('getInput')->once();
 		$field->shouldReceive('getErrors')->times(2);
-		$field->shouldReceive('get')->times(2);
 
 		$decoratorClass = 'Bozboz\\Admin\\Decorators\\PageAdminDecorator';
 		$decoratorMock = Mockery::mock($decoratorClass . '[getFields]', array($this->pageMock));

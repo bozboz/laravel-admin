@@ -6,14 +6,23 @@ class UserTableSeeder extends \Seeder
 {
 	public function run()
 	{
-		User::create(array(
-			'id' => 2,
-			'username' => 'Bower',
-			'email' => 'danielb@bozboz.co.uk',
-			'password' => 'really secure password',
-			'name' => 'Dan Bower',
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		));
+		User::truncate();
+		$usersData = [
+			[
+				'username' => 'admin',
+				'email' => 'admin@bozboz.co.uk',
+				'name' => 'Bozboz Admin'
+			],
+			[
+				'username' => 'Bower',
+				'email' => 'danielb@bozboz.co.uk',
+				'name' => 'Dan Bower',
+			]
+		];
+		foreach ($usersData as $userData) {
+			$user = new User($userData);
+			$user->password = 'gukbeb6s';
+			$user->save();
+		}
 	}
 }

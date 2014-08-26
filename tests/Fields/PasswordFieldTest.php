@@ -10,6 +10,5 @@ class PasswordFieldTest extends TestCase
 		$field = new PasswordField(array('name' => 'some_field'));
 
 		$this->assertContains('name="some_field"', $field->getInput());
-		$this->assertContains('class="foo_class"', $field->getInput(array('class' => 'foo_class')));
 	}
 }

@@ -1,31 +1,64 @@
 <?php namespace Bozboz\Admin\Test\Services\Validators;
 
 use Bozboz\Admin\Tests\TestCase;
+use Bozboz\Admin\Database\Seeds\UserTableSeeder;
 use Bozboz\Admin\Services\Validators\UserValidator;
 use Mockery;
 
 class UserValidatorTest extends TestCase
 {
-	public function testTransformUniquesSuccess()
+	/**
+	 * Run UserTableSeeder
+	 */
+	public function setUp()
 	{
-		$this->assertTrue($this->transformUniques(2));
+		parent::setUp();
+		$seeder = new UserTableSeeder();
+		$seeder->run();
 	}
 
-	public function testTransformUniquesFailure()
+	/**
+	 * Unused user ID with new creditionals
+	 */
+	public function testTransformUniquesCreateSuccess()
 	{
-		$this->assertFalse($this->transformUniques(3));
+		$this->assertTrue($this->transformUniques(1000, [
+			'username' => 'Foo',
+			'name' => 'Foo Bar',
+			'email' => 'foo@bar.com'
+		]));
 	}
 
-	private function transformUniques($userId)
+	/**
+	 * Unused user ID with existing creditionals
+	 */
+	public function testTransformUniquesCreateFailure()
+	{
+		$this->assertFalse($this->transformUniques(1001, [
+			'username' => 'admin',
+			'email' => 'admin@bozboz.co.uk',
+			'name' => 'Boz Admin'
+		]));
+	}
+
+	/**
+	 * Used ID with updated email
+	 */
+	public function testTransformUniquesUpdateSuccess()
+	{
+		$this->assertTrue($this->transformUniques(1, [
+			'username' => 'admin',
+			'email' => 'adminUpdated@bozboz.co.uk',
+			'name' => 'Boz Admin'
+		]));
+	}
+
+	private function transformUniques($userId, $userData)
 	{
 		$userMock = $this->getUserMock($userId);
 		$validator = new UserValidator();
 		$validator->updateUniques($userMock->getId());
-		$success = $validator->passesEdit(array(
-			'username' => 'Bower',
-			'name' => 'Dan Bower',
-			'email' => 'danielb@bozboz.co.uk',
-		));
+		$success = $validator->passesEdit($userData);
 
 		return $success;
 	}
