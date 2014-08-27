@@ -20,12 +20,4 @@ class PageAdminController extends ModelAdminController
 		$report = new NestedReport($this->decorator);
 		return $report->render(array('controller' => get_class($this)));
 	}
-
-	public function postReorder()
-	{
-		$model = $this->decorator->getModel();
-		$items = Input::get('items');
-
-		$this->sorter->sort($model, $items);
-	}
 }
