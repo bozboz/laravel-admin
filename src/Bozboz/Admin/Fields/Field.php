@@ -2,10 +2,17 @@
 
 use Illuminate\Support\Facades\Form;
 use Illuminate\Support\Fluent;
-use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
 
 abstract class Field extends Fluent
 {
+	public function __construct(array $attributes)
+	{
+		foreach ($attributes as $key => $attribute) {
+			$this->attributes[$key] = $attribute;
+		}
+	}
+
 	protected $attributes = array(
 		'class' => 'form-control'
 	);
@@ -17,7 +24,7 @@ abstract class Field extends Fluent
 		return Form::label($this->get('name'), $this->get('label'));
 	}
 
-	public function getErrors(MessageBag $errors)
+	public function getErrors(ViewErrorBag $errors)
 	{
 		if ($errors->first($this->get('name'))) {
 			return '<p><strong>' . $errors->first($this->get('name')) . '</strong></p>';

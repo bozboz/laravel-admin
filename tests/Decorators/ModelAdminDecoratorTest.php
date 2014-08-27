@@ -1,9 +1,11 @@
 <?php namespace Bozboz\Admin\Tests\Decorators;
 
 use Mockery;
+use Event;
 use Bozboz\Admin\Tests\TestCase;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Illuminate\Support\Collection;
+
 
 class ModelAdminDecoratorTest extends TestCase
 {
@@ -19,10 +21,9 @@ class ModelAdminDecoratorTest extends TestCase
 	{
 		$decorator = $this->getMockedDecorator();
 		$fieldsData = ['foo' => 'bar'];
-		$fields = new \Illuminate\Support\Fluent($fieldsData);
-		$decorator->shouldReceive('getFields')->once()->andReturn($fields);
-
-		$this->assertEquals($decorator->buildFields(), ['attributes' => $fieldsData]);
+		$decorator->shouldReceive('getFields')->once()->andReturn($fieldsData);
+		Event::shouldReceive('fire')->once()->with('admin.fields.built', Mockery::type('array'));
+		$this->assertEquals($decorator->buildFields(), $fieldsData);
 	}
 
 	private function getMockedDecorator($model = null)

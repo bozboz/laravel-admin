@@ -32,6 +32,7 @@ abstract class ModelAdminDecorator
 	{
 		$fieldsObj = new \Illuminate\Support\Fluent($this->getFields());
 		Event::fire('admin.fields.built', array($fieldsObj, $this->getModel()));
+
 		return $fieldsObj->toArray();
 	}
 }
