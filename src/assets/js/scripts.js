@@ -49,8 +49,8 @@ function extractId(obj)
 
 	if (obj.children) {
 		newObj.children = [];
-		for (var i in obj.children) {
-			newObj.children.push(extractId(obj.children[i]));
+		for (var i in obj.children[0]) {
+			newObj.children.push(extractId(obj.children[0][i]));
 		}
 	}
 	return newObj;
