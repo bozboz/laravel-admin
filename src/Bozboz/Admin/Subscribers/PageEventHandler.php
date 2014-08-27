@@ -17,7 +17,6 @@ class PageEventHandler {
     {
         $sortField = $page->sortBy();
         $highestSortingValue = Page::where('parent_id', $page->parent_id)->max($sortField);
-        dd($highestSortingValue);
     }
 
     public function subscribe($events)
