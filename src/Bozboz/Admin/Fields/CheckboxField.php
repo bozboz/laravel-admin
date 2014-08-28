@@ -6,6 +6,6 @@ class CheckboxField extends Field
 {
 	public function getInput()
 	{
-		return Form::checkbox($this->get('name'), 1);
+		return Form::hidden($this->get('name'), 0) . Form::checkbox($this->get('name'), 1);
 	}
 }
