@@ -78,6 +78,41 @@ class PageAdminDecorator extends ModelAdminDecorator
 
 Controllers will generally do all its communicating of models through a decorator - they won't deal directly with a model instance.
 
+## Saing Many-To-Many relationships
+
+Add CheckboxesField to the respective Decorator's getField method. e.g.
+
+```
+return [
+    new CheckboxesField([
+        'name' => 'categories_ids',
+        'options' => \Bozboz\Blog\Models\BlogCategory::all(),
+    ])
+];
+```
+
+Ensure the `name` of this field is within the model's `fillable` property.
+
+Now define an [accessor method](http://laravel.com/docs/eloquent#accessors-and-mutators) on the respective model which returns a list of IDs in the relationship. e.g.
+
+```
+public function getCategoriesIdsAttribute()
+{
+    return $this->categories()->lists('blog_category_id');
+}
+```
+
+`blog_category_id` in this instance refers to the foreign key of the related model in the join table.
+
+Now finally add a mutator method. e.g.
+
+```
+public function setCategoriesIdsAttribute($categories)
+{
+    $data = is_array($categories) ? $categories : [];
+    $this->categories()->sync($data);
+}
+```
 
 # Editing Admin Theme
 
