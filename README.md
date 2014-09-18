@@ -78,41 +78,37 @@ class PageAdminDecorator extends ModelAdminDecorator
 
 Controllers will generally do all its communicating of models through a decorator - they won't deal directly with a model instance.
 
-## Saing Many-To-Many relationships
+## Saving Many-To-Many relationships
 
-Add CheckboxesField to the respective Decorator's getField method. e.g.
+As the mapping between the two models is stored inside a join table, there's a bit more leg work to get them working within the admin module.
 
-```
-return [
-    new CheckboxesField([
-        'name' => 'categories_ids',
-        'options' => \Bozboz\Blog\Models\BlogCategory::all(),
-    ])
-];
-```
-
-Ensure the `name` of this field is within the model's `fillable` property.
-
-Now define an [accessor method](http://laravel.com/docs/eloquent#accessors-and-mutators) on the respective model which returns a list of IDs in the relationship. e.g.
+Define a `getSyncRelations` method on the respective Decorator (e.g. if you're setting up a relationship between BlogPost and BlogCategory and wish to handle the relationship when creating/editing existing BlogPosts, do the following inside the BlogPostDecorator class):
 
 ```
-public function getCategoriesIdsAttribute()
+public function getSyncRelations()
 {
-    return $this->categories()->lists('blog_category_id');
+    return ['categories'];
 }
 ```
 
-`blog_category_id` in this instance refers to the foreign key of the related model in the join table.
-
-Now finally add a mutator method. e.g.
+Add CheckboxesField to the Decorator subtype's `getFields` implementation:
 
 ```
-public function setCategoriesIdsAttribute($categories)
+public function getFields()
 {
-    $data = is_array($categories) ? $categories : [];
-    $this->categories()->sync($data);
+    return [
+        new CheckboxesField([
+         'name' => 'categories_relationship',
+         'label' => 'Categories',
+         'options' => \Bozboz\Blog\Models\BlogCategory::all(),
+        ])
+    ];
 }
 ```
+
+Ensure the `name` key maps to the name of the relationship (i.e. name of the method you defined on the model being decorated) suffixed with '_relationship'.
+
+
 
 # Editing Admin Theme
 

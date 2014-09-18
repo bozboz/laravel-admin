@@ -44,6 +44,7 @@ abstract class ModelAdminController extends BaseController
 		if ($validation->passesStore($input)) {
 			$modelInstance->fill($input);
 			$modelInstance->save();
+			$this->decorator->updateSyncRelations($modelInstance, $input);
 			$response = Redirect::action(get_class($this) . '@index');
 		} else {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
@@ -55,6 +56,7 @@ abstract class ModelAdminController extends BaseController
 	public function edit($id)
 	{
 		$instance = $this->decorator->getModel()->find($id);
+		$this->decorator->injectSyncRelations($instance);
 
 		return View::make($this->editView, array(
 			'model' => $instance,
@@ -76,6 +78,7 @@ abstract class ModelAdminController extends BaseController
 		if ($validation->passesEdit($input)) {
 			$modelInstance->fill($input);
 			$modelInstance->save();
+			$this->decorator->updateSyncRelations($modelInstance, $input);
 			$response = Redirect::action(get_class($this) . '@index');
 		} else {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
