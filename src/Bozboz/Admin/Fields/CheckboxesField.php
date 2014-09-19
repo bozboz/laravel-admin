@@ -7,7 +7,7 @@ class CheckboxesField extends Field
 {
 	public function getInput($params = array())
 	{
-		$html = Form::hidden($this->get('name'), '');
+		$html = sprintf('<input name="%1$s" type="hidden" id="%1$s">', $this->get('name'));
 
 		foreach($this->options as $option) {
 			$id = $this->get('name') . '[' . $option->id . ']';
