@@ -12,6 +12,14 @@ abstract class Base extends Eloquent
 	abstract public function getValidator();
 
 	/**
+	 * Label for the model instance
+	 */
+	public function getLabel()
+	{
+		return $this->name;
+	}
+
+	/**
 	 * Get the value of the primary key
 	 *
 	 * @return mixed
