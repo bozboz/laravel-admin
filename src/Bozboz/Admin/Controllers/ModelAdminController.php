@@ -61,7 +61,7 @@ abstract class ModelAdminController extends BaseController
 		return View::make($this->editView, array(
 			'model' => $instance,
 			'modelName' => class_basename(get_class($this->decorator->getModel())),
-			'fields' => $this->decorator->buildFields(),
+			'fields' => $this->decorator->buildFields($this->decorator->getModel()),
 			'action' => array(get_class($this) . '@update', $instance->id),
 			'listingAction' => get_class($this) . '@index',
 			'method' => 'PUT'

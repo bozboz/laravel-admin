@@ -22,7 +22,7 @@ class UserAdminDecorator extends ModelAdminDecorator
 		return $instance->getAttribute('name');
 	}
 
-	public function getFields()
+	public function getFields($instance)
 	{
 		return array(
 			new \Bozboz\Admin\Fields\TextField(array('name' => 'name')),

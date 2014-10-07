@@ -29,7 +29,7 @@ class PageAdminDecorator extends ModelAdminDecorator
 		return $instance->getAttribute('title');
 	}
 
-	public function getFields()
+	public function getFields($instance)
 	{
 		return array(
 			new TextField(array('name' => 'title')),

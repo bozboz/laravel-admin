@@ -16,7 +16,7 @@ abstract class ModelAdminDecorator
 
 	abstract public function getLabel($instance);
 
-	abstract public function getFields();
+	abstract public function getFields($instance);
 
 	public function getModel()
 	{
@@ -28,9 +28,9 @@ abstract class ModelAdminDecorator
 		return $this->model->all();
 	}
 
-	public function buildFields()
+	public function buildFields($instance)
 	{
-		$fieldsObj = new \Illuminate\Support\Fluent($this->getFields());
+		$fieldsObj = new \Illuminate\Support\Fluent($this->getFields($instance));
 		Event::fire('admin.fields.built', array($fieldsObj, $this->getModel()));
 
 		return $fieldsObj->toArray();
