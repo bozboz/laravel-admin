@@ -13,12 +13,12 @@ class CheckboxesField extends Field
 			$id = $this->get('name') . '[' . $option->id . ']';
 			$checkbox = Form::checkbox(
 				$this->get('name') . '[]',
-				$option->id,
+				$option->getId(),
 				null,
 				array('id' => $id)
 			);
 
-			$html .= '<label class="checkbox">' . $checkbox . ' ' . $option->name . '</label>';
+			$html .= '<label class="checkbox">' . $checkbox . ' ' . $option->getLabel() . '</label>';
 		}
 
 		return $html;
