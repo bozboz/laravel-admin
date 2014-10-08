@@ -28,10 +28,11 @@ abstract class ModelAdminDecorator
 		return $this->model->all();
 	}
 
-	public function buildFields($instance)
+	public function buildFields($instance = null)
 	{
+		$instance = $instance ?: $this->getModel();
 		$fieldsObj = new \Illuminate\Support\Fluent($this->getFields($instance));
-		Event::fire('admin.fields.built', array($fieldsObj, $this->getModel()));
+		Event::fire('admin.fields.built', array($fieldsObj, $instance));
 
 		return $fieldsObj->toArray();
 	}
