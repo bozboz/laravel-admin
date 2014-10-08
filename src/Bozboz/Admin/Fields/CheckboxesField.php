@@ -9,7 +9,7 @@ class CheckboxesField extends Field
 		$html = sprintf('<input name="%1$s" type="hidden" id="%1$s">', $this->get('name'));
 
 		foreach($this->options as $option) {
-			$id = $this->get('name') . '[' . $option->id . ']';
+			$id = $this->get('name') . '[' . $option->getKey() . ']';
 			$checkbox = Form::checkbox(
 				$this->get('name') . '[]',
 				$option->getKey(),
@@ -17,7 +17,7 @@ class CheckboxesField extends Field
 				array('id' => $id)
 			);
 
-			$html .= '<label class="checkbox">' . $checkbox . ' ' . $option->getLabel() . '</label>';
+			$html .= '<label class="checkbox">' . $checkbox . ' ' . $option->name . '</label>';
 		}
 
 		return $html;
