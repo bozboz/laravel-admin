@@ -72,7 +72,7 @@ abstract class ModelAdminController extends BaseController
 	{
 		$modelInstance = $this->decorator->getModel()->find($id);
 		$validation = $this->decorator->getModel()->getValidator();
-		$validation->updateUniques($modelInstance->getId());
+		$validation->updateUniques($modelInstance->getKey());
 		$input = Input::all();
 
 		if ($validation->passesEdit($input)) {

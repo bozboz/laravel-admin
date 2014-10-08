@@ -57,7 +57,7 @@ class UserValidatorTest extends TestCase
 	{
 		$userMock = $this->getUserMock($userId);
 		$validator = new UserValidator();
-		$validator->updateUniques($userMock->getId());
+		$validator->updateUniques($userMock->getKey());
 		$success = $validator->passesEdit($userData);
 
 		return $success;
@@ -66,7 +66,7 @@ class UserValidatorTest extends TestCase
 	private function getUserMock($id)
 	{
 		$mock = Mockery::mock('Model');
-		$mock->shouldReceive('getId')->once()->andReturn($id);
+		$mock->shouldReceive('getKey')->once()->andReturn($id);
 
 		return $mock;
 	}

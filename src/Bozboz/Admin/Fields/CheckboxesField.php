@@ -13,7 +13,7 @@ class CheckboxesField extends Field
 			$id = $this->get('name') . '[' . $option->id . ']';
 			$checkbox = Form::checkbox(
 				$this->get('name') . '[]',
-				$option->getId(),
+				$option->getKey(),
 				null,
 				array('id' => $id)
 			);

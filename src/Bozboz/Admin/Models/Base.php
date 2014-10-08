@@ -18,15 +18,4 @@ abstract class Base extends Eloquent
 	{
 		return $this->name;
 	}
-
-	/**
-	 * Get the value of the primary key
-	 *
-	 * @return mixed
-	 */
-	public function getId()
-	{
-		$primaryKey = $this->getKeyName();
-		return $this->$primaryKey;
-	}
 }
