@@ -1,7 +1,6 @@
 <?php namespace Bozboz\Admin\Fields;
 
 use Illuminate\Support\Facades\Form;
-use Illuminate\Database\Eloquent\Model;
 
 class CheckboxesField extends Field
 {
