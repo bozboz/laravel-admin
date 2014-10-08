@@ -82,7 +82,7 @@ Controllers will generally do all its communicating of models through a decorato
 
 As the mapping between the two models is stored inside a join table, there's a bit more leg work to get them working within the admin module.
 
-Define a `getSyncRelations` method on the respective Decorator (e.g. if you're setting up a relationship between BlogPost and BlogCategory and wish to handle the relationship when creating/editing existing BlogPosts, do the following inside the BlogPostDecorator class):
+Define a `getSyncRelations` method on the respective ModelAdminDecorator subtype (e.g. if you're setting up a relationship between BlogPost and BlogCategory and wish to handle the relationship when creating/editing existing BlogPosts, do the following inside the BlogPostDecorator class):
 
 ```
 public function getSyncRelations()
@@ -91,23 +91,26 @@ public function getSyncRelations()
 }
 ```
 
-Add CheckboxesField to the Decorator subtype's `getFields` implementation:
+Add BelongsToManyField instance to the ModelAdminDecorator subtype's `getFields` implementation:
 
 ```
 public function getFields()
 {
     return [
-        new CheckboxesField([
-         'name' => 'categories_relationship',
-         'label' => 'Categories',
-         'options' => \Bozboz\Blog\Models\BlogCategory::all(),
-        ])
+        new BelongsToManyField($this, $instance->foos(),
+            [
+                'name' => 'foos_relationship',
+            ],
+            function(\Illuminate\Database\Eloquent\Builder $builder)
+            {
+                return $builder->where('status', '=', 1);
+            }
+        )
     ];
 }
 ```
 
 Ensure the `name` key maps to the name of the relationship (i.e. name of the method you defined on the model being decorated) suffixed with '_relationship'.
-
 
 
 # Editing Admin Theme
