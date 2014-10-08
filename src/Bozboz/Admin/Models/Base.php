@@ -10,12 +10,4 @@ abstract class Base extends Eloquent
 	 * @return Validator
 	 */
 	abstract public function getValidator();
-
-	/**
-	 * Label for the model instance
-	 */
-	public function getLabel()
-	{
-		return $this->name;
-	}
 }
