@@ -97,10 +97,7 @@ Add BelongsToManyField instance to the ModelAdminDecorator subtype's `getFields`
 public function getFields()
 {
     return [
-        new BelongsToManyField($this, $instance->foos(),
-            [
-                'name' => 'foos_relationship',
-            ],
+        new BelongsToManyField($this, $instance->foos(), ['label' => 'Some label'],
             function(\Illuminate\Database\Eloquent\Builder $builder)
             {
                 return $builder->where('status', '=', 1);
@@ -109,9 +106,6 @@ public function getFields()
     ];
 }
 ```
-
-Ensure the `name` key maps to the name of the relationship (i.e. name of the method you defined on the model being decorated) suffixed with '_relationship'.
-
 
 # Editing Admin Theme
 

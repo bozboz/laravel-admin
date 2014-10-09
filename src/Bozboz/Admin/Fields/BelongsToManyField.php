@@ -36,13 +36,14 @@ class BelongsToManyField extends Field
 	 */
 	public function getInput($params = [])
 	{
-		$html = sprintf('<input name="%1$s" type="hidden" id="%1$s">', $this->get('name'));
+		$name = $this->relationship->getRelationName() . '_relationship';
+		$html = sprintf('<input name="%1$s" type="hidden" id="%1$s">', $name);
 
 		$relatedModels = $this->relationship->get();
 		foreach ($this->generateQueryBuilder()->get() as $model) {
-			$id = $this->get('name') . '[' . $model->getKey() . ']';
+			$id = $name . '[' . $model->getKey() . ']';
 			$checkbox = Form::checkbox(
-				$this->get('name') . '[]',
+				$name . '[]',
 				$model->getKey(),
 				$relatedModels->contains($model),
 				['id' => $id]
