@@ -60,10 +60,11 @@ class BelongsToManyField extends Field
 	 */
 	private function generateQueryBuilder()
 	{
-		$parentModel = $this->relationship->getParent();
-		$queryBuilder = $parentModel->query();
+		$relatedModel = $this->relationship->getRelated();
+		$queryBuilder = $relatedModel->query();
 
 		if ($this->shouldExcludeParent()) {
+			$parentModel = $this->relationship->getParent();
 			$queryBuilder = $queryBuilder->where($parentModel->getKeyName(), '!=', $parentModel->getKey());
 		}
 		if (!is_null($this->callback)) {
