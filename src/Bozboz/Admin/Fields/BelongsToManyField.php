@@ -68,8 +68,7 @@ class BelongsToManyField extends Field
 			$queryBuilder = $queryBuilder->where($parentModel->getKeyName(), '!=', $parentModel->getKey());
 		}
 		if (!is_null($this->callback)) {
-			$callback = $this->callback;
-			$queryBuilder = $callback($queryBuilder);
+			call_user_func($this->callback, $queryBuilder);
 		}
 
 		return $queryBuilder;
