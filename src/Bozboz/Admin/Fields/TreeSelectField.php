@@ -30,6 +30,8 @@ class TreeSelectField extends SelectField
 	}
 
 	/**
+	 * Return options for field
+	 *
 	 * @return array
 	 */
 	private function getOptions()
@@ -38,7 +40,9 @@ class TreeSelectField extends SelectField
 	}
 
 	/**
-	 * @param  array  $input
+	 * Turn a flat collection into a parent-keyed multi-dimensional array
+	 *
+	 * @param  Illuminate\Database\Eloquent\Collection  $input
 	 * @return array
 	 */
 	private function prepTreeStructure($input)
@@ -58,6 +62,9 @@ class TreeSelectField extends SelectField
 	}
 
 	/**
+	 * Turn multi-dimensional array into flat "indented" array
+	 * representing tree hiercharcy
+	 *
 	 * @param  int  $level
 	 * @param  int  $depth
 	 * @param  array
