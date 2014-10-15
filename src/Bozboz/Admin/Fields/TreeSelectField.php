@@ -32,7 +32,7 @@ class TreeSelectField extends SelectField
 	/**
 	 * @return array
 	 */
-	public function getOptions()
+	private function getOptions()
 	{
 		return $this->renderLevel(0);
 	}
