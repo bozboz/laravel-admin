@@ -56,15 +56,17 @@ class BelongsToManyField extends Field
 	}
 
 	/**
-	 * @returns Builder An Eloquent query builder
+	 * Construct a new query builder based on relationship
+	 *
+	 * @return Illuminate\Database\Query\Builder
 	 */
 	private function generateQueryBuilder()
 	{
+		$parentModel = $this->relationship->getParent();
 		$relatedModel = $this->relationship->getRelated();
 		$queryBuilder = $relatedModel->query();
 
-		if ($this->shouldExcludeParent()) {
-			$parentModel = $this->relationship->getParent();
+		if ($parentModel->getKey() && $this->shouldExcludeParent($parentModel)) {
 			$queryBuilder = $queryBuilder->where($parentModel->getKeyName(), '!=', $parentModel->getKey());
 		}
 		if (!is_null($this->callback)) {
@@ -75,16 +77,16 @@ class BelongsToManyField extends Field
 	}
 
 	/**
-	 * This becomes a factor when working with self-referencing relationships
-	 * (e.g. a case study being related to similar case studies).
+	 * Determine whether parent ID should be excluded from query (in case of
+	 * self-referencing relationships)
 	 *
+	 * @param  Illuminate\Database\Eloquent\Model  $parentModel
 	 * @return boolean
 	 */
-	private function shouldExcludeParent()
+	private function shouldExcludeParent($parentModel)
 	{
-		$parentModel = $this->relationship->getParent();
 		$relatedModel = $this->relationship->getRelated();
 
-		return $parentModel->exists() && get_class($parentModel) === get_class($relatedModel);
+		return get_class($parentModel) === get_class($relatedModel);
 	}
 }
