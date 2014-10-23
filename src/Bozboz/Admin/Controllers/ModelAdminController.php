@@ -27,7 +27,7 @@ abstract class ModelAdminController extends BaseController
 	{
 		return View::make($this->createView, array(
 			'model' => $this->decorator->getModel(),
-			'modelName' => class_basename(get_class($this->decorator->getModel())),
+			'modelName' => $this->decorator->getHeading(true),
 			'fields' => $this->decorator->buildFields(),
 			'method' => 'POST',
 			'action' => get_class($this) . '@store',
@@ -37,7 +37,7 @@ abstract class ModelAdminController extends BaseController
 
 	public function store()
 	{
-		$modelInstance = $this->decorator->getModel()->newInstance();
+		$modelInstance = $this->decorator->newModelInstance();
 		$validation = $modelInstance->getValidator();
 		$input = Input::all();
 
@@ -55,12 +55,12 @@ abstract class ModelAdminController extends BaseController
 
 	public function edit($id)
 	{
-		$instance = $this->decorator->getModel()->find($id);
+		$instance = $this->decorator->findInstance($id);
 		$this->decorator->injectSyncRelations($instance);
 
 		return View::make($this->editView, array(
 			'model' => $instance,
-			'modelName' => class_basename(get_class($this->decorator->getModel())),
+			'modelName' => $this->decorator->getHeading(),
 			'fields' => $this->decorator->buildFields($instance),
 			'action' => array(get_class($this) . '@update', $instance->id),
 			'listingAction' => get_class($this) . '@index',
@@ -70,8 +70,8 @@ abstract class ModelAdminController extends BaseController
 
 	public function update($id)
 	{
-		$modelInstance = $this->decorator->getModel()->find($id);
-		$validation = $this->decorator->getModel()->getValidator();
+		$modelInstance = $this->decorator->findInstance($id);
+		$validation = $modelInstance->getValidator();
 		$validation->updateUniques($modelInstance->getKey());
 		$input = Input::all();
 
@@ -89,8 +89,7 @@ abstract class ModelAdminController extends BaseController
 
 	public function destroy($id)
 	{
-		$instance = $this->decorator->getModel()->find($id);
-		$instance->delete();
+		$this->decorator->findInstance($id)->delete();
 
 		return Redirect::action(get_class($this) . '@index');
 	}

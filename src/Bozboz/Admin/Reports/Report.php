@@ -46,7 +46,7 @@ class Report
 		$params['sortableClass'] = $this->decorator->getModel() instanceof Sortable ? ' sortable' : '';
 		$params['report'] = $this;
 		$params['fullModelName'] = get_class($this->decorator->getModel());
-		$params['modelName'] = class_basename($params['fullModelName']);
+		$params['modelName'] = $this->decorator->getHeading(true);
 		return View::make($this->view, $params);
 	}
 }
