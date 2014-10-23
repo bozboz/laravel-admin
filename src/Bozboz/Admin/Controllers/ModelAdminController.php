@@ -27,7 +27,7 @@ abstract class ModelAdminController extends BaseController
 	{
 		return View::make($this->createView, array(
 			'model' => $this->decorator->getModel(),
-			'modelName' => $this->decorator->getHeading(true),
+			'modelName' => $this->decorator->getHeading(),
 			'fields' => $this->decorator->buildFields(),
 			'method' => 'POST',
 			'action' => get_class($this) . '@store',
