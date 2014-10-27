@@ -2,10 +2,18 @@
 
 use Bozboz\Admin\Services\Validators\PageValidator;
 use Bozboz\Admin\Models\Sortable;
+use Bozboz\Admin\Traits\DynamicSlugTrait;
 
 class Page extends Base implements Sortable
 {
+	use DynamicSlugTrait;
+
 	protected $guarded = array('id', 'media', 'files');
+
+	protected function getSlugSourceField()
+	{
+		return 'title';
+	}
 
 	public function getValidator()
 	{

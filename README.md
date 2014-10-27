@@ -107,6 +107,10 @@ public function getFields()
 }
 ```
 
+# Traits
+
+- DynamicSlugTrait: Automatically generates a value for a model's slug. `use` the trait on the respective model and define a `getSlugSourceField` implementation which returns the name of the property from which to derive the slug. 
+
 # Editing Admin Theme
 
 The admin theme uses *gulp* and *bower* for download and compiling assets for the theme. To be able to compile the assets you need to run:
