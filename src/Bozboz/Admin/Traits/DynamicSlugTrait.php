@@ -24,11 +24,54 @@ trait DynamicSlugTrait
 	public function save(array $options = [])
 	{
 		if (is_null($this->created_at)) {
-			$slugField = $this->getSlugField();
-			$slugSourceField = $this->getSlugSourceField();
-			$this->$slugField = Str::slug($this->$slugSourceField);
+			$this->generateSlug();
 		}
 
 		parent::save($options);
+	}
+
+	private function generateSlug()
+	{
+		$slugField = $this->getSlugField();
+		$slugSourceField = $this->getSlugSourceField();
+		$this->$slugField = Str::slug($this->$slugSourceField);
+
+		$unique = false;
+		while (!$unique) {
+			try {
+				$model = self::where($slugField, '=', $this->$slugField)->firstOrFail();
+				$this->$slugField = $this->incrementId($this->$slugField);
+			} catch (Exception $e) {
+				$unique = true;
+			}
+		}
+	}
+
+	/**
+	 * Given a string, append a number. If a number is already appended,
+	 * increment it.
+	 */
+	private function incrementId($string)
+	{
+		$lastChar = substr($string, -1);
+		if (is_numeric($lastChar)) {
+			$foundAll = false;
+			$i = strlen($string) - 1;
+			while (!$foundAll) {
+				if (is_numeric($string[$i])) {
+					$i--;
+				} else {
+					$foundAll = true;
+				}
+			}
+			$number = intval(substr($string, $i + 1, strlen($string)));
+			$number++;
+			$string = substr($string, 0, $i + 1);
+			$string .= $number;
+		} else {
+			$string .= '-1';
+		}
+
+		return $string;
 	}
 }
