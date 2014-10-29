@@ -6,8 +6,14 @@ use Illuminate\Support\ViewErrorBag;
 
 abstract class Field extends Fluent
 {
-	public function __construct(array $attributes)
+	public function __construct($attributesOrName, $attributes = array())
 	{
+		if (!is_array($attributesOrName)) {
+			$attributes['name'] = $attributesOrName;
+		} else {
+			$attributes = $attributesOrName;
+		}
+
 		foreach ($attributes as $key => $attribute) {
 			$this->attributes[$key] = $attribute;
 		}
