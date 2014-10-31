@@ -23,14 +23,12 @@ trait DynamicSlugTrait
 	 */
 	public function save(array $options = [])
 	{
-		if (is_null($this->created_at)) {
-			$this->generateSlug();
-		}
+		$this->ensureUniqueSlug();
 
 		parent::save($options);
 	}
 
-	private function generateSlug()
+	private function ensureUniqueSlug()
 	{
 		$slugField = $this->getSlugField();
 		$slugSourceField = $this->getSlugSourceField();
