@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Decorators;
 
-use Event;
+use Event, Str;
 use Bozboz\Admin\Models\Base;
 
 abstract class ModelAdminDecorator
@@ -23,6 +23,12 @@ abstract class ModelAdminDecorator
 		return $this->model;
 	}
 
+	public function getHeading($plural = false)
+	{
+		$name = class_basename(get_class($this->model));
+		return $plural ? Str::plural($name) : $name;
+	}
+
 	public function getListingModels()
 	{
 		return $this->model->all();
@@ -38,9 +44,28 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
-	 * Get the names of the many-to-many relationships defined on the model that need to be processed.
+	 * @param  array  $attributes
+	 * @return Bozboz\Admin\Models\Base
+	 */
+	public function newModelInstance($attributes = array())
+	{
+		return $this->model->newInstance($attributes);
+	}
+
+	/**
+	 * @param  int  $id
+	 * @return Bozboz\Admin\Models\Base
+	 */
+	public function findInstance($id)
+	{
+		return $this->model->find($id);
+	}
+
+	/**
+	 * Get the names of the many-to-many relationships defined on the model
+	 * that need to be processed.
 	 *
-	 * @return array Names of many-to-many relationships that need to be synced
+	 * @return array
 	 */
 	public function getSyncRelations()
 	{
@@ -48,7 +73,10 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
-	 * Sets the related IDs as an attribute on the $instance.
+	 * Set the related IDs as an attribute on the $instance.
+	 *
+	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @return void
 	 */
 	public function injectSyncRelations(Base $instance)
 	{
@@ -60,6 +88,10 @@ abstract class ModelAdminDecorator
 
 	/**
 	 * Update the many-to-many relationship mappings after a form submission.
+	 *
+	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @param  array  $formInput
+	 * @return void
 	 */
 	public function updateSyncRelations(Base $instance, $formInput)
 	{

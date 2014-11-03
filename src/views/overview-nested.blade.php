@@ -3,7 +3,7 @@
 @section('main')
 @parent
 	@include('admin::partials.new')
-	<h1>{{ Str::plural(class_basename($modelName)) }}</h1>
+	<h1>{{ $modelName }}</h1>
 
 	@include('admin::partials.sort-alert')
 
