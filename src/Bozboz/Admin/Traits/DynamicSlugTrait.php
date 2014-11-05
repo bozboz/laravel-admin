@@ -1,7 +1,6 @@
 <?php namespace Bozboz\Admin\Traits;
 
 use Str;
-use Input;
 use Exception;
 
 trait DynamicSlugTrait
