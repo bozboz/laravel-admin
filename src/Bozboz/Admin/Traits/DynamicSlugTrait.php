@@ -1,6 +1,7 @@
 <?php namespace Bozboz\Admin\Traits;
 
 use Str;
+use Input;
 use Exception;
 
 trait DynamicSlugTrait
@@ -23,23 +24,44 @@ trait DynamicSlugTrait
 	 */
 	public function save(array $options = [])
 	{
-		if (is_null($this->created_at)) {
-			$this->generateSlug();
+		$id = $this->{$this->primaryKey};
+		$slugField = $this->getSlugField();
+		$modelSlugValue = $this->getOriginal($slugField);
+		$submittedSlugValue = $this->getAttribute($slugField);
+		$isUpdatedSlugValue = !empty($id) && ($modelSlugValue !== $submittedSlugValue);
+
+		if (empty($id) || $isUpdatedSlugValue) {
+			if (empty($submittedSlugValue)) {
+				$source = $this->{$this->getSlugSourceField()};
+			} else {
+				$source = $submittedSlugValue;
+			}
+
+			$this->generateSlug($source);
 		}
+
 
 		parent::save($options);
 	}
 
-	private function generateSlug()
+	private function generateSlug($source)
 	{
 		$slugField = $this->getSlugField();
-		$slugSourceField = $this->getSlugSourceField();
-		$this->$slugField = Str::slug($this->$slugSourceField);
+		$this->$slugField = Str::slug($source);
+
+		if (empty($this->$slugField)) { //Homepage edgecase
+			$this->$slugField = '/';
+		}
 
 		$unique = false;
 		while (!$unique) {
 			try {
-				$model = self::where($slugField, '=', $this->$slugField)->firstOrFail();
+				$builder = self::where($slugField, '=', $this->$slugField);
+				$id = $this->{$this->primaryKey};
+				if (!empty($id)) {
+					$builder->where($this->primaryKey, '!=', $id);
+				}
+				$model = $builder->firstOrFail();
 				$this->$slugField = $this->incrementId($this->$slugField);
 			} catch (Exception $e) {
 				$unique = true;
