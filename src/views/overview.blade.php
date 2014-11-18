@@ -40,6 +40,7 @@
 			</li>
 		@endforeach
 		</ol>
+		{{ $report->getFooter() }}
 	@else
 		<p>Nothing here yet. Why not add something?</p>
 	@endif

@@ -41,6 +41,11 @@ class Report
 		return $rows;
 	}
 
+	public function getFooter()
+	{
+		return method_exists($this->rows, 'links') ? $this->rows->links() : null;
+	}
+
 	public function render(array $params)
 	{
 		$params['sortableClass'] = $this->decorator->getModel() instanceof Sortable ? ' sortable' : '';
