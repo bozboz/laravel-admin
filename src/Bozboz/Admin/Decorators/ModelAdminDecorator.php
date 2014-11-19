@@ -2,6 +2,7 @@
 
 use Event, Str;
 use Bozboz\Admin\Models\Base;
+use Illuminate\Database\Eloquent\Builder;
 
 abstract class ModelAdminDecorator
 {
@@ -29,9 +30,21 @@ abstract class ModelAdminDecorator
 		return $plural ? Str::plural($name) : $name;
 	}
 
+	protected function filterListing(Builder $builder)
+	{
+		foreach($this->getListingFilters() as $listingFilter) {
+			$listingFilter->filter($builder);
+		}
+	}
+
 	public function getListingModels()
 	{
 		return $this->model->all();
+	}
+
+	public function getListingFilters()
+	{
+		return [];
 	}
 
 	public function buildFields($instance = null)

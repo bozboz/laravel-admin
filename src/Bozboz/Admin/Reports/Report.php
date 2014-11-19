@@ -41,6 +41,13 @@ class Report
 		return $rows;
 	}
 
+	public function getHeader()
+	{
+		$filters = $this->decorator->getListingFilters();
+
+		return View::make('admin::partials.listing-filters')->withInput(\Input::all())->withFilters($filters);
+	}
+
 	public function getFooter()
 	{
 		return method_exists($this->rows, 'links') ? $this->rows->links() : null;
