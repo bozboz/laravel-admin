@@ -1,34 +1,79 @@
 <?php namespace Bozboz\Admin\Reports;
 
-use Closure;
+use Closure, InvalidArgumentException;
+
 use Illuminate\Support\Facades\Form;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListingFilter
 {
-	public function __construct($name, $options, Closure $callback = null)
+	/**
+	 * @param  string  $name
+	 * @param  mixed  $options
+	 * @param  string|Closure  $callback
+	 */
+	public function __construct($name, $options, $callback = null)
 	{
 		$this->name = $name;
 		$this->options = $options;
-		$this->callback = $callback ?: $this->defaultFilter();
+		$this->callback = $this->parseCallback($callback);
 	}
 
-	public function filter($builder)
+	/**
+	 * Run the closure on the provided $builder, passing in input
+	 *
+	 * @param  Illuminate\Database\Eloquent\Builder  $builder
+	 * @return void
+	 */
+	public function filter(Builder $builder)
 	{
 		call_user_func($this->callback, $builder, Input::get($this->name));
 	}
 
-	private function defaultFilter()
+	/**
+	 * Parse provided $callback and return a Closure
+	 * 
+	 * @param  mixed  $callback
+	 * @throws InvalidArgumentException
+	 * @return Closure
+	 */
+	private function parseCallback($callback)
 	{
-		$name = $this->name;
+		if (is_string($callback)) {
+			return $this->defaultFilter($callback);
+		} elseif (is_null($callback)) {
+			return $this->defaultFilter($this->name);
+		} elseif (is_callable($callback)) {
+			return $callback;
+		}
 
-		return function($builder, $value) use ($name) {
+		throw new InvalidArgumentException(
+			'$callback should be a string, callable or ommitted entirely'
+		);
+	}
+
+	/**
+	 * Get a default closure which filters the builder on the provided $field
+	 *
+	 * @param  string  $field
+	 * @return Closure
+	 */
+	private function defaultFilter($field)
+	{
+		return function($builder, $value) use ($field)
+		{
 			if ($value) {
-				$builder->where($name, $value);
+				$builder->where($field, $value);
 			}
 		};
 	}
 
+	/**
+	 * Render the select box filter
+	 *
+	 * @return string
+	 */
 	public function __toString()
 	{
 		return 
