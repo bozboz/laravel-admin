@@ -1,6 +1,7 @@
 <?php namespace Bozboz\Admin\Controllers;
 
 use Redirect, Auth, View, Input;
+use Bozboz\Admin\Models\User;
 
 class AdminController extends \BaseController
 {
@@ -17,7 +18,8 @@ class AdminController extends \BaseController
 	public function postLogin()
 	{
 		$input = Input::only('email', 'password');
-		if(Auth::attempt($input)) {
+		$user = User::where('email', '=', $input['email'])->first();
+		if (!empty($user) && $user->is_admin && Auth::attempt($input)) {
 			return Redirect::intended('admin');
 		} else {
 			return Redirect::back()->withInput()->with('error', true);
