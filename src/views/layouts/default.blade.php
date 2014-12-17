@@ -7,6 +7,11 @@
 
 	<title>@yield('page_title', 'CMS')</title>
 
+	@section('header_scripts')
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	@show
+
 	@section('styles')
 	{{ HTML::style('/packages/bozboz/admin/css/admin.min.css') }}
 	{{ HTML::style('/packages/bozboz/media-library/css/media-library.css') }}

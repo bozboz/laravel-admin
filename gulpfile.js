@@ -31,15 +31,12 @@ var vendorFiles = {
 		basePaths.bower + 'summernote/dist/summernote.css'
 	],
 	scripts: [
-
-		basePaths.bower + 'jquery/dist/jquery.min.js',
 		basePaths.bower + 'bootstrap/dist/js/bootstrap.min.js',
 		basePaths.bower + 'summernote/dist/summernote.min.js',
 		basePaths.bower + 'jquery-sortable/source/js/jquery-sortable-min.js',
 		basePaths.bower + 'imagesloaded/imagesloaded.pkgd.min.js',
 		basePaths.bower + 'masonry/dist/masonry.pkgd.min.js',
 		basePaths.bower + 'handlebars/handlebars.min.js'
-
 	]
 };
 
