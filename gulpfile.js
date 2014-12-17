@@ -53,7 +53,6 @@ var gulp = require('gulp');
 
 var es = require('event-stream');
 var gutil = require('gulp-util');
-var shell = require('gulp-shell');
 
 var plugins = require("gulp-load-plugins")({
 	pattern: ['gulp-*', 'gulp.*'],
@@ -69,12 +68,6 @@ if(gutil.env.dev === true) {
 	sassStyle = 'expanded';
 	sourceMap = true;
 	isProduction = false;
-}
-
-var publishAssets = function() {
-	shell.task([
-		'cd ../../../ && php artisan asset:publish bozboz/admin'
-	])
 }
 
 var changeEvent = function(evt) {
@@ -101,7 +94,7 @@ gulp.task('compile-css', function(){
 		.pipe(plugins.size())
 		.pipe(gulp.dest(paths.styles.dest));
 });
-gulp.task('css', ['compile-css'], publishAssets());
+gulp.task('css', ['compile-css']);
 
 gulp.task('compile-scripts', function(){
 
@@ -113,7 +106,7 @@ gulp.task('compile-scripts', function(){
 		.pipe(gulp.dest(paths.scripts.dest));
 
 });
-gulp.task('scripts', ['compile-scripts'], publishAssets());
+gulp.task('scripts', ['compile-scripts']);
 
 gulp.task('watch', ['css', 'scripts'], function(){
 	gulp.watch(appFiles.styles, ['css']).on('change', function(evt) {
