@@ -25,3 +25,8 @@
 {{ Form::close() }}
 
 @stop
+
+@section('scripts')
+	@parent
+	{{ $javascript }}
+@stop

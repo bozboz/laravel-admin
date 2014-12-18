@@ -28,7 +28,11 @@ var appFiles = {
 
 var vendorFiles = {
 	styles: [
-		basePaths.bower + 'summernote/dist/summernote.css'
+		basePaths.bower + 'summernote/dist/summernote.css',
+		basePaths.bower + 'jquery-ui/themes/base/all.css',
+		basePaths.bower + 'jquery-ui/themes/base/datepicker.css',
+		basePaths.bower + 'jquery-ui/themes/base/slider.css',
+		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css'
 	],
 	scripts: [
 		basePaths.bower + 'bootstrap/dist/js/bootstrap.min.js',
@@ -36,7 +40,10 @@ var vendorFiles = {
 		basePaths.bower + 'jquery-sortable/source/js/jquery-sortable-min.js',
 		basePaths.bower + 'imagesloaded/imagesloaded.pkgd.min.js',
 		basePaths.bower + 'masonry/dist/masonry.pkgd.min.js',
-		basePaths.bower + 'handlebars/handlebars.min.js'
+		basePaths.bower + 'handlebars/handlebars.min.js',
+		basePaths.bower + 'jquery-ui/jquery-ui.min.js',
+		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js',
+		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js'
 	]
 };
 
