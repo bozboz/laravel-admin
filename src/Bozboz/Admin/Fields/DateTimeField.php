@@ -13,8 +13,8 @@ class DateTimeField extends Field
 	public function getInput()
 	{
 		return <<<HTML
-			<input type="text" name="$this->name" id="$this->name">
-			<input type="hidden" name="$this->altName" id="$this->altName">
+			<input type="text" id="$this->altName">
+			<input type="hidden" name="$this->name" id="$this->name">
 HTML;
 	}
 
@@ -22,13 +22,15 @@ HTML;
 	{
 		return <<<JAVASCRIPT
 			jQuery(function($) {
-				$('#$this->name').datetimepicker({
-					altField: '#$this->altName',
-					altFieldTimeOnly: false,
+				$('#$this->altName').datetimepicker({
 					showSecond: false,
 					stepMinute: 5,
-					altFormat: "yy-mm-dd",
-					altTimeFormat: "HH:mm:ss",
+					dateFormat: 'dd/mm/yy',
+					minDate: new Date(),
+					altField: '#$this->name',
+					altFieldTimeOnly: false,
+					altFormat: 'yy-mm-dd',
+					altTimeFormat: 'HH:mm:ss',
 				});
 			});
 JAVASCRIPT;
