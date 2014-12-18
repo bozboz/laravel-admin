@@ -2,16 +2,19 @@
 
 class DateTimeField extends Field
 {
-	/* public function getInput() */
-	/* { */
-	/* 	return '<input type="text" name="datetime_picker" id="datetime_picker">'; */
-	/* } */
+	private $altName;
+
+	public function __construct($attributes)
+	{
+		parent::__construct($attributes);
+		$this->altName = $this->name . '_alt';
+	}
 
 	public function getInput()
 	{
 		return <<<HTML
-			<input type="text" name="datetime_picker" id="datetime_picker">
-			<input type="hidden" name="datetime_picker_alt" id="datetime_picker_alt">
+			<input type="text" name="$this->name" id="$this->name">
+			<input type="hidden" name="$this->altName" id="$this->altName">
 HTML;
 	}
 
@@ -19,8 +22,8 @@ HTML;
 	{
 		return <<<JAVASCRIPT
 			jQuery(function($) {
-				$('#datetime_picker').datetimepicker({
-					altField: '#datetime_picker_alt',
+				$('#$this->name').datetimepicker({
+					altField: '#$this->altName',
 					altFieldTimeOnly: false,
 					showSecond: false,
 					stepMinute: 5,
