@@ -103,8 +103,9 @@ abstract class ModelAdminController extends BaseController
 	{
 		$javascript = '';
 		foreach ($fields as $field) {
-			if (!is_null($field)) {
-				$javascript .= '<script type="text/javascript">' . $field->getJavascript() . '</script>' . PHP_EOL;
+			$fieldJavascript = $field->getJavascript();
+			if (!is_null($fieldJavascript)) {
+				$javascript .= '<script type="text/javascript">' . $fieldJavascript . '</script>' . PHP_EOL;
 			}
 		}
 
