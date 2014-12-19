@@ -1,5 +1,7 @@
 <?php namespace Bozboz\Admin\Fields;
 
+use Form;
+
 class DateTimeField extends Field
 {
 	private $altName;
@@ -12,10 +14,7 @@ class DateTimeField extends Field
 
 	public function getInput()
 	{
-		return <<<HTML
-			<input type="text" id="$this->altName">
-			<input type="hidden" name="$this->name" id="$this->name">
-HTML;
+		return sprintf('<input type="text" id="%s">%s', $this->altName, Form::hidden($this->name));
 	}
 
 	public function getJavascript()
@@ -32,6 +31,10 @@ HTML;
 					altFormat: 'yy-mm-dd',
 					altTimeFormat: 'HH:mm:ss',
 				});
+
+				if ($('#$this->name').val() !== '') {
+					$('#$this->altName').datetimepicker('setDate', new Date($('#$this->name').val()));
+				}
 			});
 JAVASCRIPT;
 	}
