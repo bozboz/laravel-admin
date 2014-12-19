@@ -17,6 +17,11 @@ class UserAdminDecorator extends ModelAdminDecorator
 		);
 	}
 
+	public function getListingModels()
+	{
+		return $this->model->where('is_admin', true)->get();
+	}
+
 	public function getLabel($instance)
 	{
 		return $instance->getAttribute('name');
