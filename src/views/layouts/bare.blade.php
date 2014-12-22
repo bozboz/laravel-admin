@@ -9,6 +9,7 @@
 
 	@section('styles')
 	{{ HTML::style('packages/bozboz/admin/css/admin.min.css') }}
+	@include('admin::partials.custom-styles')
 	@show
 </head>
 

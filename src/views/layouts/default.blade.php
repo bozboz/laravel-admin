@@ -15,6 +15,7 @@
 	@section('styles')
 	{{ HTML::style('/packages/bozboz/admin/css/admin.min.css') }}
 	{{ HTML::style('/packages/bozboz/media-library/css/media-library.css') }}
+	@include('admin::partials.custom-styles')
 	@show
 </head>
 

@@ -8,7 +8,9 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">CMS</a>
+			<a class="navbar-brand" href="#">
+				@include('admin::partials.nav-logo')
+			</a>
 		</div>
 
 		<div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
