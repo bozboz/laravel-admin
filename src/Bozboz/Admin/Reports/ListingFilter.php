@@ -78,6 +78,6 @@ class ListingFilter
 	{
 		return 
 			Form::label($this->name) .
-			Form::select($this->name, $this->options, null, ['onChange' => 'this.form.submit()']);
+			Form::select($this->name, $this->options, null, ['onChange' => 'this.form.submit()', 'class' => 'form-control']);
 	}
 }

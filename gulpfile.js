@@ -32,7 +32,9 @@ var vendorFiles = {
 		basePaths.bower + 'jquery-ui/themes/base/all.css',
 		basePaths.bower + 'jquery-ui/themes/base/datepicker.css',
 		basePaths.bower + 'jquery-ui/themes/base/slider.css',
-		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css'
+		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css',
+		basePaths.bower + 'select2/select2.css',
+		basePaths.bower + 'select2/select2-bootstrap.css',
 	],
 	scripts: [
 		basePaths.bower + 'bootstrap/dist/js/bootstrap.min.js',
@@ -43,7 +45,8 @@ var vendorFiles = {
 		basePaths.bower + 'handlebars/handlebars.min.js',
 		basePaths.bower + 'jquery-ui/jquery-ui.min.js',
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js',
-		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js'
+		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js',
+		basePaths.bower + 'select2/select2.min.js',
 	]
 };
 
