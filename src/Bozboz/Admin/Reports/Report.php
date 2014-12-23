@@ -50,7 +50,7 @@ class Report
 
 	public function getFooter()
 	{
-		return method_exists($this->rows, 'links') ? $this->rows->links() : null;
+		return method_exists($this->rows, 'links') ? $this->rows->appends(\Input::except('page'))->links() : null;
 	}
 
 	public function render(array $params)
