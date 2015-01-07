@@ -40,9 +40,9 @@ abstract class ModelAdminController extends BaseController
 
 	public function store()
 	{
-		$modelInstance = $this->decorator->newModelInstance();
-		$validation = $modelInstance->getValidator();
 		$input = Input::all();
+		$modelInstance = $this->decorator->newModelInstance($input);
+		$validation = $modelInstance->getValidator();
 
 		if ($validation->passesStore($input)) {
 			$modelInstance->fill($input);
