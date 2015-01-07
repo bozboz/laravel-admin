@@ -24,16 +24,16 @@ class UserAdminDecorator extends ModelAdminDecorator
 
 	public function getLabel($instance)
 	{
-		return $instance->getAttribute('name');
+		return $instance->first_name . ' ' . $instance->last_name;
 	}
 
 	public function getFields($instance)
 	{
 		return array(
-			new \Bozboz\Admin\Fields\TextField(array('name' => 'name')),
-			new \Bozboz\Admin\Fields\TextField(array('name' => 'username')),
-			new \Bozboz\Admin\Fields\EmailField(array('name' => 'email')),
-			new \Bozboz\Admin\Fields\PasswordField(array('name' => 'password'))
+			new \Bozboz\Admin\Fields\TextField('first_name'),
+			new \Bozboz\Admin\Fields\TextField('last_name'),
+			new \Bozboz\Admin\Fields\EmailField('email'),
+			new \Bozboz\Admin\Fields\PasswordField('password')
 		);
 	}
 }
