@@ -4,13 +4,6 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Hash;
 use Bozboz\Admin\Services\Validators\UserValidator;
-/*
-
-##########
-
-Add Migration to remove "username" field - Sam (2014-02-19)
-
-##########*/
 
 class User extends Base implements UserInterface, RemindableInterface
 {
