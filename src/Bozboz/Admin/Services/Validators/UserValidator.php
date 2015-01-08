@@ -3,9 +3,9 @@
 class UserValidator extends Validator
 {
 	protected $rules = array(
-		'username' => 'required|unique:users',
 		'email' => 'required|email|unique:users',
-		'name' => 'required'
+		'first_name' => 'required',
+		'last_name' => 'required'
 	);
 
 	protected $storeRules = array(
