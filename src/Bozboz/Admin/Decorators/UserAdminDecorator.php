@@ -29,11 +29,12 @@ class UserAdminDecorator extends ModelAdminDecorator
 
 	public function getFields($instance)
 	{
-		return array(
+		return array_filter([
 			new \Bozboz\Admin\Fields\TextField('first_name'),
 			new \Bozboz\Admin\Fields\TextField('last_name'),
 			new \Bozboz\Admin\Fields\EmailField('email'),
-			new \Bozboz\Admin\Fields\PasswordField('password')
-		);
+			$instance->exists ? null : new \Bozboz\Admin\Fields\PasswordField('password'),
+			new \Bozboz\Admin\Fields\HiddenField('is_admin', true)
+		]);
 	}
 }
