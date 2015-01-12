@@ -19,7 +19,9 @@ class Sorter
 
 		foreach($list as $item) {
 			$instance = $this->model->find($item['id']);
-			$instance->parent_id = $parent;
+			if (array_key_exists('parent_id', $instance->getAttributes())) {
+				$instance->parent_id = $parent;
+			}
 			$instance->$sortKey = $this->sortIterator;
 			$instance->save();
 			$this->sortIterator++;
