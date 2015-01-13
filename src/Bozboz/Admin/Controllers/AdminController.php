@@ -18,8 +18,9 @@ class AdminController extends \BaseController
 	public function postLogin()
 	{
 		$input = Input::only('email', 'password');
-		$user = User::where('email', '=', $input['email'])->first();
-		if (!empty($user) && $user->is_admin && Auth::attempt($input)) {
+		$input['is_admin'] = true;
+
+		if (Auth::attempt($input)) {
 			return Redirect::intended('admin');
 		} else {
 			return Redirect::back()->withInput()->with('error', true);
