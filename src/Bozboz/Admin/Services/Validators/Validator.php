@@ -22,12 +22,15 @@ abstract class Validator
 		return $this->errors;
 	}
 
+	/**
+	 * Transform "unique:{table}" into "unique:{table},{attribute},{id}"
+	 */
 	public function updateUniques($id)
 	{
 		foreach (array_merge($this->rules, $this->editRules) as $attribute => $validationRules) {
 			if (strpos($validationRules, 'unique') !== false) {
 				$regexReplacement = 'unique:$1,' . $attribute . ',' . $id;
-				$this->editRules[$attribute] = preg_replace('/unique:(.*)/', $regexReplacement, $validationRules);
+				$this->editRules[$attribute] = preg_replace('/unique:(\w++)(?=\b)/', $regexReplacement, $validationRules);
 			}
 		}
 	}

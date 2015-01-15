@@ -28,18 +28,25 @@ var appFiles = {
 
 var vendorFiles = {
 	styles: [
-		basePaths.bower + 'summernote/dist/summernote.css'
+		basePaths.bower + 'summernote/dist/summernote.css',
+		basePaths.bower + 'jquery-ui/themes/base/all.css',
+		basePaths.bower + 'jquery-ui/themes/base/datepicker.css',
+		basePaths.bower + 'jquery-ui/themes/base/slider.css',
+		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css',
+		basePaths.bower + 'select2/select2.css',
+		basePaths.bower + 'select2/select2-bootstrap.css',
 	],
 	scripts: [
-
-		basePaths.bower + 'jquery/dist/jquery.min.js',
 		basePaths.bower + 'bootstrap/dist/js/bootstrap.min.js',
 		basePaths.bower + 'summernote/dist/summernote.min.js',
 		basePaths.bower + 'jquery-sortable/source/js/jquery-sortable-min.js',
 		basePaths.bower + 'imagesloaded/imagesloaded.pkgd.min.js',
 		basePaths.bower + 'masonry/dist/masonry.pkgd.min.js',
-		basePaths.bower + 'handlebars/handlebars.min.js'
-
+		basePaths.bower + 'handlebars/handlebars.min.js',
+		basePaths.bower + 'jquery-ui/jquery-ui.min.js',
+		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js',
+		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js',
+		basePaths.bower + 'select2/select2.min.js',
 	]
 };
 
@@ -53,7 +60,6 @@ var gulp = require('gulp');
 
 var es = require('event-stream');
 var gutil = require('gulp-util');
-var shell = require('gulp-shell');
 
 var plugins = require("gulp-load-plugins")({
 	pattern: ['gulp-*', 'gulp.*'],
@@ -69,12 +75,6 @@ if(gutil.env.dev === true) {
 	sassStyle = 'expanded';
 	sourceMap = true;
 	isProduction = false;
-}
-
-var publishAssets = function() {
-	shell.task([
-		'cd ../../../ && php artisan asset:publish bozboz/admin'
-	])
 }
 
 var changeEvent = function(evt) {
@@ -101,7 +101,7 @@ gulp.task('compile-css', function(){
 		.pipe(plugins.size())
 		.pipe(gulp.dest(paths.styles.dest));
 });
-gulp.task('css', ['compile-css'], publishAssets());
+gulp.task('css', ['compile-css']);
 
 gulp.task('compile-scripts', function(){
 
@@ -113,7 +113,7 @@ gulp.task('compile-scripts', function(){
 		.pipe(gulp.dest(paths.scripts.dest));
 
 });
-gulp.task('scripts', ['compile-scripts'], publishAssets());
+gulp.task('scripts', ['compile-scripts']);
 
 gulp.task('watch', ['css', 'scripts'], function(){
 	gulp.watch(appFiles.styles, ['css']).on('change', function(evt) {

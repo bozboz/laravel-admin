@@ -3,7 +3,7 @@
 @section('page_title', 'Admin Login')
 
 @section('main')
-	<img class="client-logo" src="/packages/bozboz/admin/images/logo.png">
+	@include('admin::partials.login-logo')
 	{{ Form::open(array('url' => 'admin/login', 'class' => 'form-signin')) }}
 		<div class="login-container">
 		<div class="page-header">

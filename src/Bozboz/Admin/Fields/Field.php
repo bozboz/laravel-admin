@@ -36,4 +36,9 @@ abstract class Field extends Fluent
 			return '<p><strong>' . $errors->first($this->get('name')) . '</strong></p>';
 		}
 	}
+
+	public function getJavascript()
+	{
+		return null;
+	}
 }

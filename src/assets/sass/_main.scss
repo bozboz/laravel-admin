@@ -168,11 +168,25 @@
 label {
 	display: block;
 }
+.form-inline {
+	label {
+		display: inline-block;
+		&:after {
+			content: ": ";
+			display: inline-block;
+			padding-right: 5px;
+		}
+	}
+	
+}
 
 input[type="text"],
 input[type="email"],
 input[type="password"],
-select.form-control {
+select.form-control,
+.select2,
+.select2-input,
+.input-group {
 	max-width: 700px;
 }
 input.form-control-wide {
@@ -357,4 +371,25 @@ li.placeholder {
 
 .note-editor {
 	background: #fff;
+}
+
+
+/* Order Summary */
+.addresses {
+	.shipping,
+	.billing {
+		width: 49.3%;
+		display: inline-block;
+		padding: $gap;
+		background-color: $light;
+	}
+	.shipping {
+		margin-right: 10px;
+	}
+	
+	h3 {
+		font-size: 18px;
+		padding: 0 0 10px;
+		border-bottom: 1px solid $mid;
+	}
 }

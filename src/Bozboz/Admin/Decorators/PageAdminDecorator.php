@@ -36,6 +36,7 @@ class PageAdminDecorator extends ModelAdminDecorator
 			new TextField(array('name' => 'html_title', 'label' => 'HTML Title')),
 			new TextField(array('name' => 'meta_description', 'class' => 'form-control form-control-wide')),
 			new TextField(array('name' => 'slug')),
+			new TextField(array('name' => 'external_link')),
 			new SelectField(array('name' => 'redirect_to_id', 'label' => 'Redirect To Page', 'options' => $this->getRedirectOptions())),
 			new CheckboxField(array('name' => 'show_in_main_menu')),
 			new CheckboxField(array('name' => 'show_in_footer_menu')),

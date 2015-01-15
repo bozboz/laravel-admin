@@ -43,14 +43,19 @@ class Report
 
 	public function getHeader()
 	{
+		$values = [];
 		$filters = $this->decorator->getListingFilters();
 
-		return View::make('admin::partials.listing-filters')->withInput(\Input::all())->withFilters($filters);
+		foreach($filters as $filter) {
+			$values[$filter->getName()] = $filter->getValue();
+		}
+
+		return View::make('admin::partials.listing-filters')->withInput($values)->withFilters($filters);
 	}
 
 	public function getFooter()
 	{
-		return method_exists($this->rows, 'links') ? $this->rows->links() : null;
+		return method_exists($this->rows, 'links') ? $this->rows->appends(\Input::except('page'))->links() : null;
 	}
 
 	public function render(array $params)

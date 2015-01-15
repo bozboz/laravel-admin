@@ -8,16 +8,23 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ListingFilter
 {
+	private $name;
+	private $options;
+	private $callback;
+	private $default;
+
 	/**
 	 * @param  string  $name
 	 * @param  mixed  $options
 	 * @param  string|Closure  $callback
+	 * @param  mixed  $default
 	 */
-	public function __construct($name, $options, $callback = null)
+	public function __construct($name, $options, $callback = null, $default = null)
 	{
 		$this->name = $name;
 		$this->options = $options;
 		$this->callback = $this->parseCallback($callback);
+		$this->default = $default;
 	}
 
 	/**
@@ -28,7 +35,7 @@ class ListingFilter
 	 */
 	public function filter(Builder $builder)
 	{
-		call_user_func($this->callback, $builder, Input::get($this->name));
+		call_user_func($this->callback, $builder, $this->getValue());
 	}
 
 	/**
@@ -78,6 +85,26 @@ class ListingFilter
 	{
 		return 
 			Form::label($this->name) .
-			Form::select($this->name, $this->options, null, ['onChange' => 'this.form.submit()']);
+			Form::select($this->name, $this->options, null, ['onChange' => 'this.form.submit()', 'class' => 'form-control']);
+	}
+
+	/**
+	 * Get name of filter
+	 *
+	 * @return  string
+	 */
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	/**
+	 * Get value based on current input, or fall back to default
+	 *
+	 * @return mixed
+	 */
+	public function getValue()
+	{
+		return Input::get($this->name, $this->default);
 	}
 }

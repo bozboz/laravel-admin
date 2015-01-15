@@ -25,21 +25,24 @@ abstract class ModelAdminController extends BaseController
 
 	public function create()
 	{
+		$fields = $this->decorator->buildFields();
+
 		return View::make($this->createView, array(
 			'model' => $this->decorator->getModel(),
 			'modelName' => $this->decorator->getHeading(),
-			'fields' => $this->decorator->buildFields(),
+			'fields' => $fields,
 			'method' => 'POST',
 			'action' => get_class($this) . '@store',
-			'listingAction' => get_class($this) . '@index'
+			'listingAction' => get_class($this) . '@index',
+			'javascript' => $this->consolidateJavascript($fields)
 		));
 	}
 
 	public function store()
 	{
-		$modelInstance = $this->decorator->newModelInstance();
-		$validation = $modelInstance->getValidator();
 		$input = Input::all();
+		$modelInstance = $this->decorator->newModelInstance($input);
+		$validation = $modelInstance->getValidator();
 
 		if ($validation->passesStore($input)) {
 			$modelInstance->fill($input);
@@ -57,14 +60,16 @@ abstract class ModelAdminController extends BaseController
 	{
 		$instance = $this->decorator->findInstance($id);
 		$this->decorator->injectSyncRelations($instance);
+		$fields = $this->decorator->buildFields($instance);
 
 		return View::make($this->editView, array(
 			'model' => $instance,
 			'modelName' => $this->decorator->getHeading(),
-			'fields' => $this->decorator->buildFields($instance),
+			'fields' => $fields,
 			'action' => array(get_class($this) . '@update', $instance->id),
 			'listingAction' => get_class($this) . '@index',
-			'method' => 'PUT'
+			'method' => 'PUT',
+			'javascript' => $this->consolidateJavascript($fields)
 		));
 	}
 
@@ -94,4 +99,16 @@ abstract class ModelAdminController extends BaseController
 		return Redirect::action(get_class($this) . '@index');
 	}
 
+	private function consolidateJavascript($fields)
+	{
+		$javascript = '';
+		foreach ($fields as $field) {
+			$fieldJavascript = $field->getJavascript();
+			if (!is_null($fieldJavascript)) {
+				$javascript .= '<script type="text/javascript">' . $fieldJavascript . '</script>' . PHP_EOL;
+			}
+		}
+
+		return $javascript;
+	}
 }

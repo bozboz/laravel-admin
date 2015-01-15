@@ -1,0 +1,1 @@
+<img class="client-logo" src="/packages/bozboz/admin/images/logo.png">
