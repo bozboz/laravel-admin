@@ -62,7 +62,7 @@ abstract class ModelAdminDecorator
 	 */
 	public function newModelInstance($attributes = array())
 	{
-		return $this->model->newInstance($attributes);
+		return $this->model->newInstance();
 	}
 
 	/**
