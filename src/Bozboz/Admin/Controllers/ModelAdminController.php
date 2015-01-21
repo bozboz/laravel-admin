@@ -43,6 +43,7 @@ abstract class ModelAdminController extends BaseController
 		$input = Input::all();
 		$modelInstance = $this->decorator->newModelInstance($input);
 		$validation = $modelInstance->getValidator();
+		$input = $this->decorator->sanitiseInput($input);
 
 		if ($validation->passesStore($input)) {
 			$modelInstance->fill($input);
@@ -78,7 +79,7 @@ abstract class ModelAdminController extends BaseController
 		$modelInstance = $this->decorator->findInstance($id);
 		$validation = $modelInstance->getValidator();
 		$validation->updateUniques($modelInstance->getKey());
-		$input = Input::all();
+		$input = $this->decorator->sanitiseInput(Input::all());
 
 		if ($validation->passesEdit($input)) {
 			$modelInstance->fill($input);
