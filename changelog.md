@@ -1,6 +1,12 @@
-# Version 0.4.2 (2015-01-26)
+# Version 0.5.0 (FUTURE)
 
 -   Bug fix with DateTimeField concerning rendering of the DateTime DB value
+
+
+# Version 0.4.2 (2015-01-26)
+
+-   Remove "menu_icon" field from PageAdminDecorator
+-   Change private methods `getRedirectOptions` and `getTemplateOptions` to protected
 
 
 # Version 0.4.1 (2015-01-16)

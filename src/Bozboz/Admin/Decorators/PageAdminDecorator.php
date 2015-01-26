@@ -40,14 +40,13 @@ class PageAdminDecorator extends ModelAdminDecorator
 			new SelectField(array('name' => 'redirect_to_id', 'label' => 'Redirect To Page', 'options' => $this->getRedirectOptions())),
 			new CheckboxField(array('name' => 'show_in_main_menu')),
 			new CheckboxField(array('name' => 'show_in_footer_menu')),
-			new TextField(array('name' => 'menu_icon')),
 			new CheckboxField(array('name' => 'status')),
 			new HTMLEditorField(array('name' => 'description')),
 			new SelectField(array('name' => 'template', 'options' => $this->getTemplateOptions()))
 		);
 	}
 
-	private function getRedirectOptions()
+	protected function getRedirectOptions()
 	{
 		$options = array('' => 'No redirect');
 
@@ -59,7 +58,7 @@ class PageAdminDecorator extends ModelAdminDecorator
 		return $options;
 	}
 
-	private function getTemplateOptions()
+	protected function getTemplateOptions()
 	{
 		$options = array('' => 'Default');
 
