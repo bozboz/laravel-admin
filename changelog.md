@@ -1,3 +1,8 @@
+# Version 0.4.2 (2015-01-26)
+
+-   Bug fix with DateTimeField concerning rendering of the DateTime DB value
+
+
 # Version 0.4.1 (2015-01-16)
 
 -   Prevent issue with input being passed to new model instances twice.
