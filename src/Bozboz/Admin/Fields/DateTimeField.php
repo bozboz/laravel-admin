@@ -34,7 +34,11 @@ class DateTimeField extends Field
 				});
 
 				if ($('#$this->name').val() !== '') {
-					$('#$this->altName').datetimepicker('setDate', new Date($('#$this->name').val()));
+					var dateTime = $('#$this->name').val().split(' ');
+					var dateInfo = dateTime[0].split('-');
+					var timeInfo = dateTime[1].split(':');
+
+					$('#$this->altName').datetimepicker('setDate', new Date(dateInfo[0], dateInfo[1], dateInfo[2], timeInfo[0], timeInfo[1], '0'));
 				}
 			});
 JAVASCRIPT;
