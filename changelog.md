@@ -1,6 +1,8 @@
 # Version 0.5.0 (FUTURE)
 
 -   Bug fix with DateTimeField concerning rendering of the DateTime DB value
+-   Change scope of `consolidateJavascript` method on `ModelAdminController` from
+    private to protected
 
 
 # Version 0.4.2 (2015-01-26)
