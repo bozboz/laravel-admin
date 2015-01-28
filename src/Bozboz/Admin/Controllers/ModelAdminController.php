@@ -100,7 +100,7 @@ abstract class ModelAdminController extends BaseController
 		return Redirect::action(get_class($this) . '@index');
 	}
 
-	private function consolidateJavascript($fields)
+	protected function consolidateJavascript($fields)
 	{
 		$javascript = '';
 		foreach ($fields as $field) {
