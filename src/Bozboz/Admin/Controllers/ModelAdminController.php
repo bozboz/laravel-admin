@@ -49,7 +49,7 @@ abstract class ModelAdminController extends BaseController
 			$modelInstance->fill($input);
 			$modelInstance->save();
 			$this->decorator->updateSyncRelations($modelInstance, $input);
-			$response = Redirect::action(get_class($this) . '@index');
+			$response = $this->getSuccessResponse();
 		} else {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
@@ -85,7 +85,7 @@ abstract class ModelAdminController extends BaseController
 			$modelInstance->fill($input);
 			$modelInstance->save();
 			$this->decorator->updateSyncRelations($modelInstance, $input);
-			$response = Redirect::action(get_class($this) . '@index');
+			$response = $this->getSuccessResponse();
 		} else {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
@@ -97,7 +97,7 @@ abstract class ModelAdminController extends BaseController
 	{
 		$this->decorator->findInstance($id)->delete();
 
-		return Redirect::action(get_class($this) . '@index');
+		return $this->getSuccessResponse();
 	}
 
 	protected function consolidateJavascript($fields)
@@ -111,5 +111,13 @@ abstract class ModelAdminController extends BaseController
 		}
 
 		return $javascript;
+	}
+
+	/**
+	 * The Response after a successful create/edit/delete action.
+	 */
+	protected function getSuccessResponse()
+	{
+		return Redirect::action(get_class($this) . '@index');
 	}
 }

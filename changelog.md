@@ -3,6 +3,8 @@
 -   Bug fix with DateTimeField concerning rendering of the DateTime DB value
 -   Change scope of `consolidateJavascript` method on `ModelAdminController` from
     private to protected
+-   Add `getSuccessResponse` to `ModelAdminController`. This centralises the call
+    to `Redirect::action()` and allows it be easily changed by subtypes.
 
 
 # Version 0.4.2 (2015-01-26)
