@@ -122,3 +122,12 @@ $ bower install
 
 From there, a simple `gulp` will compile all css and js - however, during development a `gulp watch` can be run
 
+# Field subtypes
+
+## DateTimeField
+
+Uses the datetimepicker addon which extends the functionality of the jQuery UI DatePicker. Documentation can be found [here](http://trentrichardson.com/examples/timepicker/).
+
+When instantiating a DateTimeField object, it is possible to override the default datetimepicker configuration by passing in an array mapped to the 'options' key.
+This will be json encoded and merged in with the defaults when the DOM is rendered. When passing in values that are defined as JS Date objects within the datetimepicker
+documentation, please define these as epoch values (e.g. `time()` or `$dateTime->format('U')`). 
