@@ -38,7 +38,7 @@ class DateTimeField extends Field
 					var dateInfo = dateTime[0].split('-');
 					var timeInfo = dateTime[1].split(':');
 
-					$('#$this->altName').datetimepicker('setDate', new Date(dateInfo[0], dateInfo[1], dateInfo[2], timeInfo[0], timeInfo[1], '0'));
+					$('#$this->altName').datetimepicker('setDate', new Date(dateInfo[0], dateInfo[1] - 1, dateInfo[2], timeInfo[0], timeInfo[1], '0'));
 				}
 			});
 JAVASCRIPT;
