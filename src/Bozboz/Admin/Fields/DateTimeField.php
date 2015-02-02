@@ -24,7 +24,6 @@ class DateTimeField extends Field
 				$('#$this->altName').datetimepicker({
 					showSecond: false,
 					second: 0,
-					stepMinute: 5,
 					dateFormat: 'dd/mm/yy',
 					minDate: new Date(),
 					altField: '#$this->name',
