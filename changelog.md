@@ -5,6 +5,7 @@
     private to protected
 -   Add `getSuccessResponse` to `ModelAdminController`. This centralises the call
     to `Redirect::action()` and allows it be easily changed by subtypes.
+-   Utilise $fillable over $guarded in Page
 
 
 # Version 0.4.2 (2015-01-26)
