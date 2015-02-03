@@ -1,7 +1,8 @@
 var basePaths = {
 	src: 'src/assets/',
 	dest: 'public/',
-	bower: 'bower_components/'
+	bower: 'bower_components/',
+	jqueryui: 'bower_components/jquery-ui/ui/'
 };
 var paths = {
 	images: {
@@ -37,13 +38,15 @@ var vendorFiles = {
 		basePaths.bower + 'select2/select2-bootstrap.css',
 	],
 	scripts: [
+		basePaths.jqueryui + 'core.js',
+		basePaths.jqueryui + 'datepicker.js',
+
 		basePaths.bower + 'bootstrap/dist/js/bootstrap.min.js',
 		basePaths.bower + 'summernote/dist/summernote.min.js',
 		basePaths.bower + 'jquery-sortable/source/js/jquery-sortable-min.js',
 		basePaths.bower + 'imagesloaded/imagesloaded.pkgd.min.js',
 		basePaths.bower + 'masonry/dist/masonry.pkgd.min.js',
 		basePaths.bower + 'handlebars/handlebars.min.js',
-		basePaths.bower + 'jquery-ui/jquery-ui.min.js',
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js',
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js',
 		basePaths.bower + 'select2/select2.min.js',
