@@ -8,7 +8,20 @@ class Page extends Base implements Sortable
 {
 	use DynamicSlugTrait;
 
-	protected $guarded = array('id', 'media', 'files');
+	protected $fillable = [
+		'title',
+		'slug',
+		'description',
+		'redirect_to_id',
+		'html_title',
+		'meta_description',
+		'sorting',
+		'template',
+		'parent_id',
+		'show_in_main_menu',
+		'show_in_footer_menu',
+		'status'
+	];
 
 	protected function getSlugSourceField()
 	{
