@@ -59,7 +59,7 @@ class Media extends Base
 		if ($foreignKey) {
 			return $model->belongsTo(get_class(), $foreignKey);
 		}
-		return $model->morphToMany(get_class(), 'mediable')->withPivot('alias')->orderBy('sorting');
+		return $model->morphToMany(get_class(), 'mediable')->orderBy('sorting');
 	}
 
 	/**
@@ -75,11 +75,6 @@ class Media extends Base
 			->where('mediable_type', get_class($collection->first()))
 			->select('media.*')
 			->orderBy('sorting');
-	}
-
-	public function scopeAlias($query, $alias)
-	{
-		$query->where('alias', '=', $alias);
 	}
 
 	public function getFilename($size = null)
