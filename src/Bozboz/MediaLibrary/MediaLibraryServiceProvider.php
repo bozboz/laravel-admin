@@ -18,13 +18,9 @@ class MediaLibraryServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('bozboz/media-library');
-
 		$this->registerMediaHtmlMacro();
 
 		$this->app['events']->subscribe(new Subscribers\MediaEventHandler);
-
-		require __DIR__ . '/../../routes.php';
 	}
 
 	private function registerMediaHtmlMacro()

@@ -31,7 +31,6 @@
 	</div>
 	@section('scripts')
 		<script src="/packages/bozboz/admin/js/admin.min.js"></script>
-		<script src="/packages/bozboz/media-library/js/media.js"></script>
 	@show
 </body>
 </html>

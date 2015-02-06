@@ -1,10 +1,11 @@
 <?php namespace Bozboz\MediaLibrary\Models;
 
-use Eloquent, Input, Config, Str;
+use Input, Config, Str;
 use Illuminate\Support\Collection;
 use Bozboz\MediaLibrary\Validators\MediaValidator;
 use Bozboz\MediaLibrary\Exceptions\InvalidConfigurationException;
 use Bozboz\Admin\Models\Base;
+use Illuminate\Database\Eloquent\Model;
 
 class Media extends Base
 {
@@ -50,11 +51,14 @@ class Media extends Base
 	/**
 	 * Accessor method to retrieve all media on a model
 	 *
-	 * @param  Eloquent  $model
+	 * @param  Illuminate\Database\Eloquent\Model  $model
 	 * @return Illuminate\Database\Eloquent\Relations\MorphToMany
 	 */
-	public static function forModel(Eloquent $model)
+	public static function forModel(Model $model, $foreignKey = null)
 	{
+		if ($foreignKey) {
+			return $model->belongsTo(get_class(), $foreignKey);
+		}
 		return $model->morphToMany(get_class(), 'mediable')->withPivot('alias')->orderBy('sorting');
 	}
 

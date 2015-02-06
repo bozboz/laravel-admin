@@ -48,4 +48,9 @@ class MediaAdminDecorator extends ModelAdminDecorator
 			))
 		);
 	}
+
+	public function getListingModels()
+	{
+		return $this->model->latest()->paginate(30);
+	}
 }

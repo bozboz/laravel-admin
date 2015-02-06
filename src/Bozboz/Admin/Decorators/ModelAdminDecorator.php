@@ -3,6 +3,7 @@
 use Event, Str;
 use Bozboz\Admin\Models\Base;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Fluent;
 
 abstract class ModelAdminDecorator
 {
@@ -19,17 +20,34 @@ abstract class ModelAdminDecorator
 
 	abstract public function getFields($instance);
 
+	/**
+	 * Retrieve $this->model
+	 *
+	 * @return Bozoboz\Admin\Models\Base
+	 */
 	public function getModel()
 	{
 		return $this->model;
 	}
 
+	/**
+	 * Retrieve a heading representing $this->model
+	 *
+	 * @param  boolean  $plural
+	 * @return string
+	 */
 	public function getHeading($plural = false)
 	{
 		$name = class_basename(get_class($this->model));
 		return $plural ? Str::plural($name) : $name;
 	}
 
+	/**
+	 * Apply each defined listing filter to the passed $builder
+	 *
+	 * @param  Illuminate\Database\Eloquent\Builder  $builder
+	 * @return void
+	 */
 	protected function filterListing(Builder $builder)
 	{
 		foreach($this->getListingFilters() as $listingFilter) {
@@ -37,20 +55,36 @@ abstract class ModelAdminDecorator
 		}
 	}
 
+	/**
+	 * Retrieve a collection of instances of $this->model to display
+	 *
+	 * @return Illuminate\Database\Eloquent\Collection
+	 */
 	public function getListingModels()
 	{
 		return $this->model->all();
 	}
 
+	/**
+	 * Get an array of listing filters
+	 *
+	 * @return array
+	 */
 	public function getListingFilters()
 	{
 		return [];
 	}
 
+	/**
+	 * Build an array of fields
+	 *
+	 * @param  Bozboz/Admin/Models/Base  $instance
+	 * @return array
+	 */
 	public function buildFields($instance = null)
 	{
 		$instance = $instance ?: $this->getModel();
-		$fieldsObj = new \Illuminate\Support\Fluent($this->getFields($instance));
+		$fieldsObj = new Fluent($this->getFields($instance));
 		Event::fire('admin.fields.built', array($fieldsObj, $instance));
 
 		return $fieldsObj->toArray();

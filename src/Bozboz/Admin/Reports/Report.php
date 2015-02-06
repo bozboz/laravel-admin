@@ -34,10 +34,12 @@ class Report
 	public function getRows()
 	{
 		$rows = array();
-		$instances = $this->rows? $this->rows : $this->decorator->getListingModels();
-		foreach($instances as $row) {
+		$this->rows = $this->rows ?: $this->decorator->getListingModels();
+
+		foreach($this->rows as $row) {
 			$rows[] = new Row($row->id, $row, $this->decorator->getColumns($row));
 		}
+
 		return $rows;
 	}
 

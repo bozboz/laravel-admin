@@ -25,7 +25,10 @@ class MediaLibraryAdminController extends ModelAdminController
 	private function ajaxJSONData()
 	{
 		$data = array();
-		foreach($this->decorator->getListingModels() as $inst) {
+
+		$items = $this->decorator->getListingModels();
+
+		foreach($items as $inst) {
 			$data[] = array(
 				'id' => $inst->id,
 				'caption' => $inst->caption ? $inst->caption : $inst->filename,
@@ -35,6 +38,11 @@ class MediaLibraryAdminController extends ModelAdminController
 				'alias' => null
 			);
 		}
-		return Response::json(['media' => $data, 'mediaPath' => $this->decorator->getModel()->getFilepath('image', 'library')]);
+
+		return Response::json([
+			'media' => $data,
+			'mediaPath' => $this->decorator->getModel()->getFilepath('image', 'library'),
+			'links' => (string)$items->links()
+		]);
 	}
 }

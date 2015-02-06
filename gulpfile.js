@@ -24,7 +24,7 @@ var paths = {
 
 var appFiles = {
 	styles: paths.styles.src + '**/*.scss',
-	scripts: [paths.scripts.src + 'scripts.js']
+	scripts: [paths.scripts.src + 'scripts.js', paths.scripts.src + 'media-browser.js']
 };
 
 var vendorFiles = {
@@ -50,6 +50,7 @@ var vendorFiles = {
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js',
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js',
 		basePaths.bower + 'select2/select2.min.js',
+		basePaths.bower + 'knockout/dist/knockout.js'
 	]
 };
 
