@@ -1,7 +1,9 @@
 (function() {
-	var viewModel = new MediaViewModel({{ $data }}, '{{ url('admin/media?page=1') }}');
+	var elem = document.querySelector('.js-media-browser-{{ $id }}');
+	console.log($(elem).data('values'));
+	var viewModel = new MediaViewModel($(elem).data('values'), '{{ url('admin/media?page=1') }}');
 
-	ko.applyBindings(viewModel, document.querySelector('.js-media-browser-{{ $id }}'));
+	ko.applyBindings(viewModel, elem);
 
 	$('.media-browser').sortable({
 		placeholder: '<li class="placeholder masonry-item"></li>'

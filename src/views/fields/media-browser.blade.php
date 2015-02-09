@@ -16,6 +16,10 @@
     </ul>
   </div>
 
+  <script>
+  $('.js-media-browser-{{ $id }}').data('values', {{ $data }});
+  </script>
+
   <button class="btn btn-info" data-bind="click: mediaLibrary.browse">Browse Media</button>
 
   @include('admin::fields.partials.media-modal')

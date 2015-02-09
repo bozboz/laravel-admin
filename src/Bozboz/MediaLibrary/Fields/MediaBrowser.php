@@ -8,49 +8,75 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 class MediaBrowser extends Field
 {
 	private $relation;
-	private $mediaFactory;
 
-	public function __construct(Relation $relation, Media $mediaFactory, $params = array())
+	public function __construct(Relation $relation, $params = array())
 	{
 		$this->relation = $relation;
-		$this->mediaFactory = $mediaFactory;
+
+		$params['name'] = $this->calculateName();
 
 		parent::__construct($params);
 	}
 
+	/**
+	 * Calculate name of inputs, based on type of relation
+	 *
+	 * @return string
+	 */
+	protected function calculateName()
+	{
+		return $this->isManyRelation() ? 'media_relationship' : $this->relation->getForeignKey();
+	}
+
+	/**
+	 * Determine if relation passed is a "many" relation
+	 *
+	 * @return boolean
+	 */
 	protected function isManyRelation()
 	{
-		return strpos(get_class($this->relation), 'Many');
+		return strpos(get_class($this->relation), 'Many') !== false;
 	}
 
+	/**
+	 * Render media browser, with "current" data (either from model or session)
+	 *
+	 * @return Illuminate\View\View
+	 */
 	public function getInput()
 	{
-		return View::make('admin::fields.media-browser')->with([
-			'id' => $this->name,
-			'name' => $this->isManyRelation() ? $this->name . '_relationship[]' : $this->name
-		]);
-	}
+		$values = Form::getValueAttribute($this->name);
+		$mediaFactory = $this->relation->getRelated();
 
-	public function getJavascript()
-	{
-		$currentValues = $this->relation->get();
-		$items = array();
-
-		foreach($currentValues as $inst) {
-			$items[] = array(
+		$items = $values ? $mediaFactory->whereIn('id', $values)->get()->map(function($inst) {
+			return [
 				'id' => $inst->id,
 				'type' => $inst,
 				'caption' => $inst->caption ? $inst->caption : $inst->filename,
 				'filename' => $inst->filename,
 				'selected' => true
-			);
-		}
+			];
+		}) : [];
 
-		$data = json_encode(array(
+		$data = [
 			'media' => $items,
-			'mediaPath' => $this->mediaFactory->getFilePath('image', 'thumb')
-		));
+			'mediaPath' => $mediaFactory->getFilePath('image', 'thumb')
+		];
 
-		return View::make('admin::fields.partials.media-js')->withData($data)->withId($this->name);
+		return View::make('admin::fields.media-browser')->with([
+			'id' => $this->name,
+			'name' => $this->isManyRelation() ? $this->name . '[]' : $this->name,
+			'data' => json_encode($data)
+		]);
+	}
+
+	/**
+	 * Render Javascript required to initialise media library
+	 *
+	 * @return Illuminate\View\View
+	 */
+	public function getJavascript()
+	{
+		return View::make('admin::fields.partials.media-js')->withId($this->name);
 	}
 }
