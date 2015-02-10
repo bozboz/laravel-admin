@@ -2,20 +2,20 @@
 
 use Bozboz\Admin\Fields\Field;
 use Bozboz\MediaLibrary\Models\Media;
-use Eloquent, Form, View;
+use Form, View;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class MediaBrowser extends Field
 {
 	private $relation;
 
-	public function __construct(Relation $relation, $params = array())
+	public function __construct(Relation $relation, $attributes = array())
 	{
 		$this->relation = $relation;
 
-		$params['name'] = $this->calculateName();
+		$attributes['name'] = $this->calculateName();
 
-		parent::__construct($params);
+		parent::__construct($attributes);
 	}
 
 	/**
@@ -68,6 +68,24 @@ class MediaBrowser extends Field
 			'name' => $this->isManyRelation() ? $this->name . '[]' : $this->name,
 			'data' => json_encode($data)
 		]);
+	}
+
+	/**
+	 * Render HTML label
+	 *
+	 * @return string
+	 */
+	public function getLabel()
+	{
+		$replacements = [
+			'_relationship' => '',
+			'_id' => '',
+			'_' => ' '
+		];
+
+		$label = ucwords(str_replace(array_keys($replacements), array_values($replacements), $this->name));
+
+		return Form::label($this->name, $label);
 	}
 
 	/**
