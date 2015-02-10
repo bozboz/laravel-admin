@@ -53,8 +53,7 @@ class MediaBrowser extends Field
 				'id' => $inst->id,
 				'type' => $inst,
 				'caption' => $inst->caption ? $inst->caption : $inst->filename,
-				'filename' => $inst->filename,
-				'selected' => true
+				'filename' => $inst->filename
 			];
 		}) : [];
 
