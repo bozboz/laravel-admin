@@ -9,9 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 abstract class ListingFilter
 {
 	protected $name;
-	protected $options;
 	protected $callback;
-	protected $default;
 
 	/**
 	 * Get a default closure which filters the builder on the provided $field
@@ -30,16 +28,12 @@ abstract class ListingFilter
 
 	/**
 	 * @param  string  $name
-	 * @param  mixed  $options
 	 * @param  string|Closure  $callback
-	 * @param  mixed  $default
 	 */
-	public function __construct($name, $options, $callback = null, $default = null)
+	public function __construct($name, $callback = null)
 	{
 		$this->name = $name;
-		$this->options = $options;
 		$this->callback = $this->parseCallback($callback);
-		$this->default = $default;
 	}
 
 	/**
@@ -50,7 +44,11 @@ abstract class ListingFilter
 	 */
 	public function filter(Builder $builder)
 	{
-		call_user_func($this->callback, $builder, $this->getValue());
+		$value = $this->getValue();
+
+		if (!empty($value)) {
+			call_user_func($this->callback, $builder, $value);
+		}
 	}
 
 	/**
@@ -92,6 +90,6 @@ abstract class ListingFilter
 	 */
 	public function getValue()
 	{
-		return Input::get($this->name, $this->default);
+		return Input::get($this->name);
 	}
 }

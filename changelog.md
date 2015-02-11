@@ -10,6 +10,7 @@
 -   Listing filters will now work out of the box.
 -   Abstracted some display logic from ListingFilter to ArrayListingFilter.
 -   Moved Bozboz\Admin\Reports\ListingFilter to abstract Bozboz\Admin\Reports\Filters\ListingFilter.
+-   Added SearchListingFilter.
 
 # Version 0.4.2 (2015-01-26)
 
