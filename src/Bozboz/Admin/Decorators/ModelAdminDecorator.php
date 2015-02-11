@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Decorators;
 
-use Event, Str;
+use Event, Str, Config;
 use Bozboz\Admin\Models\Base;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -37,9 +37,24 @@ abstract class ModelAdminDecorator
 		}
 	}
 
+	protected function getListingBuilder()
+	{
+		$query = $this->model->newQuery();
+
+		if ($this->model->usesTimestamps()) {
+			$query->latest();
+		}
+
+		return $query;
+	}
+
 	public function getListingModels()
 	{
-		return $this->model->all();
+		$query = $this->getListingBuilder();
+
+		$this->filterListing($query);
+
+		return $query->paginate(Config::get('admin::listing_items_per_page'));
 	}
 
 	public function getListingFilters()

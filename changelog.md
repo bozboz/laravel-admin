@@ -6,6 +6,8 @@
 -   Add `getSuccessResponse` to `ModelAdminController`. This centralises the call
     to `Redirect::action()` and allows it be easily changed by subtypes.
 -   Utilise $fillable over $guarded in Page
+-   Introduced `getListingBuilder` to ModelAdminDecorator to easily override query builder.
+-   Listing filters will now work out of the box.
 
 
 # Version 0.4.2 (2015-01-26)

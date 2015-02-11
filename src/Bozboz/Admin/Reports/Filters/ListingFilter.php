@@ -1,17 +1,32 @@
-<?php namespace Bozboz\Admin\Reports;
+<?php namespace Bozboz\Admin\Reports\Filters;
 
-use Closure, InvalidArgumentException;
+use Closure;
+use InvalidArgumentException;
 
-use Illuminate\Support\Facades\Form;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Database\Eloquent\Builder;
 
-class ListingFilter
+abstract class ListingFilter
 {
-	private $name;
-	private $options;
-	private $callback;
-	private $default;
+	protected $name;
+	protected $options;
+	protected $callback;
+	protected $default;
+
+	/**
+	 * Get a default closure which filters the builder on the provided $field
+	 *
+	 * @param  string  $field
+	 * @return Closure
+	 */
+	abstract protected function defaultFilter($field);
+
+	/**
+	 * Render the HTML for the filter
+	 *
+	 * @return string
+	 */
+	abstract public function __toString();
 
 	/**
 	 * @param  string  $name
@@ -40,12 +55,12 @@ class ListingFilter
 
 	/**
 	 * Parse provided $callback and return a Closure
-	 * 
+	 *
 	 * @param  mixed  $callback
 	 * @throws InvalidArgumentException
 	 * @return Closure
 	 */
-	private function parseCallback($callback)
+	protected function parseCallback($callback)
 	{
 		if (is_string($callback)) {
 			return $this->defaultFilter($callback);
@@ -58,34 +73,6 @@ class ListingFilter
 		throw new InvalidArgumentException(
 			'$callback should be a string, callable or ommitted entirely'
 		);
-	}
-
-	/**
-	 * Get a default closure which filters the builder on the provided $field
-	 *
-	 * @param  string  $field
-	 * @return Closure
-	 */
-	private function defaultFilter($field)
-	{
-		return function($builder, $value) use ($field)
-		{
-			if ($value) {
-				$builder->where($field, $value);
-			}
-		};
-	}
-
-	/**
-	 * Render the select box filter
-	 *
-	 * @return string
-	 */
-	public function __toString()
-	{
-		return 
-			Form::label($this->name) .
-			Form::select($this->name, $this->options, null, ['onChange' => 'this.form.submit()', 'class' => 'form-control']);
 	}
 
 	/**
