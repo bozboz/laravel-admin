@@ -1,5 +1,7 @@
 # Version 0.5.0 (FUTURE)
 
+-   Null data sanitisation added, by defining a $nullable property on a model
+-   Fixed error when sorting non-nestable models
 -   Bug fix with DateTimeField concerning rendering of the DateTime DB value
 -   Increase scope of `consolidateJavascript` method on ModelAdminController.
 -   Add `getSuccessResponse` to `ModelAdminController`.
