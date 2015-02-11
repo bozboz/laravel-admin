@@ -1,10 +1,8 @@
 # Version 0.5.0 (FUTURE)
 
 -   Bug fix with DateTimeField concerning rendering of the DateTime DB value
--   Change scope of `consolidateJavascript` method on `ModelAdminController` from
-    private to protected
--   Add `getSuccessResponse` to `ModelAdminController`. This centralises the call
-    to `Redirect::action()` and allows it be easily changed by subtypes.
+-   Increase scope of `consolidateJavascript` method on ModelAdminController.
+-   Add `getSuccessResponse` to `ModelAdminController`.
 -   Utilise $fillable over $guarded in Page
 -   Introduced `getListingBuilder` to ModelAdminDecorator to easily override query builder.
 -   Listing filters will now work out of the box.
