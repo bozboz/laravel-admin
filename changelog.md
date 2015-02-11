@@ -8,7 +8,8 @@
 -   Utilise $fillable over $guarded in Page
 -   Introduced `getListingBuilder` to ModelAdminDecorator to easily override query builder.
 -   Listing filters will now work out of the box.
-
+-   Abstracted some display logic from ListingFilter to ArrayListingFilter.
+-   Moved Bozboz\Admin\Reports\ListingFilter to abstract Bozboz\Admin\Reports\Filters\ListingFilter.
 
 # Version 0.4.2 (2015-01-26)
 
