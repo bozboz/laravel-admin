@@ -26,7 +26,6 @@ class DateTimeField extends Field
 		$jsonConfig = json_encode($this->configOptions);
 
 		return <<<JAVASCRIPT
-			jQuery(function($) {
 				var config = $jsonConfig;
 
 				var dateTimePickerDefaults = {
@@ -68,7 +67,6 @@ class DateTimeField extends Field
 				if (dateTime !== null) {
 					$('#$this->altName').datetimepicker('setDate', dateTime);
 				}
-			});
 JAVASCRIPT;
 	}
 }
