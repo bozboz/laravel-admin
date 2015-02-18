@@ -11,6 +11,7 @@
 -   Abstracted some display logic from ListingFilter to ArrayListingFilter.
 -   Moved Bozboz\Admin\Reports\ListingFilter to abstract Bozboz\Admin\Reports\Filters\ListingFilter.
 -   Added SearchListingFilter.
+-	Output actual name of User on index screen. 
 
 # Version 0.4.2 (2015-01-26)
 
