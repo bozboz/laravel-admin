@@ -7,7 +7,9 @@ class AdminController extends \BaseController
 {
 	public function getIndex()
 	{
-		return View::make('admin::index');
+		return View::make('admin::index', [
+			'user' => Auth::user()
+		]);
 	}
 
 	public function getLogin()
