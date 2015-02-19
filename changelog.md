@@ -13,6 +13,11 @@
 -   Added SearchListingFilter.
 -	Output actual name of User on index screen. 
 
+
+# Version 0.4.3 (2015-02-19)
+-   Add "meta_title" field to pages table, which replaces "html_title" field
+
+
 # Version 0.4.2 (2015-01-26)
 
 -   Remove "menu_icon" field from PageAdminDecorator

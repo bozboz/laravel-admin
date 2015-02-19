@@ -19,10 +19,10 @@ class Provider
 
 	public function getTitle()
 	{
-		if (empty($this->page->html_title)) {
+		if (empty($this->page->meta_title)) {
 			return $this->config->get('app.site_title', 'Default Site Title');
 		} else {
-			return $this->page->html_title;
+			return $this->page->meta_title;
 		}
 	}
 
