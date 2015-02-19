@@ -3,10 +3,12 @@
 use Bozboz\Admin\Services\Validators\PageValidator;
 use Bozboz\Admin\Models\Sortable;
 use Bozboz\Admin\Traits\DynamicSlugTrait;
+use Bozboz\Admin\Traits\MetaTrait;
+use Bozboz\Admin\Meta\MetaInterface;
 
-class Page extends Base implements Sortable
+class Page extends Base implements Sortable, MetaInterface
 {
-	use DynamicSlugTrait;
+	use DynamicSlugTrait, MetaTrait;
 
 	protected $fillable = [
 		'title',

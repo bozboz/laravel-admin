@@ -12,6 +12,7 @@
 -   Moved Bozboz\Admin\Reports\ListingFilter to abstract Bozboz\Admin\Reports\Filters\ListingFilter.
 -   Added SearchListingFilter.
 -	Output actual name of User on index screen. 
+-   Meta\Provider::forPage method now accepts a more flexible MetaInterface object, as opposed to a concrete Page model
 
 
 # Version 0.4.3 (2015-02-19)
