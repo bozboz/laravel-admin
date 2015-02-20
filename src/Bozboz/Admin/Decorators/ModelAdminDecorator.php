@@ -30,29 +30,27 @@ abstract class ModelAdminDecorator
 		return $plural ? Str::plural($name) : $name;
 	}
 
-	protected function filterListing(Builder $builder)
+	protected function filterListingQuery(Builder $query)
 	{
 		foreach($this->getListingFilters() as $listingFilter) {
-			$listingFilter->filter($builder);
+			$listingFilter->filter($query);
 		}
 	}
 
-	protected function getListingBuilder()
+	protected function modifyListingQuery(Builder $query)
 	{
-		$query = $this->model->newQuery();
-
 		if ($this->model->usesTimestamps()) {
 			$query->latest();
 		}
-
-		return $query;
 	}
 
 	public function getListingModels()
 	{
-		$query = $this->getListingBuilder();
+		$query = $this->model->newQuery();
 
-		$this->filterListing($query);
+		$this->filterListingQuery($query);
+
+		$this->modifyListingQuery($query);
 
 		return $query->paginate(Config::get('admin::listing_items_per_page'));
 	}
