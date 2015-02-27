@@ -4,7 +4,7 @@
 -   Fixed error when sorting non-nestable models
 -   Bug fix with DateTimeField concerning rendering of the DateTime DB value
 -   Increase scope of `consolidateJavascript` method on ModelAdminController.
--   Add `getSuccessResponse` to `ModelAdminController`.
+-   Add `getSuccessResponse`, `getStoreResponse` and `getUpdateResponse` methods to `ModelAdminController`.
 -   Utilise $fillable over $guarded in Page
 -   Introduced `getListingBuilder` to ModelAdminDecorator to easily override query builder.
 -   Listing filters will now work out of the box.

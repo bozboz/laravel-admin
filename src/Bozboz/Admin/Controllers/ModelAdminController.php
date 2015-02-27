@@ -49,7 +49,7 @@ abstract class ModelAdminController extends BaseController
 			$modelInstance->fill($input);
 			$modelInstance->save();
 			$this->decorator->updateSyncRelations($modelInstance, $input);
-			$response = $this->getSuccessResponse();
+			$response = $this->getStoreResponse($modelInstance);
 		} else {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
@@ -85,7 +85,7 @@ abstract class ModelAdminController extends BaseController
 			$modelInstance->fill($input);
 			$modelInstance->save();
 			$this->decorator->updateSyncRelations($modelInstance, $input);
-			$response = $this->getSuccessResponse();
+			$response = $this->getUpdateResponse($modelInstance);
 		} else {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
@@ -111,6 +111,16 @@ abstract class ModelAdminController extends BaseController
 		}
 
 		return $javascript;
+	}
+
+	protected function getStoreResponse($model)
+	{
+		return $this->getSuccessResponse();
+	}
+
+	protected function getUpdateResponse($model)
+	{
+		return $this->getSuccessResponse();
 	}
 
 	/**
