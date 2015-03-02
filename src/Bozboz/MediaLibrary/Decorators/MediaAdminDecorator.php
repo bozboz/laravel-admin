@@ -53,4 +53,9 @@ class MediaAdminDecorator extends ModelAdminDecorator
 	{
 		return $this->model->latest()->paginate(30);
 	}
+
+	public function getHeading($plural = false)
+	{
+		return 'Media';
+	}
 }
