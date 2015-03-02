@@ -3,6 +3,7 @@
 use Bozboz\Admin\Services\Validators\PageValidator;
 use Bozboz\Admin\Models\Sortable;
 use Bozboz\Admin\Traits\DynamicSlugTrait;
+use Bozboz\MediaLibrary\Models\Media;
 
 class Page extends Base implements Sortable
 {
@@ -51,5 +52,10 @@ class Page extends Base implements Sortable
 	public function scopeTopLevel()
 	{
 		return $this->where('parent_id', 0);
+	}
+
+	public function media()
+	{
+		return Media::forModel($this);
 	}
 }
