@@ -5,8 +5,7 @@ use Bozboz\Admin\Services\Validators\Validator;
 class MediaValidator extends Validator
 {
 	protected $rules = [
-		'filename' => 'required',
-		'type' => 'required'
+		'filename' => 'required'
 	];
 
 	protected $editRules = [

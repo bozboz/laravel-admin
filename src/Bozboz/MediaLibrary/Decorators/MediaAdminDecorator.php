@@ -9,11 +9,8 @@ use Bozboz\MediaLibrary\Fields\FileField;
 
 class MediaAdminDecorator extends ModelAdminDecorator
 {
-	private $config;
-
-	public function __construct(Media $media, Repository $config)
+	public function __construct(Media $media)
 	{
-		$this->config = $config;
 		parent::__construct($media);
 	}
 
@@ -37,10 +34,6 @@ class MediaAdminDecorator extends ModelAdminDecorator
 	public function getFields($instance)
 	{
 		return array(
-			new SelectField(array('name' => 'type', 'options' => $this->config->get('media-library::allowed_media_types', array(
-				'image' => 'Image',
-				'pdf' => 'PDF'
-			)))),
 			new TextField(array('name' => 'caption')),
 			new FileField(array(
 				'name' => 'filename',
