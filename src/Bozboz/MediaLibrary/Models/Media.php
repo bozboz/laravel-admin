@@ -58,9 +58,8 @@ class Media extends Base
 	 */
 	public static function forModel(Model $model, $foreignKey = null)
 	{
-		if ($foreignKey) {
-			return $model->belongsTo(get_class(), $foreignKey);
-		}
+		if ($foreignKey) return $model->belongsTo(get_class(), $foreignKey);
+
 		return $model->morphToMany(get_class(), 'mediable')->orderBy('sorting');
 	}
 
