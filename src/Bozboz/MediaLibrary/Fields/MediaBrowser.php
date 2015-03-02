@@ -48,7 +48,7 @@ class MediaBrowser extends Field
 		$values = Form::getValueAttribute($this->name);
 		$mediaFactory = $this->relation->getRelated();
 
-		$items = $values ? $mediaFactory->whereIn('id', $values)->get()->map(function($inst) {
+		$items = $values ? $mediaFactory->whereIn('id', (array)$values)->get()->map(function($inst) {
 			return [
 				'id' => $inst->id,
 				'type' => $inst,
