@@ -27,10 +27,12 @@ class Media extends Base
 	{
 		if (Input::hasFile('filename')) {
 			$file = Input::file('filename');
-			$destinationPath = public_path() . '/media/' . strtolower($this->type) . '/';
+			$type = explode('/', $file->getMimeType())[0];
+			$destinationPath = public_path('media/' . $type);
 			$filename = $this->cleanFilename($file->getClientOriginalName());
 			$uploadSuccess = $file->move($destinationPath, $filename);
 			$this->attributes['filename'] = $filename;
+			$this->attributes['type'] = $type;
 		} else {
 			$this->attributes['filename'] = $value;
 		}
