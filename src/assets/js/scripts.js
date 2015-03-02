@@ -1,7 +1,7 @@
 jQuery(function($){
-	
+
 	$('.select2').select2();
-	
+
 	$('textarea.html-editor').summernote({
 		height: 230,
 		toolbar: [
@@ -12,8 +12,27 @@ jQuery(function($){
 			['insert', ['link', 'picture', 'video']],
 			['view', ['fullscreen', 'codeview']],
 			['help', ['help']]
-		]
+		],
+		onImageUpload: function(files, editor, welEditable) {
+			sendFile(files[0], editor, welEditable);
+		}
 	});
+
+	function sendFile(file, editor, welEditable) {
+		data = new FormData();
+		data.append("filename", file);
+		$.ajax({
+			data: data,
+			type: "POST",
+			url: "/admin/media",
+			cache: false,
+			contentType: false,
+			processData: false,
+			success: function(url) {
+				editor.insertImage(welEditable, url);
+			}
+		});
+	}
 
 	var masonryContainer = $('.js-mason').masonry({ "columnWidth": 187, "itemSelector": ".masonry-item" });
 	masonryContainer.imagesLoaded( function() {
@@ -59,5 +78,5 @@ jQuery(function($){
 		}
 		return newObj;
 	}
-	
+
 });
