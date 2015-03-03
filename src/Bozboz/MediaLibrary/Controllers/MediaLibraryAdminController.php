@@ -49,13 +49,18 @@ class MediaLibraryAdminController extends ModelAdminController
 	public function store()
 	{
 		$data = [];
+		$captions = Input::get('caption', []);
 
 		if (Input::hasFile('files')) {
-			foreach(Input::file('files') as $file) {
+			foreach(Input::file('files') as $index => $file) {
 				$newMedia = $this->decorator->newModelInstance($file);
 				$type = explode('/', $file->getMimeType())[0];
 				$filename = $this->cleanFilename($file->getClientOriginalName());
 				$uploadSuccess = $file->move(public_path('media/' . $type), $filename);
+
+				if (array_key_exists($index, $captions)) {
+					$newMedia->caption = $captions[$index];
+				}
 
 				$newMedia->filename = $filename;
 				$newMedia->type = $type;
@@ -64,7 +69,7 @@ class MediaLibraryAdminController extends ModelAdminController
 				$data[] = [
 					'url' => action(__CLASS__ . '@edit', $newMedia->id),
 					'thumbnailUrl' => asset($newMedia->getFilename('library')),
-					'name' => $newMedia->filename,
+					'name' => $newMedia->caption ?: $newMedia->filename,
 					'deleteUrl' => action(__CLASS__ . '@destroy', $newMedia->id),
 					'deleteType' => 'DELETE'
 				];
