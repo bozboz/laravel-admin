@@ -1,11 +1,14 @@
 <?php namespace Bozboz\MediaLibrary\Decorators;
 
-use Bozboz\Admin\Decorators\ModelAdminDecorator;
-use Bozboz\MediaLibrary\Models\Media;
 use Illuminate\Config\Repository;
+
+use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Fields\SelectField;
 use Bozboz\Admin\Fields\TextField;
+use Bozboz\Admin\Reports\Filters\SearchListingFilter;
+
 use Bozboz\MediaLibrary\Fields\FileField;
+use Bozboz\MediaLibrary\Models\Media;
 
 class MediaAdminDecorator extends ModelAdminDecorator
 {
@@ -42,13 +45,15 @@ class MediaAdminDecorator extends ModelAdminDecorator
 		);
 	}
 
-	public function getListingModels()
-	{
-		return $this->model->latest()->paginate(30);
-	}
-
 	public function getHeading($plural = false)
 	{
 		return 'Media';
+	}
+
+	public function getListingFilters()
+	{
+		return [
+			new SearchListingFilter('search', ['filename'])
+		];
 	}
 }
