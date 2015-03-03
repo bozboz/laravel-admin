@@ -1,6 +1,6 @@
 <?php namespace Bozboz\MediaLibrary\Models;
 
-Trait Mediable
+Trait MediableTrait
 {
 	public function media()
 	{
