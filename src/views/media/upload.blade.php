@@ -71,7 +71,7 @@
 			<strong class="error text-danger"></strong>
 		</td>
 		<td>
-			<input name="caption[]" placeholder="Caption">
+			<input name="caption[]" placeholder="Caption" class="caption">
 		</td>
 		<td>
 			<p class="size">Processing...</p>
@@ -142,20 +142,20 @@
 	$(function () {
 		'use strict';
 
-		// Initialize the jQuery File Upload widget:
 		$('#fileupload').fileupload({
 			url: this.action
 		});
 
-		// Enable iframe cross-domain access via redirect option:
-		$('#fileupload').fileupload(
-			'option',
-			'redirect',
-			window.location.href.replace(
-				/\/[^\/]*$/,
-				'/cors/result.html?%s'
-			)
-		);
+		$('#fileupload').bind('fileuploadsubmit', function (e, data) {
+			var emptyCaptions = $('.caption').filter(function() {
+				return !this.value;
+			});
+			if (emptyCaptions.length) {
+				emptyCaptions.first().focus();
+				data.context.find('button').prop('disabled', false);
+				return false;
+			}
+		});
 	});
 </script>
 @stop
