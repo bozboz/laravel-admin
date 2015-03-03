@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Decorators;
 
-use Event, Str;
+use Event, Str, Config;
 use Bozboz\Admin\Models\Base;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Fluent;
@@ -48,10 +48,17 @@ abstract class ModelAdminDecorator
 	 * @param  Illuminate\Database\Eloquent\Builder  $builder
 	 * @return void
 	 */
-	protected function filterListing(Builder $builder)
+	protected function filterListingQuery(Builder $query)
 	{
 		foreach($this->getListingFilters() as $listingFilter) {
-			$listingFilter->filter($builder);
+			$listingFilter->filter($query);
+		}
+	}
+
+	protected function modifyListingQuery(Builder $query)
+	{
+		if ($this->model->usesTimestamps()) {
+			$query->latest();
 		}
 	}
 
@@ -62,7 +69,13 @@ abstract class ModelAdminDecorator
 	 */
 	public function getListingModels()
 	{
-		return $this->model->all();
+		$query = $this->model->newQuery();
+
+		$this->filterListingQuery($query);
+
+		$this->modifyListingQuery($query);
+
+		return $query->paginate(Config::get('admin::listing_items_per_page'));
 	}
 
 	/**

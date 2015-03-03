@@ -1,11 +1,23 @@
 # Version 0.5.0 (FUTURE)
 
+-   Null data sanitisation added, by defining a $nullable property on a model
+-   Fixed error when sorting non-nestable models
 -   Bug fix with DateTimeField concerning rendering of the DateTime DB value
--   Change scope of `consolidateJavascript` method on `ModelAdminController` from
-    private to protected
--   Add `getSuccessResponse` to `ModelAdminController`. This centralises the call
-    to `Redirect::action()` and allows it be easily changed by subtypes.
+-   Increase scope of `consolidateJavascript` method on ModelAdminController.
+-   Add `getSuccessResponse`, `getStoreResponse` and `getUpdateResponse` methods to `ModelAdminController`.
 -   Utilise $fillable over $guarded in Page
+-   Introduced `getListingBuilder` to ModelAdminDecorator to easily override query builder.
+-   Listing filters will now work out of the box.
+-   Abstracted some display logic from ListingFilter to ArrayListingFilter.
+-   Moved Bozboz\Admin\Reports\ListingFilter to abstract Bozboz\Admin\Reports\Filters\ListingFilter.
+-   Added SearchListingFilter.
+-	Output actual name of User on index screen. 
+-   Meta\Provider::forPage method now accepts a more flexible MetaInterface object, as opposed to a concrete Page model
+-	Styling amends to bootstrap classes
+
+
+# Version 0.4.3 (2015-02-19)
+-   Add "meta_title" field to pages table, which replaces "html_title" field
 
 
 # Version 0.4.2 (2015-01-26)

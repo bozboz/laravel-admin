@@ -393,3 +393,12 @@ li.placeholder {
 		border-bottom: 1px solid $mid;
 	}
 }
+
+/* Bootstrap overrides */
+.btn-group .btn {
+	font-size: 12px;
+}
+
+.btn-group + .btn {
+	margin-right: 0;
+}

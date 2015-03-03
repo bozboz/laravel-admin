@@ -1,37 +1,40 @@
 <?php namespace Bozboz\Admin\Meta;
 
-use Bozboz\Admin\Models\Page;
 use Illuminate\Config\Repository as Config;
 use App;
 
 class Provider
 {
-	public function __construct(Page $page, Config $config)
+	protected $instance;
+
+	protected $config;
+
+	public function __construct(MetaInterface $instance, Config $config)
 	{
-		$this->page = $page;
+		$this->instance = $instance;
 		$this->config = $config;
 	}
 
-	public static function forPage(Page $page)
+	public static function forPage(MetaInterface $instance)
 	{
-		return new static($page, App::make('config'));
+		return new static($instance, App::make('config'));
 	}
 
 	public function getTitle()
 	{
-		if (empty($this->page->html_title)) {
-			return $this->config->get('app.site_title', 'Default Site Title');
-		} else {
-			return $this->page->html_title;
-		}
+		$title = $this->instance->getTitle();
+
+		if ($title) return $title;
+
+		return $this->config->get('app.site_title', 'Default Site Title');
 	}
 
 	public function getDescription()
 	{
-		if (empty($this->page->meta_description)) {
-			return $this->config->get('app.meta_description', 'Default Meta Description');
-		} else {
-			return $this->page->meta_description;
-		}
+		$description = $this->instance->getDescription();
+
+		if ($description) return $description;
+
+		return $this->config->get('app.meta_description', 'Default Meta Description');
 	}
 }

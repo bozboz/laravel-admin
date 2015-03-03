@@ -26,7 +26,7 @@ class DateTimeField extends Field
 		$jsonConfig = json_encode($this->configOptions);
 
 		return <<<JAVASCRIPT
-			jQuery(function($) {
+			(function() {
 				var config = $jsonConfig;
 
 				var dateTimePickerDefaults = {
@@ -49,7 +49,7 @@ class DateTimeField extends Field
 
 				var dateTime = $('#$this->name').val() === '' ? null : stringToDate($('#$this->name').val())
 
-				//Call stringToDate on applicable config values
+				//Parse config and convert applicable strings to Date objects
 				var dateTimeFields = ['minDateTime', 'maxDateTime', 'defaultDateTime'];
 				for (var i = 0; i < dateTimeFields.length; i++) {
 					var j = dateTimeFields[i];
@@ -68,7 +68,7 @@ class DateTimeField extends Field
 				if (dateTime !== null) {
 					$('#$this->altName').datetimepicker('setDate', dateTime);
 				}
-			});
+			})();
 JAVASCRIPT;
 	}
 }
