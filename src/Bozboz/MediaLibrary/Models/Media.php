@@ -23,33 +23,6 @@ class Media extends Base
 		return new MediaValidator;
 	}
 
-	public function setFilenameAttribute($value)
-	{
-		if (Input::hasFile('filename')) {
-			$file = Input::file('filename');
-			$type = explode('/', $file->getMimeType())[0];
-			$destinationPath = public_path('media/' . $type);
-			$filename = $this->cleanFilename($file->getClientOriginalName());
-			$uploadSuccess = $file->move($destinationPath, $filename);
-			$this->attributes['filename'] = $filename;
-			$this->attributes['type'] = $type;
-		} else {
-			$this->attributes['filename'] = $value;
-		}
-	}
-
-	private function cleanFilename($filename)
-	{
-		$filenameExploded = explode('.', $filename);
-		$filename = $filenameExploded[0];
-		$fileExtension = isset($filenameExploded[1]) ? $filenameExploded[1] : '';
-
-		$cleanFilename = Str::slug($filename);
-		$cleanFilename .= empty($fileExtension) ? '' : '.' . $fileExtension;
-
-		return $cleanFilename;
-	}
-
 	/**
 	 * Accessor method to retrieve all media on a model
 	 *

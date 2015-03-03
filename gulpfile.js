@@ -119,6 +119,27 @@ gulp.task('compile-scripts', function(){
 });
 gulp.task('scripts', ['compile-scripts']);
 
+gulp.task('compile-jquery-uploader', function() {
+	var blueimp = basePaths.bower + 'blueimp-file-upload';
+	var files = [
+		blueimp + '/js/vendor/jquery.ui.widget.js',
+		basePaths.bower + 'blueimp-tmpl/js/tmpl.min.js',
+		basePaths.bower + 'blueimp-load-image/js/load-image.all.min.js',
+		basePaths.bower + 'blueimp-canvas-to-blob/js/canvas-to-blob.min.js',
+		blueimp + '/js/jquery.iframe-transport.js',
+		blueimp + '/js/jquery.fileupload.js',
+		blueimp + '/js/jquery.fileupload-process.js',
+		blueimp + '/js/jquery.fileupload-image.js',
+		blueimp + '/js/jquery.fileupload-validate.js',
+		blueimp + '/js/jquery.fileupload-ui.js'
+	];
+
+	gulp.src(files)
+		.pipe(plugins.concat('media.min.js'))
+		.pipe(isProduction ? plugins.uglify({outSourceMap: false}) : gutil.noop())
+		.pipe(gulp.dest(paths.scripts.dest));
+});
+
 gulp.task('watch', ['css', 'scripts'], function(){
 	gulp.watch(appFiles.styles, ['css']).on('change', function(evt) {
 		changeEvent(evt);

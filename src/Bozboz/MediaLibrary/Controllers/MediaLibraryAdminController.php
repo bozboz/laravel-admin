@@ -3,10 +3,12 @@
 use Bozboz\Admin\Controllers\ModelAdminController;
 use Bozboz\Admin\Reports\Report;
 use Bozboz\MediaLibrary\Decorators\MediaAdminDecorator;
-use View, Response, Request;
+use View, Response, Request, Input, Redirect, Str;
 
 class MediaLibraryAdminController extends ModelAdminController
 {
+	protected $createView = 'admin::media.upload';
+
 	public function __construct(MediaAdminDecorator $media)
 	{
 		parent::__construct($media);
@@ -18,7 +20,7 @@ class MediaLibraryAdminController extends ModelAdminController
 			return $this->ajaxJSONData();
 		}
 		$report = new Report($this->decorator);
-		$report->overrideView('media-library::overview');
+		$report->overrideView('admin::media.overview');
 		return $report->render(array('controller' => get_class($this)));
 	}
 
@@ -43,4 +45,47 @@ class MediaLibraryAdminController extends ModelAdminController
 			'links' => (string)$items->links()
 		]);
 	}
+
+	public function store()
+	{
+		$data = [];
+
+		if (Input::hasFile('files')) {
+			foreach(Input::file('files') as $file) {
+				$newMedia = $this->decorator->newModelInstance($file);
+				$type = explode('/', $file->getMimeType())[0];
+				$filename = $this->cleanFilename($file->getClientOriginalName());
+				$uploadSuccess = $file->move(public_path('media/' . $type), $filename);
+
+				$newMedia->filename = $filename;
+				$newMedia->type = $type;
+				$newMedia->save();
+
+				$data[] = [
+					'url' => action(__CLASS__ . '@edit', $newMedia->id),
+					'thumbnailUrl' => asset($newMedia->getFilename('library')),
+					'name' => $newMedia->filename,
+					'deleteUrl' => action(__CLASS__ . '@destroy', $newMedia->id),
+					'deleteType' => 'DELETE'
+				];
+			}
+		}
+
+		return Response::json(['files' => $data]);
+	}
+
+	/**
+	 * Clean uploaded filename string
+	 *
+	 * @param  string  $filename
+	 * @return string
+	 */
+	private function cleanFilename($filename)
+	{
+		$filenameParts = explode('.', $filename);
+		$filenameParts[0] = Str::slug($filenameParts[0]);
+
+		return implode('.', $filenameParts);
+	}
+
 }
