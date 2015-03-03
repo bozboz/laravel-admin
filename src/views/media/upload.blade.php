@@ -1,5 +1,10 @@
 @extends('admin::layouts.default')
 
+@section('styles')
+	@parent
+	<link rel="stylesheet" href="/packages/bozboz/admin/css/media.css">
+@stop
+
 @section('main')
 
 	<div class="form-row discrete">
