@@ -88,4 +88,15 @@ class MediaLibraryAdminController extends ModelAdminController
 		return implode('.', $filenameParts);
 	}
 
+	public function destroy($id)
+	{
+		$media = $this->decorator->findInstance($id);
+
+		$media->delete();
+
+		return Response::json(['files' => [
+			$media->getFilename() => true
+		]]);
+	}
+
 }
