@@ -14,6 +14,7 @@
 -	Output actual name of User on index screen. 
 -   Meta\Provider::forPage method now accepts a more flexible MetaInterface object, as opposed to a concrete Page model
 -	Styling amends to bootstrap classes
+-	Output flash message upon successful model update
 
 
 # Version 0.4.3 (2015-02-19)
