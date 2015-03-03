@@ -16,13 +16,12 @@
 			</a>
 			<div class="icons">
 				<p>{{ $row->getColumns()['caption'] }}</p>
-				<a href="{{ URL::action($controller . '@edit', array($row->getId())) }}" class="btn btn-info btn-sm pull-right">
-					<i class="fa fa-pencil"></i>
-					Edit
-				</a>
 
-				{{ Form::model($row->getModel(), array('class' => 'inline-form', 'action' => array($controller . '@destroy', $row->getId()), 'method' => 'DELETE')) }}
-					<button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
+				{{ Form::model($row->getModel(), array('action' => array($controller . '@destroy', $row->getId()), 'method' => 'DELETE')) }}
+					<button data-warn="true" class="btn btn-danger btn-xs" type="submit">
+						<i class="fa fa-minus-square"></i>
+						Delete
+					</button>
 				{{ Form::close() }}
 			</div>
 		</li>
