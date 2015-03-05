@@ -53,7 +53,7 @@ class MediaAdminDecorator extends ModelAdminDecorator
 	public function getListingFilters()
 	{
 		return [
-			new SearchListingFilter('search', ['filename'])
+			new SearchListingFilter('search', ['filename', 'caption'])
 		];
 	}
 }
