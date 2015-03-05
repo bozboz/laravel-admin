@@ -3,7 +3,6 @@
 use Input, Config, Str;
 use Illuminate\Support\Collection;
 use Bozboz\MediaLibrary\Validators\MediaValidator;
-use Bozboz\MediaLibrary\Exceptions\InvalidConfigurationException;
 use Bozboz\Admin\Models\Base;
 use Illuminate\Database\Eloquent\Model;
 
