@@ -1,4 +1,4 @@
-# Version 0.5.0 (FUTURE)
+# Version 1.0.0 (FUTURE)
 
 -   Null data sanitisation added, by defining a $nullable property on a model
 -   Fixed error when sorting non-nestable models
@@ -14,6 +14,13 @@
 -	Output actual name of User on index screen. 
 -   Meta\Provider::forPage method now accepts a more flexible MetaInterface object, as opposed to a concrete Page model
 -	Styling amends to bootstrap classes
+-   Moved bozboz/media-library package inside this repository
+-   Media can now be uploaded in bulk
+-   Media overview is now paginated, searchable and in descending date order
+-   Media can be uploaded on edit screens containing the Media Browser field
+-   Failed validation no longer removes media browser selections
+-   Summernote WYSIWYG editor will now upload to the Media Library
+-   Type is now automatically resolved from the uploaded file's mime type
 
 
 # Version 0.4.3 (2015-02-19)
