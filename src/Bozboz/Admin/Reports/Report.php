@@ -62,10 +62,14 @@ class Report
 
 	public function render(array $params)
 	{
-		$params['sortableClass'] = $this->decorator->getModel() instanceof Sortable ? ' sortable' : '';
-		$params['report'] = $this;
-		$params['fullModelName'] = get_class($this->decorator->getModel());
-		$params['modelName'] = $this->decorator->getHeading(true);
+		$params = array_merge([
+			'sortableClass' => $this->decorator->getModel() instanceof Sortable ? ' sortable' : '',
+			'report' => $this,
+			'fullModelName' => get_class($this->decorator->getModel()),
+			'modelName' => $this->decorator->getHeading(true),
+			'canCreate' => true
+		], $params);
+
 		return View::make($this->view, $params);
 	}
 }
