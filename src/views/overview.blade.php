@@ -29,12 +29,12 @@
 				<div class="faux-cell">{{ $value }}</div>
 			@endforeach
 				<div class="no-wrap faux-cell">
-					<a href="{{ URL::action($controller . '@edit', array($row->getModel()->id)) }}" class="btn btn-info btn-sm" type="submit">
+					<a href="{{ URL::action($controller . '@edit', [$row->getId()]) }}" class="btn btn-info btn-sm" type="submit">
 						<i class="fa fa-pencil"></i>
 						Edit
 					</a>
 
-					{{ Form::model($row->getModel(), array('class' => 'inline-form', 'action' => array($controller . '@destroy', $row->getModel()->id), 'method' => 'DELETE')) }}
+					{{ Form::open(['class' => 'inline-form', 'action' => [ $controller . '@destroy', $row->getId() ], 'method' => 'DELETE']) }}
 						<button class="btn btn-danger btn-sm" data-warn="true" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
 					{{ Form::close() }}
 				</div>
