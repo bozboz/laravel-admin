@@ -7,7 +7,7 @@ use Bozboz\Admin\Fields\SelectField;
 use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Reports\Filters\SearchListingFilter;
 
-use Bozboz\MediaLibrary\Fields\FileField;
+use Bozboz\MediaLibrary\Fields\MediaField;
 use Bozboz\MediaLibrary\Models\Media;
 
 class MediaAdminDecorator extends ModelAdminDecorator
@@ -37,10 +37,9 @@ class MediaAdminDecorator extends ModelAdminDecorator
 	public function getFields($instance)
 	{
 		return array(
-			new TextField(array('name' => 'caption')),
-			new FileField(array(
-				'name' => 'filename',
-				'model' => $instance
+			new TextField('caption'),
+			new MediaField($instance, array(
+				'name' => 'filename'
 			))
 		);
 	}
