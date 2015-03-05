@@ -1,10 +1,5 @@
 @extends('admin::layouts.default')
 
-@section('styles')
-	@parent
-	<link rel="stylesheet" href="/packages/bozboz/admin/css/media.css">
-@stop
-
 @section('main')
 
 	<div class="form-row discrete">
@@ -137,7 +132,7 @@
 	</tr>
 {% } %}
 </script>
-<script src="/packages/bozboz/admin/js/media.min.js"></script>
+<script src="/packages/bozboz/admin/js/upload-ui.min.js"></script>
 <script>
 	$(function () {
 		'use strict';

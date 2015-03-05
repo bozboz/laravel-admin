@@ -2,7 +2,6 @@ var basePaths = {
 	src: 'src/assets/',
 	dest: 'public/',
 	bower: 'bower_components/',
-	jqueryui: 'bower_components/jquery-ui/ui/'
 };
 var paths = {
 	images: {
@@ -27,6 +26,9 @@ var appFiles = {
 	scripts: [paths.scripts.src + 'scripts.js', paths.scripts.src + 'media-browser.js']
 };
 
+var jQueryUi = basePaths.bower + 'jquery-ui/ui/';
+var blueImp = basePaths.bower + 'blueimp-file-upload/js/';
+
 var vendorFiles = {
 	styles: [
 		basePaths.bower + 'summernote/dist/summernote.css',
@@ -38,8 +40,9 @@ var vendorFiles = {
 		basePaths.bower + 'select2/select2-bootstrap.css',
 	],
 	scripts: [
-		basePaths.jqueryui + 'core.js',
-		basePaths.jqueryui + 'datepicker.js',
+		jQueryUi + 'core.js',
+		jQueryUi + 'datepicker.js',
+		jQueryUi + 'widget.js',
 
 		basePaths.bower + 'bootstrap/dist/js/bootstrap.min.js',
 		basePaths.bower + 'summernote/dist/summernote.min.js',
@@ -50,11 +53,12 @@ var vendorFiles = {
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js',
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js',
 		basePaths.bower + 'select2/select2.min.js',
-		basePaths.bower + 'knockout/dist/knockout.js'
+		basePaths.bower + 'knockout/dist/knockout.js',
+
+		blueImp + 'jquery.iframe-transport.js',
+		blueImp + 'jquery.fileupload.js'
 	]
 };
-
-
 
 /*
 	Let the magic begin
@@ -117,28 +121,26 @@ gulp.task('compile-scripts', function(){
 		.pipe(gulp.dest(paths.scripts.dest));
 
 });
-gulp.task('scripts', ['compile-scripts']);
 
-gulp.task('compile-jquery-uploader', function() {
-	var blueimp = basePaths.bower + 'blueimp-file-upload';
-	var files = [
-		blueimp + '/js/vendor/jquery.ui.widget.js',
-		basePaths.bower + 'blueimp-tmpl/js/tmpl.min.js',
+gulp.task('compile-media-scripts', function() {
+	var scripts = [
+		basePaths.bower + 'blueimp-tmpl/js/tmpl.js',
 		basePaths.bower + 'blueimp-load-image/js/load-image.all.min.js',
-		basePaths.bower + 'blueimp-canvas-to-blob/js/canvas-to-blob.min.js',
-		blueimp + '/js/jquery.iframe-transport.js',
-		blueimp + '/js/jquery.fileupload.js',
-		blueimp + '/js/jquery.fileupload-process.js',
-		blueimp + '/js/jquery.fileupload-image.js',
-		blueimp + '/js/jquery.fileupload-validate.js',
-		blueimp + '/js/jquery.fileupload-ui.js'
+		basePaths.bower + 'blueimp-canvas-to-blob/js/canvas-to-blob.js',
+		blueImp + 'jquery.fileupload-process.js',
+		blueImp + 'jquery.fileupload-image.js',
+		blueImp + 'jquery.fileupload-validate.js',
+		blueImp + 'jquery.fileupload-ui.js'
 	];
 
-	gulp.src(files)
-		.pipe(plugins.concat('media.min.js'))
+	gulp.src(scripts)
+		.pipe(plugins.concat('upload-ui.min.js'))
 		.pipe(isProduction ? plugins.uglify({outSourceMap: false}) : gutil.noop())
 		.pipe(gulp.dest(paths.scripts.dest));
+
 });
+
+gulp.task('scripts', ['compile-scripts', 'compile-media-scripts']);
 
 gulp.task('watch', ['css', 'scripts'], function(){
 	gulp.watch(appFiles.styles, ['css']).on('change', function(evt) {
