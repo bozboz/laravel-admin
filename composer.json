@@ -30,7 +30,7 @@
     "minimum-stability": "stable",
     "extra": {
         "branch-alias": {
-            "dev-media": "0.5.x-dev"
+            "dev-media": "1.0.x-dev"
         }
     }
 }
