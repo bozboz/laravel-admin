@@ -32,7 +32,7 @@ abstract class Field extends Fluent
 
 	public function getErrors(ViewErrorBag $errors)
 	{
-		if ($errors->first($this->get('name'))) {
+		if ($this->name && $errors->first($this->name)) {
 			return '<p><strong>' . $errors->first($this->get('name')) . '</strong></p>';
 		}
 	}
