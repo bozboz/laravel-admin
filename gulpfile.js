@@ -52,7 +52,7 @@ var vendorFiles = {
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js',
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js',
 		basePaths.bower + 'select2/select2.min.js',
-		basePaths.bower + 'knockout/dist/knockout.js',
+		paths.scripts.dest + 'knockout.js',
 
 		blueImp + 'jquery.iframe-transport.js',
 		blueImp + 'jquery.fileupload.js'
@@ -146,7 +146,12 @@ gulp.task('move-sorting-scripts', function() {
 		.pipe(isProduction ? plugins.uglify({outSourceMap: false}) : gutil.noop())
 		.pipe(gulp.dest(paths.scripts.dest));
 
-	gulp.src(jQueryUi + 'sortable.js')
+	var scripts = [
+			jQueryUi + 'mouse.js',
+			jQueryUi + 'sortable.js'
+		];
+
+	gulp.src(scripts)
 		.pipe(plugins.concat('ui-sortable.min.js'))
 		.pipe(isProduction ? plugins.uglify({outSourceMap: false}) : gutil.noop())
 		.pipe(gulp.dest(paths.scripts.dest));		
