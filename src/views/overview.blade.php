@@ -48,3 +48,9 @@
 	</div>
 	@include('admin::partials.new')
 @stop
+
+
+@section('scripts')
+	@parent
+	<script src="/packages/bozboz/admin/js/sortable.min.js"></script>
+@stop
