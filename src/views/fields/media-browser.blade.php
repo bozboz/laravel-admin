@@ -17,38 +17,19 @@
   </div>
 
   <span class="btn btn-success fileinput-button">
-        <i class="glyphicon glyphicon-plus"></i>
-        <span>Select files...</span>
-        <!-- The file input field used as target for the file upload widget -->
-        <input id="fileupload" type="file" name="files[]" multiple>
-    </span>
-    <br>
-    <br>
-    <!-- The global progress bar -->
-    <div id="progress" class="progress">
-        <div class="progress-bar progress-bar-success"></div>
-    </div>
-    <!-- The container for the uploaded files -->
-  <div id="files" class="files"></div>
+    <i class="glyphicon glyphicon-plus"></i>
+    <span>Select files...</span>
+    <input class="js-file-upload" type="file" name="files[]" multiple>
+  </span>
+
+  <br>
+  <br>
+
+  <div class="js-progress progress">
+    <div class="progress-bar progress-bar-success"></div>
+  </div>
 
   <script>
-    $(function () {
-        'use strict';
-
-        $('#fileupload').fileupload({
-            url: '/admin/media',
-            dataType: 'json',
-            formData: { },
-            progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('#progress .progress-bar').css(
-                    'width',
-                    progress + '%'
-                );
-            }
-        }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
-    });
     $('.js-media-browser-{{ $id }}').data('values', {{ $data }});
   </script>
 
