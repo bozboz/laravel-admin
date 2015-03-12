@@ -46,7 +46,6 @@ var vendorFiles = {
 
 		basePaths.bower + 'bootstrap/dist/js/bootstrap.min.js',
 		basePaths.bower + 'summernote/dist/summernote.min.js',
-		basePaths.bower + 'jquery-sortable/source/js/jquery-sortable-min.js',
 		basePaths.bower + 'imagesloaded/imagesloaded.pkgd.min.js',
 		basePaths.bower + 'masonry/dist/masonry.pkgd.min.js',
 		basePaths.bower + 'handlebars/handlebars.min.js',
@@ -140,7 +139,22 @@ gulp.task('compile-media-scripts', function() {
 
 });
 
-gulp.task('scripts', ['compile-scripts', 'compile-media-scripts']);
+gulp.task('move-sorting-scripts', function() {
+
+	gulp.src(basePaths.bower + 'jquery-sortable/source/js/jquery-sortable-min.js')
+		.pipe(plugins.concat('sortable.min.js'))
+		.pipe(isProduction ? plugins.uglify({outSourceMap: false}) : gutil.noop())
+		.pipe(gulp.dest(paths.scripts.dest));
+
+	gulp.src(jQueryUi + 'sortable.js')
+		.pipe(plugins.concat('ui-sortable.min.js'))
+		.pipe(isProduction ? plugins.uglify({outSourceMap: false}) : gutil.noop())
+		.pipe(gulp.dest(paths.scripts.dest));		
+});
+
+
+
+gulp.task('scripts', ['compile-scripts', 'compile-media-scripts', 'move-sorting-scripts']);
 
 gulp.task('watch', ['css', 'scripts'], function(){
 	gulp.watch(appFiles.styles, ['css']).on('change', function(evt) {
