@@ -52,7 +52,7 @@ var vendorFiles = {
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js',
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js',
 		basePaths.bower + 'select2/select2.min.js',
-		paths.scripts.dest + 'knockout.js',
+		'src/assets/js/knockout.js',
 
 		blueImp + 'jquery.iframe-transport.js',
 		blueImp + 'jquery.fileupload.js'
