@@ -13,6 +13,7 @@ class Report
 	public function __construct(ModelAdminDecorator $decorator)
 	{
 		$this->decorator = $decorator;
+		$this->rows = $this->decorator->getListingModels();
 	}
 
 	public function overrideView($view)
@@ -27,14 +28,12 @@ class Report
 
 	public function hasRows()
 	{
-		$this->rows = $this->decorator->getListingModels();
 		return count($this->rows) > 0;
 	}
 
 	public function getRows()
 	{
 		$rows = array();
-		$this->rows = $this->rows ?: $this->decorator->getListingModels();
 
 		foreach($this->rows as $row) {
 			$rows[] = new Row($row->id, $row, $this->decorator->getColumns($row));

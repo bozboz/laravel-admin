@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Controllers;
 
-use View, Input, Redirect;
+use View, Input, Redirect, Session;
 use BaseController;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Report;
@@ -86,6 +86,7 @@ abstract class ModelAdminController extends BaseController
 			$modelInstance->save();
 			$this->decorator->updateSyncRelations($modelInstance, $input);
 			$response = $this->getUpdateResponse($modelInstance);
+			Session::flash('model.updated', sprintf('Successfully updated "%s"', $this->decorator->getLabel($modelInstance)));
 		} else {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}

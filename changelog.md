@@ -21,6 +21,8 @@
 -   Failed validation no longer removes media browser selections
 -   Summernote WYSIWYG editor will now upload to the Media Library
 -   Type is now automatically resolved from the uploaded file's mime type
+-	Output flash message upon successful model update
+-   If model is sortable, automatically order by sorting field in Admin
 
 
 # Version 0.4.3 (2015-02-19)

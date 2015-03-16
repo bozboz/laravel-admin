@@ -10,11 +10,11 @@ use Bozboz\Admin\Decorators\ModelAdminDecorator;
  */
 class BelongsToManyField extends Field
 {
-	private $decorator;
+	protected $decorator;
 
-	private $relationship;
+	protected $relationship;
 
-	private $callback;
+	protected $callback;
 
 	/**
 	 * @param ModelAdminDecorator $decorator The decorator used to render the model instance
@@ -43,10 +43,9 @@ class BelongsToManyField extends Field
 		$html .= '<select class="select2 form-control" multiple name="' . $name . '[]">';
 		
 		$relatedModels = $this->relationship->get();
-		foreach ($this->generateQueryBuilder()->get() as $model) {
-			$id = $name . '[' . $model->getKey() . ']';
-			
-			$html .= '<option ' . ($relatedModels->contains($model) ? 'selected' : '') . ' value="' . $model->getKey() . '">' . $this->decorator->getLabel($model) . '</option>';
+
+		foreach ($this->generateQueryBuilder()->get() as $i => $model) {
+			$html .= '<option ' . ($relatedModels->contains($model) ? 'selected' : '') . ' value="' . $model->getKey() . $i . '">' . $this->decorator->getLabel($model) . '</option>';
 		}
 
 		return $html . '</select>';
@@ -57,7 +56,7 @@ class BelongsToManyField extends Field
 	 *
 	 * @return Illuminate\Database\Query\Builder
 	 */
-	private function generateQueryBuilder()
+	protected function generateQueryBuilder()
 	{
 		$parentModel = $this->relationship->getParent();
 		$relatedModel = $this->relationship->getRelated();

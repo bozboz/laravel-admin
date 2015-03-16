@@ -5,6 +5,12 @@
 	@include('admin::partials.new')
 	<h1>{{ $modelName }}</h1>
 
+	@if (Session::has('model.updated'))
+		<div id="js-alert" class="alert alert-success fade out" data-alert="alert">
+			{{ Session::get('model.updated') }}
+		</div>
+	@endif
+
 	@include('admin::partials.sort-alert')
 
 	{{ $report->getHeader() }}
@@ -47,4 +53,13 @@
 	@endif
 	</div>
 	@include('admin::partials.new')
+
+	@section('scripts')
+		@parent
+		<script>
+			window.setTimeout(function () {
+				$("#js-alert").fadeOut();
+			}, 3000);
+		</script>
+	@stop
 @stop
