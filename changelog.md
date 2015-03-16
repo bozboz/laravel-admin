@@ -15,6 +15,7 @@
 -   Meta\Provider::forPage method now accepts a more flexible MetaInterface object, as opposed to a concrete Page model
 -	Styling amends to bootstrap classes
 -	Output flash message upon successful model update
+-   If model is sortable, automatically order by sorting field in Admin
 
 
 # Version 0.4.3 (2015-02-19)

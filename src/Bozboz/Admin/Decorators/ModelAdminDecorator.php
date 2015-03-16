@@ -2,6 +2,7 @@
 
 use Event, Str, Config;
 use Bozboz\Admin\Models\Base;
+use Bozboz\Admin\Models\Sortable;
 use Illuminate\Database\Eloquent\Builder;
 
 abstract class ModelAdminDecorator
@@ -39,7 +40,9 @@ abstract class ModelAdminDecorator
 
 	protected function modifyListingQuery(Builder $query)
 	{
-		if ($this->model->usesTimestamps()) {
+		if ($this->model instanceof Sortable) {
+			$query->orderBy($this->model->sortBy());
+		} elseif ($this->model->usesTimestamps()) {
 			$query->latest();
 		}
 	}
