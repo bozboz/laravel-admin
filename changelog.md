@@ -16,6 +16,7 @@
 -	Styling amends to bootstrap classes
 -	Output flash message upon successful model update
 -   If model is sortable, automatically order by sorting field in Admin
+-   Add menu active states
 
 
 # Version 0.4.3 (2015-02-19)

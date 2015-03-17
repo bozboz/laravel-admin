@@ -3,12 +3,18 @@
 use Event;
 use Auth;
 use Bozboz\Admin\Components\Menu;
+use Illuminate\Http\Request;
 
 class Nav
 {
+	function __construct(Menu $menu)
+	{
+		$this->menu = $menu;
+	}
+
 	function compose($view)
 	{
-		$menu = new Menu;
+		$menu = $this->menu;
 		Event::fire('admin.renderMenu', array($menu));
 		$view->with('menu', $menu)->with('user', Auth::user());
 	}
