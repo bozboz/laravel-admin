@@ -40,11 +40,7 @@ jQuery(function($){
 	});
 
 	$('#save-new-order').on('click', function() {
-		var objects = table.sortable('serialize')[0];
-		var data = [];
-		for (var i in objects) {
-			data.push(extractId(objects[i]));
-		}
+		var data = table.nestedSortable('toHierarchy');
 
 		$.post('/admin/sort', {model: table.data('model'), items: data});
 		$(this).closest('.alert').hide();
@@ -57,13 +53,18 @@ jQuery(function($){
 	$('.btn[data-warn]').on('click', function() {
 		return confirm('Are you sure you want to delete');
 	});
-
-	var table = $('.sortable').sortable({
-		handle: '.sorting-handle',
-		onDrop: function ($item, container, _super) {
-			$('.js-save-notification').show();
-			_super($item, container);
-		}
+	
+	var table = $('.sortable').each(function(){
+		return $(this).nestedSortable({
+			handle: '.sorting-handle',
+			items: 'li',
+			toleranceElement: '> div',
+			// maxLevels: 0 = unlimited
+			maxLevels: $(this).hasClass('nested') ? 0 : 1,
+			stop: function (e, ui) {
+				$('.js-save-notification').show();
+			}
+		});
 	});
 
 	function extractId(obj)

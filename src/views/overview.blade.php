@@ -27,7 +27,7 @@
 			</li>
 
 		@foreach ($report->getRows() as $row)
-			<li class="faux-table-row" data-id="{{ $row->getId() }}">
+			<li class="faux-table-row" id="sortable-item_{{ $row->getId() }}">
 				<div class="faux-cell cell-small">
 					<i class="fa fa-sort sorting-handle"></i>
 				</div>

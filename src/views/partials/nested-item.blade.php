@@ -1,4 +1,4 @@
-			<li data-id="{{$row->getId()}}">
+			<li id="nested-item_{{$row->getId()}}">
 				<div class="nested-group">
 					<div class="actions">
 						<a href="{{ URL::action($controller . '@edit', array($row->getModel()->id)) }}" class="btn btn-info btn-sm" type="submit">

@@ -41,8 +41,10 @@ var vendorFiles = {
 	],
 	scripts: [
 		jQueryUi + 'core.js',
-		jQueryUi + 'datepicker.js',
 		jQueryUi + 'widget.js',
+		jQueryUi + 'datepicker.js',
+		jQueryUi + 'mouse.js',
+		jQueryUi + 'sortable.js',
 
 		basePaths.bower + 'bootstrap/dist/js/bootstrap.min.js',
 		basePaths.bower + 'summernote/dist/summernote.min.js',
@@ -52,6 +54,7 @@ var vendorFiles = {
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js',
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js',
 		basePaths.bower + 'select2/select2.min.js',
+		basePaths.bower + 'nestedSortable/jquery.ui.nestedSortable.js',
 		'src/assets/js/knockout.js',
 
 		blueImp + 'jquery.iframe-transport.js',
@@ -139,27 +142,7 @@ gulp.task('compile-media-scripts', function() {
 
 });
 
-gulp.task('move-sorting-scripts', function() {
-
-	gulp.src(basePaths.bower + 'jquery-sortable/source/js/jquery-sortable-min.js')
-		.pipe(plugins.concat('sortable.min.js'))
-		.pipe(isProduction ? plugins.uglify({outSourceMap: false}) : gutil.noop())
-		.pipe(gulp.dest(paths.scripts.dest));
-
-	var scripts = [
-			jQueryUi + 'mouse.js',
-			jQueryUi + 'sortable.js'
-		];
-
-	gulp.src(scripts)
-		.pipe(plugins.concat('ui-sortable.min.js'))
-		.pipe(isProduction ? plugins.uglify({outSourceMap: false}) : gutil.noop())
-		.pipe(gulp.dest(paths.scripts.dest));		
-});
-
-
-
-gulp.task('scripts', ['compile-scripts', 'compile-media-scripts', 'move-sorting-scripts']);
+gulp.task('scripts', ['compile-scripts', 'compile-media-scripts']);
 
 gulp.task('watch', ['css', 'scripts'], function(){
 	gulp.watch(appFiles.styles, ['css']).on('change', function(evt) {

@@ -27,6 +27,5 @@
 
 @section('scripts')
 	@parent
-	<script src="/packages/bozboz/admin/js/sortable.min.js"></script>
 	{{ $javascript }}
 @stop
