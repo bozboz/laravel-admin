@@ -66,9 +66,9 @@ class Menu extends Fluent
 	 */
 	public function activeClassForUrl($url)
 	{
-		$strippedUrl = str_replace($this->request->root() . '/', '', $url);
+		$matched = $this->matchUrlPattern($url, '/^%s$/');
 
-		return $this->getActiveClass($this->request->is($strippedUrl));
+		return $this->getActiveClass($matched);
 	}
 
 	/**
@@ -79,8 +79,22 @@ class Menu extends Fluent
 	 */
 	public function activeClassForPartialUrl($url)
 	{
-		$strippedUrl = str_replace($this->request->root() . '/', '', $url);
+		$matched = $this->matchUrlPattern($url, '/^%s(\/.+)?$/');
 
-		return $this->getActiveClass($this->request->is($strippedUrl, $strippedUrl . '/*'));
+		return $this->getActiveClass($matched);
+	}
+
+	/**
+	 * Match URL to pattern
+	 *
+	 * @param  string  $url
+	 * @param  string  $pattern
+	 * @return boolean
+	 */
+	protected function matchUrlPattern($url, $pattern)
+	{
+		$pattern = sprintf($pattern, preg_quote($url, '/'));
+
+		return (bool) preg_match($pattern, $this->request->url());
 	}
 }

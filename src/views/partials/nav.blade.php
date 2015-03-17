@@ -15,7 +15,7 @@
 
 		<div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-left">
-				<li class="{{ $menu->activeClassForUrl('admin') }}">
+				<li class="{{ $menu->activeClassForUrl(URL::to('admin')) }}">
 					<a href="{{ URL::to('admin') }}">
 						<i class="fa fa-home"></i>
 						Home
@@ -35,7 +35,7 @@
 						</ul>
 					</li>
 				@endforeach
-				<li class="{{ $menu->activeClassForPartialUrl('admin/users') }}">
+				<li class="{{ $menu->activeClassForPartialUrl(URL::to('admin/users')) }}">
 					<a href="{{URL::to('admin/users')}}">
 						<i class="fa fa-user"></i>
 						Users
