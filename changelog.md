@@ -23,7 +23,7 @@
 -   Type is now automatically resolved from the uploaded file's mime type
 -	Output flash message upon successful model update
 -   If model is sortable, automatically order by sorting field in Admin
-
+-   Added BelongsToField
 
 # Version 0.4.3 (2015-02-19)
 -   Add "meta_title" field to pages table, which replaces "html_title" field
