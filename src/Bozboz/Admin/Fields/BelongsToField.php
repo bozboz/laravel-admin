@@ -3,6 +3,7 @@
 use Closure, Form;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\ViewErrorBag;
 
 class BelongsToField extends Field
 {
@@ -72,6 +73,15 @@ class BelongsToField extends Field
 		};
 
 		return Form::label($this->relation->getForeignKey(), $this->label ?: $defaultLabel());
+	}
+
+	public function getErrors(ViewErrorBag $errors)
+	{
+		$name = $this->relation->getForeignKey();
+
+		if ($errors->first($name)) {
+			return '<p><strong>' . $errors->first($name) . '</strong></p>';
+		}
 	}
 }
 
