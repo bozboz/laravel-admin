@@ -96,9 +96,11 @@ abstract class ModelAdminController extends BaseController
 
 	public function destroy($id)
 	{
-		$this->decorator->findInstance($id)->delete();
+		$instance = $this->decorator->findInstance($id);
 
-		return $this->getSuccessResponse();
+		$instance->delete();
+
+		return $this->getSuccessResponse($instance);
 	}
 
 	protected function consolidateJavascript($fields)
