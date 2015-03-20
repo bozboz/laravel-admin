@@ -2,7 +2,6 @@ var basePaths = {
 	src: 'src/assets/',
 	dest: 'public/',
 	bower: 'bower_components/',
-	jqueryui: 'bower_components/jquery-ui/ui/'
 };
 var paths = {
 	images: {
@@ -24,8 +23,11 @@ var paths = {
 
 var appFiles = {
 	styles: paths.styles.src + '**/*.scss',
-	scripts: [paths.scripts.src + 'scripts.js']
+	scripts: [paths.scripts.src + 'scripts.js', paths.scripts.src + 'media-browser.js']
 };
+
+var jQueryUi = basePaths.bower + 'jquery-ui/ui/';
+var blueImp = basePaths.bower + 'blueimp-file-upload/js/';
 
 var vendorFiles = {
 	styles: [
@@ -38,22 +40,27 @@ var vendorFiles = {
 		basePaths.bower + 'select2/select2-bootstrap.css',
 	],
 	scripts: [
-		basePaths.jqueryui + 'core.js',
-		basePaths.jqueryui + 'datepicker.js',
+		jQueryUi + 'core.js',
+		jQueryUi + 'widget.js',
+		jQueryUi + 'datepicker.js',
+		jQueryUi + 'mouse.js',
+		jQueryUi + 'sortable.js',
 
 		basePaths.bower + 'bootstrap/dist/js/bootstrap.min.js',
 		basePaths.bower + 'summernote/dist/summernote.min.js',
-		basePaths.bower + 'jquery-sortable/source/js/jquery-sortable-min.js',
 		basePaths.bower + 'imagesloaded/imagesloaded.pkgd.min.js',
 		basePaths.bower + 'masonry/dist/masonry.pkgd.min.js',
 		basePaths.bower + 'handlebars/handlebars.min.js',
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js',
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js',
 		basePaths.bower + 'select2/select2.min.js',
+		basePaths.bower + 'nestedSortable/jquery.ui.nestedSortable.js',
+		'src/assets/js/knockout.js',
+
+		blueImp + 'jquery.iframe-transport.js',
+		blueImp + 'jquery.fileupload.js'
 	]
 };
-
-
 
 /*
 	Let the magic begin
@@ -116,7 +123,26 @@ gulp.task('compile-scripts', function(){
 		.pipe(gulp.dest(paths.scripts.dest));
 
 });
-gulp.task('scripts', ['compile-scripts']);
+
+gulp.task('compile-media-scripts', function() {
+	var scripts = [
+		basePaths.bower + 'blueimp-tmpl/js/tmpl.js',
+		basePaths.bower + 'blueimp-load-image/js/load-image.all.min.js',
+		basePaths.bower + 'blueimp-canvas-to-blob/js/canvas-to-blob.js',
+		blueImp + 'jquery.fileupload-process.js',
+		blueImp + 'jquery.fileupload-image.js',
+		blueImp + 'jquery.fileupload-validate.js',
+		blueImp + 'jquery.fileupload-ui.js'
+	];
+
+	gulp.src(scripts)
+		.pipe(plugins.concat('upload-ui.min.js'))
+		.pipe(isProduction ? plugins.uglify({outSourceMap: false}) : gutil.noop())
+		.pipe(gulp.dest(paths.scripts.dest));
+
+});
+
+gulp.task('scripts', ['compile-scripts', 'compile-media-scripts']);
 
 gulp.task('watch', ['css', 'scripts'], function(){
 	gulp.watch(appFiles.styles, ['css']).on('change', function(evt) {

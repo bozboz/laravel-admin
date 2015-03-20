@@ -1,7 +1,7 @@
 jQuery(function($){
-	
+
 	$('.select2').select2();
-	
+
 	$('textarea.html-editor').summernote({
 		height: 230,
 		toolbar: [
@@ -12,8 +12,27 @@ jQuery(function($){
 			['insert', ['link', 'picture', 'video']],
 			['view', ['fullscreen', 'codeview']],
 			['help', ['help']]
-		]
+		],
+		onImageUpload: function(files, editor, welEditable) {
+			sendFile(files[0], editor, welEditable);
+		}
 	});
+
+	function sendFile(file, editor, welEditable) {
+		data = new FormData();
+		data.append("filename", file);
+		$.ajax({
+			data: data,
+			type: "POST",
+			url: "/admin/media",
+			cache: false,
+			contentType: false,
+			processData: false,
+			success: function(url) {
+				editor.insertImage(welEditable, url);
+			}
+		});
+	}
 
 	var masonryContainer = $('.js-mason').masonry({ "columnWidth": 187, "itemSelector": ".masonry-item" });
 	masonryContainer.imagesLoaded( function() {
@@ -21,11 +40,7 @@ jQuery(function($){
 	});
 
 	$('#save-new-order').on('click', function() {
-		var objects = table.sortable('serialize')[0];
-		var data = [];
-		for (var i in objects) {
-			data.push(extractId(objects[i]));
-		}
+		var data = table.nestedSortable('toHierarchy');
 
 		$.post('/admin/sort', {model: table.data('model'), items: data});
 		$(this).closest('.alert').hide();
@@ -38,13 +53,18 @@ jQuery(function($){
 	$('.btn[data-warn]').on('click', function() {
 		return confirm('Are you sure you want to delete');
 	});
-
-	var table = $('.sortable').sortable({
-		handle: '.sorting-handle',
-		onDrop: function ($item, container, _super) {
-			$('.js-save-notification').show();
-			_super($item, container);
-		}
+	
+	var table = $('.sortable').each(function(){
+		return $(this).nestedSortable({
+			handle: '.sorting-handle',
+			items: 'li',
+			toleranceElement: '> div',
+			// maxLevels: 0 = unlimited
+			maxLevels: $(this).hasClass('nested') ? 0 : 1,
+			stop: function (e, ui) {
+				$('.js-save-notification').show();
+			}
+		});
 	});
 
 	function extractId(obj)
@@ -59,5 +79,5 @@ jQuery(function($){
 		}
 		return newObj;
 	}
-	
+
 });

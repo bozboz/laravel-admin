@@ -8,6 +8,8 @@ use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Fields\HTMLEditorField;
 use Bozboz\Admin\Fields\SelectField;
 use Bozboz\Admin\Fields\CheckboxField;
+use Bozboz\MediaLibrary\Fields\MediaBrowser;
+use Bozboz\MediaLibrary\Models\Media;
 
 class PageAdminDecorator extends ModelAdminDecorator
 {
@@ -42,7 +44,8 @@ class PageAdminDecorator extends ModelAdminDecorator
 			new CheckboxField(array('name' => 'show_in_footer_menu')),
 			new CheckboxField(array('name' => 'status')),
 			new HTMLEditorField(array('name' => 'description')),
-			new SelectField(array('name' => 'template', 'options' => $this->getTemplateOptions()))
+			new SelectField(array('name' => 'template', 'options' => $this->getTemplateOptions())),
+			new MediaBrowser(Media::forModel($instance))
 		);
 	}
 
@@ -74,6 +77,11 @@ class PageAdminDecorator extends ModelAdminDecorator
 	public function getListingModels()
 	{
 		return $this->model->orderBy($this->model->sortBy())->get();
+	}
+
+	public function getSyncRelations()
+	{
+		return ['media'];
 	}
 
 }

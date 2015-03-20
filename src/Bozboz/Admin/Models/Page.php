@@ -5,10 +5,11 @@ use Bozboz\Admin\Models\Sortable;
 use Bozboz\Admin\Traits\DynamicSlugTrait;
 use Bozboz\Admin\Traits\MetaTrait;
 use Bozboz\Admin\Meta\MetaInterface;
+use Bozboz\MediaLibrary\Models\MediableTrait;
 
 class Page extends Base implements Sortable, MetaInterface
 {
-	use DynamicSlugTrait, MetaTrait;
+	use DynamicSlugTrait, MetaTrait, MediableTrait;
 
 	protected $fillable = [
 		'title',

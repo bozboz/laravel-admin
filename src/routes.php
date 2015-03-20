@@ -26,3 +26,5 @@ Route::group(array('namespace' => 'Bozboz\Admin\Controllers', 'prefix' => 'admin
 	});
 
 });
+
+Route::resource('admin/media', 'Bozboz\MediaLibrary\Controllers\MediaLibraryAdminController', ['before' => 'auth']);

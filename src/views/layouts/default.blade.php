@@ -14,7 +14,7 @@
 
 	@section('styles')
 	{{ HTML::style('/packages/bozboz/admin/css/admin.min.css') }}
-	{{ HTML::style('/packages/bozboz/media-library/css/media-library.css') }}
+	{{ HTML::style('/packages/bozboz/admin/css/media-library.css') }}
 	@include('admin::partials.custom-styles')
 	@show
 </head>
@@ -31,7 +31,6 @@
 	</div>
 	@section('scripts')
 		<script src="/packages/bozboz/admin/js/admin.min.js"></script>
-		<script src="/packages/bozboz/media-library/js/media.js"></script>
 	@show
 </body>
 </html>

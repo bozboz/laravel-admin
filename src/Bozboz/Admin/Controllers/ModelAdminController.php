@@ -96,9 +96,11 @@ abstract class ModelAdminController extends BaseController
 
 	public function destroy($id)
 	{
-		$this->decorator->findInstance($id)->delete();
+		$instance = $this->decorator->findInstance($id);
 
-		return $this->getSuccessResponse();
+		$instance->delete();
+
+		return $this->getSuccessResponse($instance);
 	}
 
 	protected function consolidateJavascript($fields)
@@ -114,20 +116,20 @@ abstract class ModelAdminController extends BaseController
 		return $javascript;
 	}
 
-	protected function getStoreResponse($model)
+	protected function getStoreResponse($instance)
 	{
-		return $this->getSuccessResponse();
+		return $this->getSuccessResponse($instance);
 	}
 
-	protected function getUpdateResponse($model)
+	protected function getUpdateResponse($instance)
 	{
-		return $this->getSuccessResponse();
+		return $this->getSuccessResponse($instance);
 	}
 
 	/**
 	 * The Response after a successful create/edit/delete action.
 	 */
-	protected function getSuccessResponse()
+	protected function getSuccessResponse($instance)
 	{
 		return Redirect::action(get_class($this) . '@index');
 	}
