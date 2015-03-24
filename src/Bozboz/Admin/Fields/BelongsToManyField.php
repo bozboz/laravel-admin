@@ -45,7 +45,7 @@ class BelongsToManyField extends Field
 		$relatedModels = $this->relationship->get();
 
 		foreach ($this->generateQueryBuilder()->get() as $i => $model) {
-			$html .= '<option ' . ($relatedModels->contains($model) ? 'selected' : '') . ' value="' . $model->getKey() . $i . '">' . $this->decorator->getLabel($model) . '</option>';
+			$html .= '<option ' . ($relatedModels->contains($model) ? 'selected' : '') . ' value="' . $model->getKey() . '">' . $this->decorator->getLabel($model) . '</option>';
 		}
 
 		return $html . '</select>';
