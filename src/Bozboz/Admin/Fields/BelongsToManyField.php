@@ -52,6 +52,17 @@ class BelongsToManyField extends Field
 	}
 
 	/**
+	 *
+	 * @return string
+	 */
+	public function getLabel()
+	{
+		$name = $this->relationship->getRelationName() . '_relationship';
+
+		return Form::label($name, $this->label ?: ucwords(str_replace('_', ' ', $this->relationship->getTable())));
+	}
+
+	/**
 	 * Construct a new query builder based on relationship
 	 *
 	 * @return Illuminate\Database\Query\Builder
