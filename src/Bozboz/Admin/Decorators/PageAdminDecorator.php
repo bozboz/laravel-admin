@@ -35,7 +35,7 @@ class PageAdminDecorator extends ModelAdminDecorator
 	{
 		return array(
 			new TextField(array('name' => 'title')),
-			new TextField(array('name' => 'html_title', 'label' => 'HTML Title')),
+			new TextField(array('name' => 'meta_title')),
 			new TextField(array('name' => 'meta_description', 'class' => 'form-control form-control-wide')),
 			new TextField(array('name' => 'slug')),
 			new TextField(array('name' => 'external_link')),

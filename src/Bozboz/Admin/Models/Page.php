@@ -16,7 +16,7 @@ class Page extends Base implements Sortable, MetaInterface
 		'slug',
 		'description',
 		'redirect_to_id',
-		'html_title',
+		'meta_title',
 		'meta_description',
 		'sorting',
 		'template',
