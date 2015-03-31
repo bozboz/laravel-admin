@@ -23,7 +23,8 @@ class PageEventHandler {
     {
         $events->listen(
             'admin.renderMenu',
-            get_class($this) . '@onRenderMenu'
+            get_class($this) . '@onRenderMenu',
+            100
         );
     }
 }
