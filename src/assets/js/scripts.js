@@ -55,7 +55,7 @@ jQuery(function($){
 	});
 	
 	var table = $('.sortable').each(function(){
-		return $(this).nestedSortable({
+		var options = {
 			handle: '.sorting-handle',
 			items: 'li',
 			toleranceElement: '> div',
@@ -64,7 +64,11 @@ jQuery(function($){
 			stop: function (e, ui) {
 				$('.js-save-notification').show();
 			}
-		});
+		};
+		if ($(this).hasClass('nested'))
+			return $(this).nestedSortable(options);
+		else
+			return $(this).sortable(options);
 	});
 
 	function extractId(obj)
