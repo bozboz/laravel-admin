@@ -83,5 +83,11 @@ jQuery(function($){
 		}
 		return newObj;
 	}
+	
+	var setTopPadding = function() {
+		$('body').css('padding-top', ($('.navbar').height()+15)+'px');
+	}
+	$(window).resize(setTopPadding);
+	setTopPadding();
 
 });
