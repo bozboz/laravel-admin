@@ -102,9 +102,11 @@ class MediaLibraryAdminController extends ModelAdminController
 
 		$media->delete();
 
-		if (Request::ajax()) return Response::json($data);
-
-		return $this->getSuccessResponse();
+		if (Request::ajax()) {
+			return Response::json($data);
+		} else {
+			return $this->getSuccessResponse($media);
+		}
 	}
 
 }
