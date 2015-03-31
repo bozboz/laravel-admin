@@ -22,20 +22,26 @@ abstract class ModelAdminController extends BaseController
 		$report = new Report($this->decorator);
 		return $report->render(array('controller' => get_class($this)));
 	}
-
+	
 	public function create()
 	{
-		$fields = $this->decorator->buildFields();
+	    $instance = $this->decorator->newModelInstance();
+	    return $this->renderCreateFormFor($instance);
+	}
 
-		return View::make($this->createView, array(
-			'model' => $this->decorator->getModel(),
-			'modelName' => $this->decorator->getHeading(),
-			'fields' => $fields,
-			'method' => 'POST',
-			'action' => get_class($this) . '@store',
-			'listingAction' => get_class($this) . '@index',
-			'javascript' => $this->consolidateJavascript($fields)
-		));
+	protected function renderCreateFormFor($instance)
+	{
+	    $fields = $this->decorator->buildFields($instance);
+
+	    return View::make($this->createView, array(
+	        'model' => $instance,
+	        'modelName' => $this->decorator->getHeading(),
+	        'fields' => $fields,
+	        'method' => 'POST',
+	        'action' => get_class($this) . '@store',
+	        'listingAction' => get_class($this) . '@index',
+	        'javascript' => $this->consolidateJavascript($fields)
+	    ));
 	}
 
 	public function store()
