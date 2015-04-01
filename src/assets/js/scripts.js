@@ -14,24 +14,22 @@ jQuery(function($){
 			['help', ['help']]
 		],
 		onImageUpload: function(files, editor, welEditable) {
-			sendFile(files[0], editor, welEditable);
+			sendFile(files, editor, welEditable);
 		}
 	});
 
-	function sendFile(file, editor, welEditable) {
-		data = new FormData();
-		data.append("filename", file);
-		$.ajax({
-			data: data,
-			type: "POST",
-			url: "/admin/media",
-			cache: false,
-			contentType: false,
-			processData: false,
-			success: function(url) {
-				editor.insertImage(welEditable, url);
-			}
-		});
+	function sendFile(files, editor, welEditable) {
+		var temp_form = $('<form></form>');
+		$('body').append(temp_form);
+		temp_form.fileupload().fileupload('send', {files: files, url: '/admin/media'})
+			.success(function(data) {
+				editor.insertImage(welEditable, data.files[0].thumbnailUrl);
+				temp_form.remove();
+			})
+			.error(function(jqXHR, textStatus, errorThrown) {
+				if (typeof console == "object") console.log(textStatus, errorThrown);
+				alert('An error occurred while trying to upload the image. Please try again.');
+			});
 	}
 
 	var masonryContainer = $('.js-mason').masonry({ "columnWidth": 187, "itemSelector": ".masonry-item" });
