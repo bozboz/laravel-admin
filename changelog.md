@@ -25,6 +25,9 @@
 -   If model is sortable, automatically order by sorting field in Admin
 -   Add menu active states
 -   Added BelongsToField
+-   Remove jquery-sortable plugin, replace with nestedSortable
+-   Rename pages.html_title to pages.meta_title
+-   Separate out `create` method on `ModelAdminController` so it can be more easily overridden
 
 
 # Version 0.4.3 (2015-02-19)
