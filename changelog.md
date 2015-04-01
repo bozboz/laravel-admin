@@ -11,9 +11,9 @@
 -   Abstracted some display logic from ListingFilter to ArrayListingFilter.
 -   Moved Bozboz\Admin\Reports\ListingFilter to abstract Bozboz\Admin\Reports\Filters\ListingFilter.
 -   Added SearchListingFilter.
--	Output actual name of User on index screen. 
+-   Output actual name of User on index screen. 
 -   Meta\Provider::forPage method now accepts a more flexible MetaInterface object, as opposed to a concrete Page model
--	Styling amends to bootstrap classes
+-   Styling amends to bootstrap classes
 -   Moved bozboz/media-library package inside this repository
 -   Media can now be uploaded in bulk
 -   Media overview is now paginated, searchable and in descending date order
@@ -21,7 +21,7 @@
 -   Failed validation no longer removes media browser selections
 -   Summernote WYSIWYG editor will now upload to the Media Library
 -   Type is now automatically resolved from the uploaded file's mime type
--	Output flash message upon successful model update
+-   Output flash message upon successful model update
 -   If model is sortable, automatically order by sorting field in Admin
 -   Add menu active states
 -   Added BelongsToField
@@ -47,22 +47,22 @@
 
 # Version 0.4.0 (2015-01-13)
 
--	Add `status` attribute to Page model
--	Move FileField into bozboz/media-library
--	Update bootstrap version; remove custom-bootstrap partial
--	Allow a string to be passed for name (instead of array) to Field constructor
--	Allow top level menu items to be defined
--	Add DynamicSlugTrait
--	Add support for pagination in Report footer
--	Add listing filters to Report
--	Tidy-up of routes
--	Bug fix in `Validator::updateUniques()`
--	Add `is_admin` attribute to User model
--	Add `external_link` attribute to Page model
--	Remove used references in gulpfile
--	Bring in jQuery via CDN
--	Add DateTimeField
--	Improve functionality & appeparance of BelongsToManyField to use Select2 library
--	Remove username and name attributes from User model
--	Add first_name and lastname to User model
--	Tidy up a few old comments and unused properties
+-   Add `status` attribute to Page model
+-   Move FileField into bozboz/media-library
+-   Update bootstrap version; remove custom-bootstrap partial
+-   Allow a string to be passed for name (instead of array) to Field constructor
+-   Allow top level menu items to be defined
+-   Add DynamicSlugTrait
+-   Add support for pagination in Report footer
+-   Add listing filters to Report
+-   Tidy-up of routes
+-   Bug fix in `Validator::updateUniques()`
+-   Add `is_admin` attribute to User model
+-   Add `external_link` attribute to Page model
+-   Remove used references in gulpfile
+-   Bring in jQuery via CDN
+-   Add DateTimeField
+-   Improve functionality & appeparance of BelongsToManyField to use Select2 library
+-   Remove username and name attributes from User model
+-   Add first_name and lastname to User model
+-   Tidy up a few old comments and unused properties
