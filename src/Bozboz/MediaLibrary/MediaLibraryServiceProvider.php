@@ -20,7 +20,10 @@ class MediaLibraryServiceProvider extends ServiceProvider {
 	{
 		$this->registerMediaHtmlMacro();
 
-		$this->app['events']->subscribe(new Subscribers\MediaEventHandler);
+		$this->app['events']->listen('admin.renderMenu', function($menu)
+		{
+			$menu['Media Library'] = route('admin.media.index');
+		});
 	}
 
 	private function registerMediaHtmlMacro()
