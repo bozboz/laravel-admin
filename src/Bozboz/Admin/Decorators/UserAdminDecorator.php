@@ -1,5 +1,11 @@
 <?php namespace Bozboz\Admin\Decorators;
 
+use Illuminate\Database\Eloquent\Builder;
+
+use Bozboz\Admin\Fields\TextField;
+use Bozboz\Admin\Fields\EmailField;
+use Bozboz\Admin\Fields\HiddenField;
+use Bozboz\Admin\Fields\PasswordField;
 use Bozboz\Admin\Models\User;
 
 class UserAdminDecorator extends ModelAdminDecorator
@@ -17,9 +23,9 @@ class UserAdminDecorator extends ModelAdminDecorator
 		);
 	}
 
-	public function getListingModels()
+	public function modifyListingQuery(Builder $query)
 	{
-		return $this->model->where('is_admin', true)->get();
+		$query->where('is_admin', true)->latest();
 	}
 
 	public function getLabel($instance)
@@ -30,11 +36,11 @@ class UserAdminDecorator extends ModelAdminDecorator
 	public function getFields($instance)
 	{
 		return array_filter([
-			new \Bozboz\Admin\Fields\TextField('first_name'),
-			new \Bozboz\Admin\Fields\TextField('last_name'),
-			new \Bozboz\Admin\Fields\EmailField('email'),
-			$instance->exists ? null : new \Bozboz\Admin\Fields\PasswordField('password'),
-			new \Bozboz\Admin\Fields\HiddenField('is_admin', true)
+			new TextField('first_name'),
+			new TextField('last_name'),
+			new EmailField('email'),
+			$instance->exists ? null : new PasswordField('password'),
+			new HiddenField('is_admin', true)
 		]);
 	}
 }
