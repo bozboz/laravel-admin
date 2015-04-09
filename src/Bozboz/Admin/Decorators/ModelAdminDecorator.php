@@ -97,10 +97,10 @@ abstract class ModelAdminDecorator
 	 * @param  Bozboz/Admin/Models/Base  $instance
 	 * @return array
 	 */
-	public function buildFields($instance = null)
+	public function buildFields($instance)
 	{
-		$instance = $instance ?: $this->getModel();
 		$fieldsObj = new Fluent($this->getFields($instance));
+
 		Event::fire('admin.fields.built', array($fieldsObj, $instance));
 
 		return $fieldsObj->toArray();

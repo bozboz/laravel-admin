@@ -28,7 +28,7 @@
 -   Remove jquery-sortable plugin, replace with nestedSortable
 -   Rename pages.html_title to pages.meta_title
 -   Separate out `create` method on `ModelAdminController` so it can be more easily overridden
-
+-   ModelAdminDecorator::buildFields now take mandatory instance argument
 
 # Version 0.4.3 (2015-02-19)
 -   Add "meta_title" field to pages table, which replaces "html_title" field
