@@ -74,7 +74,7 @@ abstract class ModelAdminController extends BaseController
 			'modelName' => $this->decorator->getHeading(),
 			'fields' => $fields,
 			'action' => array(get_class($this) . '@update', $instance->id),
-			'listingAction' => get_class($this) . '@index',
+			'listingAction' => $this->getListingAction($instance),
 			'method' => 'PUT',
 			'javascript' => $this->consolidateJavascript($fields)
 		));
@@ -138,5 +138,10 @@ abstract class ModelAdminController extends BaseController
 	protected function getSuccessResponse($instance)
 	{
 		return Redirect::action(get_class($this) . '@index');
+	}
+
+	protected function getListingAction($instance)
+	{
+		return action(get_class($this) . '@index');
 	}
 }

@@ -30,6 +30,7 @@
 -   Separate out `create` method on `ModelAdminController` so it can be more easily overridden
 -   ModelAdminDecorator::buildFields now take mandatory instance argument
 -   Move the "Back to Listing" element from admin.partials.save into admin.partials.listing
+-   ModelAdminController::edit 'listingAction' value is now derived from a method call
 
 # Version 0.4.3 (2015-02-19)
 -   Add "meta_title" field to pages table, which replaces "html_title" field
