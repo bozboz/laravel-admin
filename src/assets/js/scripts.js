@@ -38,7 +38,16 @@ jQuery(function($){
 	});
 
 	$('#save-new-order').on('click', function() {
-		var data = table.nestedSortable('toHierarchy');
+		if (table.hasClass('nested')) {
+			var data = table.nestedSortable('toHierarchy');
+		} else {
+			var data = [];
+			table.sortable().children().each(function() {
+				if ($(this).data('id') !== undefined) {
+					data.push({'id': $(this).data('id')});
+				}
+			});
+		}
 
 		$.post('/admin/sort', {model: table.data('model'), items: data});
 		$(this).closest('.alert').hide();
