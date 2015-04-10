@@ -19,6 +19,7 @@
 
 	<div class="form-row">
 		@include('admin::partials.save')
+		@include('admin::partials.listing')
 	</div>
 
 {{ Form::close() }}
