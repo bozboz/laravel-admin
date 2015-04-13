@@ -61,7 +61,7 @@ abstract class ModelAdminDecorator
 		if ($this->model instanceof Sortable) {
 			$query->orderBy($this->model->sortBy());
 		} elseif ($this->model->usesTimestamps()) {
-			$query->latest();
+			$query->orderBy($this->model->getTable() . '.created_at', 'DESC');
 		}
 	}
 
