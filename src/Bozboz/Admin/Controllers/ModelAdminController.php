@@ -39,7 +39,7 @@ abstract class ModelAdminController extends BaseController
 	        'fields' => $fields,
 	        'method' => 'POST',
 	        'action' => get_class($this) . '@store',
-	        'listingAction' => get_class($this) . '@index',
+	        'listingUrl' => $this->getListingUrl($instance),
 	        'javascript' => $this->consolidateJavascript($fields)
 	    ));
 	}
@@ -74,7 +74,7 @@ abstract class ModelAdminController extends BaseController
 			'modelName' => $this->decorator->getHeading(),
 			'fields' => $fields,
 			'action' => array(get_class($this) . '@update', $instance->id),
-			'listingAction' => $this->getListingUrl($instance),
+			'listingUrl' => $this->getListingUrl($instance),
 			'method' => 'PUT',
 			'javascript' => $this->consolidateJavascript($fields)
 		));
