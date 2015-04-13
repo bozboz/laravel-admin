@@ -8,3 +8,4 @@
 	- Define the model's media relationship in the decorator's `getSyncRelations()` method
 - References to a save method in Bozboz\Admin\Traits\DynamicSlugTrait should be removed
 - If you have overriden the "admin.form" view, you'll need to @include "admin.partials.listing" to get the "Back to Listing" element
+- If you have overriden the "admin.overview" view, you'll need to encode each instance id with `data-id="{{ $row->getId() }}"` as opposed to `id="sortable-item_{{ $row->getId() }}"`

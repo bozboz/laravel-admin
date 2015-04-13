@@ -31,6 +31,7 @@
 -   ModelAdminDecorator::buildFields now take mandatory instance argument
 -   Move the "Back to Listing" element from admin.partials.save into admin.partials.listing
 -   ModelAdminController::edit 'listingAction' value is now derived from a method call
+-   overview.blade.php now encodes model id using data-id attribute
 
 # Version 0.4.3 (2015-02-19)
 -   Add "meta_title" field to pages table, which replaces "html_title" field
