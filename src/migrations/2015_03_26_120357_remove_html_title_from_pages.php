@@ -25,7 +25,7 @@ class RemoveHtmlTitleFromPages extends Migration {
 	public function down()
 	{
 		Schema::table('pages', function($table){
-			$table->string('html_title', 'varchar(255)');
+			$table->string('html_title', 255);
 		});
 	}
 
