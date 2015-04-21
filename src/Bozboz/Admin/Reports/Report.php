@@ -44,14 +44,9 @@ class Report
 
 	public function getHeader()
 	{
-		$values = [];
 		$filters = $this->decorator->getListingFilters();
 
-		foreach($filters as $filter) {
-			$values[$filter->getName()] = $filter->getValue();
-		}
-
-		return View::make('admin::partials.listing-filters')->withInput($values)->withFilters($filters);
+		return View::make('admin::partials.listing-filters')->withFilters($filters);
 	}
 
 	public function getFooter()

@@ -28,7 +28,10 @@ class ArrayListingFilter extends ListingFilter
 	public function __toString()
 	{
 		$html = Form::label($this->name);
-		$html .= Form::select($this->name, $this->options, null, ['onChange' => 'this.form.submit()', 'class' => 'form-control']);
+		$html .= Form::select($this->name, $this->options, $this->getValue(), [
+			'onChange' => 'this.form.submit()',
+			'class' => 'form-control'
+		]);
 
 		return $html;
 	}
