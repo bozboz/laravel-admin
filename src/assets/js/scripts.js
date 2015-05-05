@@ -1,5 +1,5 @@
 jQuery(function($){
-
+	
 	$('.select2').select2();
 
 	$('textarea.html-editor').summernote({
@@ -37,31 +37,34 @@ jQuery(function($){
 	  masonryContainer.masonry();
 	});
 
-	$('#save-new-order').on('click', function() {
-		if (table.hasClass('nested')) {
-			var data = table.nestedSortable('toHierarchy');
+	$('#save-new-order').on('click', function(e) {
+		e.preventDefault();
+		var sortable = $(this).data('sortable');
+		if (sortable.hasClass('nested')) {
+			var data = sortable.nestedSortable('toHierarchy');
 		} else {
 			var data = [];
-			table.sortable().children().each(function() {
+			sortable.sortable().children().each(function() {
 				if ($(this).data('id') !== undefined) {
 					data.push({'id': $(this).data('id')});
 				}
 			});
 		}
-
-		$.post('/admin/sort', {model: table.data('model'), items: data});
+		
+		$.post('/admin/sort', {model: sortable.data('model'), items: data});
 		$(this).closest('.alert').hide();
 	});
 
-	$('#cancel-new-order').on('click', function() {
+	$('#cancel-new-order').on('click', function(e) {
 		$('.js-save-notification').hide();
+		e.preventDefault();
 	});
 
 	$('.btn[data-warn]').on('click', function() {
 		return confirm('Are you sure you want to delete');
 	});
 	
-	var table = $('.sortable').each(function(){
+	$('.sortable').each(function(){
 		var options = {
 			handle: '.sorting-handle',
 			items: 'li',
@@ -70,6 +73,7 @@ jQuery(function($){
 			maxLevels: $(this).hasClass('nested') ? 0 : 1,
 			stop: function (e, ui) {
 				$('.js-save-notification').show();
+				$('#save-new-order').data('sortable', $(this));
 			}
 		};
 		if ($(this).hasClass('nested'))
