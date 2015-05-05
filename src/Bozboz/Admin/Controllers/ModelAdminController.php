@@ -111,15 +111,12 @@ abstract class ModelAdminController extends BaseController
 
 	protected function consolidateJavascript($fields)
 	{
-		$javascript = '';
+		$javascript = [];
 		foreach ($fields as $field) {
-			$fieldJavascript = $field->getJavascript();
-			if (!is_null($fieldJavascript)) {
-				$javascript .= '<script type="text/javascript">' . $fieldJavascript . '</script>' . PHP_EOL;
-			}
+			$javascript[] = $field->getJavascript();
 		}
-
-		return $javascript;
+		
+		return '<script type="text/javascript">' . implode(PHP_EOL, array_filter($javascript)) . '</script>' . PHP_EOL;
 	}
 
 	protected function getStoreResponse($instance)
