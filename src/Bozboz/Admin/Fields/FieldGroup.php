@@ -13,12 +13,6 @@ class FieldGroup extends Field
 	{
 		$this->legend = $name;
 		$this->fields = $fields;
-		
-		if (!isset($attributes['class'])) {
-			$attributes['class'] = '';
-		}
-		$attributes['class'] .= ' form-group';
-		
 		$this->attributes = $attributes;
 	}
 	
@@ -42,6 +36,6 @@ class FieldGroup extends Field
 	
 	public function render()
 	{
-		return $this->getInput();
+		return '<div class="form-group">'.$this->getInput().'</div>';
 	}
 }
