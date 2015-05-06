@@ -1,4 +1,4 @@
-# Version 1.0.0 (FUTURE)
+# Version 1.0.0 (2015-05-06)
 
 -   Null data sanitisation added, by defining a $nullable property on a model
 -   Fixed error when sorting non-nestable models
@@ -11,7 +11,7 @@
 -   Abstracted some display logic from ListingFilter to ArrayListingFilter.
 -   Moved Bozboz\Admin\Reports\ListingFilter to abstract Bozboz\Admin\Reports\Filters\ListingFilter.
 -   Added SearchListingFilter.
--   Output actual name of User on index screen. 
+-   Output actual name of User on index screen.
 -   Meta\Provider::forPage method now accepts a more flexible MetaInterface object, as opposed to a concrete Page model
 -   Styling amends to bootstrap classes
 -   Moved bozboz/media-library package inside this repository
@@ -32,6 +32,8 @@
 -   Move the "Back to Listing" element from admin.partials.save into admin.partials.listing
 -   ModelAdminController::edit 'listingAction' value is now derived from a method call
 -   overview.blade.php now encodes model id using data-id attribute
+-   Allow for multiple sortable "things" on a single pages
+-   Add FieldGroup field type for making groups of fields
 
 # Version 0.4.3 (2015-02-19)
 -   Add "meta_title" field to pages table, which replaces "html_title" field
