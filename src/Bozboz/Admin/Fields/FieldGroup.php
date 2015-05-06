@@ -1,17 +1,24 @@
 <?php namespace Bozboz\Admin\Fields;
 
+use View;
 use Bozboz\Admin\Fields\Field;
 
 class FieldGroup extends Field
 {
 	protected $legend;
 	protected $fields;
-	protected $view;
+	protected $view = 'admin::fields.field-group';
 
 	public function __construct($name, $fields, $attributes=[])
 	{
 		$this->legend = $name;
 		$this->fields = $fields;
+		
+		if (!isset($attributes['class'])) {
+			$attributes['class'] = '';
+		}
+		$attributes['class'] .= ' form-group';
+		
 		$this->attributes = $attributes;
 	}
 	
@@ -26,11 +33,15 @@ class FieldGroup extends Field
 
 	public function getInput()
 	{
-		$view = $this->view ?: 'admin::fields.field-group';
-		return \View::make($view)->with([
+		return View::make($this->view)->with([
 			'legend' => $this->legend,
 			'fields' => $this->fields,
 			'attributes' => $this->attributes,
 		]);
+	}
+	
+	public function render()
+	{
+		return $this->getInput();
 	}
 }

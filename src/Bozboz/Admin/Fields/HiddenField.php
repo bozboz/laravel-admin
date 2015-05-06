@@ -18,4 +18,9 @@ class HiddenField extends Field
 	{
 		// empty
 	}
+	
+	public function render()
+	{
+		return $this->getInput();
+	}
 }

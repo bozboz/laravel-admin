@@ -1,5 +1,6 @@
 <?php namespace Bozboz\Admin\Fields;
 
+use View;
 use Illuminate\Support\Facades\Form;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\ViewErrorBag;
@@ -40,5 +41,10 @@ abstract class Field extends Fluent
 	public function getJavascript()
 	{
 		return null;
+	}
+	
+	public function render()
+	{
+		return View::make('admin::fields.field')->with(['field' => $this]);
 	}
 }

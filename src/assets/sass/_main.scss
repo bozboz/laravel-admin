@@ -200,13 +200,20 @@ input.form-control-wide {
 
 .form-group {
 	clear: both;
+	&.bs-callout-danger {
+		background: #fdf7f7 !important;
+	}
 }
 
 .form-group:nth-child(even) {
 	background: #f5f5f5;
-	&.bs-callout-danger {
-		background: #fdf7f7;
+	.form-group {
+		background: #f5f5f5;
 	}
+}
+
+.form-group:nth-child(odd) .form-group {
+	background: transparent;
 }
 
 .btn-group + .btn {

@@ -1,10 +1,8 @@
-<fieldset>
-	<legend>{{ $legend }}</legend>
+<fieldset{{ HTML::attributes($attributes) }}>
+	@if (isset($legend))
+		<legend>{{ $legend }}</legend>
+	@endif
 	@foreach ($fields as $field)
-		<div class="form-group{{{ ($field->getErrors($errors)) ? ' bs-callout bs-callout-danger' : '' }}}">
-			{{ $field->getLabel() }}
-			{{ $field->getInput() }}
-			{{ $field->getErrors($errors) }}
-		</div>
+		{{ $field->render() }}
 	@endforeach
 </fieldset>
