@@ -1,7 +1,6 @@
 <?php namespace Bozboz\Admin\Reports\Filters;
 
 use Form;
-use Exception;
 
 class SearchListingFilter extends ListingFilter
 {
