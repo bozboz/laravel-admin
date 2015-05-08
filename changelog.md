@@ -1,3 +1,7 @@
+# Version 1.0.1 (2015-05-08)
+-   Use strict type comparison for listing filter values
+
+
 # Version 1.0.0 (2015-05-06)
 
 -   Null data sanitisation added, by defining a $nullable property on a model
@@ -34,6 +38,7 @@
 -   overview.blade.php now encodes model id using data-id attribute
 -   Allow for multiple sortable "things" on a single pages
 -   Add FieldGroup field type for making groups of fields
+
 
 # Version 0.4.3 (2015-02-19)
 -   Add "meta_title" field to pages table, which replaces "html_title" field

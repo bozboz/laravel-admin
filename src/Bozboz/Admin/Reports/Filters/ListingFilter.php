@@ -46,7 +46,7 @@ abstract class ListingFilter
 	{
 		$value = $this->getValue();
 
-		if (!empty($value)) {
+		if ($value !== '') {
 			call_user_func($this->callback, $builder, $value);
 		}
 	}
