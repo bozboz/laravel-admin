@@ -7,11 +7,11 @@ class SearchListingFilter extends ListingFilter
 {
 	protected $attributes;
 
-	public function __construct($name, array $attributes, $callback = null)
+	public function __construct($name, array $attributes = [], $callback = null)
 	{
 		parent::__construct($name, $callback);
 
-		$this->attributes = $attributes;
+		$this->attributes = $attributes ?: [$name];
 	}
 
 	protected function defaultFilter($field)
