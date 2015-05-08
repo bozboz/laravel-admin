@@ -29,7 +29,7 @@ class SearchListingFilter extends ListingFilter
 	public function __toString()
 	{
 		$html = Form::label($this->name);
-		$html .= Form::text($this->name);
+		$html .= Form::text($this->name, $this->getValue());
 		$html .= Form::submit('Search');
 
 		return $html;
