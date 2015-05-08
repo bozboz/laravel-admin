@@ -74,16 +74,6 @@ abstract class ListingFilter
 	}
 
 	/**
-	 * Get name of filter
-	 *
-	 * @return  string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-
-	/**
 	 * Get value based on current input, or fall back to default
 	 *
 	 * @return mixed
