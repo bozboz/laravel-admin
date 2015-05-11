@@ -6,7 +6,7 @@
 	<h1>{{ $modelName }}</h1>
 
 	@if (Session::has('model.updated'))
-		<div id="js-alert" class="alert alert-success fade out" data-alert="alert">
+		<div id="js-alert" class="alert alert-success" data-alert="alert">
 			{{ Session::get('model.updated') }}
 		</div>
 	@endif
