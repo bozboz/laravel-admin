@@ -76,13 +76,17 @@ class MediaBrowser extends Field
 	 */
 	public function getLabel()
 	{
-		$replacements = [
-			'_relationship' => '',
-			'_id' => '',
-			'_' => ' '
-		];
+		if (isset($this->attributes['label'])) {
+			$label = $this->attributes['label'];
+		} else {
+			$replacements = [
+				'_relationship' => '',
+				'_id' => '',
+				'_' => ' '
+			];
 
-		$label = ucwords(str_replace(array_keys($replacements), array_values($replacements), $this->name));
+			$label = ucwords(str_replace(array_keys($replacements), array_values($replacements), $this->name));
+		}
 
 		return Form::label($this->name, $label);
 	}
