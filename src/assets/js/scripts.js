@@ -1,6 +1,8 @@
 jQuery(function($){
 	
-	$('.select2').select2();
+	$('.select2').select2({
+		minimumResultsForSearch: 15
+	});
 
 	$('textarea.html-editor').summernote({
 		height: 230,

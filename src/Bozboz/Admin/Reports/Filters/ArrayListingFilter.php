@@ -30,7 +30,7 @@ class ArrayListingFilter extends ListingFilter
 		$html = Form::label($this->name);
 		$html .= Form::select($this->name, $this->options, $this->getValue(), [
 			'onChange' => 'this.form.submit()',
-			'class' => 'form-control'
+			'class' => 'form-control select2'
 		]);
 
 		return $html;

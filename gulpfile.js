@@ -36,8 +36,7 @@ var vendorFiles = {
 		basePaths.bower + 'jquery-ui/themes/base/datepicker.css',
 		basePaths.bower + 'jquery-ui/themes/base/slider.css',
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css',
-		basePaths.bower + 'select2/select2.css',
-		basePaths.bower + 'select2/select2-bootstrap.css',
+		basePaths.bower + 'select2/dist/css/select2.css',
 	],
 	scripts: [
 		jQueryUi + 'core.js',
@@ -53,7 +52,7 @@ var vendorFiles = {
 		basePaths.bower + 'handlebars/handlebars.min.js',
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js',
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js',
-		basePaths.bower + 'select2/select2.min.js',
+		basePaths.bower + 'select2/dist/js/select2.min.js',
 		basePaths.bower + 'nestedSortable/jquery.ui.nestedSortable.js',
 		'src/assets/js/knockout.js',
 
