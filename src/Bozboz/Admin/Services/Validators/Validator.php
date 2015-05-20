@@ -2,7 +2,7 @@
 
 abstract class Validator
 {
-	protected $errors = array();
+	protected $errors;
 	protected $rules = array();
 	protected $storeRules = array();
 	protected $editRules = array();
@@ -38,13 +38,8 @@ abstract class Validator
 	protected function passes($attributes, $rules)
 	{
 		$validation = \Validator::make($attributes, $rules);
-		$isValid = true;
+		$this->errors = $validation->messages();
 
-		if (!$validation->passes()) {
-			$isValid = false;
-			$this->errors = $validation->messages();
-		}
-
-		return $isValid;
+		return $validation->passes();
 	}
 }
