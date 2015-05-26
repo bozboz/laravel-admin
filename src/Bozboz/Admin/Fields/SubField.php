@@ -30,8 +30,8 @@ class SubField extends Field
 
     public function getErrors(\Illuminate\Support\ViewErrorBag $errors)
     {
-        if ($errors->has($this->originalFieldName)) {
-            return '<p><strong>' . $errors->first($this->originalFieldName) . '</strong></p>';
+        if ($errors->has($this->decorate->name)) {
+            return '<p><strong>' . $errors->first($this->decorate->name) . '</strong></p>';
         }
     }
 
