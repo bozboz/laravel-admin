@@ -13,7 +13,9 @@ class MediaBrowser extends Field
 	{
 		$this->relation = $relation;
 
-		$attributes['name'] = $this->calculateName();
+		if ( ! array_key_exists('name', $attributes)) {
+			$attributes['name'] = $this->calculateName();
+		}
 
 		parent::__construct($attributes);
 	}
@@ -63,7 +65,7 @@ class MediaBrowser extends Field
 		];
 
 		return View::make('admin::fields.media-browser')->with([
-			'id' => $this->name,
+			'id' => $this->sanitiseName($this->name),
 			'name' => $this->isManyRelation() ? $this->name . '[]' : $this->name,
 			'data' => json_encode($data)
 		]);
@@ -98,6 +100,18 @@ class MediaBrowser extends Field
 	 */
 	public function getJavascript()
 	{
-		return View::make('admin::fields.partials.media-js')->withId($this->name);
+		return View::make('admin::fields.partials.media-js')->withId($this->sanitiseName($this->name));
 	}
+
+	/**
+	 * Produce a valid HTML class name
+	 *
+	 * @param $name string
+	 * @return string
+	 */
+	protected function sanitiseName($name)
+	{
+		return str_replace(['[', ']'], '', $name);
+	}
+
 }
