@@ -50,6 +50,13 @@ class Media extends Base
 			->orderBy('sorting');
 	}
 
+	/**
+	 * Get filename to either the original media file, or - if size argument is
+	 * provided - the resized file URL
+	 *
+	 * @param  string  $size
+	 * @return string
+	 */
 	public function getFilename($size = null)
 	{
 		if (!is_null($size)) {
@@ -57,7 +64,17 @@ class Media extends Base
 		} else {
 			$prefix = '';
 		}
-		return $prefix . '/media/' . strtolower($this->type) . '/' . $this->filename;
+		return $prefix . '/' . $this->getDirectory() . '/' . $this->filename;
+	}
+
+	/**
+	 * Get the directory path to original media file
+	 *
+	 * @return string
+	 */
+	public function getDirectory()
+	{
+		return 'media/' . strtolower($this->type);
 	}
 
 	public function getFilepath($type, $size)

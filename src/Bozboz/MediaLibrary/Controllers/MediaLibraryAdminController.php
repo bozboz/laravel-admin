@@ -60,25 +60,26 @@ class MediaLibraryAdminController extends ModelAdminController
 		if (Input::hasFile('files')) {
 			foreach(Input::file('files') as $index => $file) {
 				$newMedia = $this->decorator->newModelInstance($file);
-				$type = $this->getTypeFromFile($file);
-				$filename = $this->cleanFilename($file->getClientOriginalName());
-				$uploadSuccess = $file->move(public_path('media/' . $type), $filename);
+
+				$newMedia->filename = $this->cleanFilename($file->getClientOriginalName());
+				$newMedia->type = $this->getTypeFromFile($file);
+
+				$uploadSuccess = $file->move(public_path($newMedia->getDirectory()), $newMedia->filename);
 
 				if (array_key_exists($index, $captions)) {
 					$newMedia->caption = $captions[$index];
 				}
 
-				$newMedia->filename = $filename;
-				$newMedia->type = $type;
-				$newMedia->save();
-
-				$data[] = [
-					'url' => action(__CLASS__ . '@edit', $newMedia->id),
-					'thumbnailUrl' => asset($newMedia->getFilename('library')),
-					'name' => $newMedia->caption ?: $newMedia->filename,
-					'deleteUrl' => action(__CLASS__ . '@destroy', $newMedia->id),
-					'deleteType' => 'DELETE'
-				];
+				if ($uploadSuccess) {
+					$newMedia->save();
+					$data[] = [
+						'url' => action(__CLASS__ . '@edit', $newMedia->id),
+						'thumbnailUrl' => asset($newMedia->getFilename('library')),
+						'name' => $newMedia->caption ?: $newMedia->filename,
+						'deleteUrl' => action(__CLASS__ . '@destroy', $newMedia->id),
+						'deleteType' => 'DELETE'
+					];
+				}
 			}
 		}
 
