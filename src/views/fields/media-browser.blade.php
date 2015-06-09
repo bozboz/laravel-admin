@@ -9,7 +9,7 @@
           value: id, attr: { id: '{{ $id }}-' + id }
         ">
         <label data-bind="attr: { for: '{{ $id }}-' + id }">
-          <img data-bind="attr: { src: type === 'pdf' ? '/packages/bozboz/media-library/images/document.png' : $parent.getFilename(filename) }" width="150">
+          <img data-bind="attr: { src: type === 'pdf' ? '/packages/bozboz/admin/images/document.png' : $parent.getFilename(filename) }" width="150">
           <p class="icons" data-bind="text: caption"></p>
         </label>
       </li>
