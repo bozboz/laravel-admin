@@ -37,7 +37,7 @@ class MediaField extends Field
 		$alt = $this->media->filename ?: $this->media->caption;
 
 		$html .= HTML::image($filename, $alt, ['style' => 'margin-bottom: 5px; display: block']);
-		$html .= '<p>' . $this->media->filename . '</p>';
+		$html .= '<p>' . HTML::link($this->media->getFilename(), $this->media->filename, ['target' => '_blank']) . '</p>';
 
 		return $html;
 	}
