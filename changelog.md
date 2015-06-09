@@ -1,3 +1,7 @@
+# Version 1.0.2 (2015-06-09)
+-   Fix media type directory when uploading PDFs
+
+
 # Version 1.0.1 (2015-05-08)
 -   Use strict type comparison for listing filter values
 

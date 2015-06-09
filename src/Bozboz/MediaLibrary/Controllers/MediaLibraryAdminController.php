@@ -5,9 +5,15 @@ use Bozboz\Admin\Reports\Report;
 use Bozboz\MediaLibrary\Decorators\MediaAdminDecorator;
 use View, Response, Request, Input, Redirect, Str;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 class MediaLibraryAdminController extends ModelAdminController
 {
 	protected $createView = 'admin::media.upload';
+	protected $mimeTypeMapping = [
+		'image/*' => 'image',
+		'application/pdf' => 'pdf'
+	];
 
 	public function __construct(MediaAdminDecorator $media)
 	{
@@ -54,7 +60,7 @@ class MediaLibraryAdminController extends ModelAdminController
 		if (Input::hasFile('files')) {
 			foreach(Input::file('files') as $index => $file) {
 				$newMedia = $this->decorator->newModelInstance($file);
-				$type = explode('/', $file->getMimeType())[0];
+				$type = $this->getTypeFromFile($file);
 				$filename = $this->cleanFilename($file->getClientOriginalName());
 				$uploadSuccess = $file->move(public_path('media/' . $type), $filename);
 
@@ -77,6 +83,26 @@ class MediaLibraryAdminController extends ModelAdminController
 		}
 
 		return Response::json(['files' => $data]);
+	}
+
+	/**
+	 * Return the sub-directory to save the uploaded file, based on the file's
+	 * mime type
+	 *
+	 * @param  Symfony\Component\HttpFoundation\File\UploadedFile  $file
+	 * @return string
+	 */
+	protected function getTypeFromFile(UploadedFile $file)
+	{
+		$mimeType = $file->getMimeType();
+
+		foreach($this->mimeTypeMapping as $regex => $directory) {
+			if (preg_match("#{$regex}#", $mimeType)) {
+				return $directory;
+			}
+		}
+
+		return 'misc';
 	}
 
 	/**
