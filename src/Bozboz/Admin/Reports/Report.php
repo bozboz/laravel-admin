@@ -1,7 +1,6 @@
 <?php namespace Bozboz\Admin\Reports;
 
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
-use Bozboz\Admin\Models\Sortable;
 use View;
 
 class Report
@@ -72,13 +71,20 @@ class Report
 
 	public function render(array $params)
 	{
-		$params = array_merge([
-			'sortableClass' => $this->decorator->getModel() instanceof Sortable ? ' sortable' : '',
+		$identifier = $this->decorator->getListingIdentifier();
+
+		$deprecatedParams = [
+			'fullModelName' => $identifier
+		];
+
+		$params += $deprecatedParams + [
+			'sortableClass' => $this->decorator->isSortable() ? ' sortable' : '',
 			'report' => $this,
-			'fullModelName' => get_class($this->decorator->getModel()),
-			'modelName' => $this->decorator->getHeading(true),
+			'heading' => $this->decorator->getHeading(true),
+			'modelName' => $this->decorator->getHeading(false),
+			'identifier' => $identifier,
 			'canCreate' => true
-		], $params);
+		];
 
 		return View::make($this->view, $params);
 	}

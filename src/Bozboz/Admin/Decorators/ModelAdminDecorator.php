@@ -22,7 +22,7 @@ abstract class ModelAdminDecorator
 	abstract public function getFields($instance);
 
 	/**
-	 * Retrieve $this->model
+	 * DEPRECATED: Retrieve $this->model
 	 *
 	 * @return Bozoboz\Admin\Models\Base
 	 */
@@ -58,7 +58,7 @@ abstract class ModelAdminDecorator
 
 	protected function modifyListingQuery(Builder $query)
 	{
-		if ($this->model instanceof Sortable) {
+		if ($this->isSortable()) {
 			$query->orderBy($this->model->sortBy());
 		} elseif ($this->model->usesTimestamps()) {
 			$query->orderBy($this->model->getTable() . '.created_at', 'DESC');
@@ -175,5 +175,25 @@ abstract class ModelAdminDecorator
 	public function sanitiseInput($input)
 	{
 		return $this->model->sanitiseInput($input);
+	}
+
+	/**
+	 * Determine if underlying model is sortable
+	 *
+	 * @return boolean
+	 */
+	public function isSortable()
+	{
+		return $this->model instanceof Sortable;
+	}
+
+	/**
+	 * Return a string to identify the underlying model on the listing screen
+	 *
+	 * @return string
+	 */
+	public function getListingIdentifier()
+	{
+		return get_class($this->model);
 	}
 }

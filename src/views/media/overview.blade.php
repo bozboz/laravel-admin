@@ -2,7 +2,7 @@
 
 @section('main')
 	@include('admin::partials.new')
-	<h1>{{ $modelName }}</h1>
+	<h1>{{ $heading }}</h1>
 	{{ $report->getHeader() }}
 	<ul class="js-mason secret-list media-view">
 	@foreach ($report->getRows() as $row)
