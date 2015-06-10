@@ -55,7 +55,7 @@ class Report
 			return $this->renderedColumns[$id];
 		}
 
-		return new Row($id, $instance, $this->decorator->getColumns($instance));
+		return new Row($id, $this->decorator->getColumns($instance));
 	}
 
 	public function getHeader()

@@ -8,16 +8,12 @@
 	@foreach ($report->getRows() as $row)
 		<li class="masonry-item">
 			<a href="{{ URL::action($controller . '@edit', array($row->getId())) }}">
-				@if ($row->getModel()->getAttribute('type') === 'image')
-					{{ $row->getColumns()['image'] }}
-				@else
-					<img src="{{ asset('/packages/bozboz/admin/images/document.png') }}" alt="{{ $row->getModel()->getAttribute('caption') }}">
-				@endif
+				{{ $row->getColumns()['image'] }}
 			</a>
 			<div class="icons">
 				<p>{{ $row->getColumns()['caption'] }}</p>
 
-				{{ Form::model($row->getModel(), array('action' => array($controller . '@destroy', $row->getId()), 'method' => 'DELETE')) }}
+				{{ Form::open(['action' => array($controller . '@destroy', $row->getId()), 'method' => 'DELETE']) }}
 					<button data-warn="true" class="btn btn-danger btn-xs" type="submit">
 						<i class="fa fa-minus-square"></i>
 						Delete
