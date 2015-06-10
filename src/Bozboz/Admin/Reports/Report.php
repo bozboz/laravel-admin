@@ -9,6 +9,7 @@ class Report
 	protected $decorator;
 	protected $rows;
 	protected $view = 'admin::overview';
+	protected $renderedColumns = [];
 
 	public function __construct(ModelAdminDecorator $decorator)
 	{
@@ -23,7 +24,11 @@ class Report
 
 	public function getHeadings()
 	{
-		return array_keys($this->decorator->getColumns($this->decorator->getModel()));
+		$firstRow = $this->getRowFromInstance($this->rows->first());
+
+		$this->renderedColumns[$firstRow->getId()] = $firstRow;
+
+		return array_keys($firstRow->getColumns());
 	}
 
 	public function hasRows()
@@ -33,13 +38,24 @@ class Report
 
 	public function getRows()
 	{
-		$rows = array();
+		$rows = [];
 
 		foreach($this->rows as $row) {
-			$rows[] = new Row($row->id, $row, $this->decorator->getColumns($row));
+			$rows[] = $this->getRowFromInstance($row);
 		}
 
 		return $rows;
+	}
+
+	protected function getRowFromInstance($instance)
+	{
+		$id = $instance->id;
+
+		if (array_key_exists($id, $this->renderedColumns)) {
+			return $this->renderedColumns[$id];
+		}
+
+		return new Row($id, $instance, $this->decorator->getColumns($instance));
 	}
 
 	public function getHeader()
