@@ -8,17 +8,41 @@ use Illuminate\Support\Fluent;
 
 abstract class ModelAdminDecorator
 {
+	/**
+	 * @var Bozboz\Admin\Models\Base
+	 */
 	protected $model;
 
+	/**
+	 * @param  Bozboz\Admin\Models\Base  $model
+	 */
 	public function __construct(Base $model)
 	{
 		$this->model = $model;
 	}
 
+	/**
+	 * Return the columns to be displayed on an overview screen
+	 *
+	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @return array
+	 */
 	abstract public function getColumns($instance);
 
+	/**
+	 * Return the label identifying the instance
+	 *
+	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @return mixed
+	 */
 	abstract public function getLabel($instance);
 
+	/**
+	 * Return the fields displayed on a create/edit screen
+	 *
+	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @return array
+	 */
 	abstract public function getFields($instance);
 
 	/**
@@ -46,7 +70,7 @@ abstract class ModelAdminDecorator
 	/**
 	 * Apply each defined listing filter to the passed $builder
 	 *
-	 * @param  Illuminate\Database\Eloquent\Builder  $builder
+	 * @param  Illuminate\Database\Eloquent\Builder  $query
 	 * @return void
 	 */
 	protected function filterListingQuery(Builder $query)
@@ -56,6 +80,13 @@ abstract class ModelAdminDecorator
 		}
 	}
 
+	/**
+	 * Add order by clause to the $query, if model is sortable; or order by
+	 * latest if model uses timestamps
+	 *
+	 * @param  Illuminate\Database\Eloquent\Builder  $query
+	 * @return void
+	 */
 	protected function modifyListingQuery(Builder $query)
 	{
 		if ($this->isSortable()) {
