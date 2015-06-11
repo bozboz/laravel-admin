@@ -78,7 +78,17 @@ abstract class ModelAdminDecorator
 
 		$this->modifyListingQuery($query);
 
-		return $query->paginate(Config::get('admin::listing_items_per_page'));
+		return $query->paginate($this->listingPerPageLimit());
+	}
+
+	/**
+	 * Determine number of items per page on the listing
+	 *
+	 * @return int
+	 */
+	protected function listingPerPageLimit()
+	{
+		return Config::get('admin::listing_items_per_page');
 	}
 
 	/**
