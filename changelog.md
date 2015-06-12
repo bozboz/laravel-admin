@@ -1,4 +1,3 @@
-
 # Version 1.1.0 (FUTURE)
 
 -   Fix non-standard behaviour of getColumns by always passing it an instance,
@@ -14,7 +13,7 @@
 -   Add defaultAttributes method to Field
 -   Generate a better label in BelongsToManyField
 -   Add URLField
-
+-   Improve getHeading method of ModelAdminDecorator
 
 # Version 1.0.3 (2015-06-12)
 -   Fix media browser, so inline-uploaded files are selected immediately

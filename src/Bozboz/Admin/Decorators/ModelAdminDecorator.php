@@ -63,7 +63,7 @@ abstract class ModelAdminDecorator
 	 */
 	public function getHeading($plural = false)
 	{
-		$name = class_basename(get_class($this->model));
+		$name = preg_replace('/([a-z])([A-Z])/', '$1 $2', class_basename($this->model));
 		return $plural ? Str::plural($name) : $name;
 	}
 
