@@ -77,7 +77,10 @@ class MediaLibraryAdminController extends ModelAdminController
 						'thumbnailUrl' => asset($newMedia->getFilename('library')),
 						'name' => $newMedia->caption ?: $newMedia->filename,
 						'deleteUrl' => action(__CLASS__ . '@destroy', $newMedia->id),
-						'deleteType' => 'DELETE'
+						'deleteType' => 'DELETE',
+						'id' => $newMedia->id,
+						'filename' => $newMedia->filename,
+						'type' => $newMedia->type
 					];
 				}
 			}
