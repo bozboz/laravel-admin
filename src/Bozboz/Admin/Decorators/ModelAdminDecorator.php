@@ -140,7 +140,7 @@ abstract class ModelAdminDecorator
 	 */
 	public function buildFields($instance)
 	{
-		$fieldsObj = new Fluent($this->getFields($instance));
+		$fieldsObj = new Fluent(array_filter($this->getFields($instance)));
 
 		Event::fire('admin.fields.built', array($fieldsObj, $instance));
 
