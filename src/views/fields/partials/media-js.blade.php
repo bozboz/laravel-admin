@@ -13,7 +13,7 @@
 		viewModel.mediaLibrary.query(this.href);
 	});
 
-	$('.js-file-upload').fileupload({
+	$('.js-file-upload-{{ $id }}').fileupload({
 		url: '/admin/media',
 		dataType: 'json',
 		formData: { },
@@ -25,6 +25,15 @@
 			);
 		},
 		done: function(e, data) {
+			for (var i in data.result.files) {
+				var upload = data.result.files[i];
+				viewModel.selectedMedia.media.push({
+					id: upload.id,
+					type: upload.type,
+					caption: upload.name,
+					filename: upload.filename
+				});
+			}
 			viewModel.mediaLibrary.loaded(false);
 			delete viewModel.mediaLibrary.pages['admin/media?page=1'];
 		}

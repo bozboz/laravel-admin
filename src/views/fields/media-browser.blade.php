@@ -19,7 +19,7 @@
   <span class="btn btn-success fileinput-button">
     <i class="glyphicon glyphicon-plus"></i>
     <span>Select files...</span>
-    <input class="js-file-upload" type="file" name="files[]" multiple>
+    <input class="js-file-upload-{{ $id }}" type="file" name="files[]" multiple>
   </span>
 
   <br>
