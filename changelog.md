@@ -1,3 +1,7 @@
+# Version 1.0.3 (2015-06-12)
+-   Fix media browser, so inline-uploaded files are selected immediately
+
+
 # Version 1.0.2 (2015-06-09)
 -   Fix media type directory when uploading PDFs
 
