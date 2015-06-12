@@ -3,7 +3,7 @@
 @section('main')
 @parent
 	@include('admin::partials.new')
-	<h1>{{ $modelName }}</h1>
+	<h1>{{ $heading }}</h1>
 
 	@if (Session::has('model.updated'))
 		<div id="js-alert" class="alert alert-success" data-alert="alert">
@@ -16,7 +16,7 @@
 	{{ $report->getHeader() }}
 	<div class="table-responsive">
 	@if ($report->hasRows())
-		<ol class="secret-list faux-table{{ $sortableClass }}" data-model="{{ $fullModelName }}">
+		<ol class="secret-list faux-table{{ $sortableClass }}" data-model="{{ $identifier }}">
 
 			<li class="faux-table-row faux-table-heading">
 				<div class="faux-cell cell-small"></div>

@@ -1,3 +1,21 @@
+
+# Version 1.1.0 (FUTURE)
+
+-   Fix non-standard behaviour of getColumns by always passing it an instance,
+    rather than a factory
+-   Deprecate Reports\Row::getModel() method
+-   Deprecate ModelAdminDecorator::getModel() method
+-   Add helper methods isSortable and getListingIdentififer to ModelAdminDecorator
+-   Rename "fullModelName" variable to "heading"
+-   Correct case of "New {modelName}" in admin
+-   Add listingPerPageLimit method to ModelAdminDecorator
+-   Add docblocks to ModelAdminDecorator
+-   Allow null fields in ModelAdminDecorator::getFields
+-   Add defaultAttributes method to Field
+-   Generate a better label in BelongsToManyField
+-   Add URLField
+
+
 # Version 1.0.3 (2015-06-12)
 -   Fix media browser, so inline-uploaded files are selected immediately
 

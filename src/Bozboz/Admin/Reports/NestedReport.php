@@ -12,9 +12,8 @@ class NestedReport extends Report
 	{
 		$tree = array();
 
-		$instances = $this->rows? $this->rows : $this->decorator->getListingModels();
-		foreach($instances as $page) {
-			$this->tree[$page->parent_id][] = new Row($page->id, $page, $this->decorator->getColumns($page));
+		foreach($this->rows as $inst) {
+			$this->tree[$inst->parent_id][] = $this->getRowFromInstance($inst);
 		}
 
 		return count($this->tree)? $this->tree[0] : array();
