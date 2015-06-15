@@ -27,6 +27,11 @@ class Row
 		return $this->data;
 	}
 
+	public function getColumn($name)
+	{
+		return $this->data[$name];
+	}
+
 	/**
 	 * DEPRECATED
 	 *

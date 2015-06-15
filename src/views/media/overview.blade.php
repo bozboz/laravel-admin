@@ -8,11 +8,7 @@
 	@foreach ($report->getRows() as $row)
 		<li class="masonry-item">
 			<a href="{{ URL::action($controller . '@edit', array($row->getId())) }}">
-				@if ($row->getModel()->getAttribute('type') === 'image')
-					{{ $row->getColumns()['image'] }}
-				@else
-					<img src="{{ asset('/packages/bozboz/admin/images/document.png') }}" alt="{{ $row->getModel()->getAttribute('caption') }}">
-				@endif
+				{{ $row->getColumn('image') }}
 			</a>
 			<div class="icons">
 				<p>{{ $row->getColumns()['caption'] }}</p>
