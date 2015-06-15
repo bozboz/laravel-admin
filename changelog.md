@@ -14,6 +14,7 @@
 -   Generate a better label in BelongsToManyField
 -   Add URLField
 -   Improve getHeading method of ModelAdminDecorator
+-	Deprecate "admin.fields.built" event in ModelAdminDecorator
 
 
 # Version 1.0.4 (2015-06-15)

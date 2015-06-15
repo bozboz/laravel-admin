@@ -142,6 +142,8 @@ abstract class ModelAdminDecorator
 	{
 		$fieldsObj = new Fluent(array_filter($this->getFields($instance)));
 
+		// Below line deprecated in v1.1.0.
+		// Flagged for removal in next major version
 		Event::fire('admin.fields.built', array($fieldsObj, $instance));
 
 		return $fieldsObj->toArray();
