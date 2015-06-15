@@ -12,7 +12,7 @@
               checked: $parent.currentMedia, value: $data, attr: { id: 'library-{{ $name }}-' + id }
             ">
             <label data-bind="attr: { for: 'library-{{ $name }}-' + id }">
-              <img data-bind="attr: { src: type === 'pdf' ? '/packages/bozboz/media-library/images/document.png' : $parent.getFilename(filename) }" width="150">
+              <img data-bind="attr: { src: type !== 'image' ? '/packages/bozboz/admin/images/document.png' : $parent.getFilename(filename) }" width="150">
               <p class="icons" data-bind="text: caption"></p>
             </label>
           </li>
@@ -25,4 +25,4 @@
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->  
+</div><!-- /.modal -->

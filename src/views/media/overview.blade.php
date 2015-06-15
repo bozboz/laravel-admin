@@ -11,7 +11,7 @@
 				@if ($row->getModel()->getAttribute('type') === 'image')
 					{{ $row->getColumns()['image'] }}
 				@else
-					<img src="{{ asset('/packages/bozboz/media-library/images/document.png') }}" alt="{{ $row->getModel()->getAttribute('caption') }}">
+					<img src="{{ asset('/packages/bozboz/admin/images/document.png') }}" alt="{{ $row->getModel()->getAttribute('caption') }}">
 				@endif
 			</a>
 			<div class="icons">
