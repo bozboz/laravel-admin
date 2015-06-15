@@ -5,7 +5,7 @@
 	ko.applyBindings(viewModel, elem);
 
 	$('.media-browser').sortable({
-		placeholder: '<li class="placeholder masonry-item"></li>'
+		placeholder: 'placeholder masonry-item'
 	});
 
 	$('.js-media-browser-{{ $id }} .pagination').on('click', 'a', function(e) {

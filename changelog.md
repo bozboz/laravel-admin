@@ -1,3 +1,6 @@
+# Version 1.0.4 (2015-06-15)
+-	Fix for placeholder when sorting in-line media
+
 # Version 1.0.3 (2015-06-12)
 -   Fix media browser, so inline-uploaded files are selected immediately
 
