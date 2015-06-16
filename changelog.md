@@ -1,5 +1,10 @@
+# Version 1.0.11 (2015-11-24)
+-   Fix bug where image thumbnails aren't displaying in the media browser
+
+
 # Version 1.0.10 (2015-10-25)
 -   Fix handling of nulled `parent_id` for Baum models
+
 
 # Version 1.0.9 (2015-10-22)
 -   Fix media macro for case where $subject is null
