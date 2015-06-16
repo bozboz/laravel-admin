@@ -53,7 +53,7 @@ class MediaBrowser extends Field
 		$items = $values ? $mediaFactory->whereIn('id', (array)$values)->get()->map(function($inst) {
 			return [
 				'id' => $inst->id,
-				'type' => $inst,
+				'type' => $inst->type,
 				'caption' => $inst->caption ? $inst->caption : $inst->filename,
 				'filename' => $inst->filename
 			];
