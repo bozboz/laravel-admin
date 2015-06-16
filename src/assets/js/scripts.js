@@ -62,8 +62,11 @@ jQuery(function($){
 		e.preventDefault();
 	});
 
-	$('.btn[data-warn]').on('click', function() {
-		return confirm('Are you sure you want to delete');
+	$('.main').on('click', '.btn[data-warn]', function() {
+		var msg = $(this).data('warn').length > 1
+			? $(this).data('warn')
+			: 'Are you sure you want to delete?';
+		return confirm( msg );
 	});
 	
 	$('.sortable').each(function(){
