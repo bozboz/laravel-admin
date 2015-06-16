@@ -15,9 +15,16 @@ abstract class Field extends Fluent
 			$attributes = $attributesOrName;
 		}
 
+		$attributes += $this->defaultAttributes();
+
 		foreach ($attributes as $key => $attribute) {
 			$this->attributes[$key] = $attribute;
 		}
+	}
+
+	protected function defaultAttributes()
+	{
+		return [];
 	}
 
 	protected $attributes = array(

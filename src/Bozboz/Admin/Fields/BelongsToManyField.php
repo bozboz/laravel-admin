@@ -59,7 +59,9 @@ class BelongsToManyField extends Field
 	{
 		$name = $this->relationship->getRelationName() . '_relationship';
 
-		return Form::label($name, $this->label ?: ucwords(str_replace('_', ' ', $this->relationship->getTable())));
+		$label = ucwords(str_replace('_', ' ', \Str::snake($this->relationship->getRelationName())));
+
+		return Form::label($name, $this->label ?: $label);
 	}
 
 	/**
