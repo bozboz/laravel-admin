@@ -16,6 +16,7 @@
 -   Improve getHeading method of ModelAdminDecorator
 -	Deprecate "admin.fields.built" event in ModelAdminDecorator
 -	Correctly display fallback image for non-image Media
+-   Allow warn btn js to work on ajaxed elements
 
 
 # Version 1.0.4 (2015-06-15)
