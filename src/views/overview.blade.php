@@ -19,7 +19,9 @@
 		<ol class="secret-list faux-table{{ $sortableClass }}" data-model="{{ $identifier }}">
 
 			<li class="faux-table-row faux-table-heading">
+			@if ($sortableClass)
 				<div class="faux-cell cell-small"></div>
+			@endif
 			@foreach ($report->getHeadings() as $heading)
 				<div class="faux-cell">{{ $heading }}</div>
 			@endforeach
@@ -28,9 +30,11 @@
 
 		@foreach ($report->getRows() as $row)
 			<li class="faux-table-row" data-id="{{ $row->getId() }}">
+			@if ($sortableClass)
 				<div class="faux-cell cell-small">
 					<i class="fa fa-sort sorting-handle"></i>
 				</div>
+			@endif
 			@foreach ($row->getColumns() as $name => $value)
 				<div class="faux-cell">{{ $value }}</div>
 			@endforeach

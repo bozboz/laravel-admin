@@ -14,13 +14,14 @@
 -   Generate a better label in BelongsToManyField
 -   Add URLField
 -   Improve getHeading method of ModelAdminDecorator
--	Deprecate "admin.fields.built" event in ModelAdminDecorator
--	Correctly display fallback image for non-image Media
+-   Deprecate "admin.fields.built" event in ModelAdminDecorator
+-   Correctly display fallback image for non-image Media
 -   Allow warn btn js to work on ajaxed elements
+-   Remove blank sortable column on overview screen if model is not sortable
 
 
 # Version 1.0.4 (2015-06-15)
--	Fix for placeholder when sorting in-line media
+-   Fix for placeholder when sorting in-line media
 
 
 # Version 1.0.3 (2015-06-12)
