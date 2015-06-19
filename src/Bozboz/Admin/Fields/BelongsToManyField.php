@@ -22,7 +22,7 @@ class BelongsToManyField extends Field
 	 * @param array $attributes Fluent attributes
 	 * @param Closure Influences which model instances are presented as candidates for a relationship
 	 */
-	public function __construct(ModelAdminDecorator $decorator, BelongsToMany $relationship, array $attributes, Closure $callback = null)
+	public function __construct(ModelAdminDecorator $decorator, BelongsToMany $relationship, array $attributes = [], Closure $callback = null)
 	{
 		parent::__construct($attributes);
 
