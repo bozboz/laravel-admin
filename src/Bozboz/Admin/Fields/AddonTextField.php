@@ -1,4 +1,4 @@
-<?php namespace Bozboz\Fields;
+<?php namespace Bozboz\Admin\Fields;
 
 use Bozboz\Admin\Fields\TextField;
 
