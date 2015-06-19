@@ -36,13 +36,14 @@ class BelongsToManyField extends Field
 	 */
 	public function getInput($params = [])
 	{
-		
 		$name = $this->relationship->getRelationName() . '_relationship';
-		
+
 		$html = sprintf('<input name="%1$s" type="hidden" id="%1$s">', $name);
 		$html .= '<select class="select2 form-control" multiple name="' . $name . '[]">';
-		
-		$relatedModels = $this->relationship->get();
+
+		$values = (array)Form::getValueAttribute($name);
+
+		$relatedModels = $this->relationship->getRelated()->find($values);
 
 		foreach ($this->generateQueryBuilder()->get() as $i => $model) {
 			$html .= '<option ' . ($relatedModels->contains($model) ? 'selected' : '') . ' value="' . $model->getKey() . '">' . $this->decorator->getLabel($model) . '</option>';
