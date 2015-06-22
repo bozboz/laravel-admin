@@ -55,6 +55,7 @@ class MediaBrowser extends Field
 				'id' => $inst->id,
 				'type' => $inst->type,
 				'caption' => $inst->caption ? $inst->caption : $inst->filename,
+				'private' => $inst->private,
 				'filename' => $inst->filename
 			];
 		}) : [];

@@ -12,7 +12,7 @@
               checked: $parent.currentMedia, value: $data, attr: { id: 'library-{{ $name }}-' + id }
             ">
             <label data-bind="attr: { for: 'library-{{ $name }}-' + id }">
-              <img data-bind="attr: { src: previewImageUrl }" width="150">
+              <img data-bind="attr: { src: $parent.getPreviewImageUrl(filename, type, private) }" width="150">
               <p class="icons" data-bind="text: caption"></p>
             </label>
           </li>

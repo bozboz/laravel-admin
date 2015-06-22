@@ -9,7 +9,7 @@
           value: id, attr: { id: '{{ $id }}-' + id }
         ">
         <label data-bind="attr: { for: '{{ $id }}-' + id }">
-          <img data-bind="attr: { src: previewImageUrl }" width="150">
+          <img data-bind="attr: { src: $parent.getPreviewImageUrl(filename, type, private) }" width="150">
           <p class="icons" data-bind="text: caption"></p>
         </label>
       </li>

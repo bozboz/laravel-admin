@@ -9,6 +9,16 @@ function MediaViewModel(data, url)
 		{
 			return self.selectedMedia.mediaPath + '/' + filename;
 		},
+		getPreviewImageUrl: function(filename, type, isPrivate)
+		{
+			if (isPrivate) {
+				return '/packages/bozboz/admin/images/private-document.png';
+			} else if (type == 'image') {
+				return self.selectedMedia.getFilename(filename);
+			} else {
+				return '/packages/bozboz/admin/images/document.png';
+			}
+		},
 		update: function()
 		{
 			self.selectedMedia.media(self.mediaLibrary.currentMedia());
@@ -26,6 +36,16 @@ function MediaViewModel(data, url)
 		getFilename: function(filename)
 		{
 			return self.mediaLibrary.mediaPath + '/' + filename;
+		},
+		getPreviewImageUrl: function(filename, type, isPrivate)
+		{
+			if (isPrivate) {
+				return '/packages/bozboz/admin/images/private-document.png';
+			} else if (type == 'image') {
+				return self.mediaLibrary.getFilename(filename);
+			} else {
+				return '/packages/bozboz/admin/images/document.png';
+			}
 		},
 		browse: function()
 		{
