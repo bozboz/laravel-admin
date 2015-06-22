@@ -48,6 +48,7 @@ class MediaLibraryAdminController extends ModelAdminController
 				'id' => $inst->id,
 				'caption' => $inst->caption ? $inst->caption : $inst->filename,
 				'filename' => $inst->filename,
+				'previewImageUrl' => $inst->getPreviewImageUrl(),
 				'type' => $inst->type
 			);
 		}

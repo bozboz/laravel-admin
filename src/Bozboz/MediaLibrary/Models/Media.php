@@ -81,4 +81,16 @@ class Media extends Base
 	{
 		return strtolower(sprintf('/images/%s/media/%s', $size, $type));
 	}
+	
+	public function getPreviewImageUrl()
+	{
+		if ($this->private) {
+			$filename = asset('packages/bozboz/admin/images/private-document.png');
+		} elseif ($this->type === 'image') {
+			$filename = $this->getFilename('thumb');
+		} else {
+			$filename = asset('packages/bozboz/admin/images/document.png');
+		}
+		return $filename;
+	}
 }

@@ -24,18 +24,10 @@ class MediaAdminDecorator extends ModelAdminDecorator
 
 	public function getColumns($instance)
 	{
-		if ($instance->private) {
-			$src = '/packages/bozboz/admin/images/private-document.png';
-		} elseif ($instance->type === 'image') {
-			$src = $instance->getFilename('library');
-		} else {
-			$src = '/packages/bozboz/admin/images/document.png';
-		}
-
 		return array(
 			'id' => $instance->getKey(),
 			'image' => sprintf('<img src="%s" alt="%s" width="150">',
-				$src,
+				$instance->getPreviewImageUrl(),
 				$this->getLabel($instance)
 			),
 			'caption' => $this->getLabel($instance)
