@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Media extends Base
 {
 	protected $table = 'media';
-	protected $fillable = array('filename', 'caption');
+	protected $fillable = array('filename', 'caption', 'private');
 	private $dynamicRelations = array();
 
 	public function mediable()

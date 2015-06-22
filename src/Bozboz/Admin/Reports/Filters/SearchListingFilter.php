@@ -27,10 +27,18 @@ class SearchListingFilter extends ListingFilter
 
 	public function __toString()
 	{
-		$html = Form::label($this->name);
-		$html .= Form::text($this->name, $this->getValue());
-		$html .= Form::submit('Search');
-
-		return $html;
+		$label = Form::label($this->name);
+		$input = Form::text($this->name, $this->getValue(), ['class' => 'form-control']);
+		$submit = Form::submit('Search', ['class' => 'btn btn-default']);
+		
+		return <<<HTML
+			{$label}
+			<div class="input-group">
+				{$input}
+				<div class="input-group-btn">
+					{$submit}
+				</div>
+			</div>
+HTML;
 	}
 }

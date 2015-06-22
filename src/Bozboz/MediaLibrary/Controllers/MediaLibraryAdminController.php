@@ -3,7 +3,8 @@
 use Bozboz\Admin\Controllers\ModelAdminController;
 use Bozboz\Admin\Reports\Report;
 use Bozboz\MediaLibrary\Decorators\MediaAdminDecorator;
-use View, Response, Request, Input, Redirect, Str;
+use Bozboz\MediaLibrary\Models\Media;
+use View, Response, Request, Input, Redirect, Str, File;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -28,6 +29,12 @@ class MediaLibraryAdminController extends ModelAdminController
 		$report = new Report($this->decorator);
 		$report->overrideView('admin::media.overview');
 		return $report->render(array('controller' => get_class($this)));
+	}
+	
+	public function viewPrivate($id)
+	{
+		$media = Media::find($id);
+		return Response::download(storage_path().$media->getFileName());
 	}
 
 	private function ajaxJSONData()
@@ -56,6 +63,7 @@ class MediaLibraryAdminController extends ModelAdminController
 	{
 		$data = [];
 		$captions = Input::get('caption', []);
+		$is_private = Input::get('is_private', []);
 
 		if (Input::hasFile('files')) {
 			foreach(Input::file('files') as $index => $file) {
@@ -63,8 +71,13 @@ class MediaLibraryAdminController extends ModelAdminController
 
 				$newMedia->filename = $this->cleanFilename($file->getClientOriginalName());
 				$newMedia->type = $this->getTypeFromFile($file);
-
-				$uploadSuccess = $file->move(public_path($newMedia->getDirectory()), $newMedia->filename);
+				
+				if ($is_private[$index]) {
+					$uploadSuccess = $file->move(storage_path($newMedia->getDirectory()), $newMedia->filename);
+					$newMedia->private = true;
+				} else {
+					$uploadSuccess = $file->move(public_path($newMedia->getDirectory()), $newMedia->filename);
+				}
 
 				if (array_key_exists($index, $captions)) {
 					$newMedia->caption = $captions[$index];
@@ -80,7 +93,8 @@ class MediaLibraryAdminController extends ModelAdminController
 						'deleteType' => 'DELETE',
 						'id' => $newMedia->id,
 						'filename' => $newMedia->filename,
-						'type' => $newMedia->type
+						'type' => $newMedia->type,
+						'private' => ($is_private[$index])
 					];
 				}
 			}

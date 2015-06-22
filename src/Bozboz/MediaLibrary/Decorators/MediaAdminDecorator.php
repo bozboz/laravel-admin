@@ -5,6 +5,7 @@ use Illuminate\Config\Repository;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Fields\SelectField;
 use Bozboz\Admin\Fields\TextField;
+use Bozboz\Admin\Reports\Filters\ArrayListingFilter;
 use Bozboz\Admin\Reports\Filters\SearchListingFilter;
 
 use Bozboz\MediaLibrary\Fields\MediaField;
@@ -12,6 +13,10 @@ use Bozboz\MediaLibrary\Models\Media;
 
 class MediaAdminDecorator extends ModelAdminDecorator
 {
+	const ACCESS_BOTH = 0;
+	const ACCESS_PUBLIC = 1;
+	const ACCESS_PRIVATE = 2;
+	
 	public function __construct(Media $media)
 	{
 		parent::__construct($media);
@@ -19,7 +24,9 @@ class MediaAdminDecorator extends ModelAdminDecorator
 
 	public function getColumns($instance)
 	{
-		if ($instance->type === 'image') {
+		if ($instance->private) {
+			$src = '/packages/bozboz/admin/images/private-document.png';
+		} elseif ($instance->type === 'image') {
 			$src = $instance->getFilename('library');
 		} else {
 			$src = '/packages/bozboz/admin/images/document.png';
@@ -58,7 +65,31 @@ class MediaAdminDecorator extends ModelAdminDecorator
 	public function getListingFilters()
 	{
 		return [
-			new SearchListingFilter('search', ['filename', 'caption'])
+			new ArrayListingFilter('access', [
+					self::ACCESS_BOTH => 'All',
+					self::ACCESS_PUBLIC => 'Public Only',
+					self::ACCESS_PRIVATE => 'Private Only',
+				], function($builder, $value) {
+				switch ($value) {
+					case self::ACCESS_PUBLIC:
+						$builder->where('private', 0);
+					break;
+					case self::ACCESS_PRIVATE:
+						$builder->where('private', 1);
+					break;
+				}
+			}, self::ACCESS_BOTH),
+			new ArrayListingFilter('type', $this->getTypeOptions(), function($builder, $value) {
+				if ($value) {
+					$builder->where('type', $value);
+				}
+			}),
+			new SearchListingFilter('search', ['filename', 'caption']),
 		];
+	}
+	
+	private function getTypeOptions()
+	{
+		return ['All'] + array_map('ucwords', Media::groupBy('type')->lists('type', 'type'));
 	}
 }

@@ -28,3 +28,8 @@ Route::group(array('namespace' => 'Bozboz\Admin\Controllers', 'prefix' => 'admin
 });
 
 Route::resource('admin/media', 'Bozboz\MediaLibrary\Controllers\MediaLibraryAdminController', ['before' => 'auth']);
+Route::get('admin/media/{id}/view', [
+	'before' => 'auth',
+	'as' => 'admin.media.view-private',
+	'uses' => 'Bozboz\MediaLibrary\Controllers\MediaLibraryAdminController@viewPrivate'
+]);

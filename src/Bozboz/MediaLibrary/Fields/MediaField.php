@@ -28,7 +28,9 @@ class MediaField extends Field
 	{
 		$html = Form::hidden($this->get('name'));
 
-		if ($this->media->type === 'image') {
+		if ($this->media->private) {
+			$filename = asset('packages/bozboz/admin/images/private-document.png');
+		} elseif ($this->media->type === 'image') {
 			$filename = $this->media->getFilename('thumb');
 		} else {
 			$filename = asset('packages/bozboz/admin/images/document.png');
@@ -37,7 +39,11 @@ class MediaField extends Field
 		$alt = $this->media->filename ?: $this->media->caption;
 
 		$html .= HTML::image($filename, $alt, ['style' => 'margin-bottom: 5px; display: block']);
-		$html .= '<p>' . HTML::link($this->media->getFilename(), $this->media->filename, ['target' => '_blank']) . '</p>';
+		if ($this->media->private) {
+			$html .= '<p>' . HTML::linkRoute('admin.media.view-private', $this->media->filename, [$this->media->id], ['target' => '_blank']) . '</p>';
+		} else {
+			$html .= '<p>' . HTML::link($this->media->getFilename(), $this->media->filename, ['target' => '_blank']) . '</p>';
+		}
 
 		return $html;
 	}
