@@ -95,7 +95,7 @@ class MediaLibraryAdminController extends ModelAdminController
 						'id' => $newMedia->id,
 						'filename' => $newMedia->filename,
 						'type' => $newMedia->type,
-						'private' => ($is_private[$index])
+						'private' => array_key_exists($index, $is_private)
 					];
 				}
 			}
