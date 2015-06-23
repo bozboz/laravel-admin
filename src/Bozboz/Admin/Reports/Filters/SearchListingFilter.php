@@ -28,8 +28,8 @@ class SearchListingFilter extends ListingFilter
 	public function __toString()
 	{
 		$label = Form::label($this->name);
-		$input = Form::text($this->name, $this->getValue(), ['class' => 'form-control']);
-		$submit = Form::submit('Search', ['class' => 'btn btn-default']);
+		$input = Form::text($this->name, $this->getValue(), ['class' => 'form-control input-sm']);
+		$submit = Form::submit('Search', ['class' => 'btn btn-sm btn-default']);
 		
 		return <<<HTML
 			{$label}

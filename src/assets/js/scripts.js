@@ -7,7 +7,7 @@ jQuery(function($){
 	$('textarea.html-editor').summernote({
 		height: 230,
 		toolbar: [
-			// ['style', ['style']],
+			['style', ['style']],
 			['font', ['bold', 'italic', 'underline', 'clear']],
 			['para', ['ul', 'ol', 'paragraph']],
 			['table', ['table']],
