@@ -73,7 +73,7 @@ class MediaLibraryAdminController extends ModelAdminController
 				$newMedia->filename = $this->cleanFilename($file->getClientOriginalName());
 				$newMedia->type = $this->getTypeFromFile($file);
 				
-				if ($is_private[$index]) {
+				if (array_key_exists($index, $is_private)) {
 					$uploadSuccess = $file->move(storage_path($newMedia->getDirectory()), $newMedia->filename);
 					$newMedia->private = true;
 				} else {
