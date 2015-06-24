@@ -44,9 +44,11 @@
 						Edit
 					</a>
 
-					{{ Form::open(['class' => 'inline-form', 'action' => [ $controller . '@destroy', $row->getId() ], 'method' => 'DELETE']) }}
-						<button class="btn btn-danger btn-sm" data-warn="true" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
-					{{ Form::close() }}
+					@if ($canDelete)
+						{{ Form::open(['class' => 'inline-form', 'action' => [ $controller . '@destroy', $row->getId() ], 'method' => 'DELETE']) }}
+							<button class="btn btn-danger btn-sm" data-warn="true" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
+						{{ Form::close() }}
+					@endif
 				</div>
 			</li>
 		@endforeach

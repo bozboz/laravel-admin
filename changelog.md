@@ -18,6 +18,7 @@
 -   Correctly display fallback image for non-image Media
 -   Allow warn btn js to work on ajaxed elements
 -   Remove blank sortable column on overview screen if model is not sortable
+-   Add "canDelete" param to overview screen to hide the delete button
 
 
 # Version 1.0.4 (2015-06-15)
