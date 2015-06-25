@@ -5,10 +5,12 @@
 	@include('admin::partials.new')
 	<h1>{{ $heading }}</h1>
 
-	@if (Session::has('model.updated'))
-		<div id="js-alert" class="alert alert-success" data-alert="alert">
-			{{ Session::get('model.updated') }}
-		</div>
+	@if (Session::has('model'))
+		@foreach(Session::get('model') as $msg)
+			<div id="js-alert" class="alert alert-success" data-alert="alert">
+				{{ $msg }}
+			</div>
+		@endforeach
 	@endif
 
 	@include('admin::partials.sort-alert')
