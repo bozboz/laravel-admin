@@ -115,8 +115,8 @@ abstract class ModelAdminController extends BaseController
 		foreach ($fields as $field) {
 			$javascript[] = $field->getJavascript();
 		}
-		
-		return '<script type="text/javascript">' . implode(PHP_EOL, array_filter($javascript)) . '</script>' . PHP_EOL;
+
+		return '<script>' . implode(PHP_EOL, array_filter($javascript)) . '</script>' . PHP_EOL;
 	}
 
 	protected function getStoreResponse($instance)
