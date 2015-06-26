@@ -17,8 +17,8 @@
   </div>
 
   <span class="btn btn-success fileinput-button">
-    <i class="glyphicon glyphicon-plus"></i>
-    <span>Select files...</span>
+    <i class="fa fa-plus"></i>
+    <span>Upload New Media</span>
     <input class="js-file-upload-{{ $id }}" type="file" name="files[]" multiple>
   </span>
 
@@ -33,7 +33,7 @@
     $('.js-media-browser-{{ $id }}').data('values', {{ $data }});
   </script>
 
-  <button class="btn btn-info" data-bind="click: mediaLibrary.browse">Browse Media</button>
+  <button class="btn btn-info" data-bind="click: mediaLibrary.browse"><i class="fa fa-search"></i> Browse Media</button>
 
   @include('admin::fields.partials.media-modal')
 

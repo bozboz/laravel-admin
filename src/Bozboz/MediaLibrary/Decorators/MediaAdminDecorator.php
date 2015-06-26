@@ -1,6 +1,8 @@
 <?php namespace Bozboz\MediaLibrary\Decorators;
 
+use Input;
 use Illuminate\Config\Repository;
+use Illuminate\Database\Eloquent\Builder;
 
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Fields\SelectField;
@@ -78,6 +80,19 @@ class MediaAdminDecorator extends ModelAdminDecorator
 			}),
 			new SearchListingFilter('search', ['filename', 'caption']),
 		];
+	}
+	
+	protected function filterListingQuery(Builder $query)
+	{
+		parent::filterListingQuery($query);
+		
+		if (Input::get('public')) {
+			$query->where('private', 0);
+		}
+		
+		if (Input::get('private')) {
+			$query->where('private', 1);
+		}
 	}
 	
 	private function getTypeOptions()

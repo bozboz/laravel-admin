@@ -29,6 +29,7 @@ function MediaViewModel(data, url)
 	this.mediaLibrary = {
 		active: ko.observable(false),
 		loaded: ko.observable(false),
+		privateMediaOnly: data.privateMediaOnly,
 		media: ko.observableArray([]),
 		currentMedia: ko.observableArray([]),
 		links: ko.observable(''),
@@ -67,6 +68,12 @@ function MediaViewModel(data, url)
 				self.mediaLibrary.media(data.media);
 				if (callback) callback();
 			};
+			
+			if (self.mediaLibrary.privateMediaOnly) {
+				url = url + '&private=1';
+			} else {
+				url = url + '&public=1';
+			}
 
 			if (self.mediaLibrary.pages[url]) {
 				update(self.mediaLibrary.pages[url]);

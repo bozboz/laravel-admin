@@ -1,6 +1,7 @@
 (function() {
 	var elem = document.querySelector('.js-media-browser-{{ $id }}');
-	var viewModel = new MediaViewModel($(elem).data('values'), '{{ url('admin/media?page=1') }}');
+	var settings = $(elem).data('values');
+	var viewModel = new MediaViewModel(settings, '{{ url('admin/media?page=1') }}');
 
 	ko.applyBindings(viewModel, elem);
 
@@ -16,7 +17,9 @@
 	$('.js-file-upload-{{ $id }}').fileupload({
 		url: '/admin/media',
 		dataType: 'json',
-		formData: { },
+		formData: {
+			'is_private[]': settings.privateMediaOnly
+		},
 		progressall: function (e, data) {
 			var progress = parseInt(data.loaded / data.total * 100, 10);
 			$(this).parent().nextAll('.js-progress').find('.progress-bar').css(
@@ -31,11 +34,13 @@
 					id: upload.id,
 					type: upload.type,
 					caption: upload.name,
-					filename: upload.filename
+					filename: upload.filename,
+					private: settings.privateMediaOnly,
 				});
 			}
 			viewModel.mediaLibrary.loaded(false);
-			delete viewModel.mediaLibrary.pages['admin/media?page=1'];
+			delete viewModel.mediaLibrary.pages['admin/media?page=1&public=1'];
+			delete viewModel.mediaLibrary.pages['admin/media?page=1&private=1'];
 		}
 	}).prop('disabled', !$.support.fileInput)
 		.parent().addClass($.support.fileInput ? undefined : 'disabled');

@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 class MediaBrowser extends Field
 {
 	private $relation;
+	private $privateMediaOnly;
 
-	public function __construct(Relation $relation, $attributes = array())
+	public function __construct(Relation $relation, $attributes = array(), $privateMediaOnly = false)
 	{
 		$this->relation = $relation;
+		$this->privateMediaOnly = $privateMediaOnly;
 
 		if ( ! array_key_exists('name', $attributes)) {
 			$attributes['name'] = $this->calculateName();
@@ -62,13 +64,14 @@ class MediaBrowser extends Field
 
 		$data = [
 			'media' => $items,
-			'mediaPath' => $mediaFactory->getFilePath('image', 'thumb')
+			'mediaPath' => $mediaFactory->getFilePath('image', 'thumb'),
+			'privateMediaOnly' => $this->privateMediaOnly,
 		];
 
 		return View::make('admin::fields.media-browser')->with([
 			'id' => $this->sanitiseName($this->name),
 			'name' => $this->isManyRelation() ? $this->name . '[]' : $this->name,
-			'data' => json_encode($data)
+			'data' => json_encode($data),
 		]);
 	}
 
