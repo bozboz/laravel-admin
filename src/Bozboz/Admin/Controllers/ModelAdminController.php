@@ -55,7 +55,11 @@ abstract class ModelAdminController extends BaseController
 			$modelInstance->fill($input);
 			$modelInstance->save();
 			$this->decorator->updateSyncRelations($modelInstance, $input);
-			$response = $this->getStoreResponse($modelInstance);
+			$response = $this->backResponse() ?: $this->getStoreResponse($modelInstance);
+			Session::flash('model.created', sprintf(
+				'Successfully created "%s"',
+				$this->decorator->getLabel($modelInstance)
+			));
 		} else {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
@@ -91,8 +95,11 @@ abstract class ModelAdminController extends BaseController
 			$modelInstance->fill($input);
 			$modelInstance->save();
 			$this->decorator->updateSyncRelations($modelInstance, $input);
-			$response = $this->getUpdateResponse($modelInstance);
-			Session::flash('model.updated', sprintf('Successfully updated "%s"', $this->decorator->getLabel($modelInstance)));
+			$response = $this->backResponse() ?: $this->getUpdateResponse($modelInstance);
+			Session::flash('model.updated', sprintf(
+				'Successfully updated "%s"',
+				$this->decorator->getLabel($modelInstance)
+			));
 		} else {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
@@ -109,28 +116,41 @@ abstract class ModelAdminController extends BaseController
 		return $this->getSuccessResponse($instance);
 	}
 
+	protected function backResponse()
+	{
+		if (Input::has('after_save') && Input::get('after_save') === 'continue') {
+			return Redirect::back();
+		}
+	}
+
 	protected function consolidateJavascript($fields)
 	{
 		$javascript = [];
 		foreach ($fields as $field) {
 			$javascript[] = $field->getJavascript();
 		}
-		
-		return '<script type="text/javascript">' . implode(PHP_EOL, array_filter($javascript)) . '</script>' . PHP_EOL;
+
+		return '<script>' . implode(PHP_EOL, array_filter($javascript)) . '</script>' . PHP_EOL;
 	}
 
+	/**
+	 * The response after successfully storing an instance
+	 */
 	protected function getStoreResponse($instance)
 	{
 		return $this->getSuccessResponse($instance);
 	}
 
+	/**
+	 * The response after successfully updating an instance
+	 */
 	protected function getUpdateResponse($instance)
 	{
 		return $this->getSuccessResponse($instance);
 	}
 
 	/**
-	 * The Response after a successful create/edit/delete action.
+	 * The generic response after a successful create/edit/delete action.
 	 */
 	protected function getSuccessResponse($instance)
 	{

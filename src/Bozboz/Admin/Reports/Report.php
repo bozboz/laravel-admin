@@ -83,7 +83,8 @@ class Report
 			'heading' => $this->decorator->getHeading(true),
 			'modelName' => $this->decorator->getHeading(false),
 			'identifier' => $identifier,
-			'canCreate' => true
+			'canCreate' => true,
+			'canDelete' => true
 		];
 
 		return View::make($this->view, $params);
