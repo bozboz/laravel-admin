@@ -74,6 +74,7 @@ jQuery(function($){
 			handle: '.sorting-handle',
 			items: 'li',
 			toleranceElement: '> div',
+			revert: 200,
 			// maxLevels: 0 = unlimited
 			maxLevels: $(this).hasClass('nested') ? 0 : 1,
 			stop: function (e, ui) {
