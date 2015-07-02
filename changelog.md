@@ -21,6 +21,7 @@
 -   Add "canDelete" param to overview screen to hide the delete button
 -   Add "Save and continue" button on form screen
 -   Add "Model created" flash message as well as updated
+-   Give ModelAdminDecorator::getColumns a sensible default, making it no longer abstract
 
 
 # Version 1.0.4 (2015-06-15)

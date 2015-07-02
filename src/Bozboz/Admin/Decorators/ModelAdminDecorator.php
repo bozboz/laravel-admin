@@ -22,14 +22,6 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
-	 * Return the columns to be displayed on an overview screen
-	 *
-	 * @param  Bozboz\Admin\Models\Base  $instance
-	 * @return array
-	 */
-	abstract public function getColumns($instance);
-
-	/**
 	 * Return the label identifying the instance
 	 *
 	 * @param  Bozboz\Admin\Models\Base  $instance
@@ -44,6 +36,19 @@ abstract class ModelAdminDecorator
 	 * @return array
 	 */
 	abstract public function getFields($instance);
+
+	/**
+	 * Return the columns to be displayed on an overview screen
+	 *
+	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @return array
+	 */
+	public function getColumns($instance)
+	{
+		return [
+			'Name' => $this->getLabel($instance)
+		];
+	}
 
 	/**
 	 * DEPRECATED: Retrieve $this->model
