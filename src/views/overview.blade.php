@@ -2,20 +2,22 @@
 
 @section('main')
 @parent
-	@include('admin::partials.new')
-	<h1>{{ $heading }}</h1>
+	@section('report_header')
+		@include('admin::partials.new')
+		<h1>{{ $heading }}</h1>
 
-	@if (Session::has('model'))
-		@foreach(Session::get('model') as $msg)
-			<div id="js-alert" class="alert alert-success" data-alert="alert">
-				{{ $msg }}
-			</div>
-		@endforeach
-	@endif
+		@if (Session::has('model'))
+			@foreach(Session::get('model') as $msg)
+				<div id="js-alert" class="alert alert-success" data-alert="alert">
+					{{ $msg }}
+				</div>
+			@endforeach
+		@endif
 
-	@include('admin::partials.sort-alert')
+		@include('admin::partials.sort-alert')
 
-	{{ $report->getHeader() }}
+		{{ $report->getHeader() }}
+	@show
 	<div class="table-responsive">
 	@if ($report->hasRows())
 		<ol class="secret-list faux-table{{ $sortableClass }}" data-model="{{ $identifier }}">
@@ -55,12 +57,15 @@
 			</li>
 		@endforeach
 		</ol>
-		{{ $report->getFooter() }}
 	@else
 		<p>Nothing here yet. Why not add something?</p>
 	@endif
 	</div>
-	@include('admin::partials.new')
+
+	@section('report_footer')
+		{{ $report->getFooter() }}
+		@include('admin::partials.new')
+	@show
 
 	@section('scripts')
 		@parent
