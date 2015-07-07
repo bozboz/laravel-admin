@@ -4,12 +4,12 @@ use Bozboz\Admin\Models\Page;
 use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\File;
-use Bozboz\Admin\Fields\TextField;
+use Bozboz\Admin\Fields\CheckboxField;
 use Bozboz\Admin\Fields\HTMLEditorField;
 use Bozboz\Admin\Fields\SelectField;
-use Bozboz\Admin\Fields\CheckboxField;
+use Bozboz\Admin\Fields\TextField;
+use Bozboz\Admin\Fields\URLField;
 use Bozboz\MediaLibrary\Fields\MediaBrowser;
-use Bozboz\MediaLibrary\Models\Media;
 
 class PageAdminDecorator extends ModelAdminDecorator
 {
@@ -33,20 +33,32 @@ class PageAdminDecorator extends ModelAdminDecorator
 
 	public function getFields($instance)
 	{
-		return array(
-			new TextField(array('name' => 'title')),
-			new TextField(array('name' => 'meta_title')),
-			new TextField(array('name' => 'meta_description', 'class' => 'form-control form-control-wide')),
-			new TextField(array('name' => 'slug')),
-			new TextField(array('name' => 'external_link')),
-			new SelectField(array('name' => 'redirect_to_id', 'label' => 'Redirect To Page', 'options' => $this->getRedirectOptions())),
-			new CheckboxField(array('name' => 'show_in_main_menu')),
-			new CheckboxField(array('name' => 'show_in_footer_menu')),
-			new CheckboxField(array('name' => 'status')),
-			new HTMLEditorField(array('name' => 'description')),
-			new SelectField(array('name' => 'template', 'options' => $this->getTemplateOptions())),
-			new MediaBrowser(Media::forModel($instance))
-		);
+		return [
+			new TextField('title'),
+			new TextField('meta_title'),
+			new TextField([
+				'name' => 'meta_description',
+				'class' => 'form-control form-control-wide'
+			]),
+			new URLField('slug', [
+				'route' => 'page'
+			]),
+			new TextField('external_link'),
+			new SelectField([
+				'name' => 'redirect_to_id',
+				'label' => 'Redirect To Page',
+				'options' => $this->getRedirectOptions()
+			]),
+			new CheckboxField('show_in_main_menu'),
+			new CheckboxField('show_in_footer_menu'),
+			new CheckboxField('status'),
+			new HTMLEditorField('description'),
+			new SelectField([
+				'name' => 'template',
+				'options' => $this->getTemplateOptions()
+			]),
+			new MediaBrowser($instance->media())
+		];
 	}
 
 	protected function getRedirectOptions()
@@ -54,6 +66,7 @@ class PageAdminDecorator extends ModelAdminDecorator
 		$options = array('' => 'No redirect');
 
 		$listing = $this->getListingModels();
+
 		foreach($listing as $page) {
 			$options[$page->id] = $page->slug;
 		}
@@ -65,18 +78,14 @@ class PageAdminDecorator extends ModelAdminDecorator
 	{
 		$options = array('' => 'Default');
 
-		$files = File::files(app_path() . '/views/pages');
+		$files = File::files(app_path('views/pages'));
+
 		foreach($files as $file) {
 			$key = str_replace(array('.blade', '.php'), '', basename($file));
 			$options[$key] = basename($file);
 		}
 
 		return $options;
-	}
-
-	public function getListingModels()
-	{
-		return $this->model->orderBy($this->model->sortBy())->get();
 	}
 
 	public function getSyncRelations()

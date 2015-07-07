@@ -55,7 +55,7 @@ abstract class ModelAdminController extends BaseController
 			$modelInstance->fill($input);
 			$modelInstance->save();
 			$this->decorator->updateSyncRelations($modelInstance, $input);
-			$response = $this->backResponse() ?: $this->getStoreResponse($modelInstance);
+			$response = $this->reEdit($modelInstance) ?: $this->getStoreResponse($modelInstance);
 			Session::flash('model.created', sprintf(
 				'Successfully created "%s"',
 				$this->decorator->getLabel($modelInstance)
@@ -95,7 +95,7 @@ abstract class ModelAdminController extends BaseController
 			$modelInstance->fill($input);
 			$modelInstance->save();
 			$this->decorator->updateSyncRelations($modelInstance, $input);
-			$response = $this->backResponse() ?: $this->getUpdateResponse($modelInstance);
+			$response = $this->reEdit($modelInstance) ?: $this->getUpdateResponse($modelInstance);
 			Session::flash('model.updated', sprintf(
 				'Successfully updated "%s"',
 				$this->decorator->getLabel($modelInstance)
@@ -116,10 +116,10 @@ abstract class ModelAdminController extends BaseController
 		return $this->getSuccessResponse($instance);
 	}
 
-	protected function backResponse()
+	protected function reEdit($instance)
 	{
 		if (Input::has('after_save') && Input::get('after_save') === 'continue') {
-			return Redirect::back();
+			return Redirect::action(get_class($this) . '@edit', $instance->getKey());
 		}
 	}
 
