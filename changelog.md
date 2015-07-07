@@ -24,6 +24,8 @@
 -   Give ModelAdminDecorator::getColumns a sensible default, making it no longer abstract
 -   Add report_header and report_footer sections in overview view
 -   Add concept of "private" media stored outside of the public dir.
+-   Fix password reset
+
 
 # Version 1.0.4 (2015-06-15)
 -   Fix for placeholder when sorting in-line media
