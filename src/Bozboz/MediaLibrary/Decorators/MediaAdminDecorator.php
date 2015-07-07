@@ -1,11 +1,6 @@
 <?php namespace Bozboz\MediaLibrary\Decorators;
 
-use Input;
-use Illuminate\Config\Repository;
-use Illuminate\Database\Eloquent\Builder;
-
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
-use Bozboz\Admin\Fields\SelectField;
 use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Reports\Filters\ArrayListingFilter;
 use Bozboz\Admin\Reports\Filters\SearchListingFilter;
