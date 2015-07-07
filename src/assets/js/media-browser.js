@@ -29,7 +29,7 @@ function MediaViewModel(data, url)
 	this.mediaLibrary = {
 		active: ko.observable(false),
 		loaded: ko.observable(false),
-		privateMediaOnly: data.privateMediaOnly,
+		mediaAccess: data.mediaAccess,
 		media: ko.observableArray([]),
 		currentMedia: ko.observableArray([]),
 		links: ko.observable(''),
@@ -68,8 +68,8 @@ function MediaViewModel(data, url)
 				self.mediaLibrary.media(data.media);
 				if (callback) callback();
 			};
-			
-			if (self.mediaLibrary.privateMediaOnly) {
+
+			if (self.mediaLibrary.mediaAccess === ACCESS_PRIVATE) {
 				url = url + '&private=1';
 			} else {
 				url = url + '&public=1';
@@ -112,7 +112,7 @@ ko.bindingHandlers.modal = {
 		});
 	},
 	update: function(element, valueAccessor, allBindings) {
-		var active = ko.unwrap(valueAccessor());		
+		var active = ko.unwrap(valueAccessor());
 		$(element).modal(active ? 'show' : 'hide');
 	}
 };

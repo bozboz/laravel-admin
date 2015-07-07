@@ -1,3 +1,6 @@
+var ACCESS_PUBLIC = {{ Media::ACCESS_PUBLIC }};
+var ACCESS_PRIVATE = {{ Media::ACCESS_PRIVATE }};
+
 (function() {
 	var elem = document.querySelector('.js-media-browser-{{ $id }}');
 	var settings = $(elem).data('values');
@@ -18,7 +21,7 @@
 		url: '/admin/media',
 		dataType: 'json',
 		formData: {
-			'is_private[]': settings.privateMediaOnly
+			'is_private[]': ( settings.mediaAccess === ACCESS_PRIVATE ? 1 : 0 )
 		},
 		progressall: function (e, data) {
 			var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -35,7 +38,7 @@
 					type: upload.type,
 					caption: upload.name,
 					filename: upload.filename,
-					private: settings.privateMediaOnly,
+					private: ( settings.mediaAccess === ACCESS_PRIVATE ? 1 : 0 ),
 				});
 			}
 			viewModel.mediaLibrary.loaded(false);

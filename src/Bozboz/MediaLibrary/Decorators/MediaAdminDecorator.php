@@ -15,10 +15,6 @@ use Bozboz\MediaLibrary\Models\Media;
 
 class MediaAdminDecorator extends ModelAdminDecorator
 {
-	const ACCESS_BOTH = 0;
-	const ACCESS_PUBLIC = 1;
-	const ACCESS_PRIVATE = 2;
-	
 	public function __construct(Media $media)
 	{
 		parent::__construct($media);
@@ -60,19 +56,19 @@ class MediaAdminDecorator extends ModelAdminDecorator
 	{
 		return [
 			new ArrayListingFilter('access', [
-					self::ACCESS_BOTH => 'All',
-					self::ACCESS_PUBLIC => 'Public Only',
-					self::ACCESS_PRIVATE => 'Private Only',
+					Media::ACCESS_BOTH => 'All',
+					Media::ACCESS_PUBLIC => 'Public Only',
+					Media::ACCESS_PRIVATE => 'Private Only',
 				], function($builder, $value) {
 				switch ($value) {
-					case self::ACCESS_PUBLIC:
+					case Media::ACCESS_PUBLIC:
 						$builder->where('private', 0);
 					break;
-					case self::ACCESS_PRIVATE:
+					case Media::ACCESS_PRIVATE:
 						$builder->where('private', 1);
 					break;
 				}
-			}, self::ACCESS_BOTH),
+			}, Media::ACCESS_BOTH),
 			new ArrayListingFilter('type', $this->getTypeOptions(), function($builder, $value) {
 				if ($value) {
 					$builder->where('type', $value);
@@ -81,20 +77,20 @@ class MediaAdminDecorator extends ModelAdminDecorator
 			new SearchListingFilter('search', ['filename', 'caption']),
 		];
 	}
-	
+
 	protected function filterListingQuery(Builder $query)
 	{
 		parent::filterListingQuery($query);
-		
+
 		if (Input::get('public')) {
 			$query->where('private', 0);
 		}
-		
+
 		if (Input::get('private')) {
 			$query->where('private', 1);
 		}
 	}
-	
+
 	private function getTypeOptions()
 	{
 		return ['All'] + array_map('ucwords', Media::groupBy('type')->lists('type', 'type'));

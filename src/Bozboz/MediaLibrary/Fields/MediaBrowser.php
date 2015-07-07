@@ -8,12 +8,23 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 class MediaBrowser extends Field
 {
 	private $relation;
-	private $privateMediaOnly;
+	private $mediaAccess;
 
-	public function __construct(Relation $relation, $attributes = array(), $privateMediaOnly = false)
+	public function __construct(Relation $relation, $attributes = array(), $mediaAccess = Media::ACCESS_PUBLIC)
 	{
+		switch ($mediaAccess) {
+			case Media::ACCESS_PUBLIC:
+			case Media::ACCESS_PRIVATE:
+				// all good
+			break;
+
+			default:
+				throw new Predis\NotSupportedException('Unsupported media browser access type');
+			break;
+		}
+
 		$this->relation = $relation;
-		$this->privateMediaOnly = $privateMediaOnly;
+		$this->mediaAccess = $mediaAccess;
 
 		if ( ! array_key_exists('name', $attributes)) {
 			$attributes['name'] = $this->calculateName();
@@ -65,7 +76,7 @@ class MediaBrowser extends Field
 		$data = [
 			'media' => $items,
 			'mediaPath' => $mediaFactory->getFilePath('image', 'thumb'),
-			'privateMediaOnly' => $this->privateMediaOnly,
+			'mediaAccess' => $this->mediaAccess,
 		];
 
 		return View::make('admin::fields.media-browser')->with([

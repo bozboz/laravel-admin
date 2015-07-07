@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Media extends Base
 {
+	const ACCESS_BOTH = 0;
+	const ACCESS_PUBLIC = 1;
+	const ACCESS_PRIVATE = 2;
+
 	protected $table = 'media';
 	protected $fillable = array('filename', 'caption', 'private');
 	private $dynamicRelations = array();
@@ -81,7 +85,7 @@ class Media extends Base
 	{
 		return strtolower(sprintf('/images/%s/media/%s', $size, $type));
 	}
-	
+
 	public function getPreviewImageUrl()
 	{
 		if ($this->private) {
