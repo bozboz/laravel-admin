@@ -69,11 +69,7 @@ function MediaViewModel(data, url)
 				if (callback) callback();
 			};
 
-			if (self.mediaLibrary.mediaAccess === ACCESS_PRIVATE) {
-				url = url + '&private=1';
-			} else {
-				url = url + '&public=1';
-			}
+			url = url + '&access=' + self.mediaLibrary.mediaAccess;
 
 			if (self.mediaLibrary.pages[url]) {
 				update(self.mediaLibrary.pages[url]);

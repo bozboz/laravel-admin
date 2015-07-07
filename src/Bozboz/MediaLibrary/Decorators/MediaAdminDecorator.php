@@ -78,19 +78,6 @@ class MediaAdminDecorator extends ModelAdminDecorator
 		];
 	}
 
-	protected function filterListingQuery(Builder $query)
-	{
-		parent::filterListingQuery($query);
-
-		if (Input::get('public')) {
-			$query->where('private', 0);
-		}
-
-		if (Input::get('private')) {
-			$query->where('private', 1);
-		}
-	}
-
 	private function getTypeOptions()
 	{
 		return ['All'] + array_map('ucwords', Media::groupBy('type')->lists('type', 'type'));
