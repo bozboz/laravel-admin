@@ -55,11 +55,7 @@ class MediaAdminDecorator extends ModelAdminDecorator
 	public function getListingFilters()
 	{
 		return [
-			new ArrayListingFilter('access', [
-					Media::ACCESS_BOTH => 'All',
-					Media::ACCESS_PUBLIC => 'Public Only',
-					Media::ACCESS_PRIVATE => 'Private Only',
-				], function($builder, $value) {
+			new ArrayListingFilter('access', $this->getAccessOptions(), function($builder, $value) {
 				switch ($value) {
 					case Media::ACCESS_PUBLIC:
 						$builder->where('private', 0);
@@ -75,6 +71,15 @@ class MediaAdminDecorator extends ModelAdminDecorator
 				}
 			}),
 			new SearchListingFilter('search', ['filename', 'caption']),
+		];
+	}
+
+	protected function getAccessOptions()
+	{
+		return [
+			Media::ACCESS_BOTH => 'All',
+			Media::ACCESS_PUBLIC => 'Public only',
+			Media::ACCESS_PRIVATE => 'Private only',
 		];
 	}
 
