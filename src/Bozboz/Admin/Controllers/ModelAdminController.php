@@ -113,7 +113,7 @@ abstract class ModelAdminController extends BaseController
 
 		$instance->delete();
 
-		return $this->getSuccessResponse($instance);
+		return Redirect::back();
 	}
 
 	protected function reEdit($instance)
