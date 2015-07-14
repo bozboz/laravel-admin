@@ -1,11 +1,11 @@
 <?php namespace Bozboz\Admin\Controllers;
 
 use View, Input, Redirect, Session;
-use BaseController;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Report;
+use Illuminate\Routing\Controller;
 
-abstract class ModelAdminController extends BaseController
+abstract class ModelAdminController extends Controller
 {
 	protected $decorator;
 	protected $editView = 'admin::edit';
