@@ -113,6 +113,11 @@ abstract class ModelAdminController extends BaseController
 
 		$instance->delete();
 
+		Session::flash('model.deleted', sprintf(
+			'Successfully deleted "%s"',
+			$this->decorator->getLabel($instance)
+		));
+
 		return Redirect::back();
 	}
 
