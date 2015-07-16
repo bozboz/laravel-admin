@@ -22,7 +22,7 @@
 -   Add "Save and continue" button on form screen
 -   Fire model created and deleted flash messagees in addition to updated
 -   Give ModelAdminDecorator::getColumns a sensible default, making it no longer abstract
--   Add report_header and report_footer sections in overview view
+-   Add report, report_header and report_footer sections in overview view
 -   Add concept of "private" media stored outside of the public dir.
 -   Fix password reset
 -   Redirect back after delete, rather than overview

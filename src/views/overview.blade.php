@@ -18,6 +18,7 @@
 
 		{{ $report->getHeader() }}
 	@show
+	@section('report')
 	<div class="table-responsive">
 	@if ($report->hasRows())
 		<ol class="secret-list faux-table{{ $sortableClass }}" data-model="{{ $identifier }}">
@@ -61,6 +62,7 @@
 		<p>Nothing here yet. Why not add something?</p>
 	@endif
 	</div>
+	@show
 
 	@section('report_footer')
 		{{ $report->getFooter() }}
