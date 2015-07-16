@@ -20,10 +20,13 @@
 -   Remove blank sortable column on overview screen if model is not sortable
 -   Add "canDelete" param to overview screen to hide the delete button
 -   Add "Save and continue" button on form screen
--   Add "Model created" flash message as well as updated
+-   Fire model created and deleted flash messagees in addition to updated
 -   Give ModelAdminDecorator::getColumns a sensible default, making it no longer abstract
--   Add report_header and report_footer sections in overview view
+-   Add report, report_header and report_footer sections in overview view
 -   Add concept of "private" media stored outside of the public dir.
+-   Fix password reset
+-   Redirect back after delete, rather than overview
+
 
 # Version 1.0.4 (2015-06-15)
 -   Fix for placeholder when sorting in-line media

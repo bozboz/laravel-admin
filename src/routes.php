@@ -25,6 +25,8 @@ Route::group(array('namespace' => 'Bozboz\Admin\Controllers', 'prefix' => 'admin
 		Route::post('login', 'AdminController@postLogin');
 	});
 
+	Route::controller('password', 'RemindersController');
+
 });
 
 Route::resource('admin/media', 'Bozboz\MediaLibrary\Controllers\MediaLibraryAdminController', ['before' => 'auth']);

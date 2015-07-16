@@ -1,11 +1,11 @@
 <?php namespace Bozboz\Admin\Controllers;
 
 use View, Input, Redirect, Session;
-use BaseController;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Report;
+use Illuminate\Routing\Controller;
 
-abstract class ModelAdminController extends BaseController
+abstract class ModelAdminController extends Controller
 {
 	protected $decorator;
 	protected $editView = 'admin::edit';
@@ -113,7 +113,12 @@ abstract class ModelAdminController extends BaseController
 
 		$instance->delete();
 
-		return $this->getSuccessResponse($instance);
+		Session::flash('model.deleted', sprintf(
+			'Successfully deleted "%s"',
+			$this->decorator->getLabel($instance)
+		));
+
+		return Redirect::back();
 	}
 
 	protected function reEdit($instance)
