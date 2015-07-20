@@ -26,6 +26,7 @@
 -   Add concept of "private" media stored outside of the public dir.
 -   Fix password reset
 -   Redirect back after delete, rather than overview
+-   Add CSVReport
 
 
 # Version 1.0.4 (2015-06-15)
