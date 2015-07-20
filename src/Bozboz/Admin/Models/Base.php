@@ -1,8 +1,8 @@
 <?php namespace Bozboz\Admin\Models;
 
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 
-abstract class Base extends Eloquent
+abstract class Base extends Model
 {
 	/**
 	 * @var array

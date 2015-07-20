@@ -10,10 +10,10 @@ class Sorter
 	public function sort(Sortable $model, Array $items)
 	{
 		$this->model = $model;
-		$this->saveList($items, 0);
+		$this->saveList($items);
 	}
 
-	private function saveList(array $list, $parent = 0)
+	private function saveList(array $list, $parent = null)
 	{
 		$sortKey = $this->model->sortBy();
 

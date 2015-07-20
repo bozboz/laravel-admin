@@ -1,11 +1,11 @@
 <?php namespace Bozboz\Admin\Controllers;
 
 use View, Input, Redirect, Session;
-use BaseController;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Report;
+use Illuminate\Routing\Controller;
 
-abstract class ModelAdminController extends BaseController
+abstract class ModelAdminController extends Controller
 {
 	protected $decorator;
 	protected $editView = 'admin::edit';
@@ -55,7 +55,11 @@ abstract class ModelAdminController extends BaseController
 			$modelInstance->fill($input);
 			$modelInstance->save();
 			$this->decorator->updateSyncRelations($modelInstance, $input);
-			$response = $this->getStoreResponse($modelInstance);
+			$response = $this->reEdit($modelInstance) ?: $this->getStoreResponse($modelInstance);
+			Session::flash('model.created', sprintf(
+				'Successfully created "%s"',
+				$this->decorator->getLabel($modelInstance)
+			));
 		} else {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
@@ -91,8 +95,11 @@ abstract class ModelAdminController extends BaseController
 			$modelInstance->fill($input);
 			$modelInstance->save();
 			$this->decorator->updateSyncRelations($modelInstance, $input);
-			$response = $this->getUpdateResponse($modelInstance);
-			Session::flash('model.updated', sprintf('Successfully updated "%s"', $this->decorator->getLabel($modelInstance)));
+			$response = $this->reEdit($modelInstance) ?: $this->getUpdateResponse($modelInstance);
+			Session::flash('model.updated', sprintf(
+				'Successfully updated "%s"',
+				$this->decorator->getLabel($modelInstance)
+			));
 		} else {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
@@ -106,7 +113,19 @@ abstract class ModelAdminController extends BaseController
 
 		$instance->delete();
 
-		return $this->getSuccessResponse($instance);
+		Session::flash('model.deleted', sprintf(
+			'Successfully deleted "%s"',
+			$this->decorator->getLabel($instance)
+		));
+
+		return Redirect::back();
+	}
+
+	protected function reEdit($instance)
+	{
+		if (Input::has('after_save') && Input::get('after_save') === 'continue') {
+			return Redirect::action(get_class($this) . '@edit', $instance->getKey());
+		}
 	}
 
 	protected function consolidateJavascript($fields)
@@ -115,22 +134,28 @@ abstract class ModelAdminController extends BaseController
 		foreach ($fields as $field) {
 			$javascript[] = $field->getJavascript();
 		}
-		
-		return '<script type="text/javascript">' . implode(PHP_EOL, array_filter($javascript)) . '</script>' . PHP_EOL;
+
+		return '<script>' . implode(PHP_EOL, array_filter($javascript)) . '</script>' . PHP_EOL;
 	}
 
+	/**
+	 * The response after successfully storing an instance
+	 */
 	protected function getStoreResponse($instance)
 	{
 		return $this->getSuccessResponse($instance);
 	}
 
+	/**
+	 * The response after successfully updating an instance
+	 */
 	protected function getUpdateResponse($instance)
 	{
 		return $this->getSuccessResponse($instance);
 	}
 
 	/**
-	 * The Response after a successful create/edit/delete action.
+	 * The generic response after a successful create/edit/delete action.
 	 */
 	protected function getSuccessResponse($instance)
 	{

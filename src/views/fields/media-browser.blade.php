@@ -9,7 +9,7 @@
           value: id, attr: { id: '{{ $id }}-' + id }
         ">
         <label data-bind="attr: { for: '{{ $id }}-' + id }">
-          <img data-bind="attr: { src: type === 'pdf' ? '/packages/bozboz/media-library/images/document.png' : $parent.getFilename(filename) }" width="150">
+          <img data-bind="attr: { src: $parent.getPreviewImageUrl(filename, type, private) }" width="150">
           <p class="icons" data-bind="text: caption"></p>
         </label>
       </li>
@@ -17,9 +17,9 @@
   </div>
 
   <span class="btn btn-success fileinput-button">
-    <i class="glyphicon glyphicon-plus"></i>
-    <span>Select files...</span>
-    <input class="js-file-upload" type="file" name="files[]" multiple>
+    <i class="fa fa-plus"></i>
+    <span>Upload New Media</span>
+    <input class="js-file-upload-{{ $id }}" type="file" name="files[]" multiple>
   </span>
 
   <br>
@@ -33,7 +33,7 @@
     $('.js-media-browser-{{ $id }}').data('values', {{ $data }});
   </script>
 
-  <button class="btn btn-info" data-bind="click: mediaLibrary.browse">Browse Media</button>
+  <button class="btn btn-info" data-bind="click: mediaLibrary.browse"><i class="fa fa-search"></i> Browse Media</button>
 
   @include('admin::fields.partials.media-modal')
 

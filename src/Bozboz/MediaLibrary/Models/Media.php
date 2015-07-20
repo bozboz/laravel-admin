@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Media extends Base
 {
+	const ACCESS_BOTH = 0;
+	const ACCESS_PUBLIC = 1;
+	const ACCESS_PRIVATE = 2;
+
 	protected $table = 'media';
-	protected $fillable = array('filename', 'caption');
+	protected $fillable = array('filename', 'caption', 'private');
 	private $dynamicRelations = array();
 
 	public function mediable()
@@ -50,6 +54,13 @@ class Media extends Base
 			->orderBy('sorting');
 	}
 
+	/**
+	 * Get filename to either the original media file, or - if size argument is
+	 * provided - the resized file URL
+	 *
+	 * @param  string  $size
+	 * @return string
+	 */
 	public function getFilename($size = null)
 	{
 		if (!is_null($size)) {
@@ -57,11 +68,33 @@ class Media extends Base
 		} else {
 			$prefix = '';
 		}
-		return $prefix . '/media/' . strtolower($this->type) . '/' . $this->filename;
+		return $prefix . '/' . $this->getDirectory() . '/' . $this->filename;
+	}
+
+	/**
+	 * Get the directory path to original media file
+	 *
+	 * @return string
+	 */
+	public function getDirectory()
+	{
+		return 'media/' . strtolower($this->type);
 	}
 
 	public function getFilepath($type, $size)
 	{
 		return strtolower(sprintf('/images/%s/media/%s', $size, $type));
+	}
+
+	public function getPreviewImageUrl()
+	{
+		if ($this->private) {
+			$filename = asset('packages/bozboz/admin/images/private-document.png');
+		} elseif ($this->type === 'image') {
+			$filename = $this->getFilename('thumb');
+		} else {
+			$filename = asset('packages/bozboz/admin/images/document.png');
+		}
+		return $filename;
 	}
 }

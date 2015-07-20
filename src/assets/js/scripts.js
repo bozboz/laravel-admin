@@ -7,7 +7,7 @@ jQuery(function($){
 	$('textarea.html-editor').summernote({
 		height: 230,
 		toolbar: [
-			// ['style', ['style']],
+			['style', ['style']],
 			['font', ['bold', 'italic', 'underline', 'clear']],
 			['para', ['ul', 'ol', 'paragraph']],
 			['table', ['table']],
@@ -62,8 +62,11 @@ jQuery(function($){
 		e.preventDefault();
 	});
 
-	$('.btn[data-warn]').on('click', function() {
-		return confirm('Are you sure you want to delete');
+	$('.main').on('click', '.btn[data-warn]', function() {
+		var msg = $(this).data('warn').length > 1
+			? $(this).data('warn')
+			: 'Are you sure you want to delete?';
+		return confirm( msg );
 	});
 	
 	$('.sortable').each(function(){
@@ -71,6 +74,7 @@ jQuery(function($){
 			handle: '.sorting-handle',
 			items: 'li',
 			toleranceElement: '> div',
+			revert: 200,
 			// maxLevels: 0 = unlimited
 			maxLevels: $(this).hasClass('nested') ? 0 : 1,
 			stop: function (e, ui) {

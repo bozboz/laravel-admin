@@ -28,17 +28,20 @@ class MediaField extends Field
 	{
 		$html = Form::hidden($this->get('name'));
 
-		if ($this->media->type === 'image') {
-			$filename = $this->media->getFilename('thumb');
-		} else {
-			$filename = asset('packages/bozboz/admin/images/document.png');
-		}
-
 		$alt = $this->media->filename ?: $this->media->caption;
 
-		$html .= HTML::image($filename, $alt, ['style' => 'margin-bottom: 5px; display: block']);
-		$html .= '<p>' . $this->media->filename . '</p>';
+		$html .= HTML::image($this->media->getPreviewImageUrl(), $alt, ['style' => 'margin-bottom: 5px; display: block']);
+		$html .= '<p>' . HTML::link($this->getMediaPreviewURL(), $this->media->filename, ['target' => '_blank']) . '</p>';
 
 		return $html;
+	}
+	
+	public function getMediaPreviewURL()
+	{
+		if ($this->media->private) {
+			return route('admin.media.view-private', [$this->media->id]);
+		} else {
+			return $this->media->getFilename();
+		}
 	}
 }

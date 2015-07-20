@@ -1,3 +1,46 @@
+# Version 1.1.0 (FUTURE)
+
+-   Fix non-standard behaviour of getColumns by always passing it an instance,
+    rather than a factory
+-   Deprecate Reports\Row::getModel() method
+-   Deprecate ModelAdminDecorator::getModel() method
+-   Add helper methods isSortable and getListingIdentififer to ModelAdminDecorator
+-   Rename "fullModelName" variable to "heading"
+-   Correct case of "New {modelName}" in admin
+-   Add listingPerPageLimit method to ModelAdminDecorator
+-   Add docblocks to ModelAdminDecorator
+-   Allow null fields in ModelAdminDecorator::getFields
+-   Add defaultAttributes method to Field
+-   Generate a better label in BelongsToManyField
+-   Add URLField
+-   Improve getHeading method of ModelAdminDecorator
+-   Deprecate "admin.fields.built" event in ModelAdminDecorator
+-   Correctly display fallback image for non-image Media
+-   Allow warn btn js to work on ajaxed elements
+-   Remove blank sortable column on overview screen if model is not sortable
+-   Add "canDelete" param to overview screen to hide the delete button
+-   Add "Save and continue" button on form screen
+-   Fire model created and deleted flash messagees in addition to updated
+-   Give ModelAdminDecorator::getColumns a sensible default, making it no longer abstract
+-   Add report, report_header and report_footer sections in overview view
+-   Add concept of "private" media stored outside of the public dir.
+-   Fix password reset
+-   Redirect back after delete, rather than overview
+-   Add CSVReport
+
+
+# Version 1.0.4 (2015-06-15)
+-   Fix for placeholder when sorting in-line media
+
+
+# Version 1.0.3 (2015-06-12)
+-   Fix media browser, so inline-uploaded files are selected immediately
+
+
+# Version 1.0.2 (2015-06-09)
+-   Fix media type directory when uploading PDFs
+
+
 # Version 1.0.1 (2015-05-08)
 -   Use strict type comparison for listing filter values
 

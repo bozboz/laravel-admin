@@ -36,7 +36,14 @@ class TreeSelectField extends SelectField
 	 */
 	private function getOptions()
 	{
-		return $this->renderLevel(0);
+		if ( ! $this->all) {
+			$this->disabled = true;
+			$options = [];
+		} else {
+			$options = $this->renderLevel(0);
+		}
+
+		return $options;
 	}
 
 	/**

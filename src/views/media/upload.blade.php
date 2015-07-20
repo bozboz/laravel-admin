@@ -66,7 +66,12 @@
 			<strong class="error text-danger"></strong>
 		</td>
 		<td>
-			<input name="caption[]" placeholder="Caption" class="caption">
+			<input name="caption[]" placeholder="Caption" class="caption form-control">
+		</td>
+		<td>
+			<label>Private
+				<input name="is_private[]" type="checkbox" class="is-private form-control">
+			</label>
 		</td>
 		<td>
 			<p class="size">Processing...</p>
@@ -100,7 +105,7 @@
 				{% } %}
 			</span>
 		</td>
-		<td>
+		<td colspan="2">
 			<p class="name">
 				{% if (file.url) { %}
 					<a href="{%=file.url%}" title="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
@@ -110,6 +115,13 @@
 			</p>
 			{% if (file.error) { %}
 				<div><span class="label label-danger">Error</span> {%=file.error%}</div>
+			{% } %}
+		</td>
+		<td>
+			{% if(file.private) { %} 
+				Private 
+			{% } else { %} 
+				Public 
 			{% } %}
 		</td>
 		<td>

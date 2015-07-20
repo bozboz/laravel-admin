@@ -1,10 +1,8 @@
 <?php namespace Bozboz\MediaLibrary\Decorators;
 
-use Illuminate\Config\Repository;
-
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
-use Bozboz\Admin\Fields\SelectField;
 use Bozboz\Admin\Fields\TextField;
+use Bozboz\Admin\Reports\Filters\ArrayListingFilter;
 use Bozboz\Admin\Reports\Filters\SearchListingFilter;
 
 use Bozboz\MediaLibrary\Fields\MediaField;
@@ -22,7 +20,7 @@ class MediaAdminDecorator extends ModelAdminDecorator
 		return array(
 			'id' => $instance->getKey(),
 			'image' => sprintf('<img src="%s" alt="%s" width="150">',
-				$instance->getFilename('library'),
+				$instance->getPreviewImageUrl(),
 				$this->getLabel($instance)
 			),
 			'caption' => $this->getLabel($instance)
@@ -52,7 +50,36 @@ class MediaAdminDecorator extends ModelAdminDecorator
 	public function getListingFilters()
 	{
 		return [
-			new SearchListingFilter('search', ['filename', 'caption'])
+			new ArrayListingFilter('access', $this->getAccessOptions(), function($builder, $value) {
+				switch ($value) {
+					case Media::ACCESS_PUBLIC:
+						$builder->where('private', 0);
+					break;
+					case Media::ACCESS_PRIVATE:
+						$builder->where('private', 1);
+					break;
+				}
+			}, Media::ACCESS_BOTH),
+			new ArrayListingFilter('type', $this->getTypeOptions(), function($builder, $value) {
+				if ($value) {
+					$builder->where('type', $value);
+				}
+			}),
+			new SearchListingFilter('search', ['filename', 'caption']),
 		];
+	}
+
+	protected function getAccessOptions()
+	{
+		return [
+			Media::ACCESS_BOTH => 'All',
+			Media::ACCESS_PUBLIC => 'Public only',
+			Media::ACCESS_PRIVATE => 'Private only',
+		];
+	}
+
+	private function getTypeOptions()
+	{
+		return ['All'] + array_map('ucwords', Media::groupBy('type')->lists('type', 'type'));
 	}
 }

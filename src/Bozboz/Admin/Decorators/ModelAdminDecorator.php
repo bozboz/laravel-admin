@@ -8,21 +8,50 @@ use Illuminate\Support\Fluent;
 
 abstract class ModelAdminDecorator
 {
+	/**
+	 * @var Bozboz\Admin\Models\Base
+	 */
 	protected $model;
 
+	/**
+	 * @param  Bozboz\Admin\Models\Base  $model
+	 */
 	public function __construct(Base $model)
 	{
 		$this->model = $model;
 	}
 
-	abstract public function getColumns($instance);
-
+	/**
+	 * Return the label identifying the instance
+	 *
+	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @return mixed
+	 */
 	abstract public function getLabel($instance);
 
+	/**
+	 * Return the fields displayed on a create/edit screen
+	 *
+	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @return array
+	 */
 	abstract public function getFields($instance);
 
 	/**
-	 * Retrieve $this->model
+	 * Return the columns to be displayed on an overview screen
+	 *
+	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @return array
+	 */
+	public function getColumns($instance)
+	{
+		return [
+			'Name' => $this->getLabel($instance)
+		];
+	}
+
+	/**
+	 * DEPRECATED: Retrieve $this->model
 	 *
 	 * @return Bozoboz\Admin\Models\Base
 	 */
@@ -39,14 +68,14 @@ abstract class ModelAdminDecorator
 	 */
 	public function getHeading($plural = false)
 	{
-		$name = class_basename(get_class($this->model));
+		$name = preg_replace('/([a-z])([A-Z])/', '$1 $2', class_basename($this->model));
 		return $plural ? Str::plural($name) : $name;
 	}
 
 	/**
 	 * Apply each defined listing filter to the passed $builder
 	 *
-	 * @param  Illuminate\Database\Eloquent\Builder  $builder
+	 * @param  Illuminate\Database\Eloquent\Builder  $query
 	 * @return void
 	 */
 	protected function filterListingQuery(Builder $query)
@@ -56,9 +85,16 @@ abstract class ModelAdminDecorator
 		}
 	}
 
+	/**
+	 * Add order by clause to the $query, if model is sortable; or order by
+	 * latest if model uses timestamps
+	 *
+	 * @param  Illuminate\Database\Eloquent\Builder  $query
+	 * @return void
+	 */
 	protected function modifyListingQuery(Builder $query)
 	{
-		if ($this->model instanceof Sortable) {
+		if ($this->isSortable()) {
 			$query->orderBy($this->model->sortBy());
 		} elseif ($this->model->usesTimestamps()) {
 			$query->orderBy($this->model->getTable() . '.created_at', 'DESC');
@@ -66,11 +102,41 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
-	 * Retrieve a collection of instances of $this->model to display
+	 * Retrieve a paginated collection of instances of $this->model to display
+	 *
+	 * @return Illuminate\Pagination\Paginator
+	 */
+	public function getListingModels()
+	{
+		return $this->getModelQuery()->paginate($this->listingPerPageLimit());
+	}
+
+	/**
+	 * Determine number of items per page on the listing
+	 *
+	 * @return int
+	 */
+	protected function listingPerPageLimit()
+	{
+		return Config::get('admin::listing_items_per_page');
+	}
+
+	/**
+	 * Retrieve entire collection of instances of $this->model to display
 	 *
 	 * @return Illuminate\Database\Eloquent\Collection
 	 */
-	public function getListingModels()
+	public function getListingModelsNoLimit()
+	{
+		return $this->getModelQuery()->get();
+	}
+
+	/**
+	 * Get filtered, customised query builder object for $this->model
+	 *
+	 * @return Illuminate\Database\Eloquent\Builder
+	 */
+	protected function getModelQuery()
 	{
 		$query = $this->model->newQuery();
 
@@ -78,7 +144,7 @@ abstract class ModelAdminDecorator
 
 		$this->modifyListingQuery($query);
 
-		return $query->paginate(Config::get('admin::listing_items_per_page'));
+		return $query;
 	}
 
 	/**
@@ -99,8 +165,10 @@ abstract class ModelAdminDecorator
 	 */
 	public function buildFields($instance)
 	{
-		$fieldsObj = new Fluent($this->getFields($instance));
+		$fieldsObj = new Fluent(array_filter($this->getFields($instance)));
 
+		// Below line deprecated in v1.1.0.
+		// Flagged for removal in next major version
 		Event::fire('admin.fields.built', array($fieldsObj, $instance));
 
 		return $fieldsObj->toArray();
@@ -175,5 +243,25 @@ abstract class ModelAdminDecorator
 	public function sanitiseInput($input)
 	{
 		return $this->model->sanitiseInput($input);
+	}
+
+	/**
+	 * Determine if underlying model is sortable
+	 *
+	 * @return boolean
+	 */
+	public function isSortable()
+	{
+		return $this->model instanceof Sortable;
+	}
+
+	/**
+	 * Return a string to identify the underlying model on the listing screen
+	 *
+	 * @return string
+	 */
+	public function getListingIdentifier()
+	{
+		return get_class($this->model);
 	}
 }

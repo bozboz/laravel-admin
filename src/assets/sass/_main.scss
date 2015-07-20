@@ -177,7 +177,7 @@ label {
 			padding-right: 5px;
 		}
 	}
-	
+
 }
 
 input[type="text"],
@@ -242,6 +242,10 @@ input.form-control-wide {
 .checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
 	margin-left: 0;
 	margin-right: $gap;
+}
+
+.table-responsive {
+	margin-bottom: 1em;
 }
 
 
@@ -393,7 +397,7 @@ li.placeholder {
 	.shipping {
 		margin-right: 10px;
 	}
-	
+
 	h3 {
 		font-size: 18px;
 		padding: 0 0 10px;
@@ -492,4 +496,4 @@ li.placeholder {
 /* DateTimeField */
 .ui-datepicker {
 	z-index: 3 !important;
-}	
+}

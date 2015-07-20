@@ -9,6 +9,16 @@ function MediaViewModel(data, url)
 		{
 			return self.selectedMedia.mediaPath + '/' + filename;
 		},
+		getPreviewImageUrl: function(filename, type, isPrivate)
+		{
+			if (isPrivate) {
+				return '/packages/bozboz/admin/images/private-document.png';
+			} else if (type == 'image') {
+				return self.selectedMedia.getFilename(filename);
+			} else {
+				return '/packages/bozboz/admin/images/document.png';
+			}
+		},
 		update: function()
 		{
 			self.selectedMedia.media(self.mediaLibrary.currentMedia());
@@ -19,6 +29,7 @@ function MediaViewModel(data, url)
 	this.mediaLibrary = {
 		active: ko.observable(false),
 		loaded: ko.observable(false),
+		mediaAccess: data.mediaAccess,
 		media: ko.observableArray([]),
 		currentMedia: ko.observableArray([]),
 		links: ko.observable(''),
@@ -26,6 +37,16 @@ function MediaViewModel(data, url)
 		getFilename: function(filename)
 		{
 			return self.mediaLibrary.mediaPath + '/' + filename;
+		},
+		getPreviewImageUrl: function(filename, type, isPrivate)
+		{
+			if (isPrivate) {
+				return '/packages/bozboz/admin/images/private-document.png';
+			} else if (type == 'image') {
+				return self.mediaLibrary.getFilename(filename);
+			} else {
+				return '/packages/bozboz/admin/images/document.png';
+			}
 		},
 		browse: function()
 		{
@@ -47,6 +68,8 @@ function MediaViewModel(data, url)
 				self.mediaLibrary.media(data.media);
 				if (callback) callback();
 			};
+
+			url = url + '&access=' + self.mediaLibrary.mediaAccess;
 
 			if (self.mediaLibrary.pages[url]) {
 				update(self.mediaLibrary.pages[url]);
@@ -85,7 +108,7 @@ ko.bindingHandlers.modal = {
 		});
 	},
 	update: function(element, valueAccessor, allBindings) {
-		var active = ko.unwrap(valueAccessor());		
+		var active = ko.unwrap(valueAccessor());
 		$(element).modal(active ? 'show' : 'hide');
 	}
 };

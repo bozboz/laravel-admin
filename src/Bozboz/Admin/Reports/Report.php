@@ -1,7 +1,6 @@
 <?php namespace Bozboz\Admin\Reports;
 
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
-use Bozboz\Admin\Models\Sortable;
 use View;
 
 class Report
@@ -9,6 +8,7 @@ class Report
 	protected $decorator;
 	protected $rows;
 	protected $view = 'admin::overview';
+	protected $renderedColumns = [];
 
 	public function __construct(ModelAdminDecorator $decorator)
 	{
@@ -23,7 +23,11 @@ class Report
 
 	public function getHeadings()
 	{
-		return array_keys($this->decorator->getColumns($this->decorator->getModel()));
+		$firstRow = $this->getRowFromInstance($this->rows->first());
+
+		$this->renderedColumns[$firstRow->getId()] = $firstRow;
+
+		return array_keys($firstRow->getColumns());
 	}
 
 	public function hasRows()
@@ -33,13 +37,29 @@ class Report
 
 	public function getRows()
 	{
-		$rows = array();
+		$rows = [];
 
 		foreach($this->rows as $row) {
-			$rows[] = new Row($row->id, $row, $this->decorator->getColumns($row));
+			$rows[] = $this->getRowFromInstance($row);
 		}
 
 		return $rows;
+	}
+
+	protected function getRowFromInstance($instance)
+	{
+		$id = $instance->id;
+
+		if (array_key_exists($id, $this->renderedColumns)) {
+			return $this->renderedColumns[$id];
+		}
+
+		return new Row($id, $instance, $this->getColumnsFromInstance($instance));
+	}
+
+	protected function getColumnsFromInstance($instance)
+	{
+		return $this->decorator->getColumns($instance);
 	}
 
 	public function getHeader()
@@ -56,13 +76,21 @@ class Report
 
 	public function render(array $params)
 	{
-		$params = array_merge([
-			'sortableClass' => $this->decorator->getModel() instanceof Sortable ? ' sortable' : '',
+		$identifier = $this->decorator->getListingIdentifier();
+
+		$deprecatedParams = [
+			'fullModelName' => $identifier
+		];
+
+		$params += $deprecatedParams + [
+			'sortableClass' => $this->decorator->isSortable() ? ' sortable' : '',
 			'report' => $this,
-			'fullModelName' => get_class($this->decorator->getModel()),
-			'modelName' => $this->decorator->getHeading(true),
-			'canCreate' => true
-		], $params);
+			'heading' => $this->decorator->getHeading(true),
+			'modelName' => $this->decorator->getHeading(false),
+			'identifier' => $identifier,
+			'canCreate' => true,
+			'canDelete' => true
+		];
 
 		return View::make($this->view, $params);
 	}

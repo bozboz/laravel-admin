@@ -8,10 +8,23 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 class MediaBrowser extends Field
 {
 	private $relation;
+	private $mediaAccess;
 
-	public function __construct(Relation $relation, $attributes = array())
+	public function __construct(Relation $relation, $attributes = array(), $mediaAccess = Media::ACCESS_PUBLIC)
 	{
+		switch ($mediaAccess) {
+			case Media::ACCESS_PUBLIC:
+			case Media::ACCESS_PRIVATE:
+				// all good
+			break;
+
+			default:
+				throw new Predis\NotSupportedException('Unsupported media browser access type');
+			break;
+		}
+
 		$this->relation = $relation;
+		$this->mediaAccess = $mediaAccess;
 
 		if ( ! array_key_exists('name', $attributes)) {
 			$attributes['name'] = $this->calculateName();
@@ -53,21 +66,23 @@ class MediaBrowser extends Field
 		$items = $values ? $mediaFactory->whereIn('id', (array)$values)->get()->map(function($inst) {
 			return [
 				'id' => $inst->id,
-				'type' => $inst,
+				'type' => $inst->type,
 				'caption' => $inst->caption ? $inst->caption : $inst->filename,
+				'private' => $inst->private,
 				'filename' => $inst->filename
 			];
 		}) : [];
 
 		$data = [
 			'media' => $items,
-			'mediaPath' => $mediaFactory->getFilePath('image', 'thumb')
+			'mediaPath' => $mediaFactory->getFilePath('image', 'thumb'),
+			'mediaAccess' => $this->mediaAccess,
 		];
 
 		return View::make('admin::fields.media-browser')->with([
 			'id' => $this->sanitiseName($this->name),
 			'name' => $this->isManyRelation() ? $this->name . '[]' : $this->name,
-			'data' => json_encode($data)
+			'data' => json_encode($data),
 		]);
 	}
 

@@ -22,13 +22,14 @@ class BelongsToManyField extends Field
 	 * @param array $attributes Fluent attributes
 	 * @param Closure Influences which model instances are presented as candidates for a relationship
 	 */
-	public function __construct(ModelAdminDecorator $decorator, BelongsToMany $relationship, array $attributes, Closure $callback = null)
+	public function __construct(ModelAdminDecorator $decorator, BelongsToMany $relationship, array $attributes = [], Closure $callback = null)
 	{
 		parent::__construct($attributes);
 
 		$this->decorator = $decorator;
 		$this->relationship = $relationship;
 		$this->callback = $callback;
+		$this->name = $this->relationship->getRelationName() . '_relationship';
 	}
 
 	/**
@@ -36,13 +37,12 @@ class BelongsToManyField extends Field
 	 */
 	public function getInput($params = [])
 	{
-		
-		$name = $this->relationship->getRelationName() . '_relationship';
-		
-		$html = sprintf('<input name="%1$s" type="hidden" id="%1$s">', $name);
-		$html .= '<select class="select2 form-control" multiple name="' . $name . '[]">';
-		
-		$relatedModels = $this->relationship->get();
+		$html = sprintf('<input name="%1$s" type="hidden" id="%1$s">', $this->name);
+		$html .= '<select class="select2 form-control" multiple name="' . $this->name . '[]">';
+
+		$values = (array)Form::getValueAttribute($this->name);
+
+		$relatedModels = $this->relationship->getRelated()->find($values);
 
 		foreach ($this->generateQueryBuilder()->get() as $i => $model) {
 			$html .= '<option ' . ($relatedModels->contains($model) ? 'selected' : '') . ' value="' . $model->getKey() . '">' . $this->decorator->getLabel($model) . '</option>';
@@ -57,9 +57,9 @@ class BelongsToManyField extends Field
 	 */
 	public function getLabel()
 	{
-		$name = $this->relationship->getRelationName() . '_relationship';
+		$label = ucwords(str_replace('_', ' ', \Str::snake($this->relationship->getRelationName())));
 
-		return Form::label($name, $this->label ?: ucwords(str_replace('_', ' ', $this->relationship->getTable())));
+		return Form::label($this->name, $this->label ?: $label);
 	}
 
 	/**

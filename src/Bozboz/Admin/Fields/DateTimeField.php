@@ -1,24 +1,25 @@
 <?php namespace Bozboz\Admin\Fields;
 
-use Form;
+use Form, Str;
 
 class DateTimeField extends Field
 {
-	private $altName;
+	private $altName, $sanitisedName;
 
 	protected $configOptions;
 
 	public function __construct($attributes)
 	{
 		parent::__construct($attributes);
-
-		$this->altName = $this->name . '_alt';
+		
+		$this->sanitisedName = Str::slug($this->name);
+		$this->altName = $this->sanitisedName . '_alt';
 		$this->configOptions = empty($this->options) ? [] : $this->options;
 	}
 
 	public function getInput()
 	{
-		return sprintf('<input type="text" id="%s">%s', $this->altName, Form::hidden($this->name));
+		return sprintf('<input type="text" id="%s">%s', $this->altName, Form::hidden($this->name, null, ['id' => $this->sanitisedName]));
 	}
 
 	public function getJavascript()
@@ -32,7 +33,7 @@ class DateTimeField extends Field
 				var dateTimePickerDefaults = {
 					showSecond: false,
 					dateFormat: 'dd/mm/yy',
-					altField: '#$this->name',
+					altField: '#$this->sanitisedName',
 					altFieldTimeOnly: false,
 					altFormat: 'yy-mm-dd',
 					altTimeFormat: 'HH:mm:ss',
@@ -47,7 +48,7 @@ class DateTimeField extends Field
 					return new Date(dateInfo[0], dateInfo[1] - 1, dateInfo[2], timeInfo[0], timeInfo[1], timeInfo[2]);
 				};
 
-				var dateTime = $('#$this->name').val() === '' ? null : stringToDate($('#$this->name').val())
+				var dateTime = $('#$this->sanitisedName').val() === '' ? null : stringToDate($('#$this->sanitisedName').val())
 
 				//Parse config and convert applicable strings to Date objects
 				var dateTimeFields = ['minDateTime', 'maxDateTime', 'defaultDateTime'];
