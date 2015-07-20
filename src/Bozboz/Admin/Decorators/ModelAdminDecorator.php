@@ -102,19 +102,13 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
-	 * Retrieve a collection of instances of $this->model to display
+	 * Retrieve a paginated collection of instances of $this->model to display
 	 *
-	 * @return Illuminate\Database\Eloquent\Collection
+	 * @return Illuminate\Pagination\Paginator
 	 */
 	public function getListingModels()
 	{
-		$query = $this->model->newQuery();
-
-		$this->filterListingQuery($query);
-
-		$this->modifyListingQuery($query);
-
-		return $query->paginate($this->listingPerPageLimit());
+		return $this->getModelQuery()->paginate($this->listingPerPageLimit());
 	}
 
 	/**
@@ -125,6 +119,32 @@ abstract class ModelAdminDecorator
 	protected function listingPerPageLimit()
 	{
 		return Config::get('admin::listing_items_per_page');
+	}
+
+	/**
+	 * Retrieve entire collection of instances of $this->model to display
+	 *
+	 * @return Illuminate\Database\Eloquent\Collection
+	 */
+	public function getListingModelsNoLimit()
+	{
+		return $this->getModelQuery()->get();
+	}
+
+	/**
+	 * Get filtered, customised query builder object for $this->model
+	 *
+	 * @return Illuminate\Database\Eloquent\Builder
+	 */
+	protected function getModelQuery()
+	{
+		$query = $this->model->newQuery();
+
+		$this->filterListingQuery($query);
+
+		$this->modifyListingQuery($query);
+
+		return $query;
 	}
 
 	/**

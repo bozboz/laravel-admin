@@ -6,7 +6,8 @@ class CSVReport extends Report
 {
 	public function __construct(Downloadable $decorator)
 	{
-		parent::__construct($decorator);
+		$this->decorator = $decorator;
+		$this->rows = $this->decorator->getListingModelsNoLimit();
 	}
 
 	/**
