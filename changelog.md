@@ -1,3 +1,8 @@
+# Version 2.0.0 (FUTURE)
+-   Remove ModelAdminDecorator::getListingModelsNoLimit
+-   Add $limit argument to ModelAdminDecorator::getListingModels 
+
+
 # Version 1.1.0 (FUTURE)
 
 -   Fix non-standard behaviour of getColumns by always passing it an instance,
