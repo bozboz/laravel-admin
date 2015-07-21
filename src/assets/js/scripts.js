@@ -1,5 +1,5 @@
 jQuery(function($){
-	
+
 	$('.select2').select2({
 		minimumResultsForSearch: 15
 	});
@@ -39,7 +39,7 @@ jQuery(function($){
 	  masonryContainer.masonry();
 	});
 
-	$('#save-new-order').on('click', function(e) {
+	$('[id=save-new-order]').on('click', function(e) {
 		e.preventDefault();
 		var sortable = $(this).data('sortable');
 		if (sortable.hasClass('nested')) {
@@ -52,12 +52,12 @@ jQuery(function($){
 				}
 			});
 		}
-		
+
 		$.post('/admin/sort', {model: sortable.data('model'), items: data});
-		$(this).closest('.alert').hide();
+		$('.js-save-notification').hide();
 	});
 
-	$('#cancel-new-order').on('click', function(e) {
+	$('[id=cancel-new-order]').on('click', function(e) {
 		$('.js-save-notification').hide();
 		e.preventDefault();
 	});
@@ -68,7 +68,7 @@ jQuery(function($){
 			: 'Are you sure you want to delete?';
 		return confirm( msg );
 	});
-	
+
 	$('.sortable').each(function(){
 		var options = {
 			handle: '.sorting-handle',
@@ -79,7 +79,7 @@ jQuery(function($){
 			maxLevels: $(this).hasClass('nested') ? 0 : 1,
 			stop: function (e, ui) {
 				$('.js-save-notification').show();
-				$('#save-new-order').data('sortable', $(this));
+				$('[id=save-new-order]').data('sortable', $(this));
 			}
 		};
 		if ($(this).hasClass('nested'))
@@ -100,7 +100,7 @@ jQuery(function($){
 		}
 		return newObj;
 	}
-	
+
 	var setTopPadding = function() {
 		$('body').css('padding-top', ($('.navbar').height()+15)+'px');
 	}
