@@ -15,20 +15,21 @@ jQuery(function($){
 			['view', ['fullscreen', 'codeview']],
 			['help', ['help']]
 		],
-		onImageUpload: function(files, editor, welEditable) {
-			sendFile(files, editor, welEditable);
+		onImageUpload: function(files) {
+			sendFile(files, $(this));
 		}
 	});
 
-	function sendFile(files, editor, welEditable) {
+	function sendFile(files, editor) {
 		var temp_form = $('<form></form>');
 		$('body').append(temp_form);
 		temp_form.fileupload().fileupload('send', {files: files, url: '/admin/media'})
 			.success(function(data) {
-				editor.insertImage(welEditable, data.files[0].thumbnailUrl);
+				editor.summernote('insertImage', data.files[0].thumbnailUrl);
 				temp_form.remove();
 			})
 			.error(function(jqXHR, textStatus, errorThrown) {
+				temp_form.remove();
 				if (typeof console == "object") console.log(textStatus, errorThrown);
 				alert('An error occurred while trying to upload the image. Please try again.');
 			});
