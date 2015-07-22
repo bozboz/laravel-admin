@@ -47,8 +47,18 @@ abstract class ListingFilter
 		$value = $this->getValue();
 
 		if (isset($value) && $value !== '') {
-			call_user_func($this->callback, $builder, $value);
+			$this->call($builder, $value);
 		}
+	}
+
+	/**
+	 * Execute the callback, with given arguments
+	 *
+	 * @return mixed
+	 */
+	public function call()
+	{
+		return call_user_func_array($this->callback, func_get_args());
 	}
 
 	/**
