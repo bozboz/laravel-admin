@@ -1,6 +1,7 @@
 <?php namespace Bozboz\Admin\Reports;
 
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
+use Input;
 use View;
 
 class Report
@@ -71,7 +72,9 @@ class Report
 
 	public function getFooter()
 	{
-		return method_exists($this->rows, 'links') ? $this->rows->appends(\Input::except('page'))->links() : null;
+		if (method_exists($this->rows, 'links')) {
+			return $this->rows->appends(Input::except('page'))->links();
+		}
 	}
 
 	public function render(array $params)
