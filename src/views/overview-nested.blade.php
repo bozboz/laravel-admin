@@ -1,13 +1,7 @@
-@extends('admin::layouts.default')
+@extends('admin::overview')
 
-@section('main')
-@parent
-	@include('admin::partials.new')
-	<h1>{{ $heading }}</h1>
-
-	@include('admin::partials.sort-alert')
-
-	<div class="table-responsive">
+@section('report')
+<div class="table-responsive">
 	@if ($report->hasRows())
 		<ol class="secret-list nested{{ $sortableClass }}" data-model="{{ $identifier }}">
 		@foreach ($report->getRows() as $row)
@@ -18,5 +12,4 @@
 		<p>Nothing here yet. Why not add something?</p>
 	@endif
 </div>
-	@include('admin::partials.new')
 @stop
