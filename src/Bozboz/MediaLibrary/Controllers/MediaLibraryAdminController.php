@@ -30,11 +30,12 @@ class MediaLibraryAdminController extends ModelAdminController
 		$report->overrideView('admin::media.overview');
 		return $report->render(array('controller' => get_class($this)));
 	}
-	
-	public function viewPrivate($id)
+
+	public function show($id)
 	{
-		$media = Media::find($id);
-		return Response::download(storage_path().$media->getFileName());
+		$media = $this->decorator->findInstance($id);
+
+		return Response::download(storage_path($media->getFileName()));
 	}
 
 	private function ajaxJSONData()
