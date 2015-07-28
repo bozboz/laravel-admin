@@ -13,7 +13,7 @@ class Media extends Base
 	const ACCESS_PRIVATE = 2;
 
 	protected $table = 'media';
-	protected $fillable = array('filename', 'caption', 'private');
+	protected $fillable = array('filename', 'caption', 'private', 'tags_list');
 
 	public function mediable()
 	{
@@ -112,5 +112,25 @@ class Media extends Base
 				$builder->where('private', 1);
 			break;
 		}
+	}
+
+	public function getTagsListAttribute()
+	{
+		return $this->tags()->lists('name');
+	}
+
+	public function setTagsListAttribute($value)
+	{
+		$relation = $this->tags();
+
+		$tags = [];
+
+		foreach((array)$value as $value) {
+			$tags[] = $relation->getModel()->firstOrCreate([
+				'name' => $value
+			])->id;
+		}
+
+		$relation->sync($tags);
 	}
 }
