@@ -20,6 +20,11 @@ class Media extends Base
 		return $this->morphTo();
 	}
 
+	public function tags()
+	{
+		return $this->belongsToMany('Bozboz\MediaLibrary\Models\Tag', 'media_mm_tags');
+	}
+
 	public function getValidator()
 	{
 		return new MediaValidator;
@@ -95,5 +100,17 @@ class Media extends Base
 			$filename = asset('packages/bozboz/admin/images/document.png');
 		}
 		return $filename;
+	}
+
+	public function scopeScope($builder, $value)
+	{
+		switch ($value) {
+			case self::ACCESS_PUBLIC:
+				$builder->where('private', 0);
+			break;
+			case self::ACCESS_PRIVATE:
+				$builder->where('private', 1);
+			break;
+		}
 	}
 }

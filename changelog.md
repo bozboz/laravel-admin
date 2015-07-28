@@ -1,5 +1,11 @@
 # Bozboz Admin Package Changelog
 
+## Version 1.2.0 (FUTURE)
+
+### Added
+-   Add tags to Media Library
+-   Add MultiOptionListingFilter
+
 ## Version 1.1.0 (FUTURE)
 
 ### Added
