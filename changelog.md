@@ -1,32 +1,37 @@
 # Version 1.1.0 (FUTURE)
 
--   Fix non-standard behaviour of getColumns by always passing it an instance,
-    rather than a factory
--   Deprecate Reports\Row::getModel() method
--   Deprecate ModelAdminDecorator::getModel() method
--   Add helper methods isSortable and getListingIdentififer to ModelAdminDecorator
--   Rename "fullModelName" variable to "heading"
--   Correct case of "New {modelName}" in admin
+## Added
 -   Add listingPerPageLimit method to ModelAdminDecorator
--   Add docblocks to ModelAdminDecorator
--   Allow null fields in ModelAdminDecorator::getFields
 -   Add defaultAttributes method to Field
--   Generate a better label in BelongsToManyField
 -   Add URLField
--   Improve getHeading method of ModelAdminDecorator
--   Deprecate "admin.fields.built" event in ModelAdminDecorator
--   Correctly display fallback image for non-image Media
--   Allow warn btn js to work on ajaxed elements
--   Remove blank sortable column on overview screen if model is not sortable
 -   Add "canDelete" param to overview screen to hide the delete button
 -   Add "Save and continue" button on form screen
 -   Fire model created and deleted flash messagees in addition to updated
--   Give ModelAdminDecorator::getColumns a sensible default, making it no longer abstract
--   Add report, report_header and report_footer sections in overview view
 -   Add concept of "private" media stored outside of the public dir.
--   Fix password reset
--   Redirect back after delete, rather than overview
+-   Add report, report_header and report_footer sections in overview view
 -   Add CSVReport
+
+## Changed
+-   Rename "fullModelName" variable to "heading"
+-   Allow null fields in ModelAdminDecorator::getFields
+-   Generate a better label in BelongsToManyField
+-   Improve getHeading method of ModelAdminDecorator
+-   Allow warn btn js to work on ajaxed elements
+-   Remove blank sortable column on overview screen if model is not sortable
+-   Give ModelAdminDecorator::getColumns a sensible default, making it no longer abstract
+-   Redirect back after delete, rather than overview
+
+## Deprecated
+-   Deprecate Reports\Row::getModel() method
+-   Deprecate ModelAdminDecorator::getModel() method
+-   Deprecate "admin.fields.built" event in ModelAdminDecorator
+
+## Fixed
+-   Fix non-standard behaviour of getColumns by always passing it an instance,
+    rather than a factory
+-   Correct case of "New {modelName}" in admin
+-   Correctly display fallback image for non-image Media
+-   Fix password reset
 
 
 # Version 1.0.4 (2015-06-15)
