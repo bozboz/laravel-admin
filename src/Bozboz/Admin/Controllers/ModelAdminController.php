@@ -54,7 +54,7 @@ abstract class ModelAdminController extends Controller
 		if ($validation->passesStore($input)) {
 			$modelInstance->fill($input);
 			$modelInstance->save();
-			$this->decorator->updateSyncRelations($modelInstance, $input);
+			$this->decorator->updateRelations($modelInstance, $input);
 			$response = $this->reEdit($modelInstance) ?: $this->getStoreResponse($modelInstance);
 			Session::flash('model.created', sprintf(
 				'Successfully created "%s"',
@@ -70,7 +70,7 @@ abstract class ModelAdminController extends Controller
 	public function edit($id)
 	{
 		$instance = $this->decorator->findInstance($id);
-		$this->decorator->injectSyncRelations($instance);
+		$this->decorator->injectRelations($instance);
 		$fields = $this->decorator->buildFields($instance);
 
 		return View::make($this->editView, array(
@@ -94,7 +94,7 @@ abstract class ModelAdminController extends Controller
 		if ($validation->passesEdit($input)) {
 			$modelInstance->fill($input);
 			$modelInstance->save();
-			$this->decorator->updateSyncRelations($modelInstance, $input);
+			$this->decorator->updateRelations($modelInstance, $input);
 			$response = $this->reEdit($modelInstance) ?: $this->getUpdateResponse($modelInstance);
 			Session::flash('model.updated', sprintf(
 				'Successfully updated "%s"',

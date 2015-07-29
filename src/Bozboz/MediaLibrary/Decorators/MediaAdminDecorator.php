@@ -2,6 +2,7 @@
 
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Fields\BelongsToManyField;
+use Bozboz\Admin\Fields\ListField;
 use Bozboz\Admin\Fields\SelectField;
 use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Reports\Filters\ArrayListingFilter;
@@ -46,17 +47,20 @@ class MediaAdminDecorator extends ModelAdminDecorator
 			new MediaField($instance, array(
 				'name' => 'filename'
 			)),
-			new SelectField('tags_list[]', [
-				'options' => $instance->tags()->getModel()->lists('name', 'name'),
-				'class' => 'form-control select2',
-				'multiple'
-			]),
+			new ListField($instance->tags())
 		);
 	}
 
 	public function getHeading($plural = false)
 	{
 		return 'Media';
+	}
+
+	public function getListRelations()
+	{
+		return [
+			'tags' => 'name'
+		];
 	}
 
 	public function getListingFilters()

@@ -193,8 +193,8 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
-	 * Get the names of the many-to-many relationships defined on the model
-	 * that need to be processed.
+	 * Get the names of many-to-many relationships defined on the model that
+	 * should be synced.
 	 *
 	 * @return array
 	 */
@@ -204,17 +204,64 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
+	 * Get the names (and associated attribute to use) of list-style
+	 * many-to-many relationship on the model that should be saved.
+	 *
+	 * @return array
+	 */
+	public function getListRelations()
+	{
+		return [];
+	}
+
+	/**
 	 * Set the related IDs as an attribute on the $instance.
+	 *
+	 * @deprecated
 	 *
 	 * @param  Bozboz\Admin\Models\Base  $instance
 	 * @return void
 	 */
 	public function injectSyncRelations(Base $instance)
 	{
+		$this->injectRelations($instance);
+	}
+
+	/**
+	 * Set the related IDs as an attribute on the $instance.
+	 *
+	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @return void
+	 */
+	public function injectRelations(Base $instance)
+	{
 		foreach ($this->getSyncRelations() as $relationName) {
-			$relation = $instance->$relationName();
-			$instance->setAttribute($relationName . '_relationship', $relation->getRelatedIds());
+			$instance->setAttribute(
+				$relationName . '_relationship',
+				$instance->$relationName()->getRelatedIds()
+			);
 		}
+
+		foreach($this->getListRelations() as $relationName => $attribute) {
+			$instance->setAttribute(
+				$relationName . '_list',
+				$instance->$relationName()->lists($attribute)
+			);
+		}
+	}
+
+	/**
+	 * Update the many-to-many relationship mappings after a form submission.
+	 *
+	 * @deprecated
+	 *
+	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @param  array  $formInput
+	 * @return void
+	 */
+	public function updateSyncRelations(Base $instance, $formInput)
+	{
+		$this->updateRelations($instance, $formInput);
 	}
 
 	/**
@@ -224,12 +271,29 @@ abstract class ModelAdminDecorator
 	 * @param  array  $formInput
 	 * @return void
 	 */
-	public function updateSyncRelations(Base $instance, $formInput)
+	public function updateRelations(Base $instance, $formInput)
 	{
 		foreach ($this->getSyncRelations() as $relationship) {
 			if (isset($formInput[$relationship . '_relationship'])) {
 				$data = $formInput[$relationship . '_relationship'];
 				$instance->$relationship()->sync(is_array($data) ? $data : array());
+			}
+		}
+
+		foreach ($this->getListRelations() as $relationship => $attribute) {
+			if (isset($formInput[$relationship . '_list'])) {
+				$data = $formInput[$relationship . '_list'];
+
+				$relation = $instance->$relationship();
+				$model = $relation->getModel();
+
+				$toSync = array_map(function($value) use ($model, $attribute) {
+					return $model->firstOrCreate([
+						$attribute => $value
+					])->id;
+				}, $data);
+
+				$relation->sync($toSync);
 			}
 		}
 	}
