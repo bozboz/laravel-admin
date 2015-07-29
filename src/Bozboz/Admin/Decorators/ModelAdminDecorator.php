@@ -244,7 +244,7 @@ abstract class ModelAdminDecorator
 
 		foreach($this->getListRelations() as $relationName => $attribute) {
 			$instance->setAttribute(
-				$relationName . '_list',
+				$relationName . '_relationship',
 				$instance->$relationName()->lists($attribute)
 			);
 		}
@@ -281,8 +281,8 @@ abstract class ModelAdminDecorator
 		}
 
 		foreach ($this->getListRelations() as $relationship => $attribute) {
-			if (isset($formInput[$relationship . '_list'])) {
-				$data = $formInput[$relationship . '_list'];
+			if (isset($formInput[$relationship . '_relationship'])) {
+				$data = $formInput[$relationship . '_relationship'];
 
 				$relation = $instance->$relationship();
 				$model = $relation->getModel();

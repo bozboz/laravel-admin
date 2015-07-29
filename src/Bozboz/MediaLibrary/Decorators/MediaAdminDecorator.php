@@ -47,7 +47,10 @@ class MediaAdminDecorator extends ModelAdminDecorator
 			new MediaField($instance, array(
 				'name' => 'filename'
 			)),
-			new ListField($instance->tags())
+			new BelongsToManyField($this->tags, $instance->tags(), [
+				'key' => 'name',
+				'data-tags' => 'true'
+			])
 		);
 	}
 
