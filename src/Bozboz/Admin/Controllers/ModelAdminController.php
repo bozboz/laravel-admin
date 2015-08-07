@@ -22,7 +22,7 @@ abstract class ModelAdminController extends Controller
 		$report = new Report($this->decorator);
 		return $report->render(array('controller' => get_class($this)));
 	}
-	
+
 	public function create()
 	{
 	    $instance = $this->decorator->newModelInstance();
