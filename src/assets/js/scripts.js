@@ -25,7 +25,7 @@ jQuery(function($){
 		$('body').append(temp_form);
 		temp_form.fileupload().fileupload('send', {files: files, url: '/admin/media'})
 			.success(function(data) {
-				editor.insertImage(welEditable, data.files[0].thumbnailUrl);
+				editor.insertImage(welEditable, data.files[0].fullsizeUrl);
 				temp_form.remove();
 			})
 			.error(function(jqXHR, textStatus, errorThrown) {

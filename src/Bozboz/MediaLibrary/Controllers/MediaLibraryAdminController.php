@@ -74,6 +74,7 @@ class MediaLibraryAdminController extends ModelAdminController
 					$newMedia->save();
 					$data[] = [
 						'url' => action(__CLASS__ . '@edit', $newMedia->id),
+						'fullsizeUrl' => asset($newMedia->getFilename()),
 						'thumbnailUrl' => asset($newMedia->getFilename('library')),
 						'name' => $newMedia->caption ?: $newMedia->filename,
 						'deleteUrl' => action(__CLASS__ . '@destroy', $newMedia->id),
