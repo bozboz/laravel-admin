@@ -92,6 +92,7 @@ class Report
 			'modelName' => $this->decorator->getHeading(false),
 			'identifier' => $identifier,
 			'canCreate' => true,
+			'canEdit' => true,
 			'canDelete' => true
 		];
 

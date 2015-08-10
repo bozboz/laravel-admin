@@ -29,7 +29,7 @@ jQuery(function($){
 		$('body').append(temp_form);
 		temp_form.fileupload().fileupload('send', {files: files, url: '/admin/media'})
 			.success(function(data) {
-				editor.summernote('insertImage', data.files[0].thumbnailUrl);
+				editor.summernote('insertImage', data.files[0].fullsizeUrl);
 				temp_form.remove();
 			})
 			.error(function(jqXHR, textStatus, errorThrown) {
