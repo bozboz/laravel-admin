@@ -1,7 +1,7 @@
 <?php namespace Bozboz\Admin\Decorators;
 
 use Event, Str, Config;
-use Bozboz\Admin\Models\Base;
+use Bozboz\Admin\Models\BaseInterface;
 use Bozboz\Admin\Models\Sortable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Fluent;
@@ -9,14 +9,14 @@ use Illuminate\Support\Fluent;
 abstract class ModelAdminDecorator
 {
 	/**
-	 * @var Bozboz\Admin\Models\Base
+	 * @var Bozboz\Admin\Models\BaseInterface
 	 */
 	protected $model;
 
 	/**
-	 * @param  Bozboz\Admin\Models\Base  $model
+	 * @param  Bozboz\Admin\Models\BaseInterface  $model
 	 */
-	public function __construct(Base $model)
+	public function __construct(BaseInterface $model)
 	{
 		$this->model = $model;
 	}
@@ -24,7 +24,7 @@ abstract class ModelAdminDecorator
 	/**
 	 * Return the label identifying the instance
 	 *
-	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
 	 * @return mixed
 	 */
 	abstract public function getLabel($instance);
@@ -32,7 +32,7 @@ abstract class ModelAdminDecorator
 	/**
 	 * Return the fields displayed on a create/edit screen
 	 *
-	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
 	 * @return array
 	 */
 	abstract public function getFields($instance);
@@ -40,7 +40,7 @@ abstract class ModelAdminDecorator
 	/**
 	 * Return the columns to be displayed on an overview screen
 	 *
-	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
 	 * @return array
 	 */
 	public function getColumns($instance)
@@ -53,7 +53,7 @@ abstract class ModelAdminDecorator
 	/**
 	 * DEPRECATED: Retrieve $this->model
 	 *
-	 * @return Bozoboz\Admin\Models\Base
+	 * @return Bozoboz\Admin\Models\BaseInterface
 	 */
 	public function getModel()
 	{
@@ -160,7 +160,7 @@ abstract class ModelAdminDecorator
 	/**
 	 * Build an array of fields
 	 *
-	 * @param  Bozboz/Admin/Models/Base  $instance
+	 * @param  Bozboz/Admin/Models/BaseInterface  $instance
 	 * @return array
 	 */
 	public function buildFields($instance)
@@ -176,7 +176,7 @@ abstract class ModelAdminDecorator
 
 	/**
 	 * @param  array  $attributes
-	 * @return Bozboz\Admin\Models\Base
+	 * @return Bozboz\Admin\Models\BaseInterface
 	 */
 	public function newModelInstance($attributes = array())
 	{
@@ -185,7 +185,7 @@ abstract class ModelAdminDecorator
 
 	/**
 	 * @param  int  $id
-	 * @return Bozboz\Admin\Models\Base
+	 * @return Bozboz\Admin\Models\BaseInterface
 	 */
 	public function findInstance($id)
 	{
@@ -206,10 +206,10 @@ abstract class ModelAdminDecorator
 	/**
 	 * Set the related IDs as an attribute on the $instance.
 	 *
-	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
 	 * @return void
 	 */
-	public function injectSyncRelations(Base $instance)
+	public function injectSyncRelations(BaseInterface $instance)
 	{
 		foreach ($this->getSyncRelations() as $relationName) {
 			$relation = $instance->$relationName();
@@ -220,11 +220,11 @@ abstract class ModelAdminDecorator
 	/**
 	 * Update the many-to-many relationship mappings after a form submission.
 	 *
-	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
 	 * @param  array  $formInput
 	 * @return void
 	 */
-	public function updateSyncRelations(Base $instance, $formInput)
+	public function updateSyncRelations(BaseInterface $instance, $formInput)
 	{
 		foreach ($this->getSyncRelations() as $relationship) {
 			if (isset($formInput[$relationship . '_relationship'])) {

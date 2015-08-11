@@ -1,9 +1,12 @@
 <?php namespace Bozboz\Admin\Models;
 
+use Bozboz\Admin\Traits\SanitisesInputTrait;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class Base extends Model
+abstract class Base extends Model implements BaseInterface
 {
+	use SanitisesInputTrait;
+
 	/**
 	 * @var array
 	 */
@@ -15,21 +18,4 @@ abstract class Base extends Model
 	 * @return Validator
 	 */
 	abstract public function getValidator();
-
-	/**
-	 * Sanitise form input, ready for database insertion
-	 *
-	 * @param  array  $input
-	 * @return array
-	 */
-	public function sanitiseInput($input)
-	{
-		foreach($this->nullable as $field) {
-			if (array_key_exists($field, $input)) {
-				$input[$field] = empty($input[$field]) ? null : $input[$field];
-			}
-		}
-
-		return $input;
-	}
 }
