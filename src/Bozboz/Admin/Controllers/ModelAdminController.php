@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Controllers;
 
-use View, Input, Redirect, Session;
+use Input, Redirect, Session, URL, View;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Report;
 use Illuminate\Routing\Controller;
@@ -164,6 +164,6 @@ abstract class ModelAdminController extends Controller
 
 	protected function getListingUrl($instance)
 	{
-		return action(get_class($this) . '@index');
+		return URL::action(get_class($this) . '@index');
 	}
 }
