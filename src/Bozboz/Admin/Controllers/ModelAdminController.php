@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Controllers;
 
-use Input, Redirect, Session, URL, View;
+use Input, Redirect, URL, View;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Report;
 use Illuminate\Routing\Controller;
@@ -56,7 +56,7 @@ abstract class ModelAdminController extends Controller
 			$modelInstance->save();
 			$this->decorator->updateRelations($modelInstance, $input);
 			$response = $this->reEdit($modelInstance) ?: $this->getStoreResponse($modelInstance);
-			Session::flash('model.created', sprintf(
+			$response->with('model.created', sprintf(
 				'Successfully created "%s"',
 				$this->decorator->getLabel($modelInstance)
 			));
@@ -96,7 +96,7 @@ abstract class ModelAdminController extends Controller
 			$modelInstance->save();
 			$this->decorator->updateRelations($modelInstance, $input);
 			$response = $this->reEdit($modelInstance) ?: $this->getUpdateResponse($modelInstance);
-			Session::flash('model.updated', sprintf(
+			$response->with('model.updated', sprintf(
 				'Successfully updated "%s"',
 				$this->decorator->getLabel($modelInstance)
 			));
@@ -113,12 +113,10 @@ abstract class ModelAdminController extends Controller
 
 		$instance->delete();
 
-		Session::flash('model.deleted', sprintf(
+		return Redirect::back()->with('model.deleted', sprintf(
 			'Successfully deleted "%s"',
 			$this->decorator->getLabel($instance)
 		));
-
-		return Redirect::back();
 	}
 
 	protected function reEdit($instance)
