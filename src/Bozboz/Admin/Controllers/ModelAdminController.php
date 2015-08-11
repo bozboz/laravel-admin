@@ -155,7 +155,7 @@ abstract class ModelAdminController extends Controller
 	}
 
 	/**
-	 * The generic response after a successful create/edit/delete action.
+	 * The generic response after a successful store/update action.
 	 */
 	protected function getSuccessResponse($instance)
 	{
