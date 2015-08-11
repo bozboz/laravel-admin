@@ -91,7 +91,7 @@ abstract class ModelAdminController extends Controller
 		$validation->updateUniques($modelInstance->getKey());
 		$input = $this->decorator->sanitiseInput(Input::all());
 
-		if ($validation->passesEdit($input)) {
+		if ($validation->passesUpdate($input)) {
 			$modelInstance->fill($input);
 			$modelInstance->save();
 			$this->decorator->updateRelations($modelInstance, $input);

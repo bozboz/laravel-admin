@@ -6,6 +6,13 @@
 -   Add tags to Media Library
 -   Add MultiOptionListingFilter
 
+### Changed
+-   $editRules and passesEdit() method on Validator changed to $updateRules and passesUpdate()
+
+### Deprecated
+-   Deprecate Services\Validator::passesEdit() method
+
+
 ## Version 1.1.0 (FUTURE)
 
 ### Added
