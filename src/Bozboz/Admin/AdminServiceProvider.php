@@ -9,11 +9,6 @@ class AdminServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$this->registerEvents();
-
-        $this->app->alias(
-            'Bozboz\Admin\Models\Base',
-            'Bozboz\Admin\Models\BaseInterface'
-        );
 	}
 
 	public function boot()
