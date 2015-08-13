@@ -7,7 +7,7 @@ interface BaseInterface
 	/**
 	 * Get the Validator used by this model.
 	 *
-	 * @return Validator
+	 * @return Bozboz\Admin\Services\Validators\Validator
 	 */
 	public function getValidator();
 
