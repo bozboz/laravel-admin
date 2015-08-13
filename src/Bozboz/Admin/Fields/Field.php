@@ -49,9 +49,14 @@ abstract class Field extends Fluent
 	{
 		return null;
 	}
-	
-	public function render()
+
+	public function render($errors)
 	{
-		return View::make('admin::fields.field')->with(['field' => $this]);
+		return View::make('admin::fields.field')->with([
+			'label' => $this->getLabel(),
+			'input' => $this->getInput(),
+			'errors' => $this->getErrors($errors),
+			'field' => $this,
+		]);
 	}
 }

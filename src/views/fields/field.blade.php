@@ -1,5 +1,5 @@
-<div class="form-group{{{ ($field->getErrors($errors)) ? ' bs-callout bs-callout-danger' : '' }}}">
-	{{ $field->getLabel() }}
-	{{ $field->getInput() }}
-	{{ $field->getErrors($errors) }}
+<div class="form-group{{{ ($errors) ? ' bs-callout bs-callout-danger' : '' }}}">
+	{{ $label }}
+	{{ $input }}
+	{{ $errors }}
 </div>

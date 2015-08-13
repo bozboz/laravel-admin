@@ -34,9 +34,4 @@ class SubField extends Field
             return '<p><strong>' . $errors->first($this->decorate->name) . '</strong></p>';
         }
     }
-
-    public function render()
-    {
-        return View::make('admin::fields.field')->with(['field' => $this]);
-    }
 }

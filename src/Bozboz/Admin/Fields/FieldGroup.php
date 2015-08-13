@@ -15,7 +15,7 @@ class FieldGroup extends Field
 		$this->fields = $fields;
 		$this->attributes = $attributes;
 	}
-	
+
 	public function getJavascript()
 	{
 		$javascript = [];
@@ -33,8 +33,8 @@ class FieldGroup extends Field
 			'attributes' => $this->attributes,
 		]);
 	}
-	
-	public function render()
+
+	public function render($errors)
 	{
 		return '<div class="form-group">'.$this->getInput().'</div>';
 	}

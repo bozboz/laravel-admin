@@ -18,8 +18,8 @@ class HiddenField extends Field
 	{
 		// empty
 	}
-	
-	public function render()
+
+	public function render($errors)
 	{
 		return $this->getInput();
 	}

@@ -3,6 +3,6 @@
 		<legend>{{ $legend }}</legend>
 	@endif
 	@foreach ($fields as $field)
-		{{ $field->render() }}
+		{{ $field->render($errors) }}
 	@endforeach
 </fieldset>
