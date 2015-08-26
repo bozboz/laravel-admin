@@ -34,6 +34,7 @@
 -   Correct case of "New {modelName}" in admin
 -   Correctly display fallback image for non-image Media
 -   Fix password reset
+-   Prevent media with many relation from attempting to sync null relations
 
 
 ## Version 1.0.4 (2015-06-15)
