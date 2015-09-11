@@ -1,36 +1,64 @@
 <?php namespace Bozboz\Admin\Reports\Filters;
 
-use Form;
+use Illuminate\Support\Facades\Form;
 
 class SearchListingFilter extends ListingFilter
 {
-	protected $attributes;
-
-	public function __construct($name, array $attributes = [], $callback = null)
+	/**
+	 * Parse argument and return a callback condition in which to filter on
+	 *
+	 * @param  array|string|null|callable  $input
+	 * @throws InvalidArgumentException
+	 * @return Closure
+	 */
+	protected function parseCallback($input)
 	{
-		parent::__construct($name, $callback);
+		if (is_array($input)) {
+			return $this->defaultFilter($input);
+		} elseif (is_string($input)) {
+			return $this->defaultFilter([$input]);
+		} elseif (is_null($input)) {
+			return $this->defaultFilter([$this->name]);
+		} elseif (is_callable($input)) {
+			return $input;
+		}
 
-		$this->attributes = $attributes ?: [$name];
+		throw new InvalidArgumentException(
+			'The second argument to ' . __CLASS__ . ' ' .
+			'should be a callback, an array, a string or ommitted entirely'
+		);
 	}
 
-	protected function defaultFilter($field)
+	/**
+	 * Return a callable function, containing the default search filtering
+	 * logic
+	 *
+	 * @param  array  $attributes
+	 * @return Closure
+	 */
+	protected function defaultFilter($attributes)
 	{
-		return function($builder, $value) use ($field)
+		return function($builder, $value) use ($attributes)
 		{
-			$builder->where(function ($query) use ($value) {
-				foreach ($this->attributes as $attribute) {
+			$builder->where(function ($query) use ($value, $attributes) {
+				foreach ($attributes as $attribute) {
 					$query->orWhere($attribute, 'LIKE', '%' . $value . '%');
 				}
 			});
 		};
 	}
 
+	/**
+	 * Render an input and a submit button
+	 *
+	 * @return string
+	 */
 	public function __toString()
 	{
 		$label = Form::label($this->name);
 		$input = Form::text($this->name, $this->getValue(), ['class' => 'form-control input-sm']);
 		$submit = Form::submit('Search', ['class' => 'btn btn-sm btn-default']);
-		
+
 		return <<<HTML
 			{$label}
 			<div class="input-group">
