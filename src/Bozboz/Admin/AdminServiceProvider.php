@@ -14,6 +14,7 @@ class AdminServiceProvider extends ServiceProvider
 	public function boot()
 	{
 		$this->package('bozboz/admin');
+
 		require __DIR__ . '/../../routes.php';
 		require __DIR__ . '/../../filters.php';
 	}

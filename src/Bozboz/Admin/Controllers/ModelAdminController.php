@@ -22,7 +22,7 @@ abstract class ModelAdminController extends Controller
 		$report = new Report($this->decorator);
 		return $report->render(array('controller' => get_class($this)));
 	}
-	
+
 	public function create()
 	{
 	    $instance = $this->decorator->newModelInstance();
@@ -46,7 +46,7 @@ abstract class ModelAdminController extends Controller
 
 	public function store()
 	{
-		$input = Input::all();
+		$input = Input::except('after_save');
 		$modelInstance = $this->decorator->newModelInstance($input);
 		$validation = $modelInstance->getValidator();
 		$input = $this->decorator->sanitiseInput($input);
@@ -89,7 +89,7 @@ abstract class ModelAdminController extends Controller
 		$modelInstance = $this->decorator->findInstance($id);
 		$validation = $modelInstance->getValidator();
 		$validation->updateUniques($modelInstance->getKey());
-		$input = $this->decorator->sanitiseInput(Input::all());
+		$input = $this->decorator->sanitiseInput(Input::except('after_save'));
 
 		if ($validation->passesEdit($input)) {
 			$modelInstance->fill($input);

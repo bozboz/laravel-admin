@@ -1,4 +1,4 @@
-<input type="hidden" name="{{ $name }}">
+<input type="hidden" name="{{ str_replace('[]', '', $name) }}">
 
 <div class="js-media-browser-{{ $id }}">
 

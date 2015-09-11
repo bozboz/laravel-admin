@@ -44,10 +44,12 @@
 				<div class="faux-cell">{{ $value }}</div>
 			@endforeach
 				<div class="no-wrap faux-cell">
-					<a href="{{ URL::action($controller . '@edit', [$row->getId()]) }}" class="btn btn-info btn-sm" type="submit">
-						<i class="fa fa-pencil"></i>
-						Edit
-					</a>
+					@if ($canEdit)
+						<a href="{{ URL::action($controller . '@edit', [$row->getId()]) }}" class="btn btn-info btn-sm" type="submit">
+							<i class="fa fa-pencil"></i>
+							Edit
+						</a>
+					@endif
 
 					@if ($canDelete)
 						{{ Form::open(['class' => 'inline-form', 'action' => [ $controller . '@destroy', $row->getId() ], 'method' => 'DELETE']) }}

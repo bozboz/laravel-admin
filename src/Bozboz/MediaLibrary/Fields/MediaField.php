@@ -35,11 +35,11 @@ class MediaField extends Field
 
 		return $html;
 	}
-	
+
 	public function getMediaPreviewURL()
 	{
 		if ($this->media->private) {
-			return route('admin.media.view-private', [$this->media->id]);
+			return route('admin.media.show', [$this->media->id]);
 		} else {
 			return $this->media->getFilename();
 		}

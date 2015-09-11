@@ -19,7 +19,7 @@ class MediaBrowser extends Field
 			break;
 
 			default:
-				throw new Predis\NotSupportedException('Unsupported media browser access type');
+				throw new Exception('Unsupported media browser access type');
 			break;
 		}
 

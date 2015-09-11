@@ -1,56 +1,65 @@
-# Version 2.0.0 (FUTURE)
+# Bozboz Admin Package Changelog
+
+## Version 2.0.0 (FUTURE)
+
 -   Remove ModelAdminDecorator::getListingModelsNoLimit
--   Add $limit argument to ModelAdminDecorator::getListingModels 
+-   Add $limit argument to ModelAdminDecorator::getListingModels
 
 
-# Version 1.1.0 (FUTURE)
+## Version 1.1.0 (2015-08-26)
 
--   Fix non-standard behaviour of getColumns by always passing it an instance,
-    rather than a factory
--   Deprecate Reports\Row::getModel() method
--   Deprecate ModelAdminDecorator::getModel() method
--   Add helper methods isSortable and getListingIdentififer to ModelAdminDecorator
--   Rename "fullModelName" variable to "heading"
--   Correct case of "New {modelName}" in admin
+### Added
 -   Add listingPerPageLimit method to ModelAdminDecorator
--   Add docblocks to ModelAdminDecorator
--   Allow null fields in ModelAdminDecorator::getFields
 -   Add defaultAttributes method to Field
--   Generate a better label in BelongsToManyField
 -   Add URLField
--   Improve getHeading method of ModelAdminDecorator
--   Deprecate "admin.fields.built" event in ModelAdminDecorator
--   Correctly display fallback image for non-image Media
--   Allow warn btn js to work on ajaxed elements
--   Remove blank sortable column on overview screen if model is not sortable
 -   Add "canDelete" param to overview screen to hide the delete button
 -   Add "Save and continue" button on form screen
 -   Fire model created and deleted flash messagees in addition to updated
--   Give ModelAdminDecorator::getColumns a sensible default, making it no longer abstract
--   Add report, report_header and report_footer sections in overview view
 -   Add concept of "private" media stored outside of the public dir.
--   Fix password reset
--   Redirect back after delete, rather than overview
+-   Add report, report_header and report_footer sections in overview view
 -   Add CSVReport
 
+### Changed
+-   Rename "fullModelName" variable to "heading"
+-   Allow null fields in ModelAdminDecorator::getFields
+-   Generate a better label in BelongsToManyField
+-   Improve getHeading method of ModelAdminDecorator
+-   Allow warn btn js to work on ajaxed elements
+-   Remove blank sortable column on overview screen if model is not sortable
+-   Give ModelAdminDecorator::getColumns a sensible default, making it no longer abstract
+-   Redirect back after delete, rather than overview
 
-# Version 1.0.4 (2015-06-15)
+### Deprecated
+-   Deprecate Reports\Row::getModel() method
+-   Deprecate ModelAdminDecorator::getModel() method
+-   Deprecate "admin.fields.built" event in ModelAdminDecorator
+
+### Fixed
+-   Fix non-standard behaviour of getColumns by always passing it an instance,
+    rather than a factory
+-   Correct case of "New {modelName}" in admin
+-   Correctly display fallback image for non-image Media
+-   Fix password reset
+-   Prevent media with many relation from attempting to sync null relations
+
+
+## Version 1.0.4 (2015-06-15)
 -   Fix for placeholder when sorting in-line media
 
 
-# Version 1.0.3 (2015-06-12)
+## Version 1.0.3 (2015-06-12)
 -   Fix media browser, so inline-uploaded files are selected immediately
 
 
-# Version 1.0.2 (2015-06-09)
+## Version 1.0.2 (2015-06-09)
 -   Fix media type directory when uploading PDFs
 
 
-# Version 1.0.1 (2015-05-08)
+## Version 1.0.1 (2015-05-08)
 -   Use strict type comparison for listing filter values
 
 
-# Version 1.0.0 (2015-05-06)
+## Version 1.0.0 (2015-05-06)
 
 -   Null data sanitisation added, by defining a $nullable property on a model
 -   Fixed error when sorting non-nestable models
@@ -88,22 +97,22 @@
 -   Add FieldGroup field type for making groups of fields
 
 
-# Version 0.4.3 (2015-02-19)
+## Version 0.4.3 (2015-02-19)
 -   Add "meta_title" field to pages table, which replaces "html_title" field
 
 
-# Version 0.4.2 (2015-01-26)
+## Version 0.4.2 (2015-01-26)
 
 -   Remove "menu_icon" field from PageAdminDecorator
 -   Change private methods `getRedirectOptions` and `getTemplateOptions` to protected
 
 
-# Version 0.4.1 (2015-01-16)
+## Version 0.4.1 (2015-01-16)
 
 -   Prevent issue with input being passed to new model instances twice.
 
 
-# Version 0.4.0 (2015-01-13)
+## Version 0.4.0 (2015-01-13)
 
 -   Add `status` attribute to Page model
 -   Move FileField into bozboz/media-library
