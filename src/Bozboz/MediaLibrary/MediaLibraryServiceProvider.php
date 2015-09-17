@@ -48,7 +48,11 @@ class MediaLibraryServiceProvider extends ServiceProvider {
 	 */
 	public function mediaMacro($builder, $size = null, $default = null, $alt = null, $attributes = [])
 	{
-		$item = $builder->first();
+		if (method_exists($builder, 'getFilename')) {
+			$item = $builder;
+		} else {
+			$item = $builder->first();
+		}
 
 		if ($item || $default) {
 			$filename = $item ? $item->getFilename($size) : $default;
