@@ -95,7 +95,7 @@ class Media extends Base
 	 * @param  string  $size
 	 * @return string
 	 */
-	static public function getFilenameOrFallback(Media $media, $fallback, $size = null)
+	static public function getFilenameOrFallback($media, $fallback, $size = null)
 	{
 		return $media ? $media->getFilename($size) : $fallback;
 	}

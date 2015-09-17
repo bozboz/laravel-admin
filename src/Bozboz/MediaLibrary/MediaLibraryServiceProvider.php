@@ -1,5 +1,6 @@
 <?php namespace Bozboz\MediaLibrary;
 
+use Bozboz\MediaLibrary\Models\Media;
 use Illuminate\Support\ServiceProvider;
 
 class MediaLibraryServiceProvider extends ServiceProvider {
@@ -49,7 +50,7 @@ class MediaLibraryServiceProvider extends ServiceProvider {
 	public function mediaMacro($subject, $size = null, $default = null, $alt = null, $attributes = [])
 	{
 		// If subject is a builder or a collection, use the first item
-		if (method_exists('first', $subject)) {
+		if (method_exists($subject, 'first')) {
 			$subject = $subject->first();
 		}
 
