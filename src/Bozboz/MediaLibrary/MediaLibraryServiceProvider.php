@@ -37,7 +37,7 @@ class MediaLibraryServiceProvider extends ServiceProvider {
 	 *
 	 * Example usage:
 	 *
-	 * HTML::media(Media::forModel($item), 'thumb', '/images/default.png', $item->name);
+	 * HTML::media(Media::forModel($item)->first(), 'thumb', '/images/default.png', $item->name);
 	 *
 	 * @param  mixed  $builder
 	 * @param  string  $size
@@ -46,16 +46,16 @@ class MediaLibraryServiceProvider extends ServiceProvider {
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public function mediaMacro($builder, $size = null, $default = null, $alt = null, $attributes = [])
+	public function mediaMacro($subject, $size = null, $default = null, $alt = null, $attributes = [])
 	{
-		if (method_exists($builder, 'getFilename')) {
-			$item = $builder;
-		} else {
-			$item = $builder->first();
+		// If subject is a builder or a collection, use the first item
+		if (method_exists('first', $subject)) {
+			$subject = $subject->first();
 		}
 
-		if ($item || $default) {
-			$filename = $item ? $item->getFilename($size) : $default;
+		$filename = Media::getFilenameOrFallback($subject, $default, $size);
+
+		if ($filename) {
 			return $this->app['html']->image($filename, $alt, $attributes);
 		}
 	}
