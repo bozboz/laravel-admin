@@ -1,3 +1,8 @@
+# Version 1.0.7 (2015-09-17)
+-   Fix issue with HTML::media macro when passing in Media instances
+-   Add `Media::getFilenameOrFallback` method
+
+
 # Version 1.0.6 (2015-09-10)
 -   Insert full size image in to WYSIWYG on upload rather than thumb
 
