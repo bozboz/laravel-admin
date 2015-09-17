@@ -132,6 +132,18 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
+	 * Retrieve results from a query in chunks
+	 *
+	 * @param  int  $amount
+	 * @param  Callable  $callback
+	 * @return void
+	 */
+	public function getListingModelsChunked($amount, $callback)
+	{
+		$this->getModelQuery()->chunk($amount, $callback);
+	}
+
+	/**
 	 * Get filtered, customised query builder object for $this->model
 	 *
 	 * @return Illuminate\Database\Eloquent\Builder

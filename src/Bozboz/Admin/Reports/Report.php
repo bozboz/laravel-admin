@@ -77,7 +77,7 @@ class Report
 		}
 	}
 
-	public function render(array $params)
+	public function render(array $params = [])
 	{
 		$identifier = $this->decorator->getListingIdentifier();
 
