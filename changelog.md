@@ -2,9 +2,18 @@
 
 ## Version 2.0.0 (FUTURE)
 
--   Remove ModelAdminDecorator::getListingModelsNoLimit
+### Added
 -   Add $limit argument to ModelAdminDecorator::getListingModels
 
+### Changed
+-	Remove dependancy on Base model and replace it with BaseInterface
+-	Consolidate migrations
+
+### Fixed
+-	Prevent media with many relation from attempting to sync null relations
+
+### Removed
+-   Remove ModelAdminDecorator::getListingModelsNoLimit
 
 ## Version 1.2.0 (FUTURE)
 
