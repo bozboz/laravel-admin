@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Bozboz\Admin\Models\User;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 
 class CreateAdminUser extends Migration {
 
@@ -13,16 +13,13 @@ class CreateAdminUser extends Migration {
 	 */
 	public function up()
 	{
-		$user = new User();
-		$user->fill(array(
-			'first_name' => 'admin',
-			'last_name' => 'admin',
+		DB::table('users')->insert([
+			'first_name' => 'Bozboz',
+			'last_name' => 'Admin',
 			'email' => 'admin@bozboz.co.uk',
-			'name' => 'Bozboz Admin',
-			'is_admin' => 1
-		));
-		$user->password = 'gukbeb6s';
-		$user->save();
+			'is_admin' => 1,
+			'password' => app('hash')->make('gukbeb6s')
+		]);
 	}
 
 	/**
@@ -32,7 +29,7 @@ class CreateAdminUser extends Migration {
 	 */
 	public function down()
 	{
-		User::where('email', '=', 'admin@bozboz.co.uk')->delete();
+		DB::table('users')->where('email', 'admin@bozboz.co.uk')->delete();
 	}
 
 }
