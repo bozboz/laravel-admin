@@ -1,6 +1,7 @@
 <?php namespace Bozboz\Admin\Reports;
 
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
+use Illuminate\Support\Facades\Config;
 use Input;
 use View;
 
@@ -74,7 +75,11 @@ class Report
 	{
 		$filters = $this->decorator->getListingFilters();
 
-		return View::make('admin::partials.listing-filters')->withFilters($filters);
+		$perPage = Config::get('admin::listing_items_per_page');
+		$range = range($perPage, $perPage*4, $perPage);
+		$perPageOptions = array_combine($range, $range);
+
+		return View::make('admin::partials.listing-filters')->with(compact('perPageOptions'))->withFilters($filters);
 	}
 
 	public function getFooter()

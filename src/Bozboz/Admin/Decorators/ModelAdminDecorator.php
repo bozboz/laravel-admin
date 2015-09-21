@@ -4,6 +4,7 @@ use Event, Str, Config;
 use Bozboz\Admin\Models\Base;
 use Bozboz\Admin\Models\Sortable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Fluent;
 
 abstract class ModelAdminDecorator
@@ -118,7 +119,7 @@ abstract class ModelAdminDecorator
 	 */
 	protected function listingPerPageLimit()
 	{
-		return Config::get('admin::listing_items_per_page');
+		return Input::get('per-page', Config::get('admin::listing_items_per_page'));
 	}
 
 	/**
