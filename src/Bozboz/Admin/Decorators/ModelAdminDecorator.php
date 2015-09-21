@@ -252,10 +252,10 @@ abstract class ModelAdminDecorator
 	/**
 	 * Set the related IDs as an attribute on the $instance.
 	 *
-	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
 	 * @return void
 	 */
-	public function injectRelations(Base $instance)
+	public function injectRelations(BaseInterface $instance)
 	{
 		foreach ($this->getSyncRelations() as $relationName) {
 			$instance->setAttribute(
@@ -289,11 +289,11 @@ abstract class ModelAdminDecorator
 	/**
 	 * Update the many-to-many relationship mappings after a form submission.
 	 *
-	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
 	 * @param  array  $formInput
 	 * @return void
 	 */
-	public function updateRelations(Base $instance, $formInput)
+	public function updateRelations(BaseInterface $instance, $formInput)
 	{
 		foreach ($this->getSyncRelations() as $relationship) {
 			if (isset($formInput[$relationship . '_relationship'])) {
