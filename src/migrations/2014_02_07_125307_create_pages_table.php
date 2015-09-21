@@ -18,6 +18,17 @@ class CreatePagesTable extends Migration {
             $table->string('title');
             $table->string('slug');
             $table->text('description');
+			$table->integer('redirect_to_id');
+			$table->string('meta_title');
+			$table->text('meta_description');
+			$table->integer('sorting');
+			$table->string('template');
+			$table->integer('parent_id')->default(0);
+			$table->string('remember_token', 100)->nullable();
+			$table->boolean('show_in_main_menu');
+			$table->boolean('show_in_footer_menu');
+			$table->boolean('status');
+			$table->string('external_link', 255);
             $table->timestamps();
 		});
 	}

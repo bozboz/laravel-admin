@@ -15,9 +15,11 @@ class CreateAdminUser extends Migration {
 	{
 		$user = new User();
 		$user->fill(array(
-			'username' => 'admin',
+			'first_name' => 'admin',
+			'last_name' => 'admin',
 			'email' => 'admin@bozboz.co.uk',
-			'name' => 'Bozboz Admin'
+			'name' => 'Bozboz Admin',
+			'is_admin' => 1
 		));
 		$user->password = 'gukbeb6s';
 		$user->save();

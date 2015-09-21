@@ -17,6 +17,8 @@ class CreateMediaTable extends Migration {
 			$table->increments('id');
 			$table->string('filename');
 			$table->string('type');
+			$table->string('caption');
+			$table->boolean('private');
 			$table->timestamps();
 		});
 
@@ -24,7 +26,9 @@ class CreateMediaTable extends Migration {
 		{
 			$table->morphs('mediable');
 			$table->integer('media_id');
-			$table->primary(array('media_id', 'mediable_id'));
+            $table->integer('sorting');
+            $table->string('alias');
+			$table->primary(['mediable_id', 'mediable_type', 'media_id']);
 		});
 	}
 
