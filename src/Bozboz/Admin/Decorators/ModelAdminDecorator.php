@@ -159,6 +159,18 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
+	 * Get and array of options for the items per page select on listing view
+	 *
+	 * @return array
+	 */
+	public function getItemsPerPageOptions()
+	{
+		$perPage = Config::get('admin::listing_items_per_page');
+		$range = range($perPage, $perPage*4, $perPage);
+		return array_combine($range, $range);
+	}
+
+	/**
 	 * Build an array of fields
 	 *
 	 * @param  Bozboz/Admin/Models/Base  $instance

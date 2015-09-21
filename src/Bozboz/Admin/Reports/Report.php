@@ -74,10 +74,7 @@ class Report
 	public function getHeader()
 	{
 		$filters = $this->decorator->getListingFilters();
-
-		$perPage = Config::get('admin::listing_items_per_page');
-		$range = range($perPage, $perPage*4, $perPage);
-		$perPageOptions = array_combine($range, $range);
+		$perPageOptions = $this->decorator->getItemsPerPageOptions();
 
 		return View::make('admin::partials.listing-filters')->with(compact('perPageOptions'))->withFilters($filters);
 	}
