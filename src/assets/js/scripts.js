@@ -1,7 +1,11 @@
 jQuery(function($){
 
-	$('.select2').select2({
-		minimumResultsForSearch: 15
+	$('.select2').each(function() {
+		var obj = $(this);
+		var defaultParams = {
+			minimumResultsForSearch: 15
+		};
+		obj.select2($.extend(defaultParams, obj.data()));
 	});
 
 	$('textarea.html-editor').summernote({

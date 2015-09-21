@@ -1,10 +1,11 @@
 <?php namespace Bozboz\MediaLibrary\Models;
 
-use Input, Config, Str;
-use Illuminate\Support\Collection;
-use Bozboz\MediaLibrary\Validators\MediaValidator;
 use Bozboz\Admin\Models\Base;
+use Bozboz\MediaLibrary\Validators\MediaValidator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use Input, Config, Str;
+use Whoops\Exception\ErrorException;
 
 class Media extends Base
 {
@@ -15,9 +16,27 @@ class Media extends Base
 	protected $table = 'media';
 	protected $fillable = array('filename', 'caption', 'private');
 
+	public static function boot()
+	{
+		parent::boot();
+
+		/**
+		 * Remove file from disk after deleting
+		 * @unlink to ignore errors on the off chance the file isn't there.
+		 */
+		static::deleted(function($instance) {
+			@unlink(public_path($instance->getFilename()));
+		});
+	}
+
 	public function mediable()
 	{
 		return $this->morphTo();
+	}
+
+	public function tags()
+	{
+		return $this->belongsToMany('Bozboz\MediaLibrary\Models\Tag', 'media_mm_tags');
 	}
 
 	public function getValidator()
@@ -95,5 +114,17 @@ class Media extends Base
 			$filename = asset('packages/bozboz/admin/images/document.png');
 		}
 		return $filename;
+	}
+
+	public function scopeScope($builder, $value)
+	{
+		switch ($value) {
+			case self::ACCESS_PUBLIC:
+				$builder->where('private', 0);
+			break;
+			case self::ACCESS_PRIVATE:
+				$builder->where('private', 1);
+			break;
+		}
 	}
 }

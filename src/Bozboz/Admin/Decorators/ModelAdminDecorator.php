@@ -4,6 +4,7 @@ use Event, Str, Config;
 use Bozboz\Admin\Models\BaseInterface;
 use Bozboz\Admin\Models\Sortable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Fluent;
 
 abstract class ModelAdminDecorator
@@ -129,7 +130,7 @@ abstract class ModelAdminDecorator
 	 */
 	protected function listingPerPageLimit()
 	{
-		return Config::get('admin::listing_items_per_page');
+		return Input::get('per-page', Config::get('admin::listing_items_per_page'));
 	}
 
 	/**
@@ -140,6 +141,18 @@ abstract class ModelAdminDecorator
 	public function getListingFilters()
 	{
 		return [];
+	}
+
+	/**
+	 * Get and array of options for the items per page select on listing view
+	 *
+	 * @return array
+	 */
+	public function getItemsPerPageOptions()
+	{
+		$perPage = Config::get('admin::listing_items_per_page');
+		$range = range($perPage, $perPage*4, $perPage);
+		return array_combine($range, $range);
 	}
 
 	/**
@@ -178,6 +191,15 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
+	 * @param  int  $id
+	 * @return Bozboz\Admin\Models\BaseInterface
+	 */
+	public function findInstanceOrFail($id)
+	{
+		return $this->model->findOrFail($id);
+	}
+
+	/**
 	 * Get the names of the many-to-many relationships defined on the model
 	 * that need to be processed.
 	 *
@@ -189,16 +211,36 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
+	 * Get the names (and associated attribute to use) of list-style
+	 * many-to-many relationship on the model that should be saved.
+	 *
+	 * @return array
+	 */
+	public function getListRelations()
+	{
+		return [];
+	}
+
+	/**
 	 * Set the related IDs as an attribute on the $instance.
 	 *
 	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
 	 * @return void
 	 */
-	public function injectSyncRelations(BaseInterface $instance)
+	public function injectRelations(BaseInterface $instance)
 	{
 		foreach ($this->getSyncRelations() as $relationName) {
-			$relation = $instance->$relationName();
-			$instance->setAttribute($relationName . '_relationship', $relation->getRelatedIds());
+			$instance->setAttribute(
+				$relationName . '_relationship',
+				$instance->$relationName()->getRelatedIds()
+			);
+		}
+
+		foreach($this->getListRelations() as $relationName => $attribute) {
+			$instance->setAttribute(
+				$relationName . '_relationship',
+				$instance->$relationName()->lists($attribute)
+			);
 		}
 	}
 
@@ -209,12 +251,29 @@ abstract class ModelAdminDecorator
 	 * @param  array  $formInput
 	 * @return void
 	 */
-	public function updateSyncRelations(BaseInterface $instance, $formInput)
+	public function updateRelations(BaseInterface $instance, $formInput)
 	{
 		foreach ($this->getSyncRelations() as $relationship) {
 			if (isset($formInput[$relationship . '_relationship'])) {
-				$data = $formInput[$relationship . '_relationship'];
+				$data = array_filter($formInput[$relationship . '_relationship']);
 				$instance->$relationship()->sync(is_array($data) ? $data : array());
+			}
+		}
+
+		foreach ($this->getListRelations() as $relationship => $attribute) {
+			if (isset($formInput[$relationship . '_relationship'])) {
+				$data = array_filter($formInput[$relationship . '_relationship']);
+
+				$relation = $instance->$relationship();
+				$model = $relation->getModel();
+
+				$toSync = array_map(function($value) use ($model, $attribute) {
+					return $model->firstOrCreate([
+						$attribute => $value
+					])->id;
+				}, $data);
+
+				$relation->sync($toSync);
 			}
 		}
 	}

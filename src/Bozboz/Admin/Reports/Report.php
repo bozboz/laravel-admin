@@ -1,6 +1,7 @@
 <?php namespace Bozboz\Admin\Reports;
 
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
+use Illuminate\Support\Facades\Config;
 use Input;
 use View;
 
@@ -11,12 +12,19 @@ class Report
 	protected $view = 'admin::overview';
 	protected $renderedColumns = [];
 
-	public function __construct(ModelAdminDecorator $decorator)
+	public function __construct(ModelAdminDecorator $decorator, $view = null)
 	{
 		$this->decorator = $decorator;
+		$this->view = $view ?: $this->view;
 		$this->rows = $this->decorator->getListingModels();
 	}
 
+	/**
+	 * @deprecated
+	 *
+	 * @param  string  $view
+	 * @return void
+	 */
 	public function overrideView($view)
 	{
 		$this->view = $view;
@@ -66,8 +74,9 @@ class Report
 	public function getHeader()
 	{
 		$filters = $this->decorator->getListingFilters();
+		$perPageOptions = $this->decorator->getItemsPerPageOptions();
 
-		return View::make('admin::partials.listing-filters')->withFilters($filters);
+		return View::make('admin::partials.listing-filters')->with(compact('perPageOptions'))->withFilters($filters);
 	}
 
 	public function getFooter()

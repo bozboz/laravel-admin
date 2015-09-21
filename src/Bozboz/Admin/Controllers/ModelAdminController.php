@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Controllers;
 
-use View, Input, Redirect, Session;
+use Input, Redirect, URL, View;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Report;
 use Illuminate\Routing\Controller;
@@ -54,9 +54,9 @@ abstract class ModelAdminController extends Controller
 		if ($validation->passesStore($input)) {
 			$modelInstance->fill($input);
 			$modelInstance->save();
-			$this->decorator->updateSyncRelations($modelInstance, $input);
+			$this->decorator->updateRelations($modelInstance, $input);
 			$response = $this->reEdit($modelInstance) ?: $this->getStoreResponse($modelInstance);
-			Session::flash('model.created', sprintf(
+			$response->with('model.created', sprintf(
 				'Successfully created "%s"',
 				$this->decorator->getLabel($modelInstance)
 			));
@@ -69,8 +69,8 @@ abstract class ModelAdminController extends Controller
 
 	public function edit($id)
 	{
-		$instance = $this->decorator->findInstance($id);
-		$this->decorator->injectSyncRelations($instance);
+		$instance = $this->decorator->findInstanceOrFail($id);
+		$this->decorator->injectRelations($instance);
 		$fields = $this->decorator->buildFields($instance);
 
 		return View::make($this->editView, array(
@@ -86,17 +86,17 @@ abstract class ModelAdminController extends Controller
 
 	public function update($id)
 	{
-		$modelInstance = $this->decorator->findInstance($id);
+		$modelInstance = $this->decorator->findInstanceOrFail($id);
 		$validation = $modelInstance->getValidator();
 		$validation->updateUniques($modelInstance->getKey());
 		$input = $this->decorator->sanitiseInput(Input::except('after_save'));
 
-		if ($validation->passesEdit($input)) {
+		if ($validation->passesUpdate($input)) {
 			$modelInstance->fill($input);
 			$modelInstance->save();
-			$this->decorator->updateSyncRelations($modelInstance, $input);
+			$this->decorator->updateRelations($modelInstance, $input);
 			$response = $this->reEdit($modelInstance) ?: $this->getUpdateResponse($modelInstance);
-			Session::flash('model.updated', sprintf(
+			$response->with('model.updated', sprintf(
 				'Successfully updated "%s"',
 				$this->decorator->getLabel($modelInstance)
 			));
@@ -109,16 +109,14 @@ abstract class ModelAdminController extends Controller
 
 	public function destroy($id)
 	{
-		$instance = $this->decorator->findInstance($id);
+		$instance = $this->decorator->findInstanceOrFail($id);
 
 		$instance->delete();
 
-		Session::flash('model.deleted', sprintf(
+		return Redirect::back()->with('model.deleted', sprintf(
 			'Successfully deleted "%s"',
 			$this->decorator->getLabel($instance)
 		));
-
-		return Redirect::back();
 	}
 
 	protected function reEdit($instance)
@@ -155,7 +153,7 @@ abstract class ModelAdminController extends Controller
 	}
 
 	/**
-	 * The generic response after a successful create/edit/delete action.
+	 * The generic response after a successful store/update action.
 	 */
 	protected function getSuccessResponse($instance)
 	{
@@ -164,6 +162,6 @@ abstract class ModelAdminController extends Controller
 
 	protected function getListingUrl($instance)
 	{
-		return action(get_class($this) . '@index');
+		return URL::action(get_class($this) . '@index');
 	}
 }

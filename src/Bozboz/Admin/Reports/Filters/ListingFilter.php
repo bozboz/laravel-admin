@@ -46,7 +46,7 @@ abstract class ListingFilter
 	{
 		$value = $this->getValue();
 
-		if (isset($value) && $value !== '') {
+		if ( ! is_null($value)) {
 			$this->call($builder, $value);
 		}
 	}

@@ -2,6 +2,7 @@
 
 use Closure;
 use Illuminate\Support\Facades\Form;
+use Illuminate\Support\Facades\HTML;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 
@@ -24,31 +25,48 @@ class BelongsToManyField extends Field
 	 */
 	public function __construct(ModelAdminDecorator $decorator, BelongsToMany $relationship, array $attributes = [], Closure $callback = null)
 	{
-		parent::__construct($attributes);
+		$name = $relationship->getRelationName() . '_relationship';
+
+		parent::__construct($name, $attributes);
 
 		$this->decorator = $decorator;
 		$this->relationship = $relationship;
 		$this->callback = $callback;
-		$this->name = $this->relationship->getRelationName() . '_relationship';
 	}
 
 	/**
-	 * @return string HTML representing the relationship
+	 * Return a select2 component, with multiple select functionality
+	 *
+	 * @param  array  $params
+	 * @return string
 	 */
 	public function getInput($params = [])
 	{
-		$html = sprintf('<input name="%1$s" type="hidden" id="%1$s">', $this->name);
-		$html .= '<select class="select2 form-control" multiple name="' . $this->name . '[]">';
+		$options = [];
 
-		$values = (array)Form::getValueAttribute($this->name);
-
-		$relatedModels = $this->relationship->getRelated()->find($values);
-
-		foreach ($this->generateQueryBuilder()->get() as $i => $model) {
-			$html .= '<option ' . ($relatedModels->contains($model) ? 'selected' : '') . ' value="' . $model->getKey() . '">' . $this->decorator->getLabel($model) . '</option>';
+		foreach ($this->generateQueryBuilder()->get() as $inst) {
+			$options[] = Form::getSelectOption(
+				$this->decorator->getLabel($inst),
+				$this->key ? $inst->{$this->key} : $inst->getKey(),
+				Form::getValueAttribute($this->name)
+			);
 		}
 
-		return $html . '</select>';
+		$options = implode(PHP_EOL, $options);
+
+		$this->class .= ' select2';
+
+		$attributes = HTML::attributes([
+			'name' => $this->name . '[]',
+			'multiple'
+		] + $this->attributes);
+
+		return <<<HTML
+			<input name="{$this->name}" type="hidden" id="{$this->name}">
+			<select{$attributes}>
+				{$options}
+			</select>
+HTML;
 	}
 
 	/**

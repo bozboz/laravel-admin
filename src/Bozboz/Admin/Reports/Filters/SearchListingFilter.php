@@ -69,4 +69,11 @@ class SearchListingFilter extends ListingFilter
 			</div>
 HTML;
 	}
+
+	public function getValue()
+	{
+		$value = parent::getValue();
+
+		return $value !== '' ? $value : null;
+	}
 }

@@ -17,6 +17,7 @@ class AdminServiceProvider extends ServiceProvider
 
 		require __DIR__ . '/../../routes.php';
 		require __DIR__ . '/../../filters.php';
+		require __DIR__ . '/../../errors.php';
 	}
 
 	protected function registerEvents()

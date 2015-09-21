@@ -6,15 +6,35 @@ abstract class Validator
 	protected $rules = array();
 	protected $storeRules = array();
 	protected $editRules = array();
+	protected $updateRules = array();
+	protected $messages = array();
 
 	public function passesStore($attributes)
 	{
-		return $this->passes($attributes, array_merge($this->rules, $this->storeRules));
+		return $this->passes($attributes, $this->getStoreRules());
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public function passesEdit($attributes)
 	{
-		return $this->passes($attributes, array_merge($this->rules, $this->editRules));
+		return $this->passesUpdate($attributes);
+	}
+
+	public function passesUpdate($attributes)
+	{
+		return $this->passes($attributes, $this->getUpdateRules());
+	}
+
+	protected function getStoreRules()
+	{
+		return array_merge($this->rules, $this->storeRules);
+	}
+
+	protected function getUpdateRules()
+	{
+		return array_merge($this->rules, $this->editRules, $this->updateRules);
 	}
 
 	public function getErrors()
@@ -27,17 +47,17 @@ abstract class Validator
 	 */
 	public function updateUniques($id)
 	{
-		foreach (array_merge($this->rules, $this->editRules) as $attribute => $validationRules) {
+		foreach ($this->getUpdateRules() as $attribute => $validationRules) {
 			if (strpos($validationRules, 'unique') !== false) {
 				$regexReplacement = 'unique:$1,' . $attribute . ',' . $id;
-				$this->editRules[$attribute] = preg_replace('/unique:(\w++)(?=\b)/', $regexReplacement, $validationRules);
+				$this->updateRules[$attribute] = preg_replace('/unique:(\w++)(?=\b)/', $regexReplacement, $validationRules);
 			}
 		}
 	}
 
 	protected function passes($attributes, $rules)
 	{
-		$validation = \Validator::make($attributes, $rules);
+		$validation = \Validator::make($attributes, $rules, $this->messages);
 		$this->errors = $validation->messages();
 
 		return $validation->passes();
