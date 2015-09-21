@@ -1,10 +1,11 @@
 <?php namespace Bozboz\MediaLibrary\Models;
 
-use Input, Config, Str;
-use Illuminate\Support\Collection;
-use Bozboz\MediaLibrary\Validators\MediaValidator;
 use Bozboz\Admin\Models\Base;
+use Bozboz\MediaLibrary\Validators\MediaValidator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use Input, Config, Str;
+use Whoops\Exception\ErrorException;
 
 class Media extends Base
 {
@@ -14,6 +15,18 @@ class Media extends Base
 
 	protected $table = 'media';
 	protected $fillable = array('filename', 'caption', 'private');
+
+	public static function boot()
+	{
+		parent::boot();
+
+		/**
+		 * Remove file from disk after deleting
+		 */
+		static::deleted(function($instance) {
+			@unlink(public_path($instance->getFilename()));
+		});
+	}
 
 	public function mediable()
 	{
