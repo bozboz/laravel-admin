@@ -224,7 +224,6 @@ abstract class ModelAdminDecorator
 	/**
 	 * Set the related IDs as an attribute on the $instance.
 	 *
-	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
 	 * @return void
 	 */
 	public function injectRelations(BaseInterface $instance)
@@ -247,7 +246,6 @@ abstract class ModelAdminDecorator
 	/**
 	 * Update the many-to-many relationship mappings after a form submission.
 	 *
-	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
 	 * @param  array  $formInput
 	 * @return void
 	 */
