@@ -8,16 +8,16 @@ class CheckboxesField extends Field
 	{
 		$html = sprintf('<input name="%1$s" type="hidden" id="%1$s">', $this->get('name'));
 
-		foreach($this->options as $option) {
-			$id = $this->get('name') . '[' . $option->getKey() . ']';
+		foreach($this->attributes['options'] as $key => $option) {
+			$id = $this->get('name') . '[' . $key . ']';
 			$checkbox = Form::checkbox(
 				$this->get('name') . '[]',
-				$option->getKey(),
+				$key,
 				null,
 				array('id' => $id)
 			);
 
-			$html .= '<label class="checkbox">' . $checkbox . ' ' . $option->name . '</label>';
+			$html .= '<label class="checkbox">' . $checkbox . ' <span>' . $option . '</span></label>';
 		}
 
 		return $html;
