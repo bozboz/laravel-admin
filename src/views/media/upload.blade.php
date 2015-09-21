@@ -11,6 +11,8 @@
 
 	<h2>Media Upload</h2>
 
+	<p><span class="label label-info"><strong>Please Note:</strong> Maximum file upload size is {{ str_replace('M', ' megabytes', ini_get('upload_max_filesize')) }}</span></p>
+
 	{{ Form::open(['id' => 'fileupload', 'action' => $action, 'files' => true]) }}
 		<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
 		<div class="row fileupload-buttonbar">
@@ -118,10 +120,10 @@
 			{% } %}
 		</td>
 		<td>
-			{% if(file.private) { %} 
-				Private 
-			{% } else { %} 
-				Public 
+			{% if(file.private) { %}
+				Private
+			{% } else { %}
+				Public
 			{% } %}
 		</td>
 		<td>
