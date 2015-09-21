@@ -22,6 +22,7 @@ class Media extends Base
 
 		/**
 		 * Remove file from disk after deleting
+		 * @unlink to ignore errors on the off chance the file isn't there.
 		 */
 		static::deleted(function($instance) {
 			@unlink(public_path($instance->getFilename()));
