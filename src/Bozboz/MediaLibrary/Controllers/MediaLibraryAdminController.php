@@ -33,7 +33,7 @@ class MediaLibraryAdminController extends ModelAdminController
 
 	public function show($id)
 	{
-		$media = $this->decorator->findInstance($id);
+		$media = $this->decorator->findInstanceOrFail($id);
 
 		return Response::download(storage_path($media->getFileName()));
 	}
@@ -142,7 +142,7 @@ class MediaLibraryAdminController extends ModelAdminController
 
 	public function destroy($id)
 	{
-		$media = $this->decorator->findInstance($id);
+		$media = $this->decorator->findInstanceOrFail($id);
 		$data = [ 'files' => [
 			$media->getFilename() => true
 		]];

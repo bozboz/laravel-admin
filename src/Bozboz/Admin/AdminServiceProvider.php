@@ -16,6 +16,7 @@ class AdminServiceProvider extends ServiceProvider
 		$this->package('bozboz/admin');
 		require __DIR__ . '/../../routes.php';
 		require __DIR__ . '/../../filters.php';
+		require __DIR__ . '/../../errors.php';
 	}
 
 	protected function registerEvents()

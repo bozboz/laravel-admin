@@ -206,8 +206,17 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
-	 * Get the names of many-to-many relationships defined on the model that
-	 * should be synced.
+	 * @param  int  $id
+	 * @return Bozboz\Admin\Models\BaseInterface
+	 */
+	public function findInstanceOrFail($id)
+	{
+		return $this->model->findOrFail($id);
+	}
+
+	/**
+	 * Get the names of the many-to-many relationships defined on the model
+	 * that need to be processed.
 	 *
 	 * @return array
 	 */

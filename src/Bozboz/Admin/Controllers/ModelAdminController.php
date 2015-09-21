@@ -69,7 +69,7 @@ abstract class ModelAdminController extends Controller
 
 	public function edit($id)
 	{
-		$instance = $this->decorator->findInstance($id);
+		$instance = $this->decorator->findInstanceOrFail($id);
 		$this->decorator->injectRelations($instance);
 		$fields = $this->decorator->buildFields($instance);
 
@@ -86,7 +86,7 @@ abstract class ModelAdminController extends Controller
 
 	public function update($id)
 	{
-		$modelInstance = $this->decorator->findInstance($id);
+		$modelInstance = $this->decorator->findInstanceOrFail($id);
 		$validation = $modelInstance->getValidator();
 		$validation->updateUniques($modelInstance->getKey());
 		$input = $this->decorator->sanitiseInput(Input::all());
@@ -109,7 +109,7 @@ abstract class ModelAdminController extends Controller
 
 	public function destroy($id)
 	{
-		$instance = $this->decorator->findInstance($id);
+		$instance = $this->decorator->findInstanceOrFail($id);
 
 		$instance->delete();
 
