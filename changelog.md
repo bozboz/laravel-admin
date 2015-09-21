@@ -6,12 +6,14 @@
 -   Add tags to Media Library
 -   Add MultiOptionListingFilter
 -   Added messages functionality to Validator service
+-   View can now be overridden in constructor of Report class
 
 ### Changed
 -   $editRules and passesEdit() method on Validator changed to $updateRules and passesUpdate()
 
 ### Deprecated
 -   Deprecate Services\Validator::passesEdit() method
+-   Deprecate Reports\Report::overrideView() method
 
 
 ## Version 1.1.0 (FUTURE)

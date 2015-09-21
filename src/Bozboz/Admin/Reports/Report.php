@@ -11,12 +11,19 @@ class Report
 	protected $view = 'admin::overview';
 	protected $renderedColumns = [];
 
-	public function __construct(ModelAdminDecorator $decorator)
+	public function __construct(ModelAdminDecorator $decorator, $view = null)
 	{
 		$this->decorator = $decorator;
+		$this->view = $view ?: $this->view;
 		$this->rows = $this->decorator->getListingModels();
 	}
 
+	/**
+	 * @deprecated
+	 *
+	 * @param  string  $view
+	 * @return void
+	 */
 	public function overrideView($view)
 	{
 		$this->view = $view;
