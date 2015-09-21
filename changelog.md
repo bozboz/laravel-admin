@@ -7,9 +7,12 @@
 -   Add MultiOptionListingFilter
 -   Added messages functionality to Validator service
 -   View can now be overridden in constructor of Report class
+-	Add items per page select to listing filters
+-	Add nicer error page when you edit a resource that doesn't exist
 
 ### Changed
 -   $editRules and passesEdit() method on Validator changed to $updateRules and passesUpdate()
+-	Unlink media file after deleting the db row
 
 ### Deprecated
 -   Deprecate Services\Validator::passesEdit() method
