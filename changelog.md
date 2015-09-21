@@ -5,6 +5,7 @@
 ### Added
 -   Add tags to Media Library
 -   Add MultiOptionListingFilter
+-   Added messages functionality to Validator service
 
 ### Changed
 -   $editRules and passesEdit() method on Validator changed to $updateRules and passesUpdate()

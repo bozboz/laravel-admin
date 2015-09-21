@@ -7,6 +7,7 @@ abstract class Validator
 	protected $storeRules = array();
 	protected $editRules = array();
 	protected $updateRules = array();
+	protected $messages = array();
 
 	public function passesStore($attributes)
 	{
@@ -56,7 +57,7 @@ abstract class Validator
 
 	protected function passes($attributes, $rules)
 	{
-		$validation = \Validator::make($attributes, $rules);
+		$validation = \Validator::make($attributes, $rules, $this->messages);
 		$isValid = true;
 
 		if (!$validation->passes()) {
