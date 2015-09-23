@@ -94,6 +94,10 @@ class Report
 			'fullModelName' => $identifier
 		];
 
+		if (array_key_exists('controller', $params)) {
+			$deprecatedParams += app($params['controller'])->getReportParams();
+		}
+
 		$params += $deprecatedParams + [
 			'sortableClass' => $this->decorator->isSortable() ? ' sortable' : '',
 			'report' => $this,
