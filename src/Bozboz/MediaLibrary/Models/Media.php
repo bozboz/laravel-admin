@@ -127,4 +127,22 @@ class Media extends Base
 			break;
 		}
 	}
+
+	/**
+	 * If media instance passed in is not null, return the filename based on an
+	 * optional size parameter. Otherwise, return a path to a fallback image.
+	 *
+	 * Example usage:
+	 *
+	 * Media::getFilenameOrFallback($item->detailImage, '/fallback-image.jpg', 'thumb')
+	 *
+	 * @param  Bozboz\MediaLibrary\Models\Media|null  $media
+	 * @param  string  $fallback
+	 * @param  string  $size
+	 * @return string
+	 */
+	static public function getFilenameOrFallback($media, $fallback, $size = null)
+	{
+		return $media ? $media->getFilename($size) : $fallback;
+	}
 }

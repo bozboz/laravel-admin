@@ -1,12 +1,14 @@
 			<li id="nested-item_{{$row->getId()}}">
 				<div class="nested-group">
 					<div class="actions">
-						<a href="{{ URL::action($controller . '@edit', array($row->getId())) }}" class="btn btn-info btn-sm" type="submit">
-							<i class="fa fa-pencil"></i>
-							Edit
-						</a>
+						@if ($canEdit)
+							<a href="{{ URL::action($editAction, [$row->getId()]) }}" class="btn btn-info btn-sm" type="submit">
+								<i class="fa fa-pencil"></i>
+								Edit
+							</a>
+						@endif
 						@if ($canDelete)
-							{{ Form::open(['class' => 'inline-form', 'action' => array($controller . '@destroy', $row->getId()), 'method' => 'DELETE']) }}
+							{{ Form::open(['class' => 'inline-form', 'action' => array($destroyAction, $row->getId()), 'method' => 'DELETE']) }}
 								<button class="btn btn-danger btn-sm" data-warn="true" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
 							{{ Form::close() }}
 						@endif

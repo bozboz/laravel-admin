@@ -1,11 +1,10 @@
 <?php namespace Bozboz\Admin\Reports;
 
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
-use Illuminate\Support\Facades\Config;
-use Input;
-use View;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\View;
 
-class Report
+class Report implements BaseInterface
 {
 	protected $decorator;
 	protected $rows;
@@ -86,13 +85,17 @@ class Report
 		}
 	}
 
-	public function render(array $params)
+	public function render(array $params = [])
 	{
 		$identifier = $this->decorator->getListingIdentifier();
 
 		$deprecatedParams = [
 			'fullModelName' => $identifier
 		];
+
+		if (array_key_exists('controller', $params)) {
+			$deprecatedParams += app($params['controller'])->getReportParams();
+		}
 
 		$params += $deprecatedParams + [
 			'sortableClass' => $this->decorator->isSortable() ? ' sortable' : '',

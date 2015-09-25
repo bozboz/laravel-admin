@@ -22,17 +22,19 @@
 -   Add MultiOptionListingFilter
 -   Added messages functionality to Validator service
 -   View can now be overridden in constructor of Report class
--	Add items per page select to listing filters
--	Add nicer error page when you edit a resource that doesn't exist
+-   Add items per page select to listing filters
+-   Add nicer error page when you edit a resource that doesn't exist
 
 ### Changed
 -   $editRules and passesEdit() method on Validator changed to $updateRules and passesUpdate()
--	Unlink media file after deleting the db row
+-   Unlink media file after deleting the DB row
 
 ### Deprecated
 -   Deprecate Services\Validator::passesEdit() method
 -   Deprecate Reports\Report::overrideView() method
 
+### Fixed
+-   CSVReport can now handle large data sets without running out of memory
 
 ## Version 1.1.0 (2015-08-26)
 
@@ -69,6 +71,19 @@
 -   Correctly display fallback image for non-image Media
 -   Fix password reset
 -   Prevent media with many relation from attempting to sync null relations
+
+
+## Version 1.0.7 (2015-09-17)
+-   Fix issue with HTML::media macro when passing in Media instances
+-	Add `Media::getFilenameOrFallback` method
+
+
+## Version 1.0.6 (2015-09-10)
+-   Insert full size image in to WYSIWYG on upload rather than thumb
+
+
+## Version 1.0.5 (2015-06-15)
+-   Access correct fallback image
 
 
 ## Version 1.0.4 (2015-06-15)
