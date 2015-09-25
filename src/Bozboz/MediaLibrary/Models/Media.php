@@ -66,7 +66,7 @@ class Media extends Base
 	public static function forCollection(Collection $collection)
 	{
 		return self::join('mediables', 'media.id', '=', 'mediables.media_id')
-			->whereIn('mediable_id', $collection->lists('id'))
+			->whereIn('mediable_id', $collection->lists('id')->all())
 			->where('mediable_type', get_class($collection->first()))
 			->select('media.*')
 			->orderBy('sorting');

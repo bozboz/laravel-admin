@@ -78,7 +78,7 @@ class MediaAdminDecorator extends ModelAdminDecorator
 				}
 			}),
 			new SearchListingFilter('search', ['filename', 'caption']),
-			new MultiOptionListingFilter('tags', $this->model->tags()->getModel()->lists('name', 'id')),
+			new MultiOptionListingFilter('tags', $this->model->tags()->getModel()->lists('name', 'id')->all()),
 		];
 	}
 
@@ -93,6 +93,6 @@ class MediaAdminDecorator extends ModelAdminDecorator
 
 	private function getTypeOptions()
 	{
-		return ['All'] + array_map('ucwords', $this->model->groupBy('type')->lists('type', 'type'));
+		return ['All'] + array_map('ucwords', $this->model->groupBy('type')->lists('type', 'type')->all());
 	}
 }

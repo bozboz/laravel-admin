@@ -277,7 +277,7 @@ abstract class ModelAdminDecorator
 		foreach($this->getListRelations() as $relationName => $attribute) {
 			$instance->setAttribute(
 				$relationName . '_relationship',
-				$instance->$relationName()->lists($attribute)
+				$instance->$relationName()->lists($attribute)->all()
 			);
 		}
 	}
