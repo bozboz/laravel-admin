@@ -1,5 +1,5 @@
-var ACCESS_PUBLIC = {{ Media::ACCESS_PUBLIC }};
-var ACCESS_PRIVATE = {{ Media::ACCESS_PRIVATE }};
+var ACCESS_PUBLIC = {{ Bozboz\MediaLibrary\Models\Media::ACCESS_PUBLIC }};
+var ACCESS_PRIVATE = {{ Bozboz\MediaLibrary\Models\Media::ACCESS_PRIVATE }};
 
 (function() {
 	var elem = document.querySelector('.js-media-browser-{{ $id }}');
