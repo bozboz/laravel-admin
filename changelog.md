@@ -7,17 +7,19 @@
 -   Add MultiOptionListingFilter
 -   Added messages functionality to Validator service
 -   View can now be overridden in constructor of Report class
--	Add items per page select to listing filters
--	Add nicer error page when you edit a resource that doesn't exist
+-   Add items per page select to listing filters
+-   Add nicer error page when you edit a resource that doesn't exist
 
 ### Changed
 -   $editRules and passesEdit() method on Validator changed to $updateRules and passesUpdate()
--	Unlink media file after deleting the db row
+-   Unlink media file after deleting the DB row
 
 ### Deprecated
 -   Deprecate Services\Validator::passesEdit() method
 -   Deprecate Reports\Report::overrideView() method
 
+### Fixed
+-   CSVReport can now handle large data sets without running out of memory
 
 ## Version 1.1.0 (FUTURE)
 

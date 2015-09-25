@@ -3,8 +3,9 @@
 namespace Bozboz\Admin\Reports;
 
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Fluent;
 
-class CSVReport extends Report
+class CSVReport implements BaseInterface
 {
 	protected $responseHeaders = [
 		'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',

@@ -1,11 +1,10 @@
 <?php namespace Bozboz\Admin\Reports;
 
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
-use Illuminate\Support\Facades\Config;
-use Input;
-use View;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\View;
 
-class Report
+class Report implements BaseInterface
 {
 	protected $decorator;
 	protected $rows;
