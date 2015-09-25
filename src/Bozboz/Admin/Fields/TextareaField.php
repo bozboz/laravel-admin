@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Fields;
 
-use Illuminate\Support\Facades\Form;
+use Illuminate\Html\FormFacade as Form;
 
 class TextareaField extends Field
 {

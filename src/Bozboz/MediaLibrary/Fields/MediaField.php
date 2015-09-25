@@ -2,9 +2,8 @@
 
 use Bozboz\Admin\Fields\Field;
 use Bozboz\MediaLibrary\Models\Media;
-
-use Illuminate\Support\Facades\Form;
-use Illuminate\Support\Facades\HTML;
+use Illuminate\Html\HtmlFacade as HTML;
+use Illuminate\Html\FormFacade as Form;
 
 class MediaField extends Field
 {

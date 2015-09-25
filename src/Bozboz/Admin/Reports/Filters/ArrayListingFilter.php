@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Reports\Filters;
 
-use Illuminate\Support\Facades\Form;
+use Illuminate\Html\FormFacade as Form;
 use Illuminate\Support\Facades\Input;
 
 class ArrayListingFilter extends ListingFilter

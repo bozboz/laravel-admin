@@ -1,7 +1,6 @@
 <?php namespace Bozboz\Admin\Decorators;
 
 use Bozboz\Admin\Models\Page;
-use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\File;
 use Bozboz\Admin\Fields\CheckboxField;
@@ -22,7 +21,7 @@ class PageAdminDecorator extends ModelAdminDecorator
 	{
 		return array(
 			'Title' => $this->getLabel($instance),
-			'Front End URL' => HTML::link($instance->slug, URL::route('page', array($instance->slug), false))
+			'Front End URL' => link_to($instance->slug, route('page', array($instance->slug), false))
 		);
 	}
 

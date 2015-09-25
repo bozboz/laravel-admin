@@ -1,9 +1,9 @@
 <?php namespace Bozboz\Admin\Fields;
 
-use View;
-use Illuminate\Support\Facades\Form;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\ViewErrorBag;
+use Illuminate\Html\FormFacade as Form;
+use View;
 
 abstract class Field extends Fluent
 {
