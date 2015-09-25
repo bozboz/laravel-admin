@@ -44,7 +44,7 @@ trait DynamicSlugTrait
 		$source = $instance->$sourceField;
 
 		if ( ! empty($source)) {
-			$slug = Str::slug($source);
+			$slug = str_slug($source);
 			$instance->$slugField = $this->generateUniqueSlug($slug);
 		}
 	}
