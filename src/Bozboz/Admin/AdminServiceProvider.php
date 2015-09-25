@@ -13,11 +13,22 @@ class AdminServiceProvider extends ServiceProvider
 
 	public function boot()
 	{
-		$this->package('bozboz/admin');
+		$packageRoot = __DIR__ . '/../..';
 
-		require __DIR__ . '/../../routes.php';
-		require __DIR__ . '/../../filters.php';
-		require __DIR__ . '/../../errors.php';
+		$this->loadViewsFrom($packageRoot . '/views', 'admin');
+
+		$this->publishes([
+			$packageRoot . '/../public' => public_path('vendor/admin'),
+		], 'public');
+
+		$this->publishes([
+			$packageRoot . '/migrations/' => database_path('migrations')
+		], 'migrations');
+
+		if (! $this->app->routesAreCached()) {
+			require $packageRoot . '/routes.php';
+			require $packageRoot . '/filters.php';
+		}
 	}
 
 	protected function registerEvents()
