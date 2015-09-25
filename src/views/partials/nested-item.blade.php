@@ -8,16 +8,16 @@
 							</a>
 						@endif
 						@if ($canDelete)
-							{{ Form::open(['class' => 'inline-form', 'action' => array($destroyAction, $row->getId()), 'method' => 'DELETE']) }}
+							{!! Form::open(['class' => 'inline-form', 'action' => array($destroyAction, $row->getId()), 'method' => 'DELETE']) !!}
 								<button class="btn btn-danger btn-sm" data-warn="true" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
-							{{ Form::close() }}
+							{!! Form::close() !!}
 						@endif
 					</div>
 					<div class="nested-value">
 						<i class="fa fa-sort sorting-handle"></i>
 					</div>
 				@foreach ($row->getColumns() as $name => $value)
-					<div class="nested-value">{{ $value }}</div>
+					<div class="nested-value">{!! $value !!}</div>
 				@endforeach
 				</div>
 				@if($report->isRowNested($row))
