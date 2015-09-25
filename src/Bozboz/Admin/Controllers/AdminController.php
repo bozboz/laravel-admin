@@ -1,9 +1,10 @@
 <?php namespace Bozboz\Admin\Controllers;
 
-use Redirect, Auth, View, Input;
 use Bozboz\Admin\Models\User;
+use Illuminate\Routing\Controller;
+use Redirect, Auth, View, Input;
 
-class AdminController extends \BaseController
+class AdminController extends Controller
 {
 	public function getIndex()
 	{

@@ -1,8 +1,8 @@
 <?php namespace Bozboz\Admin\Controllers;
 
 use App;
-use Controller;
 use Hash;
+use Illuminate\Routing\Controller;
 use Input;
 use Lang;
 use Password;
