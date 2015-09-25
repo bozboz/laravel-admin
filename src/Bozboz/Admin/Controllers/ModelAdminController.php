@@ -44,12 +44,10 @@ abstract class ModelAdminController extends Controller
 	 */
 	public function getReportParams()
 	{
-		$class = get_class($this);
-
 		return [
-			'createAction' => "{$class}@create",
-			'editAction' => "{$class}@edit",
-			'destroyAction' => "{$class}@destroy",
+			'createAction' => $this->getActionName('create'),
+			'editAction' => $this->getActionName('edit'),
+			'destroyAction' => $this->getActionName('destroy')
 		];
 	}
 
@@ -68,7 +66,7 @@ abstract class ModelAdminController extends Controller
 	        'modelName' => $this->decorator->getHeading(),
 	        'fields' => $fields,
 	        'method' => 'POST',
-	        'action' => get_class($this) . '@store',
+	        'action' => $this->getActionName('store'),
 	        'listingUrl' => $this->getListingUrl($instance),
 	        'javascript' => $this->consolidateJavascript($fields)
 	    ));
@@ -107,7 +105,7 @@ abstract class ModelAdminController extends Controller
 			'model' => $instance,
 			'modelName' => $this->decorator->getHeading(),
 			'fields' => $fields,
-			'action' => array(get_class($this) . '@update', $instance->id),
+			'action' => array($this->getActionName('update'), $instance->id),
 			'listingUrl' => $this->getListingUrl($instance),
 			'method' => 'PUT',
 			'javascript' => $this->consolidateJavascript($fields)
@@ -152,7 +150,7 @@ abstract class ModelAdminController extends Controller
 	protected function reEdit($instance)
 	{
 		if (Input::has('after_save') && Input::get('after_save') === 'continue') {
-			return Redirect::action(get_class($this) . '@edit', $instance->getKey());
+			return Redirect::action($this->getActionName('edit'), $instance->getKey());
 		}
 	}
 
@@ -187,11 +185,16 @@ abstract class ModelAdminController extends Controller
 	 */
 	protected function getSuccessResponse($instance)
 	{
-		return Redirect::action(get_class($this) . '@index');
+		return Redirect::action($this->getActionName('index'));
 	}
 
 	protected function getListingUrl($instance)
 	{
-		return URL::action(get_class($this) . '@index');
+		return URL::action($this->getActionName('index'));
+	}
+
+	protected function getActionName($action)
+	{
+		return '\\' . get_class($this) . '@' . $action;
 	}
 }
