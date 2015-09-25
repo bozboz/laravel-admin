@@ -56,6 +56,19 @@
 -   Prevent media with many relation from attempting to sync null relations
 
 
+## Version 1.0.7 (2015-09-17)
+-   Fix issue with HTML::media macro when passing in Media instances
+-	Add `Media::getFilenameOrFallback` method
+
+
+## Version 1.0.6 (2015-09-10)
+-   Insert full size image in to WYSIWYG on upload rather than thumb
+
+
+## Version 1.0.5 (2015-06-15)
+-   Access correct fallback image
+
+
 ## Version 1.0.4 (2015-06-15)
 -   Fix for placeholder when sorting in-line media
 
