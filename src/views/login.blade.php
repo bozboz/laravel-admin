@@ -4,7 +4,7 @@
 
 @section('main')
 	@include('admin::partials.login-logo')
-	{{ Form::open(array('url' => 'admin/login', 'class' => 'form-signin')) }}
+	{!! Form::open(array('url' => 'admin/login', 'class' => 'form-signin')) !!}
 		<div class="login-container">
 		<div class="page-header">
 			<h1 class="login-heading">Login</h1>
@@ -15,22 +15,21 @@
 					<p>Please try again or <a href="/admin/password/remind">reset your password</a></p>
 				</div>
 			@elseif(Session::has('message'))
-				<div class="alert alert-danger">{{ Session::get('message')  }}</div>
+				<div class="alert alert-danger">{!! Session::get('message') !!}</div>
 			@endif
 
 			<div class="input-group">
 				<label for="email" class="input-group-addon"><i class="fa fa-user"></i></label>
-				{{Form::email('email', '', array('id' => 'email', 'class' => 'form-control', 'placeholder'=>'Email Address')) }}
+				{!! Form::email('email', '', array('id' => 'email', 'class' => 'form-control', 'placeholder'=>'Email Address')) !!}
 			</div>
 			<div class="input-group">
 				<label for="password" class="input-group-addon"><i class="fa fa-lock"></i></label>
-				{{Form::password('password',  array('id' => 'password', 'class' => 'form-control', 'placeholder'=>'Password')) }}
+				{!! Form::password('password',  array('id' => 'password', 'class' => 'form-control', 'placeholder'=>'Password')) !!}
 			</div>
-			{{Form::submit('Login', array('class' => 'btn btn-lg btn-primary pull-right'))}}
+			{!! Form::submit('Login', array('class' => 'btn btn-lg btn-primary pull-right')) !!}
 		</div>
 		<div class="login-footer">
-			{{ link_to('admin/password/remind', 'Reset your password'); }}
+			{!! link_to('admin/password/remind', 'Reset your password') !!}
 		</div>
-	{{Form::close()}}
-
+	{!! Form::close() !!}
 @stop

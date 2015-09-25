@@ -2,7 +2,7 @@
 
 @section('main')
 @parent
-{{ Form::model($model, array('method' => $method, 'action' => $action, 'role' => 'form', 'files' => true)) }}
+{!! Form::model($model, array('method' => $method, 'action' => $action, 'role' => 'form', 'files' => true)) !!}
 	<div class="form-row discrete">
 		@include('admin::partials.save')
 	</div>
@@ -16,11 +16,11 @@
 		@include('admin::partials.listing')
 	</div>
 
-{{ Form::close() }}
+{!! Form::close() !!}
 
 @stop
 
 @section('scripts')
 	@parent
-	{{ $javascript }}
+	{!! $javascript !!}
 @stop

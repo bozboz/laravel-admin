@@ -16,7 +16,7 @@
 
 		@include('admin::partials.sort-alert')
 
-		{{ $report->getHeader() }}
+		{!! $report->getHeader() !!}
 	@show
 	@section('report')
 	<div class="table-responsive">
@@ -41,7 +41,7 @@
 				</div>
 			@endif
 			@foreach ($row->getColumns() as $name => $value)
-				<div class="faux-cell">{{ $value }}</div>
+				<div class="faux-cell">{!! $value !!}</div>
 			@endforeach
 				<div class="no-wrap faux-cell">
 					@if ($canEdit)
@@ -52,9 +52,9 @@
 					@endif
 
 					@if ($canDelete)
-						{{ Form::open(['class' => 'inline-form', 'action' => [ $destroyAction, $row->getId() ], 'method' => 'DELETE']) }}
+						{!! Form::open(['class' => 'inline-form', 'action' => [ $destroyAction, $row->getId() ], 'method' => 'DELETE']) !!}
 							<button class="btn btn-danger btn-sm" data-warn="true" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
-						{{ Form::close() }}
+						{!! Form::close() !!}
 					@endif
 				</div>
 			</li>
@@ -67,7 +67,7 @@
 	@show
 
 	@section('report_footer')
-		{{ $report->getFooter() }}
+		{!! $report->getFooter() !!}
 		@include('admin::partials.new')
 	@show
 

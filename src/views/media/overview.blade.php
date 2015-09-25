@@ -10,12 +10,12 @@
 			<div class="icons">
 				<p>{{ $row->getColumn('caption') }}</p>
 
-				{{ Form::open(['action' => array($destroyAction, $row->getId()), 'method' => 'DELETE']) }}
+				{!! Form::open(['action' => array($destroyAction, $row->getId()), 'method' => 'DELETE']) !!}
 					<button data-warn="true" class="btn btn-danger btn-xs" type="submit">
 						<i class="fa fa-minus-square"></i>
 						Delete
 					</button>
-				{{ Form::close() }}
+				{!! Form::close() !!}
 			</div>
 		</li>
 	@endforeach

@@ -13,7 +13,7 @@
 
 	<p><span class="label label-info"><strong>Please Note:</strong> Maximum file upload size is {{ str_replace('M', ' megabytes', ini_get('upload_max_filesize')) }}</span></p>
 
-	{{ Form::open(['id' => 'fileupload', 'action' => $action, 'files' => true]) }}
+	{!! Form::open(['id' => 'fileupload', 'action' => $action, 'files' => true]) !!}
 		<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
 		<div class="row fileupload-buttonbar">
 			<div class="col-lg-7">
@@ -51,7 +51,7 @@
 		</div>
 		<!-- The table listing the files available for upload/download -->
 		<table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-	{{ Form::close() }}
+	{!! Form::close() !!}
 @stop
 
 @section('scripts')
