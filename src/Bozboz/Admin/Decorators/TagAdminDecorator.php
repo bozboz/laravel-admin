@@ -1,9 +1,9 @@
 <?php
 
-namespace Bozboz\MediaLibrary\Decorators;
+namespace Bozboz\Admin\Decorators;
 
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
-use Bozboz\MediaLibrary\Models\Tag;
+use Bozboz\Admin\Models\Tag;
 
 class TagAdminDecorator extends ModelAdminDecorator
 {

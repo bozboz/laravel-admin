@@ -1,4 +1,6 @@
-<?php namespace Bozboz\MediaLibrary\Models;
+<?php namespace Bozboz\Admin\Traits;
+
+use Bozboz\Admin\Models\Media;
 
 Trait MediableTrait
 {

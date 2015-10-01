@@ -1,6 +1,6 @@
 <?php namespace Bozboz\MediaLibrary;
 
-use Bozboz\MediaLibrary\Models\Media;
+use Bozboz\Admin\Models\Media;
 use Illuminate\Support\ServiceProvider;
 
 class MediaLibraryServiceProvider extends ServiceProvider {

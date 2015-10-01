@@ -1,4 +1,6 @@
-<?php namespace Bozboz\Admin\Decorators;
+<?php
+
+namespace Bozboz\Admin\Decorators;
 
 use Illuminate\Database\Eloquent\Builder;
 

@@ -1,8 +1,8 @@
-<?php namespace Bozboz\MediaLibrary\Fields;
+<?php namespace Bozboz\Admin\Fields;
 
-use Bozboz\Admin\Fields\Field;
-use Bozboz\MediaLibrary\Models\Media;
-use Form, View;
+use Bozboz\Admin\Models\Media;
+use Illuminate\Html\FormFacade as Form;
+use View;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class MediaBrowser extends Field
@@ -115,7 +115,11 @@ class MediaBrowser extends Field
 	 */
 	public function getJavascript()
 	{
-		return View::make('admin::fields.partials.media-js')->withId($this->sanitiseName($this->name));
+		return View::make('admin::fields.partials.media-js')->with([
+			'id' => $this->sanitiseName($this->name),
+			'access_public' => Media::ACCESS_PUBLIC,
+			'access_private' => Media::ACCESS_PRIVATE,
+		]);
 	}
 
 	/**

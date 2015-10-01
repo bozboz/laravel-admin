@@ -1,4 +1,6 @@
-<?php namespace Bozboz\Admin\Decorators;
+<?php
+
+namespace Bozboz\Admin\Decorators;
 
 use Bozboz\Admin\Models\Page;
 use Illuminate\Support\Facades\URL;
@@ -8,7 +10,7 @@ use Bozboz\Admin\Fields\HTMLEditorField;
 use Bozboz\Admin\Fields\SelectField;
 use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Fields\URLField;
-use Bozboz\MediaLibrary\Fields\MediaBrowser;
+use Bozboz\Admin\Fields\MediaBrowser;
 
 class PageAdminDecorator extends ModelAdminDecorator
 {

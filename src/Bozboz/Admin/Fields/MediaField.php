@@ -1,7 +1,6 @@
-<?php namespace Bozboz\MediaLibrary\Fields;
+<?php namespace Bozboz\Admin\Fields;
 
-use Bozboz\Admin\Fields\Field;
-use Bozboz\MediaLibrary\Models\Media;
+use Bozboz\Admin\Models\Media;
 use Illuminate\Html\HtmlFacade as HTML;
 use Illuminate\Html\FormFacade as Form;
 

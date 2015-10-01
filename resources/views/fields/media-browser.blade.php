@@ -30,7 +30,7 @@
   </div>
 
   <script>
-    $('.js-media-browser-{{ $id }}').data('values', {{ $data }});
+    $('.js-media-browser-{{ $id }}').data('values', {!! $data !!});
   </script>
 
   <button class="btn btn-info" data-bind="click: mediaLibrary.browse"><i class="fa fa-search"></i> Browse Media</button>

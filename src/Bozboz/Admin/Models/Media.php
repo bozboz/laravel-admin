@@ -1,7 +1,6 @@
-<?php namespace Bozboz\MediaLibrary\Models;
+<?php namespace Bozboz\Admin\Models;
 
-use Bozboz\Admin\Models\Base;
-use Bozboz\MediaLibrary\Validators\MediaValidator;
+use Bozboz\Admin\Services\Validators\MediaValidator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Input, Config, Str;
@@ -36,7 +35,7 @@ class Media extends Base
 
 	public function tags()
 	{
-		return $this->belongsToMany('Bozboz\MediaLibrary\Models\Tag', 'media_mm_tags');
+		return $this->belongsToMany('Bozboz\Admin\Models\Tag', 'media_mm_tags');
 	}
 
 	public function getValidator()
@@ -136,7 +135,7 @@ class Media extends Base
 	 *
 	 * Media::getFilenameOrFallback($item->detailImage, '/fallback-image.jpg', 'thumb')
 	 *
-	 * @param  Bozboz\MediaLibrary\Models\Media|null  $media
+	 * @param  Bozboz\Admin\Models\Media|null  $media
 	 * @param  string  $fallback
 	 * @param  string  $size
 	 * @return string

@@ -1,6 +1,7 @@
-<?php namespace Bozboz\MediaLibrary\Decorators;
+<?php
 
-use Bozboz\Admin\Decorators\ModelAdminDecorator;
+namespace Bozboz\Admin\Decorators;
+
 use Bozboz\Admin\Fields\BelongsToManyField;
 use Bozboz\Admin\Fields\ListField;
 use Bozboz\Admin\Fields\SelectField;
@@ -8,9 +9,8 @@ use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Reports\Filters\ArrayListingFilter;
 use Bozboz\Admin\Reports\Filters\MultiOptionListingFilter;
 use Bozboz\Admin\Reports\Filters\SearchListingFilter;
-use Bozboz\MediaLibrary\Decorators\TagAdminDecorator;
-use Bozboz\MediaLibrary\Fields\MediaField;
-use Bozboz\MediaLibrary\Models\Media;
+use Bozboz\Admin\Fields\MediaField;
+use Bozboz\Admin\Models\Media;
 
 class MediaAdminDecorator extends ModelAdminDecorator
 {

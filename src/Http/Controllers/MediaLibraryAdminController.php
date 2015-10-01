@@ -1,9 +1,9 @@
 <?php namespace Bozboz\Admin\Http\Controllers;
 
 use Bozboz\Admin\Reports\Report;
-use Bozboz\MediaLibrary\Decorators\MediaAdminDecorator;
-use Bozboz\MediaLibrary\Models\Media;
-use View, Response, Request, Input, Redirect, Str, File;
+use Bozboz\Admin\Decorators\MediaAdminDecorator;
+use Bozboz\Admin\Models\Media;
+use View, Response, Request, Input;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
