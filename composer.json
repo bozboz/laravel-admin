@@ -22,15 +22,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Bozboz\\Admin\\Http": "src/Http",
             "Bozboz\\Admin\\": "src/Bozboz/Admin",
+            "Bozboz\\Admin\\Http\\": "src/Http",
             "Bozboz\\Admin\\Tests\\": "tests/",
             "Bozboz\\Admin\\Database\\": "database/",
             "Bozboz\\MediaLibrary\\": "src/Bozboz/MediaLibrary"
-        },
-        "classmap": [
-            "src/migrations"
-        ]
+        }
     },
     "minimum-stability": "stable",
     "extra": {
