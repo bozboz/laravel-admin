@@ -103,13 +103,21 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
-	 * Retrieve a paginated collection of instances of $this->model to display
+	 * Retrieve a full or paginated collection of instances of $this->model
 	 *
 	 * @return Illuminate\Pagination\Paginator
 	 */
 	public function getListingModels()
 	{
-		return $this->getModelQuery()->paginate($this->listingPerPageLimit());
+		$query = $this->getModelQuery();
+
+		if ($this->isSortable()) {
+			return $query->get();
+		}
+
+		return $query->paginate(
+			Input::get('per-page', $this->listingPerPageLimit())
+		);
 	}
 
 	/**
@@ -119,7 +127,7 @@ abstract class ModelAdminDecorator
 	 */
 	protected function listingPerPageLimit()
 	{
-		return Input::get('per-page', Config::get('admin::listing_items_per_page'));
+		return Config::get('admin::listing_items_per_page');
 	}
 
 	/**
