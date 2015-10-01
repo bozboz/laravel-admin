@@ -14,7 +14,7 @@ class AdminServiceProvider extends ServiceProvider
 
 	public function boot()
 	{
-		$packageRoot = __DIR__ . '/../../../..';
+		$packageRoot = __DIR__ . '/../../';
 
 		$this->loadViewsFrom($packageRoot . '/resources/views', 'admin');
 
