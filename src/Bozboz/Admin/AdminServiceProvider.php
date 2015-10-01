@@ -1,14 +1,12 @@
 <?php namespace Bozboz\Admin;
 
 use Illuminate\Support\ServiceProvider;
-use View;
-use Event;
 
 class AdminServiceProvider extends ServiceProvider
 {
 	public function register()
 	{
-		$this->registerEvents();
+		//
 	}
 
 	public function boot()
@@ -33,10 +31,7 @@ class AdminServiceProvider extends ServiceProvider
 			require $packageRoot . '/src/Http/routes.php';
 			require $packageRoot . '/src/Http/filters.php';
 		}
-	}
 
-	protected function registerEvents()
-	{
-		Event::subscribe(new Subscribers\PageEventHandler);
+		$this->app['events']->subscribe(new Subscribers\PageEventHandler);
 	}
 }
