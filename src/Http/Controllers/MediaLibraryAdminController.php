@@ -1,4 +1,4 @@
-<?php namespace Bozboz\MediaLibrary\Controllers;
+<?php namespace Bozboz\Admin\Http\Controllers;
 
 use Bozboz\Admin\Controllers\ModelAdminController;
 use Bozboz\Admin\Reports\Report;

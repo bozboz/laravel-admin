@@ -1,4 +1,4 @@
-<?php namespace Bozboz\Admin\Controllers;
+<?php namespace Bozboz\Admin\Http\Controllers;
 
 use Bozboz\Admin\Meta\Provider as Meta;
 use Bozboz\Admin\Models\Page;
@@ -9,7 +9,7 @@ use View, Redirect, Controller, Request;
 class PageController extends Controller
 {
 	/**
-	 * Lookup page by slug; and either render corresponding view, redirect to 
+	 * Lookup page by slug; and either render corresponding view, redirect to
 	 * another page, or throw a NotFoundHttpException.
 	 *
 	 * @param  string  $slug

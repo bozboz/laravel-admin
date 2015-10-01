@@ -1,4 +1,4 @@
-<?php namespace Bozboz\Admin\Controllers;
+<?php namespace Bozboz\Admin\Http\Controllers;
 
 use Controller, Input;
 use Bozboz\Admin\Services\Sorter;

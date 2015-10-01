@@ -22,6 +22,7 @@
     },
     "autoload": {
         "psr-4": {
+            "Bozboz\\Admin\\Http": "src/Http",
             "Bozboz\\Admin\\": "src/Bozboz/Admin",
             "Bozboz\\Admin\\Tests\\": "tests/",
             "Bozboz\\Admin\\Database\\": "database/",
