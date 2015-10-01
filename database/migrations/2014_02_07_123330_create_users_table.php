@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration {
 			$table->string('first_name', 35);
 			$table->string('last_name', 35);
 			$table->boolean('is_admin')->default(false);
+			$table->string('remember_token', 100);
 			$table->timestamps();
 		});
 	}
