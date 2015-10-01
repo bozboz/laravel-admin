@@ -14,6 +14,8 @@
 
 ### Removed
 -   Remove ModelAdminDecorator::getListingModelsNoLimit
+-   Remove migrations directory from Composer autoload
+
 
 ## Version 1.2.0 (FUTURE)
 
