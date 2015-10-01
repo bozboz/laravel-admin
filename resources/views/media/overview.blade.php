@@ -5,7 +5,7 @@
 	@foreach ($report->getRows() as $row)
 		<li class="masonry-item">
 			<a href="{{ URL::action($editAction, array($row->getId())) }}">
-				{{ $row->getColumn('image') }}
+				{!! $row->getColumn('image') !!}
 			</a>
 			<div class="icons">
 				<p>{{ $row->getColumn('caption') }}</p>

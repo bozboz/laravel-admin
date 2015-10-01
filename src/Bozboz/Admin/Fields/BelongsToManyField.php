@@ -75,7 +75,7 @@ HTML;
 	 */
 	public function getLabel()
 	{
-		$label = ucwords(str_replace('_', ' ', \Str::snake($this->relationship->getRelationName())));
+		$label = ucwords(str_replace('_', ' ', snake_case($this->relationship->getRelationName())));
 
 		return Form::label($this->name, $this->label ?: $label);
 	}

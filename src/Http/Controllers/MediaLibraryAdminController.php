@@ -1,6 +1,5 @@
 <?php namespace Bozboz\Admin\Http\Controllers;
 
-use Bozboz\Admin\Controllers\ModelAdminController;
 use Bozboz\Admin\Reports\Report;
 use Bozboz\MediaLibrary\Decorators\MediaAdminDecorator;
 use Bozboz\MediaLibrary\Models\Media;
@@ -88,11 +87,11 @@ class MediaLibraryAdminController extends ModelAdminController
 				if ($uploadSuccess) {
 					$newMedia->save();
 					$data[] = [
-						'url' => action(__CLASS__ . '@edit', $newMedia->id),
+						'url' => action($this->getActionName('edit'), $newMedia->id),
 						'fullsizeUrl' => asset($newMedia->getFilename()),
 						'thumbnailUrl' => asset($newMedia->getFilename('library')),
 						'name' => $newMedia->caption ?: $newMedia->filename,
-						'deleteUrl' => action(__CLASS__ . '@destroy', $newMedia->id),
+						'deleteUrl' => action($this->getActionName('destroy'), $newMedia->id),
 						'deleteType' => 'DELETE',
 						'id' => $newMedia->id,
 						'filename' => $newMedia->filename,
@@ -135,7 +134,7 @@ class MediaLibraryAdminController extends ModelAdminController
 	private function cleanFilename($filename)
 	{
 		$filenameParts = explode('.', $filename);
-		$filenameParts[0] = Str::slug($filenameParts[0]);
+		$filenameParts[0] = str_slug($filenameParts[0]);
 
 		return implode('.', $filenameParts);
 	}

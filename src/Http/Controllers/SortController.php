@@ -1,7 +1,8 @@
 <?php namespace Bozboz\Admin\Http\Controllers;
 
-use Controller, Input;
 use Bozboz\Admin\Services\Sorter;
+use Input;
+use Illuminate\Routing\Controller;
 
 class SortController extends Controller
 {

@@ -3,8 +3,9 @@
 use Bozboz\Admin\Meta\Provider as Meta;
 use Bozboz\Admin\Models\Page;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Routing\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use View, Redirect, Controller, Request;
+use View, Redirect, Request;
 
 class PageController extends Controller
 {

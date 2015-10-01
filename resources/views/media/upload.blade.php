@@ -146,7 +146,7 @@
 	</tr>
 {% } %}
 </script>
-<script src="/packages/bozboz/admin/js/upload-ui.min.js"></script>
+<script src="{{ asset('vendor/admin/js/upload-ui.min.js') }}"></script>
 <script>
 	$(function () {
 		'use strict';
