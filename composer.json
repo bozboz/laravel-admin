@@ -24,12 +24,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Bozboz\\Admin\\": "src/Bozboz/Admin",
-            "Bozboz\\Admin\\Http\\": "src/Http",
-            "Bozboz\\Admin\\Providers\\": "src/Providers",
+            "Bozboz\\Admin\\": "src",
             "Bozboz\\Admin\\Tests\\": "tests/",
-            "Bozboz\\Admin\\Database\\": "database/",
-            "Bozboz\\MediaLibrary\\": "src/Bozboz/MediaLibrary"
+            "Bozboz\\Admin\\Database\\": "database/"
         }
     },
     "minimum-stability": "stable",
