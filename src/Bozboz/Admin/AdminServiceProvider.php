@@ -25,6 +25,10 @@ class AdminServiceProvider extends ServiceProvider
 			$packageRoot . '/database/migrations' => database_path('migrations')
 		], 'migrations');
 
+		$this->publishes([
+			$packageRoot . '/config/admin.php' => config_path('admin.php')
+		], 'config');
+
 		if (! $this->app->routesAreCached()) {
 			require $packageRoot . '/src/Http/routes.php';
 			require $packageRoot . '/src/Http/filters.php';
