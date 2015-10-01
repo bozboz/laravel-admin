@@ -13,21 +13,21 @@ class AdminServiceProvider extends ServiceProvider
 
 	public function boot()
 	{
-		$packageRoot = __DIR__ . '/../..';
+		$packageRoot = __DIR__ . '/../../..';
 
-		$this->loadViewsFrom($packageRoot . '/views', 'admin');
+		$this->loadViewsFrom($packageRoot . '/resources/views', 'admin');
 
 		$this->publishes([
-			$packageRoot . '/../public' => public_path('vendor/admin'),
+			$packageRoot . '/public' => public_path('vendor/admin'),
 		], 'public');
 
 		$this->publishes([
-			$packageRoot . '/migrations/' => database_path('migrations')
+			$packageRoot . '/database/migrations' => database_path('migrations')
 		], 'migrations');
 
 		if (! $this->app->routesAreCached()) {
-			require $packageRoot . '/routes.php';
-			require $packageRoot . '/filters.php';
+			require $packageRoot . '/src/Http/routes.php';
+			require $packageRoot . '/src/Http/filters.php';
 		}
 	}
 
