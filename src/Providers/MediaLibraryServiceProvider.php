@@ -1,4 +1,6 @@
-<?php namespace Bozboz\MediaLibrary;
+<?php
+
+namespace Bozboz\Admin\Providers;
 
 use Bozboz\Admin\Models\Media;
 use Illuminate\Support\ServiceProvider;
@@ -6,11 +8,14 @@ use Illuminate\Support\ServiceProvider;
 class MediaLibraryServiceProvider extends ServiceProvider {
 
 	/**
-	 * Indicates if loading of the provider is deferred.
+	 * Register the service provider.
 	 *
-	 * @var bool
+	 * @return void
 	 */
-	protected $defer = false;
+	public function register()
+	{
+
+	}
 
 	/**
 	 * Bootstrap the application events.
@@ -60,25 +65,4 @@ class MediaLibraryServiceProvider extends ServiceProvider {
 			return $this->app['html']->image($filename, $alt, $attributes);
 		}
 	}
-
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-
-	}
-
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array();
-	}
-
 }

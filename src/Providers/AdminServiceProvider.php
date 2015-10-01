@@ -1,5 +1,8 @@
-<?php namespace Bozboz\Admin;
+<?php
 
+namespace Bozboz\Admin\Providers;
+
+use Bozboz\Admin\Subscribers\PageEventHandler;
 use Illuminate\Support\ServiceProvider;
 
 class AdminServiceProvider extends ServiceProvider
@@ -11,7 +14,7 @@ class AdminServiceProvider extends ServiceProvider
 
 	public function boot()
 	{
-		$packageRoot = __DIR__ . '/../../..';
+		$packageRoot = __DIR__ . '/../../../..';
 
 		$this->loadViewsFrom($packageRoot . '/resources/views', 'admin');
 
@@ -32,6 +35,6 @@ class AdminServiceProvider extends ServiceProvider
 			require $packageRoot . '/src/Http/filters.php';
 		}
 
-		$this->app['events']->subscribe(new Subscribers\PageEventHandler);
+		$this->app['events']->subscribe(new PageEventHandler);
 	}
 }

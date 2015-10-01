@@ -25,6 +25,7 @@
         "psr-4": {
             "Bozboz\\Admin\\": "src/Bozboz/Admin",
             "Bozboz\\Admin\\Http\\": "src/Http",
+            "Bozboz\\Admin\\Providers\\": "src/Providers",
             "Bozboz\\Admin\\Tests\\": "tests/",
             "Bozboz\\Admin\\Database\\": "database/",
             "Bozboz\\MediaLibrary\\": "src/Bozboz/MediaLibrary"
