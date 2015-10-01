@@ -8,8 +8,6 @@
 
 Route::group(array('namespace' => 'Bozboz\Admin\Http\Controllers', 'prefix' => 'admin'), function() {
 
-	View::composer('admin::partials.nav', 'Bozboz\Admin\Composers\Nav');
-
 	Route::group(array('before' => 'auth'), function() {
 		Route::resource('pages', 'PageAdminController', array('except' => array('show')));
 		Route::resource('users', 'UserAdminController', array('except' => array('show')));

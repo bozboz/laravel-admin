@@ -3,7 +3,6 @@
 use Event;
 use Auth;
 use Bozboz\Admin\Components\Menu;
-use Illuminate\Http\Request;
 
 class Nav
 {

@@ -36,5 +36,10 @@ class AdminServiceProvider extends ServiceProvider
 		}
 
 		$this->app['events']->subscribe(new PageEventHandler);
+
+		$this->app['view']->composer(
+			'admin::partials.nav',
+			'Bozboz\Admin\Composers\Nav'
+		);
 	}
 }
