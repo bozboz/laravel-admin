@@ -19,8 +19,36 @@ abstract class ModelAdminController extends Controller
 
 	public function index()
 	{
-		$report = new Report($this->decorator);
-		return $report->render(array('controller' => get_class($this)));
+		$report = $this->getListingReport();
+		$params = $this->getReportParams();
+
+		return $report->render($params);
+	}
+
+	/**
+	 * Get an instance of a report to display the model listing
+	 *
+	 * @return Bozboz\Admin\Reports\Report
+	 */
+	protected function getListingReport()
+	{
+		return new Report($this->decorator);
+	}
+
+	/**
+	 * Return an array of params the report requires to render
+	 *
+	 * @return array
+	 */
+	protected function getReportParams()
+	{
+		$class = get_class($this);
+
+		return [
+			'createAction' => "{$class}@create",
+			'editAction' => "{$class}@edit",
+			'destroyAction' => "{$class}@destroy",
+		];
 	}
 
 	public function create()

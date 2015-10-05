@@ -4,13 +4,13 @@
 	<ul class="js-mason secret-list media-view">
 	@foreach ($report->getRows() as $row)
 		<li class="masonry-item">
-			<a href="{{ URL::action($controller . '@edit', array($row->getId())) }}">
+			<a href="{{ URL::action($editAction, array($row->getId())) }}">
 				{{ $row->getColumn('image') }}
 			</a>
 			<div class="icons">
 				<p>{{ $row->getColumn('caption') }}</p>
 
-				{{ Form::open(['action' => array($controller . '@destroy', $row->getId()), 'method' => 'DELETE']) }}
+				{{ Form::open(['action' => array($destroyAction, $row->getId()), 'method' => 'DELETE']) }}
 					<button data-warn="true" class="btn btn-danger btn-xs" type="submit">
 						<i class="fa fa-minus-square"></i>
 						Delete

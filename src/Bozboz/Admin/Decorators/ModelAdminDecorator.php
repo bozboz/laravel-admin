@@ -103,24 +103,22 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
-	 * Retrieve a paginated collection of instances of $this->model to display
+	 * Retrieve a full or paginated collection of instances of $this->model
 	 *
 	 * @param  boolean  $limit
 	 * @return Illuminate\Pagination\Paginator
 	 */
-	public function getListingModels($limit = true)
+	public function getListingModels()
 	{
-		$query = $this->model->newQuery();
+		$query = $this->getModelQuery();
 
-		$this->filterListingQuery($query);
-
-		$this->modifyListingQuery($query);
-
-		if ($limit) {
-			return $query->paginate($this->listingPerPageLimit());
+		if ($this->isSortable()) {
+			return $query->get();
 		}
 
-		return $query->get();
+		return $query->paginate(
+			Input::get('per-page', $this->listingPerPageLimit())
+		);
 	}
 
 	/**
@@ -130,7 +128,45 @@ abstract class ModelAdminDecorator
 	 */
 	protected function listingPerPageLimit()
 	{
-		return Input::get('per-page', Config::get('admin::listing_items_per_page'));
+		return Config::get('admin::listing_items_per_page');
+	}
+
+	/**
+	 * Retrieve entire collection of instances of $this->model to display
+	 *
+	 * @return Illuminate\Database\Eloquent\Collection
+	 */
+	public function getListingModelsNoLimit()
+	{
+		return $this->getModelQuery()->get();
+	}
+
+	/**
+	 * Retrieve results from a query in chunks
+	 *
+	 * @param  int  $amount
+	 * @param  Callable  $callback
+	 * @return void
+	 */
+	public function getListingModelsChunked($amount, $callback)
+	{
+		$this->getModelQuery()->chunk($amount, $callback);
+	}
+
+	/**
+	 * Get filtered, customised query builder object for $this->model
+	 *
+	 * @return Illuminate\Database\Eloquent\Builder
+	 */
+	protected function getModelQuery()
+	{
+		$query = $this->model->newQuery();
+
+		$this->filterListingQuery($query);
+
+		$this->modifyListingQuery($query);
+
+		return $query;
 	}
 
 	/**
