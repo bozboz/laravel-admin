@@ -6,16 +6,19 @@
 -   Add $limit argument to ModelAdminDecorator::getListingModels
 
 ### Changed
--	Remove dependancy on Base model and replace it with BaseInterface
--	Consolidate migrations
+-   Remove dependancy on Base model and replace it with BaseInterface
+-   Consolidate migrations
+-   ModelAdminDecorator::getFields method no longer fires "admin.fields.built" event
+-   Reports\Row class no longer accepts an instance as its second argument
 
 ### Fixed
--	Prevent media with many relation from attempting to sync null relations
+-   Prevent media with many relation from attempting to sync null relations
 
 ### Removed
 -   Remove ModelAdminDecorator::getListingModelsNoLimit
 -   Remove migrations directory from Composer autoload
-
+-   Remove Reports\Row::getModel method
+-   Remove ModelAdminDecorator::getModel method
 
 ## Version 1.2.0 (FUTURE)
 

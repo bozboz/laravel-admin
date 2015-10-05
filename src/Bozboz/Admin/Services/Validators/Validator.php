@@ -5,21 +5,12 @@ abstract class Validator
 	protected $errors;
 	protected $rules = array();
 	protected $storeRules = array();
-	protected $editRules = array();
 	protected $updateRules = array();
 	protected $messages = array();
 
 	public function passesStore($attributes)
 	{
 		return $this->passes($attributes, $this->getStoreRules());
-	}
-
-	/**
-	 * @deprecated
-	 */
-	public function passesEdit($attributes)
-	{
-		return $this->passesUpdate($attributes);
 	}
 
 	public function passesUpdate($attributes)
@@ -34,7 +25,7 @@ abstract class Validator
 
 	protected function getUpdateRules()
 	{
-		return array_merge($this->rules, $this->editRules, $this->updateRules);
+		return array_merge($this->rules, $this->updateRules);
 	}
 
 	public function getErrors()

@@ -4,17 +4,11 @@ class Row
 {
 	private $id;
 	private $data;
-	private $model;
 
-	public function __construct($id, $modelOrData, array $data = null)
+	public function __construct($id, array $data = null)
 	{
 		$this->id = $id;
-		if (is_array($modelOrData)) {
-			$this->data = $modelOrData;
-		} else {
-			$this->model = $modelOrData;
-			$this->data = $data;
-		}
+		$this->data = $data;
 	}
 
 	public function getId()
@@ -30,15 +24,5 @@ class Row
 	public function getColumn($name)
 	{
 		return $this->data[$name];
-	}
-
-	/**
-	 * DEPRECATED
-	 *
-	 * @return mixed
-	 */
-	public function getModel()
-	{
-		return $this->model;
 	}
 }

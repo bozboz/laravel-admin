@@ -19,17 +19,6 @@ class Report
 		$this->rows = $this->decorator->getListingModels();
 	}
 
-	/**
-	 * @deprecated
-	 *
-	 * @param  string  $view
-	 * @return void
-	 */
-	public function overrideView($view)
-	{
-		$this->view = $view;
-	}
-
 	public function getHeadings()
 	{
 		$firstRow = $this->getRowFromInstance($this->rows->first());
@@ -63,7 +52,7 @@ class Report
 			return $this->renderedColumns[$id];
 		}
 
-		return new Row($id, $instance, $this->getColumnsFromInstance($instance));
+		return new Row($id, $this->getColumnsFromInstance($instance));
 	}
 
 	protected function getColumnsFromInstance($instance)
@@ -90,11 +79,7 @@ class Report
 	{
 		$identifier = $this->decorator->getListingIdentifier();
 
-		$deprecatedParams = [
-			'fullModelName' => $identifier
-		];
-
-		$params += $deprecatedParams + [
+		$params = [
 			'sortableClass' => $this->decorator->isSortable() ? ' sortable' : '',
 			'report' => $this,
 			'heading' => $this->decorator->getHeading(true),
