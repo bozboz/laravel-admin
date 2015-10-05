@@ -24,10 +24,16 @@
 	- Bozboz\Admin\Controllers\PageAdminController => Bozboz\Admin\Http\Controllers\PageAdminController
 
 - SearchListingFilter now accepts either an array of attributes OR a callback as
-  its second parameter, not both
+  its second parameter, not both.
 
 - Field, and subclasses thereof, now must take an $errors argument, which is
   passed in from the view that renders it.
 
 - ModelAdminDecorator::getModel has been removed. Do not rely on outside classes
-  having knowledge of the decorator's underlying model
+  having knowledge of the decorator's underlying model.
+
+- Services\Validator::passesEdit() has been removed. Use passesUpdate method
+  instead.
+
+- Reports\Report::overrideView() has been removed. Pass custom view in as second
+  argument to constructor.

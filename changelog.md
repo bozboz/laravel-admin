@@ -18,7 +18,9 @@
 -   Remove ModelAdminDecorator::getListingModelsNoLimit
 -   Remove migrations directory from Composer autoload
 -   Remove Reports\Row::getModel method
--   Remove ModelAdminDecorator::getModel method
+-   Remove Decorators\ModelAdminDecorator::getModel method
+-   Remove Services\Validator::passesEdit() method
+-   Remove Reports\Report::overrideView() method
 
 ## Version 1.2.0 (FUTURE)
 
