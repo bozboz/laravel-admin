@@ -32,8 +32,8 @@
 - ModelAdminDecorator::getModel has been removed. Do not rely on outside classes
   having knowledge of the decorator's underlying model.
 
-- Services\Validator::passesEdit() has been removed. Use passesUpdate method
-  instead.
+- Services\Validator::passesEdit() and Services\Validator::$editRules have been
+  removed. Use passesUpdate() and $updateRules instead.
 
 - Reports\Report::overrideView() has been removed. Pass custom view in as second
   argument to constructor.
