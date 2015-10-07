@@ -52,16 +52,6 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
-	 * DEPRECATED: Retrieve $this->model
-	 *
-	 * @return Bozoboz\Admin\Models\BaseInterface
-	 */
-	public function getModel()
-	{
-		return $this->model;
-	}
-
-	/**
 	 * Retrieve a heading representing $this->model
 	 *
 	 * @param  boolean  $plural
