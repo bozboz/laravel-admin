@@ -277,14 +277,14 @@ abstract class ModelAdminDecorator
 	{
 		foreach ($this->getSyncRelations() as $relationship) {
 			if (isset($formInput[$relationship . '_relationship'])) {
-				$data = array_filter($formInput[$relationship . '_relationship']);
+				$data = @array_filter($formInput[$relationship . '_relationship']);
 				$instance->$relationship()->sync(is_array($data) ? $data : array());
 			}
 		}
 
 		foreach ($this->getListRelations() as $relationship => $attribute) {
 			if (isset($formInput[$relationship . '_relationship'])) {
-				$data = array_filter($formInput[$relationship . '_relationship']);
+				$data = @array_filter($formInput[$relationship . '_relationship']);
 
 				$relation = $instance->$relationship();
 				$model = $relation->getModel();
