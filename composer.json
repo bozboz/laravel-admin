@@ -17,15 +17,16 @@
     },
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "4.2.*",
-        "thapp/jitimage": "0.1.*"
+        "illuminate/support": "5.*",
+        "illuminate/html": "5.*",
+        "intervention/image": "^2.3",
+        "intervention/imagecache": "^2.3"
     },
     "autoload": {
         "psr-4": {
-            "Bozboz\\Admin\\": "src/Bozboz/Admin",
+            "Bozboz\\Admin\\": "src",
             "Bozboz\\Admin\\Tests\\": "tests/",
-            "Bozboz\\Admin\\Database\\": "database/",
-            "Bozboz\\MediaLibrary\\": "src/Bozboz/MediaLibrary"
+            "Bozboz\\Admin\\Database\\": "database/"
         }
     },
     "minimum-stability": "stable",

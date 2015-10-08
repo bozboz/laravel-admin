@@ -1,5 +1,5 @@
 var basePaths = {
-	src: 'src/assets/',
+	src: 'resources/assets/',
 	dest: 'public/',
 	bower: 'bower_components/',
 };
@@ -54,7 +54,7 @@ var vendorFiles = {
 		basePaths.bower + 'jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js',
 		basePaths.bower + 'select2/dist/js/select2.min.js',
 		basePaths.bower + 'nestedSortable/jquery.ui.nestedSortable.js',
-		'src/assets/js/knockout.js',
+		'resources/assets/js/knockout.js',
 
 		blueImp + 'jquery.iframe-transport.js',
 		blueImp + 'jquery.fileupload.js'
