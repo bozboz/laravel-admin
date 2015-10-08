@@ -39,6 +39,10 @@ var vendorCSSFiles = [
 	'bower_components/select2/dist/css/select2.css',
 ];
 
+var fontAwesome = [
+	'bower_components/font-awesome/fonts/**.*'
+];
+
 /**
  * Tasks
  */
@@ -47,4 +51,7 @@ gulp.task('copies', function(){
 	gulp.src(vendorCSSFiles)
 		.pipe(concat('_vendors.scss'))
 		.pipe(gulp.dest('src/assets/sass'));
+
+	gulp.src(fontAwesome)
+		.pipe(gulp.dest('public/css/fonts'))
 });
