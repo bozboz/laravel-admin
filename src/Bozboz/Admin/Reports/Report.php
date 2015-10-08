@@ -78,7 +78,7 @@ class Report implements BaseInterface
 	{
 		$identifier = $this->decorator->getListingIdentifier();
 
-		$params = [
+		$params += [
 			'sortableClass' => $this->decorator->isSortable() ? ' sortable' : '',
 			'report' => $this,
 			'heading' => $this->decorator->getHeading(true),
