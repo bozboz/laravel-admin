@@ -50,7 +50,7 @@ var fontAwesome = [
 gulp.task('copies', function(){
 	gulp.src(vendorCSSFiles)
 		.pipe(concat('_vendors.scss'))
-		.pipe(gulp.dest('src/assets/sass'));
+		.pipe(gulp.dest('resources/assets/sass'));
 
 	gulp.src(fontAwesome)
 		.pipe(gulp.dest('public/css/fonts'))

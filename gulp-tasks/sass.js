@@ -17,7 +17,7 @@ var gulp = require('gulp'),
  */
 
  var appFiles = [
- 	'src/assets/sass/style.scss'
+ 	'resources/assets/sass/style.scss'
  ]
 
 /**

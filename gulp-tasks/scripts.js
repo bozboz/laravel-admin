@@ -30,15 +30,15 @@ var appFiles = [
 	'bower_components/jqueryui-timepicker-addon/dist/jquery-ui-sliderAccess.js',
 	'bower_components/select2/dist/js/select2.min.js',
 	'bower_components/nestedSortable/jquery.ui.nestedSortable.js',
-	'src/assets/js/knockout.js',
+	'resources/assets/js/knockout.js',
 
 	// Bluimp
 	'bower_components/blueimp-file-upload/jquery.iframe-transport.js',
 	'bower_components/blueimp-file-upload/jquery.fileupload.js',
 
 	// Custom
-	'src/assets/js/scripts.js',
-	'src/assets/js/media-browser.js'
+	'resources/assets/js/scripts.js',
+	'resources/assets/js/media-browser.js'
 ];
 
 var mediaScripts = [

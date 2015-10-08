@@ -11,8 +11,8 @@ var requireDir = require('require-dir'),
  */
 
 gulp.task('watch', function () {
-	gulp.watch('src/assets/sass/**/*.scss', ['sass']);
-	gulp.watch('src/assets/js/**/*.js', ['scripts']);
+	gulp.watch('resources/assets/sass/**/*.scss', ['sass']);
+	gulp.watch('resources/assets/js/**/*.js', ['scripts']);
 });
 
 gulp.task('default', ['copies', 'sass', 'scripts']);

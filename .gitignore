@@ -4,3 +4,4 @@ node_modules
 .sass-cache
 error_log
 *.map
+resources/assets/sass/_vendors.scss
