@@ -37,3 +37,9 @@
 
 - Reports\Report::overrideView() has been removed. Pass custom view in as second
   argument to constructor.
+
+- Overview views must be passed the following variables: $editAction,
+  $createAction and $destroyAction. These are passed in by default in the index
+  method of ModelAdminController. If you are overriding the index method in your
+  controller, ensure you pass `$this->getReportParams()` into the `render`
+  method of the report.

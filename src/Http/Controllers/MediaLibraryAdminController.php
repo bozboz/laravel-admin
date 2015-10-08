@@ -25,9 +25,13 @@ class MediaLibraryAdminController extends ModelAdminController
 		if (Request::wantsJson()) {
 			return $this->ajaxJSONData();
 		}
-		$report = new Report($this->decorator);
-		$report->overrideView('admin::media.overview');
-		return $report->render(array('controller' => get_class($this)));
+
+		return parent::index();
+	}
+
+	protected function getListingReport()
+	{
+		return new Report($this->decorator, 'admin::media.overview');
 	}
 
 	public function show($id)
