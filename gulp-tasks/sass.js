@@ -24,10 +24,6 @@ var gulp = require('gulp'),
  * Gulp Tasks
  */
 
-// function concatCSS(src) {
-
-// }
-
 function sassCompiler(src, filename) {
 	return gulp.src(src)
 		.pipe(concat(filename))
@@ -35,7 +31,7 @@ function sassCompiler(src, filename) {
 		.pipe(autoprefixer({ browsers: ['last 2 versions'] }))
 		.pipe(combineMQ())
 		.pipe(minifyCSS({ keepSpecialComments: 0 }))
-		.pipe(size())
+		.pipe(size({'title': filename}))
 		.pipe(gulp.dest('public/css'));
 }
 

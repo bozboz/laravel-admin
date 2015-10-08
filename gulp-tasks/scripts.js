@@ -4,7 +4,8 @@
 
 var gulp = require('gulp'),
 	concat = require('gulp-concat'),
-	minify = require('gulp-uglify');
+	minify = require('gulp-uglify'),
+	size = require('gulp-size');
 
 /**
  * Paths
@@ -58,6 +59,7 @@ function jsCompiler(files, filename) {
 	return gulp.src(files)
 		.pipe(concat(filename))
 		.pipe(minify())
+		.pipe(size({'title': filename}))
 		.pipe(gulp.dest('public/js'))
 }
 
