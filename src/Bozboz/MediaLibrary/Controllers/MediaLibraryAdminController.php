@@ -4,20 +4,20 @@ use Bozboz\Admin\Controllers\ModelAdminController;
 use Bozboz\Admin\Reports\Report;
 use Bozboz\MediaLibrary\Decorators\MediaAdminDecorator;
 use Bozboz\MediaLibrary\Models\Media;
-use View, Response, Request, Input, Redirect, Str, File;
+use Bozboz\MediaLibrary\Uploader;
+use View, Response, Request, Input, Redirect;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MediaLibraryAdminController extends ModelAdminController
 {
 	protected $createView = 'admin::media.upload';
-	protected $mimeTypeMapping = [
-		'image/*' => 'image',
-		'application/pdf' => 'pdf'
-	];
+	protected $uploader;
 
-	public function __construct(MediaAdminDecorator $media)
+	public function __construct(MediaAdminDecorator $media, Uploader $uploader)
 	{
+		$this->uploader = $uploader;
+
 		parent::__construct($media);
 	}
 
@@ -69,75 +69,26 @@ class MediaLibraryAdminController extends ModelAdminController
 
 		if (Input::hasFile('files')) {
 			foreach(Input::file('files') as $index => $file) {
-				$newMedia = $this->decorator->newModelInstance($file);
-
-				$newMedia->filename = $this->cleanFilename($file->getClientOriginalName());
-				$newMedia->type = $this->getTypeFromFile($file);
-
-				if (array_key_exists($index, $is_private) && ! empty($is_private[$index])) {
-					$uploadSuccess = $file->move(storage_path($newMedia->getDirectory()), $newMedia->filename);
-					$newMedia->private = true;
-				} else {
-					$uploadSuccess = $file->move(public_path($newMedia->getDirectory()), $newMedia->filename);
-				}
-
-				if (array_key_exists($index, $captions)) {
-					$newMedia->caption = $captions[$index];
-				}
-
-				if ($uploadSuccess) {
-					$newMedia->save();
-					$data[] = [
-						'url' => action(__CLASS__ . '@edit', $newMedia->id),
-						'fullsizeUrl' => asset($newMedia->getFilename()),
-						'thumbnailUrl' => asset($newMedia->getFilename('library')),
-						'name' => $newMedia->caption ?: $newMedia->filename,
-						'deleteUrl' => action(__CLASS__ . '@destroy', $newMedia->id),
-						'deleteType' => 'DELETE',
-						'id' => $newMedia->id,
-						'filename' => $newMedia->filename,
-						'type' => $newMedia->type,
-						'private' => $newMedia->private
-					];
-				}
+				$instance = $this->decorator->newModelInstance($file);
+				$instance->caption = array_key_exists($index, $captions) ? $captions[$index] : null;
+				$instance->private = array_key_exists($index, $is_private) && ! empty($is_private[$index]);
+				$this->uploader->upload($file, $instance);
+				$data[] = [
+					'url' => action(__CLASS__ . '@edit', $instance->id),
+					'fullsizeUrl' => asset($instance->getFilename()),
+					'thumbnailUrl' => asset($instance->getFilename('library')),
+					'name' => $instance->caption ?: $instance->filename,
+					'deleteUrl' => action(__CLASS__ . '@destroy', $instance->id),
+					'deleteType' => 'DELETE',
+					'id' => $instance->id,
+					'filename' => $instance->filename,
+					'type' => $instance->type,
+					'private' => $instance->private,
+				];
 			}
 		}
 
 		return Response::json(['files' => $data]);
-	}
-
-	/**
-	 * Return the sub-directory to save the uploaded file, based on the file's
-	 * mime type
-	 *
-	 * @param  Symfony\Component\HttpFoundation\File\UploadedFile  $file
-	 * @return string
-	 */
-	protected function getTypeFromFile(UploadedFile $file)
-	{
-		$mimeType = $file->getMimeType();
-
-		foreach($this->mimeTypeMapping as $regex => $directory) {
-			if (preg_match("#{$regex}#", $mimeType)) {
-				return $directory;
-			}
-		}
-
-		return 'misc';
-	}
-
-	/**
-	 * Clean uploaded filename string
-	 *
-	 * @param  string  $filename
-	 * @return string
-	 */
-	private function cleanFilename($filename)
-	{
-		$filenameParts = explode('.', $filename);
-		$filenameParts[0] = Str::slug($filenameParts[0]);
-
-		return implode('.', $filenameParts);
 	}
 
 	public function destroy($id)
