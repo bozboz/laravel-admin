@@ -1,3 +1,7 @@
+# Version 1.0.8 (2015-10-13)
+-   Add "external_link" attribute to Page's $fillable
+
+
 # Version 1.0.7 (2015-09-17)
 -   Fix issue with HTML::media macro when passing in Media instances
 -   Add `Media::getFilenameOrFallback` method
