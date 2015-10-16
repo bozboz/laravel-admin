@@ -1,5 +1,14 @@
+# Version 1.0.6 (2015-09-10)
+-   Insert full size image in to WYSIWYG on upload rather than thumb
+
+
+# Version 1.0.5 (2015-06-15)
+-   Access correct fallback image
+
+
 # Version 1.0.4 (2015-06-15)
--	Fix for placeholder when sorting in-line media
+-   Fix for placeholder when sorting in-line media
+
 
 # Version 1.0.3 (2015-06-12)
 -   Fix media browser, so inline-uploaded files are selected immediately
