@@ -3,20 +3,20 @@
 use Bozboz\Admin\Reports\Report;
 use Bozboz\Admin\Decorators\MediaAdminDecorator;
 use Bozboz\Admin\Models\Media;
-use View, Response, Request, Input;
+use Bozboz\Admin\Uploader;
+use View, Response, Request, Input, Redirect;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MediaLibraryAdminController extends ModelAdminController
 {
 	protected $createView = 'admin::media.upload';
-	protected $mimeTypeMapping = [
-		'image/*' => 'image',
-		'application/pdf' => 'pdf'
-	];
+	protected $uploader;
 
-	public function __construct(MediaAdminDecorator $media)
+	public function __construct(MediaAdminDecorator $media, Uploader $uploader)
 	{
+		$this->uploader = $uploader;
+
 		parent::__construct($media);
 	}
 
@@ -72,37 +72,22 @@ class MediaLibraryAdminController extends ModelAdminController
 
 		if (Input::hasFile('files')) {
 			foreach(Input::file('files') as $index => $file) {
-				$newMedia = $this->decorator->newModelInstance($file);
-
-				$newMedia->filename = $this->cleanFilename($file->getClientOriginalName());
-				$newMedia->type = $this->getTypeFromFile($file);
-
-				if (array_key_exists($index, $is_private) && ! empty($is_private[$index])) {
-					$uploadSuccess = $file->move(storage_path($newMedia->getDirectory()), $newMedia->filename);
-					$newMedia->private = true;
-				} else {
-					$uploadSuccess = $file->move(public_path($newMedia->getDirectory()), $newMedia->filename);
-				}
-
-				if (array_key_exists($index, $captions)) {
-					$newMedia->caption = $captions[$index];
-				}
-
-				if ($uploadSuccess) {
-					$newMedia->save();
-					$data[] = [
-						'url' => action($this->getActionName('edit'), $newMedia->id),
-						'fullsizeUrl' => asset($newMedia->getFilename()),
-						'thumbnailUrl' => asset($newMedia->getFilename('library')),
-						'name' => $newMedia->caption ?: $newMedia->filename,
-						'deleteUrl' => action($this->getActionName('destroy'), $newMedia->id),
-						'deleteType' => 'DELETE',
-						'id' => $newMedia->id,
-						'filename' => $newMedia->filename,
-						'type' => $newMedia->type,
-						'private' => $newMedia->private
-					];
-				}
+				$instance = $this->decorator->newModelInstance($file);
+				$instance->caption = array_key_exists($index, $captions) ? $captions[$index] : null;
+				$instance->private = array_key_exists($index, $is_private) && ! empty($is_private[$index]);
+				$this->uploader->upload($file, $instance);
+				$data[] = [
+					'url' => action(__CLASS__ . '@edit', $instance->id),
+					'fullsizeUrl' => asset($instance->getFilename()),
+					'thumbnailUrl' => asset($instance->getFilename('library')),
+					'name' => $instance->caption ?: $instance->filename,
+					'deleteUrl' => action(__CLASS__ . '@destroy', $instance->id),
+					'deleteType' => 'DELETE',
+					'id' => $instance->id,
+					'filename' => $instance->filename,
+					'type' => $instance->type,
+					'private' => $instance->private,
+				];
 			}
 		}
 
