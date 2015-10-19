@@ -58,9 +58,13 @@
 -   Prevent media with many relation from attempting to sync null relations
 
 
+## Version 1.0.8 (2015-10-13)
+-   Add "external_link" attribute to Page's $fillable
+
+
 ## Version 1.0.7 (2015-09-17)
 -   Fix issue with HTML::media macro when passing in Media instances
--	Add `Media::getFilenameOrFallback` method
+-   Add `Media::getFilenameOrFallback` method
 
 
 ## Version 1.0.6 (2015-09-10)

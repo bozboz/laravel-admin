@@ -23,7 +23,8 @@ class Page extends Base implements Sortable, MetaInterface
 		'parent_id',
 		'show_in_main_menu',
 		'show_in_footer_menu',
-		'status'
+		'status',
+		'external_link',
 	];
 
 	protected function getSlugSourceField()
