@@ -54,7 +54,7 @@ class BelongsToField extends Field
 	 */
 	protected function generateQueryBuilder()
 	{
-		$queryBuilder = $this->relation->getRelated()->orderBy('name');
+		$queryBuilder = $this->relation->getRelated();
 
 		call_user_func($this->callback, $queryBuilder);
 
