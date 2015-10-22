@@ -15,9 +15,8 @@ class PageAdminController extends ModelAdminController
 		parent::__construct($page);
 	}
 
-	public function index()
+	public function getListingReport()
 	{
-		$report = new NestedReport($this->decorator);
-		return $report->render(array('controller' => get_class($this)));
+		return new NestedReport($this->decorator);
 	}
 }
