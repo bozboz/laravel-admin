@@ -34,23 +34,23 @@ class MediaLibraryServiceProvider extends ServiceProvider {
 
 	/**
 	 * Render an HTML image tag based on Media of the first result of provided
-	 * query $builder object, or fall back to optional $default filename.
+	 * query $subject object, or fall back to optional $default filename.
 	 *
 	 * Example usage:
 	 *
 	 * HTML::media(Media::forModel($item)->first(), 'thumb', '/images/default.png', $item->name);
 	 *
-	 * @param  mixed  $builder
+	 * @param  mixed   $subject
 	 * @param  string  $size
 	 * @param  string  $default
 	 * @param  string  $alt
-	 * @param  array  $attributes
+	 * @param  array   $attributes
 	 * @return string
 	 */
 	public function mediaMacro($subject, $size = null, $default = null, $alt = null, $attributes = [])
 	{
-		// If subject is a builder or a collection, use the first item
-		if (method_exists($subject, 'first')) {
+		// If subject not null and not Media instance, get first instance
+		if (! is_null($subject) && ! $subject instanceof Media) {
 			$subject = $subject->first();
 		}
 
