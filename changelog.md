@@ -37,6 +37,10 @@
 -   Prevent media with many relation from attempting to sync null relations
 
 
+## Version 1.0.9 (2015-10-22)
+-   Fix media macro for case where $subject is null
+
+
 ## Version 1.0.8 (2015-10-13)
 -   Add "external_link" attribute to Page's $fillable
 
