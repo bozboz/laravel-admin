@@ -1,8 +1,9 @@
 <?php namespace Bozboz\Admin\Controllers;
 
-use Input, Redirect, URL, View;
+use App, Input, Redirect, URL, View;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Report;
+use Bozboz\Permissions\Facades\Gate;
 use Illuminate\Routing\Controller;
 
 abstract class ModelAdminController extends Controller
@@ -19,6 +20,8 @@ abstract class ModelAdminController extends Controller
 
 	public function index()
 	{
+		if ( ! $this->canView()) App::abort(403);
+
 		$report = $this->getListingReport();
 		$params = $this->getReportParams();
 
@@ -50,11 +53,16 @@ abstract class ModelAdminController extends Controller
 			'createAction' => "{$class}@create",
 			'editAction' => "{$class}@edit",
 			'destroyAction' => "{$class}@destroy",
+			'canCreate' => [$this, 'canCreate'],
+			'canEdit' => [$this, 'canEdit'],
+			'canDelete' => [$this, 'canDestroy'],
 		];
 	}
 
 	public function create()
 	{
+		if ( ! $this->canCreate()) App::abort(403);
+
 	    $instance = $this->decorator->newModelInstance();
 	    return $this->renderCreateFormFor($instance);
 	}
@@ -99,6 +107,8 @@ abstract class ModelAdminController extends Controller
 
 	public function edit($id)
 	{
+		if ( ! $this->canEdit($id)) App::abort(403);
+
 		$instance = $this->decorator->findInstanceOrFail($id);
 		$this->decorator->injectRelations($instance);
 		$fields = $this->decorator->buildFields($instance);
@@ -139,6 +149,8 @@ abstract class ModelAdminController extends Controller
 
 	public function destroy($id)
 	{
+		if ( ! $this->canDestroy($id)) App::abort(403);
+
 		$instance = $this->decorator->findInstanceOrFail($id);
 
 		$instance->delete();
@@ -193,5 +205,30 @@ abstract class ModelAdminController extends Controller
 	protected function getListingUrl($instance)
 	{
 		return URL::action(get_class($this) . '@index');
+	}
+
+	public function canView()
+	{
+		return $this->isAllowed('view_anything');
+	}
+
+	public function canCreate()
+	{
+		return $this->isAllowed('create_anything');
+	}
+
+	public function canEdit($id)
+	{
+		return $this->isAllowed('edit_anything');
+	}
+
+	public function canDestroy($id)
+	{
+		return $this->isAllowed('delete_anything');
+	}
+
+	protected function isAllowed($action)
+	{
+		return Gate::allows($action);
 	}
 }

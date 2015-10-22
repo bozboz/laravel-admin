@@ -2,6 +2,7 @@
 
 use Bozboz\Admin\Components\Menu;
 use Bozboz\Admin\Models\Page;
+use Bozboz\Permissions\Facades\Gate;
 
 class PageEventHandler {
 
@@ -10,7 +11,9 @@ class PageEventHandler {
      */
     public function onRenderMenu(Menu $menu)
     {
-        $menu['Pages'] = route('admin.pages.index');
+        if (Gate::allows('view_anything')) {
+            $menu['Pages'] = route('admin.pages.index');
+        }
     }
 
     public function saving($page)

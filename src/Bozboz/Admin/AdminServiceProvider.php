@@ -8,7 +8,7 @@ class AdminServiceProvider extends ServiceProvider
 {
 	public function register()
 	{
-		$this->registerEvents();
+		//
 	}
 
 	public function boot()
@@ -18,10 +18,11 @@ class AdminServiceProvider extends ServiceProvider
 		require __DIR__ . '/../../routes.php';
 		require __DIR__ . '/../../filters.php';
 		require __DIR__ . '/../../errors.php';
-	}
 
-	protected function registerEvents()
-	{
-		Event::subscribe(new Subscribers\PageEventHandler);
+		$permissions = $this->app['permission.handler'];
+
+		require __DIR__ . '/../../permissions.php';
+
+		$this->app['events']->subscribe(new Subscribers\PageEventHandler);
 	}
 }

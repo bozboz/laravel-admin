@@ -23,7 +23,9 @@ class MediaLibraryServiceProvider extends ServiceProvider {
 
 		$this->app['events']->listen('admin.renderMenu', function($menu)
 		{
-			$menu['Media Library'] = route('admin.media.index');
+			if ($this->app['permission.checker']->allows('view_anything')) {
+				$menu['Media Library'] = route('admin.media.index');
+			}
 		});
 	}
 
