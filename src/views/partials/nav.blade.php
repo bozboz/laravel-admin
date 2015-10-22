@@ -42,13 +42,13 @@
 							Users
 						</a>
 					</li>
-				@endif
 					<li class="{{ $menu->activeClassForPartialUrl(URL::route('admin.permissions.index')) }}">
 						<a href="{{ URL::route('admin.permissions.index') }}">
 							<i class="fa fa-cogs"></i>
 							Permissions
 						</a>
 					</li>
+				@endif
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
