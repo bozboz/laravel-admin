@@ -3,7 +3,7 @@
 use App, Input, Redirect, URL, View;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Report;
-use Bozboz\Permissions\Facades\Gate;
+use Bozboz\Permissions\RuleStack;
 use Illuminate\Routing\Controller;
 
 abstract class ModelAdminController extends Controller
@@ -207,28 +207,42 @@ abstract class ModelAdminController extends Controller
 		return URL::action(get_class($this) . '@index');
 	}
 
-	public function canView()
+	final public function canView()
 	{
-		return $this->isAllowed('view_anything');
+		return $this->isAllowed('view');
 	}
 
-	public function canCreate()
+	final public function canCreate()
 	{
-		return $this->isAllowed('create_anything');
+		return $this->isAllowed('create');
 	}
 
-	public function canEdit($id)
+	final public function canEdit($id)
 	{
-		return $this->isAllowed('edit_anything');
+		return $this->isAllowed('edit', $id);
 	}
 
-	public function canDestroy($id)
+	final public function canDestroy($id)
 	{
-		return $this->isAllowed('delete_anything');
+		return $this->isAllowed('delete', $id);
 	}
 
-	protected function isAllowed($action)
+	private function isAllowed($action, $id = null)
 	{
-		return Gate::allows($action);
+		$stack = new RuleStack;
+
+		$stack->add($action . '_anything');
+
+		$this->{$action . 'Permissions'}($stack, $id);
+
+		return $stack->isAllowed();
 	}
+
+	protected function viewPermissions($stack) { }
+
+	protected function createPermissions($stack) { }
+
+	protected function editPermissions($stack, $id) { }
+
+	protected function deletePermissions($stack, $id) { }
 }

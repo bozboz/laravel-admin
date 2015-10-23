@@ -99,11 +99,9 @@ class User extends Base implements UserInterface, RemindableInterface, Permissio
 		return 'remember_token';
 	}
 
-	public function canPerform($action, $param = null)
+	public function getPermissions()
 	{
-		return $this->permissions->filter(function($item) use ($action, $param) {
-			return $item->isValid($action, $param);
-		})->count() > 0;
+		return $this->permissions;
 	}
 
 	public function permissions()

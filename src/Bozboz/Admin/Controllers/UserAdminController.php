@@ -10,8 +10,24 @@ class UserAdminController extends ModelAdminController
 		parent::__construct($user);
 	}
 
-	public function canEdit($id)
+	public function viewPermissions($stack)
 	{
-		return Gate::allows('edit_profile', (int)$id) || parent::canEdit($id);
+		$stack->add('view_users');
+	}
+
+	public function createPermissions($stack)
+	{
+		$stack->add('create_user');
+	}
+
+	public function editPermissions($stack, $id)
+	{
+		$stack->add('edit_user', (int)$id);
+		$stack->add('edit_profile', (int)$id);
+	}
+
+	public function deletePermissions($stack, $id)
+	{
+		$stack->add('delete_user', (int)$id);
 	}
 }

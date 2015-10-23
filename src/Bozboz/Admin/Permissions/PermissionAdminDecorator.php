@@ -24,7 +24,13 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 
 	public function getLabel($instance)
 	{
-		return $instance->label();
+		$label = $instance->action;
+
+		if ($instance->param) {
+			$label .= ' [' . $this->param . ']';
+		}
+
+		return $label;
 	}
 
 	protected function getActions()
