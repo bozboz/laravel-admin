@@ -2,7 +2,7 @@
 
 Route::filter('auth', function()
 {
-	if (Auth::check() && ! Gate::allows('login')) {
+	if (Auth::check() && ! Gate::allows('admin_login')) {
 		Auth::logout();
 	}
 

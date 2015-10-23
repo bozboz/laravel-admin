@@ -2,7 +2,7 @@
 
 $permissions->define([
 
-	'login'          => 'Bozboz\Permissions\Rules\GlobalRule',
+	'admin_login'     => 'Bozboz\Permissions\Rules\GlobalRule',
 
 	'edit_profile'    => 'Bozboz\Admin\Permissions\UserRule',
 

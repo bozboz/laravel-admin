@@ -22,7 +22,7 @@ class AdminController extends \BaseController
 	{
 		$input = Input::only('email', 'password');
 
-		if (Auth::attempt($input) && Gate::allows('login')) {
+		if (Auth::attempt($input) && Gate::allows('admin_login')) {
 			return Redirect::intended('admin');
 		} else {
 			Auth::logout();
