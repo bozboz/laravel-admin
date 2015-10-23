@@ -11,7 +11,7 @@ class PageEventHandler {
      */
     public function onRenderMenu(Menu $menu)
     {
-        if (Gate::allows('view_anything')) {
+        if ($menu->gate('view_pages')) {
             $menu['Pages'] = route('admin.pages.index');
         }
     }

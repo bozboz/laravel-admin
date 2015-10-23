@@ -1,5 +1,6 @@
 <?php namespace Bozboz\Admin\Components;
 
+use Bozboz\Permissions\RuleStack;
 use Illuminate\Support\Fluent;
 use Illuminate\Http\Request;
 
@@ -96,5 +97,10 @@ class Menu extends Fluent
 		$pattern = sprintf($pattern, preg_quote($url, '/'));
 
 		return (bool) preg_match($pattern, $this->request->url());
+	}
+
+	public function gate($rule)
+	{
+		return RuleStack::with($rule)->then('view_anything')->isAllowed();
 	}
 }

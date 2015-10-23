@@ -35,7 +35,7 @@
 						</ul>
 					</li>
 				@endforeach
-				@if (Gate::allows('view_anything'))
+				@if ($menu->gate('view_users'))
 					<li class="{{ $menu->activeClassForPartialUrl(URL::to('admin/users')) }}">
 						<a href="{{URL::to('admin/users')}}">
 							<i class="fa fa-user"></i>
@@ -54,7 +54,7 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i>Logged in as {{ $user->first_name }} <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						@if (Gate::allows('edit_profile', $user->id))
+						@if (Bozboz\Permissions\RuleStack::with('edit_profile', $user->id)->then('edit_anything')->isAllowed())
 							<li><a href="/admin/users/{{ $user->id }}/edit"><i class="fa fa-wrench"></i> Edit Profile</a></li>
 						@endif
 						<li><a href="/"><i class="fa fa-desktop"></i> View Website</a></li>
