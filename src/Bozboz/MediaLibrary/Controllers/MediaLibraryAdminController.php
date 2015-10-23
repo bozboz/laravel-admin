@@ -116,7 +116,7 @@ class MediaLibraryAdminController extends ModelAdminController
 		$stack->add('view_media');
 	}
 
-	public function createPermissions($stack, $id)
+	public function createPermissions($stack)
 	{
 		$stack->add('create_media');
 	}
