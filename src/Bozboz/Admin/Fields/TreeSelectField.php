@@ -51,10 +51,7 @@ class TreeSelectField extends SelectField
 		$parentField = $this->get('parent_field', 'parent_id');
 
 		foreach($input as $cat) {
-			$key = $cat->$parentField;
-			if (is_null($key)) {
-				throw new InvalidArgumentException('"' . $parentField . '" field is not set on this instance');
-			}
+			$key = $cat->$parentField ?: 0;
 			$tree[$key][] = $cat;
 		}
 
