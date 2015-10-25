@@ -1,3 +1,6 @@
+# Version 1.0.10 (2015-10-25)
+-   Fix handling of nulled `parent_id` for Baum models
+
 # Version 1.0.9 (2015-10-22)
 -   Fix media macro for case where $subject is null
 
