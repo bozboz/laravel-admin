@@ -13,6 +13,7 @@ class NestedReport extends Report
 		$tree = array();
 
 		foreach($this->rows as $inst) {
+			$inst->parent_id = $inst->parent_id ?: 0;
 			$this->tree[$inst->parent_id][] = $this->getRowFromInstance($inst);
 		}
 
