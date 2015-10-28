@@ -9,10 +9,6 @@ use Bozboz\Permissions\Permission as BasePermission;
 
 class Permission extends BasePermission implements BaseInterface
 {
-	protected $nullable = [
-		'param'
-	];
-
 	use SanitisesInputTrait;
 
 	public function getValidator()
