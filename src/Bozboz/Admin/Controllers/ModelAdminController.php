@@ -207,22 +207,22 @@ abstract class ModelAdminController extends Controller
 		return URL::action(get_class($this) . '@index');
 	}
 
-	final public function canView()
+	public function canView()
 	{
 		return $this->isAllowed('view');
 	}
 
-	final public function canCreate()
+	public function canCreate()
 	{
 		return $this->isAllowed('create');
 	}
 
-	final public function canEdit($id)
+	public function canEdit($id)
 	{
 		return $this->isAllowed('edit', $id);
 	}
 
-	final public function canDestroy($id)
+	public function canDestroy($id)
 	{
 		return $this->isAllowed('delete', $id);
 	}
