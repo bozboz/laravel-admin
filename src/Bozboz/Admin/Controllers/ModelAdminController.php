@@ -107,7 +107,7 @@ abstract class ModelAdminController extends Controller
 
 	public function edit($id)
 	{
-		if ( ! $this->canEdit($id)) App::abort(403);
+		if ( ! $this->canEdit((int)$id)) App::abort(403);
 
 		$instance = $this->decorator->findInstanceOrFail($id);
 		$this->decorator->injectRelations($instance);
@@ -149,7 +149,7 @@ abstract class ModelAdminController extends Controller
 
 	public function destroy($id)
 	{
-		if ( ! $this->canDestroy($id)) App::abort(403);
+		if ( ! $this->canDestroy((int)$id)) App::abort(403);
 
 		$instance = $this->decorator->findInstanceOrFail($id);
 
