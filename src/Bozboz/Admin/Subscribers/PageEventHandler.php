@@ -2,7 +2,6 @@
 
 use Bozboz\Admin\Components\Menu;
 use Bozboz\Admin\Models\Page;
-use Bozboz\Permissions\Facades\Gate;
 
 class PageEventHandler {
 
