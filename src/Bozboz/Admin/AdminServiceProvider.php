@@ -1,18 +1,20 @@
 <?php namespace Bozboz\Admin;
 
-use Illuminate\Support\ServiceProvider;
-use View;
-use Event;
+use Bozboz\Permissions\PermissionServiceProvider;
 
-class AdminServiceProvider extends ServiceProvider
+class AdminServiceProvider extends PermissionServiceProvider
 {
 	public function register()
 	{
-		//
+		// Call the PermissionServiceProvider's register method
+		parent::register();
 	}
 
 	public function boot()
 	{
+		// Call the PermissionServiceProvider's boot method
+		parent::boot();
+
 		$this->package('bozboz/admin');
 
 		require __DIR__ . '/../../routes.php';
