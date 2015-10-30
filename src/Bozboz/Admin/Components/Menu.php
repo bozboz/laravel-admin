@@ -99,6 +99,13 @@ class Menu extends Fluent
 		return (bool) preg_match($pattern, $this->request->url());
 	}
 
+	/**
+	 * Check permissions for a particular rule, or fallback to catchall
+	 * "view_anything" rule
+	 *
+	 * @param  string  $rule
+	 * @return boolean
+	 */
 	public function gate($rule)
 	{
 		return RuleStack::with($rule)->then('view_anything')->isAllowed();
