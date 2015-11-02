@@ -11,7 +11,7 @@
 		</div>
 			@if(Session::has('error'))
 				<div class="alert alert-danger">
-					<p><b>Email &amp; Password combination not recognised</b></p>
+					<p><b>Your email &amp; password combination was not recognised, or you are not authorised to login.</b></p>
 					<p>Please try again or <a href="/admin/password/remind">reset your password</a></p>
 				</div>
 			@elseif(Session::has('message'))

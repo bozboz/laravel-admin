@@ -103,9 +103,6 @@ class Report implements BaseInterface
 			'heading' => $this->decorator->getHeading(true),
 			'modelName' => $this->decorator->getHeading(false),
 			'identifier' => $identifier,
-			'canCreate' => true,
-			'canEdit' => true,
-			'canDelete' => true
 		];
 
 		return View::make($this->view, $params);

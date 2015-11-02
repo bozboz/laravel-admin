@@ -14,6 +14,8 @@ Route::group(array('namespace' => 'Bozboz\Admin\Controllers', 'prefix' => 'admin
 		Route::resource('pages', 'PageAdminController', array('except' => array('show')));
 		Route::resource('users', 'UserAdminController', array('except' => array('show')));
 
+		Route::resource('permissions', 'PermissionAdminController', array('except' => array('show')));
+
 		Route::get('/', 'AdminController@getIndex');
 		Route::get('logout', 'AdminController@getLogout');
 

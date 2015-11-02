@@ -1,8 +1,9 @@
 <?php namespace Bozboz\Admin\Controllers;
 
-use Input, Redirect, URL, View;
+use App, Input, Redirect, URL, View;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Report;
+use Bozboz\Permissions\RuleStack;
 use Illuminate\Routing\Controller;
 
 abstract class ModelAdminController extends Controller
@@ -19,6 +20,8 @@ abstract class ModelAdminController extends Controller
 
 	public function index()
 	{
+		if ( ! $this->canView()) App::abort(403);
+
 		$report = $this->getListingReport();
 		$params = $this->getReportParams();
 
@@ -50,11 +53,16 @@ abstract class ModelAdminController extends Controller
 			'createAction' => "{$class}@create",
 			'editAction' => "{$class}@edit",
 			'destroyAction' => "{$class}@destroy",
+			'canCreate' => [$this, 'canCreate'],
+			'canEdit' => [$this, 'canEdit'],
+			'canDelete' => [$this, 'canDestroy'],
 		];
 	}
 
 	public function create()
 	{
+		if ( ! $this->canCreate()) App::abort(403);
+
 	    $instance = $this->decorator->newModelInstance();
 	    return $this->renderCreateFormFor($instance);
 	}
@@ -99,6 +107,8 @@ abstract class ModelAdminController extends Controller
 
 	public function edit($id)
 	{
+		if ( ! $this->canEdit((int)$id)) App::abort(403);
+
 		$instance = $this->decorator->findInstanceOrFail($id);
 		$this->decorator->injectRelations($instance);
 		$fields = $this->decorator->buildFields($instance);
@@ -139,6 +149,8 @@ abstract class ModelAdminController extends Controller
 
 	public function destroy($id)
 	{
+		if ( ! $this->canDestroy((int)$id)) App::abort(403);
+
 		$instance = $this->decorator->findInstanceOrFail($id);
 
 		$instance->delete();
@@ -152,7 +164,10 @@ abstract class ModelAdminController extends Controller
 	protected function reEdit($instance)
 	{
 		if (Input::has('after_save') && Input::get('after_save') === 'continue') {
-			return Redirect::action(get_class($this) . '@edit', $instance->getKey());
+			$reportParams = $this->getReportParams();
+			if (array_key_exists('editAction', $reportParams)) {
+				return Redirect::action($reportParams['editAction'], $instance->getKey());
+			}
 		}
 	}
 
@@ -194,4 +209,43 @@ abstract class ModelAdminController extends Controller
 	{
 		return URL::action(get_class($this) . '@index');
 	}
+
+	public function canView()
+	{
+		return $this->isAllowed('view');
+	}
+
+	public function canCreate()
+	{
+		return $this->isAllowed('create');
+	}
+
+	public function canEdit($id)
+	{
+		return $this->isAllowed('edit', $id);
+	}
+
+	public function canDestroy($id)
+	{
+		return $this->isAllowed('delete', $id);
+	}
+
+	private function isAllowed($action, $id = null)
+	{
+		$stack = new RuleStack;
+
+		$stack->add($action . '_anything');
+
+		$this->{$action . 'Permissions'}($stack, $id);
+
+		return $stack->isAllowed();
+	}
+
+	protected function viewPermissions($stack) { }
+
+	protected function createPermissions($stack) { }
+
+	protected function editPermissions($stack, $id) { }
+
+	protected function deletePermissions($stack, $id) { }
 }

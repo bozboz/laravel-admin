@@ -4,8 +4,10 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Hash;
 use Bozboz\Admin\Services\Validators\UserValidator;
+use Bozboz\Permissions\UserInterface as Permissions;
+use Bozboz\Permissions\Permission;
 
-class User extends Base implements UserInterface, RemindableInterface
+class User extends Base implements UserInterface, RemindableInterface, Permissions
 {
 	/**
 	 * The Model validator
@@ -97,4 +99,28 @@ class User extends Base implements UserInterface, RemindableInterface
 		return 'remember_token';
 	}
 
+	public function getPermissions()
+	{
+		return $this->permissions;
+	}
+
+	public function permissions()
+	{
+		return $this->hasMany(Permission::class, 'user_id');
+	}
+
+	public function grantPermission($action, $param = null)
+	{
+		$this->permissions()->create(compact('action', 'param'));
+	}
+
+	public function grantWildcard()
+	{
+		$this->grantPermission(Permission::WILDCARD);
+	}
+
+	public function revokePermission($action, $param = null)
+	{
+		$this->permissions()->whereAction($action)->whereParam($param)->delete();
+	}
 }

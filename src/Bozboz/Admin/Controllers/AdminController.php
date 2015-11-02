@@ -2,6 +2,7 @@
 
 use Redirect, Auth, View, Input;
 use Bozboz\Admin\Models\User;
+use Bozboz\Permissions\Facades\Gate;
 
 class AdminController extends \BaseController
 {
@@ -20,11 +21,11 @@ class AdminController extends \BaseController
 	public function postLogin()
 	{
 		$input = Input::only('email', 'password');
-		$input['is_admin'] = true;
 
-		if (Auth::attempt($input)) {
+		if (Auth::attempt($input) && Gate::allows('admin_login')) {
 			return Redirect::intended('admin');
 		} else {
+			Auth::logout();
 			return Redirect::back()->withInput()->with('error', true);
 		}
 	}
