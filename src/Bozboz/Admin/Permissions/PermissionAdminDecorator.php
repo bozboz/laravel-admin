@@ -27,7 +27,7 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 		$label = $instance->action;
 
 		if ($instance->param) {
-			$label .= ' [' . $this->param . ']';
+			$label .= ' [' . $instance->param . ']';
 		}
 
 		return $label;
