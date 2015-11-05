@@ -44,7 +44,8 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 	{
 		return [
 			new SelectField('action', [
-				'options' => $this->getActions()
+				'options' => $this->getActions(),
+				'class' => 'select2'
 			]),
 			new TextField('param'),
 			new BelongsToField(app('Bozboz\Admin\Decorators\UserAdminDecorator'), $instance->user()),
