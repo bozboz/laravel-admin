@@ -111,7 +111,11 @@ class User extends Base implements UserInterface, RemindableInterface, Permissio
 
 	public function grantPermission($action, $param = null)
 	{
-		$this->permissions()->create(compact('action', 'param'));
+		$attributes = compact('action', 'param');
+
+		if ($this->permissions()->where($attributes)->count() === 0) {
+			$this->permissions()->create($attributes);
+		}
 	}
 
 	public function grantWildcard()
