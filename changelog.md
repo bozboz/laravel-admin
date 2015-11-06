@@ -9,6 +9,8 @@
 -   View can now be overridden in constructor of Report class
 -   Add items per page select to listing filters
 -   Add nicer error page when you edit a resource that doesn't exist
+-   Add basic permissions (bozboz/permissions package)
+-   Ability to edit currently authenticated user's password
 
 ### Changed
 -   $editRules and passesEdit() method on Validator changed to $updateRules and passesUpdate()
@@ -20,6 +22,7 @@
 
 ### Fixed
 -   CSVReport can now handle large data sets without running out of memory
+
 
 ## Version 1.1.0 (FUTURE)
 
