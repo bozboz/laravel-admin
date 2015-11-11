@@ -13,7 +13,8 @@ use Bozboz\Permissions\Permission;
 
 class User extends Base implements AuthenticatableContract,
                                    AuthorizableContract,
-                                   CanResetPasswordContract
+                                   CanResetPasswordContract,
+                                   Permissions
 {
     use Authenticatable, Authorizable, CanResetPassword;
 
