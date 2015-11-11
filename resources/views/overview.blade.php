@@ -44,15 +44,15 @@
 				<div class="faux-cell">{!! $value !!}</div>
 			@endforeach
 				<div class="no-wrap faux-cell">
-					@if ($canEdit)
+					@if ($canEdit($row->getId()))
 						<a href="{{ URL::action($editAction, [$row->getId()]) }}" class="btn btn-info btn-sm" type="submit">
 							<i class="fa fa-pencil"></i>
 							Edit
 						</a>
 					@endif
 
-					@if ($canDelete)
-						{!! Form::open(['class' => 'inline-form', 'action' => [ $destroyAction, $row->getId() ], 'method' => 'DELETE']) !!}
+					@if ($canDelete($row->getId()))
+						{{ Form::open(['class' => 'inline-form', 'action' => [ $destroyAction, $row->getId() ], 'method' => 'DELETE']) }}
 							<button class="btn btn-danger btn-sm" data-warn="true" type="submit"><i class="fa fa-minus-square"></i> Delete</button>
 						{!! Form::close() !!}
 					@endif

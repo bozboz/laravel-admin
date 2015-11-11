@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Bozboz\Permissions\UserInterface as Permissions;
+use Bozboz\Permissions\Permission;
 
 class User extends Base implements AuthenticatableContract,
                                    AuthorizableContract,
@@ -105,4 +107,32 @@ class User extends Base implements AuthenticatableContract,
 		return 'remember_token';
 	}
 
+	public function getPermissions()
+	{
+		return $this->permissions;
+	}
+
+	public function permissions()
+	{
+		return $this->hasMany(Permission::class, 'user_id');
+	}
+
+	public function grantPermission($action, $param = null)
+	{
+		$attributes = compact('action', 'param');
+
+		if ($this->permissions()->where($attributes)->count() === 0) {
+			$this->permissions()->create($attributes);
+		}
+	}
+
+	public function grantWildcard()
+	{
+		$this->grantPermission(Permission::WILDCARD);
+	}
+
+	public function revokePermission($action, $param = null)
+	{
+		$this->permissions()->whereAction($action)->whereParam($param)->delete();
+	}
 }

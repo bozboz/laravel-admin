@@ -1,8 +1,10 @@
 <?php
 
+use Bozboz\Permissions\Facades\Gate;
+
 Route::filter('auth', function()
 {
-	if (Auth::check() && !Auth::user()->is_admin) {
+	if (Auth::check() && ! Gate::allows('admin_login')) {
 		Auth::logout();
 	}
 

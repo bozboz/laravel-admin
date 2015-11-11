@@ -3,17 +3,21 @@
 namespace Bozboz\Admin\Providers;
 
 use Bozboz\Admin\Subscribers\PageEventHandler;
-use Illuminate\Support\ServiceProvider;
+use Bozboz\Permissions\PermissionServiceProvider;
 
-class AdminServiceProvider extends ServiceProvider
+class AdminServiceProvider extends PermissionServiceProvider
 {
 	public function register()
 	{
-		//
+		// Call the PermissionServiceProvider's register method
+		parent::register();
 	}
 
 	public function boot()
 	{
+		// Call the PermissionServiceProvider's boot method
+		parent::boot();
+
 		$packageRoot = __DIR__ . '/../../';
 
 		$this->loadViewsFrom($packageRoot . '/resources/views', 'admin');
@@ -34,6 +38,10 @@ class AdminServiceProvider extends ServiceProvider
 			require $packageRoot . '/src/Http/routes.php';
 			require $packageRoot . '/src/Http/filters.php';
 		}
+
+		$permissions = $this->app['permission.handler'];
+
+		require __DIR__ . '/../../permissions.php';
 
 		$this->app['events']->subscribe(new PageEventHandler);
 

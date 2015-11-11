@@ -13,6 +13,8 @@ Route::group(array('namespace' => 'Bozboz\Admin\Http\Controllers', 'prefix' => '
 		Route::resource('users', 'UserAdminController', array('except' => array('show')));
 		Route::resource('media', 'MediaLibraryAdminController');
 
+		Route::resource('permissions', 'PermissionAdminController', array('except' => array('show')));
+
 		Route::get('/', 'AdminController@getIndex');
 		Route::get('logout', 'AdminController@getLogout');
 

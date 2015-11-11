@@ -2,6 +2,9 @@
 
 ## Version 2.0.0 (FUTURE)
 
+### Added
+-   Support for Laravel 5
+
 ### Changed
 -   Remove dependancy on Base model and replace it with BaseInterface
 -   Consolidate migrations
@@ -12,6 +15,7 @@
 -   Prevent media with many relation from attempting to sync null relations
 
 ### Removed
+-   Support for Laravel 4
 -   Remove migrations directory from Composer autoload
 -   Remove Reports\Row::getModel method
 -   Remove Decorators\ModelAdminDecorator::getModel method
@@ -28,6 +32,8 @@
 -   View can now be overridden in constructor of Report class
 -   Add items per page select to listing filters
 -   Add nicer error page when you edit a resource that doesn't exist
+-   Add basic permissions (bozboz/permissions package)
+-   Ability to edit currently authenticated user's password
 
 ### Changed
 -   $editRules and passesEdit() method on Validator changed to $updateRules and passesUpdate()

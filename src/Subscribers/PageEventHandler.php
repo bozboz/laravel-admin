@@ -10,7 +10,9 @@ class PageEventHandler {
      */
     public function onRenderMenu(Menu $menu)
     {
-        $menu['Pages'] = route('admin.pages.index');
+        if ($menu->gate('view_pages')) {
+            $menu['Pages'] = route('admin.pages.index');
+        }
     }
 
     public function saving($page)
