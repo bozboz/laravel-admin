@@ -41,7 +41,7 @@ class AdminServiceProvider extends PermissionServiceProvider
 
 		$permissions = $this->app['permission.handler'];
 
-		require __DIR__ . '/../../permissions.php';
+		require __DIR__ . '/../permissions.php';
 
 		$this->app['events']->subscribe(new PageEventHandler);
 
