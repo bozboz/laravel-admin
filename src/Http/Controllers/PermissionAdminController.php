@@ -1,6 +1,6 @@
 <?php
 
-namespace Bozboz\Admin\Controllers;
+namespace Bozboz\Admin\Http\Controllers;
 
 use Bozboz\Admin\Permissions\PermissionAdminDecorator;
 use Illuminate\Support\Facades\View;
