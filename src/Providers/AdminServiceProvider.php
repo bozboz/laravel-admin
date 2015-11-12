@@ -3,7 +3,7 @@
 namespace Bozboz\Admin\Providers;
 
 use Bozboz\Admin\Subscribers\PageEventHandler;
-use Bozboz\Permissions\PermissionServiceProvider;
+use Bozboz\Permissions\Providers\PermissionServiceProvider;
 
 class AdminServiceProvider extends PermissionServiceProvider
 {
