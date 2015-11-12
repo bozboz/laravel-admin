@@ -1,1 +1,1 @@
-<img class="client-logo" src="/packages/bozboz/admin/images/logo.png">
+<img class="client-logo" src="/vendor/admin/images/logo.png">
