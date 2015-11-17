@@ -1,6 +1,6 @@
 <?php
 
-namespace Bozboz\Amdin\Models;
+namespace Bozboz\Admin\Models;
 
 use Bozboz\Admin\Exceptions\UploadException;
 use Bozboz\Admin\Models\Media;

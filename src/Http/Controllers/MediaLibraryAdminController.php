@@ -3,7 +3,7 @@
 use Bozboz\Admin\Reports\Report;
 use Bozboz\Admin\Decorators\MediaAdminDecorator;
 use Bozboz\Admin\Models\Media;
-use Bozboz\Admin\Uploader;
+use Bozboz\Admin\Models\Uploader;
 use View, Response, Request, Input, Redirect;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
