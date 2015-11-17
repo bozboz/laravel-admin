@@ -11,11 +11,6 @@ $permissions->define([
 	'edit_anything'   => 'Bozboz\Permissions\Rules\Rule',
 	'delete_anything' => 'Bozboz\Permissions\Rules\Rule',
 
-	'view_pages'  => 'Bozboz\Permissions\Rules\GlobalRule',
-	'create_page' => 'Bozboz\Permissions\Rules\GlobalRule',
-	'edit_page'   => 'Bozboz\Permissions\Rules\Rule',
-	'delete_page' => 'Bozboz\Permissions\Rules\Rule',
-
 	'view_users'   => 'Bozboz\Permissions\Rules\GlobalRule',
 	'create_user'  => 'Bozboz\Permissions\Rules\GlobalRule',
 	'edit_user'    => 'Bozboz\Permissions\Rules\Rule',
