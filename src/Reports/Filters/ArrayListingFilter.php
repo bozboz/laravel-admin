@@ -21,7 +21,9 @@ class ArrayListingFilter extends ListingFilter
 	{
 		return function($builder, $value) use ($field)
 		{
-			$builder->where($field, $value);
+			if ($value) {
+				$builder->where($field, $value);
+			}
 		};
 	}
 
