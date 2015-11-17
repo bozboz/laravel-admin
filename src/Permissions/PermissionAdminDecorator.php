@@ -72,7 +72,7 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 	public function getListingFilters()
 	{
 		return [
-			new ArrayListingFilter('user', ['' => 'All'] + $this->model->user()->getModel()->lists('first_name', 'id'), 'user_id')
+			new ArrayListingFilter('user', $this->model->user()->getModel()->lists('first_name', 'id')->prepend('All', ''), 'user_id')
 		];
 	}
 }
