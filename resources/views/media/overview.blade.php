@@ -6,10 +6,10 @@
 		<li class="masonry-item">
 			@if ($canEdit($row->getId()))
 				<a href="{{ URL::action($editAction, array($row->getId())) }}">
-					{{ $row->getColumn('image') }}
+					{!! $row->getColumn('image') !!}
 				</a>
 			@else
-				{{ $row->getColumn('image') }}
+				{!! $row->getColumn('image') !!}
 			@endif
 			<div class="icons">
 				<p>{{ $row->getColumn('caption') }}</p>

@@ -19,20 +19,20 @@
 			<div class="col-lg-7">
 				<!-- The fileinput-button span is used to style the file input field as button -->
 				<span class="btn btn-success fileinput-button">
-					<i class="glyphicon glyphicon-plus"></i>
+					<i class="fa fa-plus"></i>
 					<span>Add files...</span>
 					<input type="file" name="files[]" multiple>
 				</span>
 				<button type="submit" class="btn btn-primary start">
-					<i class="glyphicon glyphicon-upload"></i>
+					<i class="fa fa-upload"></i>
 					<span>Start upload</span>
 				</button>
 				<button type="reset" class="btn btn-warning cancel">
-					<i class="glyphicon glyphicon-ban-circle"></i>
+					<i class="fa fa-times"></i>
 					<span>Cancel upload</span>
 				</button>
 				<button type="button" class="btn btn-danger delete">
-					<i class="glyphicon glyphicon-trash"></i>
+					<i class="fa fa-trash"></i>
 					<span>Delete</span>
 				</button>
 				<input type="checkbox" class="toggle">
@@ -82,13 +82,13 @@
 		<td>
 			{% if (!i && !o.options.autoUpload) { %}
 				<button class="btn btn-primary start" disabled>
-					<i class="glyphicon glyphicon-upload"></i>
+					<i class="fa fa-upload"></i>
 					<span>Start</span>
 				</button>
 			{% } %}
 			{% if (!i) { %}
 				<button class="btn btn-warning cancel">
-					<i class="glyphicon glyphicon-ban-circle"></i>
+					<i class="fa fa-times"></i>
 					<span>Cancel</span>
 				</button>
 			{% } %}
@@ -132,13 +132,13 @@
 		<td>
 			{% if (file.deleteUrl) { %}
 				<button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-					<i class="glyphicon glyphicon-trash"></i>
+					<i class="fa fa-trash"></i>
 					<span>Delete</span>
 				</button>
 				<input type="checkbox" name="delete" value="1" class="toggle">
 			{% } else { %}
 				<button class="btn btn-warning cancel">
-					<i class="glyphicon glyphicon-ban-circle"></i>
+					<i class="fa fa-times"></i>
 					<span>Cancel</span>
 				</button>
 			{% } %}
@@ -146,7 +146,6 @@
 	</tr>
 {% } %}
 </script>
-<script src="{{ asset('vendor/admin/js/upload-ui.min.js') }}"></script>
 <script>
 	$(function () {
 		'use strict';
