@@ -293,7 +293,7 @@ abstract class ModelAdminDecorator
 					return $model->firstOrCreate([
 						$attribute => $value
 					])->id;
-				}, $data);
+				}, is_array($data) ? $data : []);
 
 				$relation->sync($toSync);
 			}
