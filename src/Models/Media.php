@@ -83,9 +83,9 @@ class Media extends Base
 		if (!is_null($size)) {
 			$prefix = '/images/' . $size;
 		} else {
-			$prefix = '';
+			$prefix = $this->getDirectory();
 		}
-		return $prefix . '/' . $this->getDirectory() . '/' . $this->filename;
+		return $prefix . '/' . $this->filename;
 	}
 
 	/**
@@ -108,7 +108,7 @@ class Media extends Base
 		if ($this->private) {
 			$filename = asset('packages/bozboz/admin/images/private-document.png');
 		} elseif ($this->type === 'image') {
-			$filename = $this->getFilename('thumb');
+			$filename = $this->getFilename('medium');
 		} else {
 			$filename = asset('packages/bozboz/admin/images/document.png');
 		}
