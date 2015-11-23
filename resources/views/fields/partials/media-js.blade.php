@@ -21,7 +21,8 @@ var ACCESS_PRIVATE = {{ $access_private }};
 		url: '/admin/media',
 		dataType: 'json',
 		formData: {
-			'is_private[]': ( settings.mediaAccess === ACCESS_PRIVATE ? 1 : 0 )
+			'is_private[]': ( settings.mediaAccess === ACCESS_PRIVATE ? 1 : 0 ),
+			'_token' => $('input[name=_token]').val()
 		},
 		progressall: function (e, data) {
 			var progress = parseInt(data.loaded / data.total * 100, 10);
