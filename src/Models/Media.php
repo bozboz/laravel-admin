@@ -106,11 +106,11 @@ class Media extends Base
 	public function getPreviewImageUrl()
 	{
 		if ($this->private) {
-			$filename = asset('packages/bozboz/admin/images/private-document.png');
+			$filename = asset('assets/images/admin/private-document.png');
 		} elseif ($this->type === 'image') {
 			$filename = $this->getFilename('medium');
 		} else {
-			$filename = asset('packages/bozboz/admin/images/document.png');
+			$filename = asset('assets/images/admin/document.png');
 		}
 		return $filename;
 	}

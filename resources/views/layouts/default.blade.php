@@ -13,8 +13,7 @@
 	@show
 
 	@section('styles')
-	{!! HTML::style('vendor/admin/css/admin.min.css') !!}
-	{!! HTML::style('vendor/admin/css/media-library.css') !!}
+	{!! HTML::style('/assets/css/min/admin/style.css') !!}
 	@include('admin::partials.custom-styles')
 	@show
 </head>
@@ -30,7 +29,7 @@
 		@show
 	</div>
 	@section('scripts')
-		<script src="{{ asset('vendor/admin/js/admin.min.js') }}"></script>
+		<script src="{{ asset('/assets/js/min/admin/app.js') }}"></script>
 	@show
 </body>
 </html>

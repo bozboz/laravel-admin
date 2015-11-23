@@ -8,7 +8,7 @@
 	<title>@yield('page_title', 'CMS')</title>
 
 	@section('styles')
-	{!! HTML::style('vendor/admin/css/admin.min.css') !!}
+	{!! HTML::style('/assets/css/min/admin/style.css') !!}
 	@include('admin::partials.custom-styles')
 	@show
 </head>
