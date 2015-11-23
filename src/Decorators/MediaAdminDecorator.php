@@ -82,6 +82,11 @@ class MediaAdminDecorator extends ModelAdminDecorator
 		];
 	}
 
+	public function getLibraryFilePath()
+	{
+		return $this->model->getFilepath('image', 'library');
+	}
+
 	protected function getAccessOptions()
 	{
 		return [

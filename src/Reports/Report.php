@@ -69,8 +69,8 @@ class Report implements BaseInterface
 
 	public function getFooter()
 	{
-		if (method_exists($this->rows, 'links')) {
-			return $this->rows->appends(Input::except('page'))->links();
+		if (method_exists($this->rows, 'render')) {
+			return $this->rows->appends(Input::except('page'))->render();
 		}
 	}
 

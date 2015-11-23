@@ -59,8 +59,8 @@ class MediaLibraryAdminController extends ModelAdminController
 
 		return Response::json([
 			'media' => $data,
-			'mediaPath' => $this->decorator->getModel()->getFilepath('image', 'library'),
-			'links' => (string)$items->links()
+			'mediaPath' => $this->decorator->getLibraryFilePath(),
+			'links' => (string)$items->render()
 		]);
 	}
 
@@ -77,11 +77,11 @@ class MediaLibraryAdminController extends ModelAdminController
 				$instance->private = array_key_exists($index, $is_private) && ! empty($is_private[$index]);
 				$this->uploader->upload($file, $instance);
 				$data[] = [
-					'url' => action(__CLASS__ . '@edit', $instance->id),
+					'url' => action($this->getActionName('edit'), $instance->id),
 					'fullsizeUrl' => asset($instance->getFilename()),
 					'thumbnailUrl' => asset($instance->getFilename('library')),
 					'name' => $instance->caption ?: $instance->filename,
-					'deleteUrl' => action(__CLASS__ . '@destroy', $instance->id),
+					'deleteUrl' => action($this->getActionName('destroy'), $instance->id),
 					'deleteType' => 'DELETE',
 					'id' => $instance->id,
 					'filename' => $instance->filename,
