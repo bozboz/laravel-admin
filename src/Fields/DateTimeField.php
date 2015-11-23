@@ -1,6 +1,7 @@
 <?php namespace Bozboz\Admin\Fields;
 
-use Form, Str;
+use Form;
+use Illuminate\Support\Str;
 
 class DateTimeField extends Field
 {
@@ -11,7 +12,7 @@ class DateTimeField extends Field
 	public function __construct($attributes)
 	{
 		parent::__construct($attributes);
-		
+
 		$this->sanitisedName = Str::slug($this->name);
 		$this->altName = $this->sanitisedName . '_alt';
 		$this->configOptions = empty($this->options) ? [] : $this->options;
