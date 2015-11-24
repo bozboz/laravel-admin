@@ -75,7 +75,7 @@ class MediaBrowser extends Field
 
 		$data = [
 			'media' => $items,
-			'mediaPath' => $mediaFactory->getFilePath('image', 'thumb'),
+			'mediaPath' => $mediaFactory->getFilePath('image', 'small'),
 			'mediaAccess' => $this->mediaAccess,
 		];
 

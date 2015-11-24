@@ -100,7 +100,7 @@ class Media extends Base
 
 	public function getFilepath($type, $size)
 	{
-		return strtolower(sprintf('/images/%s/media/%s', $size, $type));
+		return strtolower(sprintf('/images/%s', $size));
 	}
 
 	public function getPreviewImageUrl()
