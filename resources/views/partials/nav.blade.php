@@ -58,6 +58,7 @@
 							<li><a href="/admin/users/{{ $user->id }}/edit"><i class="fa fa-wrench"></i> Edit Profile</a></li>
 						@endif
 						<li><a href="/"><i class="fa fa-desktop"></i> View Website</a></li>
+						<li><a href="{{ route('styleguide') }}"><i class="fa fa-book"></i> View Style Guide</a></li>
 						<li class="divider"></li>
 						<li><a href="/admin/logout"><i class="fa fa-sign-out"></i> Log Out</a></li>
 					</ul>
