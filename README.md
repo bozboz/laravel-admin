@@ -46,21 +46,21 @@ If you have a model that should be accessed in the Admin area, it needs an
 associated decorator. The abstract `ModelAdminDecorator` class contains several
 abstract methods which must be defined on the subclass:
 
-    - `getLabel` should return a suitable string representation of the model;
-      typically the title of the entity
-    - `getFields` should return an array of `Bozboz\Admin\Fields\Field`
-      instances, used to create/edit the entity on the relevant screens.
+-   `getLabel` should return a suitable string representation of the model;
+    typically the title of the entity
+-   `getFields` should return an array of `Bozboz\Admin\Fields\Field`
+    instances, used to create/edit the entity on the relevant screens.
 
 There are a number of optional methods to override:
 
-    - `getColumns` should return a key/value array of columns to display on the
-      admin overview page
-    - `getHeading` should return a string representation of the overall model
-      (rather than that specific instance, as in `getLabel`). This method
-      accepts a boolean paramter (defaulting to false) which allows the calling
-      script to request the word as plural or singlular.
-    - `modifyListingQuery` allows the listing query to be modified, e.g. to
-      eager load relations, or apply a custom sort or conditional.
+-   `getColumns` should return a key/value array of columns to display on the
+    admin overview page
+-   `getHeading` should return a string representation of the overall model
+    (rather than that specific instance, as in `getLabel`). This method
+    accepts a boolean paramter (defaulting to false) which allows the calling
+    script to request the word as plural or singlular.
+-   `modifyListingQuery` allows the listing query to be modified, e.g. to
+    eager load relations, or apply a custom sort or conditional.
 
 Similarly to subclasses of `ModelAdminController`, decorators must be passed a
 dependency in its constructor. This should be the entity which this decorator
