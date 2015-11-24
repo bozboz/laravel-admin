@@ -20,8 +20,12 @@
 - Several classes in the Admin namespace have also been moved. The full mapping is as follows:
 	- Bozboz\Admin\AdminServiceProvider => Bozboz\Admin\Providers\AdminServiceProvider
 	- Bozboz\Admin\Controllers\ModelAdminController => Bozboz\Admin\Http\Controllers\ModelAdminController
-	- Bozboz\Admin\Controllers\PageController => Bozboz\Admin\Http\Controllers\PageController
-	- Bozboz\Admin\Controllers\PageAdminController => Bozboz\Admin\Http\Controllers\PageAdminController
+
+- Pages have been removed from the Admin. This includes the following classes:
+  Decorators\PageAdminDecorator, Controllers\PageAdminController,
+  Controllers\PageController, Models\Page, Services\Validators\PageValidator and
+  Subscribers\PageEventHandler. Please use an alternative implementation for
+  handling pages.
 
 - SearchListingFilter now accepts either an array of attributes OR a callback as
   its second parameter, not both.

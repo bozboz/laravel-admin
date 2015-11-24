@@ -2,7 +2,6 @@
 
 namespace Bozboz\Admin\Providers;
 
-use Bozboz\Admin\Subscribers\PageEventHandler;
 use Bozboz\Permissions\Providers\PermissionServiceProvider;
 
 class AdminServiceProvider extends PermissionServiceProvider
@@ -42,8 +41,6 @@ class AdminServiceProvider extends PermissionServiceProvider
 		$permissions = $this->app['permission.handler'];
 
 		require __DIR__ . '/../permissions.php';
-
-		$this->app['events']->subscribe(new PageEventHandler);
 
 		$this->app['view']->composer(
 			'admin::partials.nav',

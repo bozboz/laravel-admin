@@ -21,6 +21,7 @@
 -   Remove Decorators\ModelAdminDecorator::getModel method
 -   Remove Services\Validator::passesEdit() method
 -   Remove Reports\Report::overrideView() method
+-   Remove Pages
 
 
 ## Version 1.2.0 (FUTURE)
