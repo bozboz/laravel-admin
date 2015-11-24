@@ -2,23 +2,18 @@
 
 ## Installation
 
-1. Add package to `composer.json` requirements
+1. Require the package in Composer, by running `composer require bozboz/admin`
+2. Add `Bozboz\Admin\AdminServiceProvider` to the providers array in
+   app/config/app.php
+3. Optionally, add `Bozboz\MediaLibrary\Models\Media` to the aliases array in
+   app/config/app.php
 
-```js
-"require": {
-	"bozboz/admin": "~0.1.0"
-}
-```
-
-2. Optionally, update `phpunit.xml` to hit package tests
-
-```xml
-<directory>./vendor/bozboz/admin/tests</directory>
-```
 
 ## Controllers
 
-Most packages will contain a FooController and a FooAdminController. The FooAdminController should extend the abstract ModelAdminController class and should - as a bare minimum - define a constructor specifying that particular controller's dependency - a ModelAdminDecorator subclass.
+`ModelAdminController` is an abstract class containing standard CRUD
+functionality for a model. Subclasses - as a bare minimum - must define a
+constructor which passes in an instance of `ModelAdminDecorator`. E.g.:
 
 ```php
 use Bozboz\Admin\Decorators\FooAdminDecorator;
@@ -32,37 +27,47 @@ class FooAdminController extends ModelAdminController
 }
 ```
 
-Laravel will smartly resolve the dependency out of the IoC container when instantiating the controller, so the only remaining thing to do is to register this controller as a resource in the routes file, like so:
+Laravel will smartly resolve the dependency out of the IoC container when
+instantiating the controller, so the only remaining thing to do is to register
+this controller as a resource in the routes file, like so:
 
 ```php
 Route::resource('admin/foo', 'FooAdminController');
 ```
 
-This will enable entire CRUD functionality on the model defined in the ModelAdminDecorator dependency. All this functionality is inside the ModelAdminController. The FooController class would be your standard "front-end" controller, which should be referenced in your routes.php file, either explicitly per route, restfully, or as a resource.
+This will enable entire CRUD functionality on the model defined in the
+`ModelAdminDecorator` dependency.
 
-## Models
-
-All models within this package need to extend Bozboz\Admin\Models\Base unless you have a good reason to deviate.
-
-## Validators
-
-Instead of storing validation rules on the actual models we have decided to create a Validator service. Base functionality resides in Bozboz\Admin\Services\Validators\Validator. It is the responsiblity of a model wishing to be validated to define its own Validator subtype (e.g. User model utilises the UserValidator class) in which it defines the validation rules to be used. Furthermore the Base type has an abstract "getValidator" method in which the model returns an instance of its Validator subtype.
-
-### "rules" property
-
-These are rules that should be applied in all validation instances.
-
-### "storeRules" property
-
-Rules that should only be applied when creating a new model instance. Will be merged with the "rules" property.
-
-### "editRules" property
-
-Rules that should only be applied when updating an existing model instance. Will be merged with the "rules" property.
 
 ## Decorators
 
-Decorators contain information about how a model is displayed in the Admin area. If you have a model that should be accessed in the Admin area, it needs an associated decorator and controller subclass. The abstract ModelAdminDecorator class currently contains a couple of abstract methods - getColumns and getLabel - as well as a few defaults getModel, getListingModels and getFields. Similarly to ModelAdminController subclasses, subclasses of ModelAdminDecorator must, as a minimum, define their own constructor, type-hinting an Eloquent model as its argument:
+Decorators contain information about how a model is displayed in the Admin area.
+If you have a model that should be accessed in the Admin area, it needs an
+associated decorator. The abstract `ModelAdminDecorator` class contains several
+abstract methods which must be defined on the subclass:
+
+    - `getLabel` should return a suitable string representation of the model;
+      typically the title of the entity
+    - `getFields` should return an array of `Bozboz\Admin\Fields\Field`
+      instances, used to create/edit the entity on the relevant screens.
+
+There are a number of optional methods to override:
+
+    - `getColumns` should return a key/value array of columns to display on the
+      admin overview page
+    - `getHeading` should return a string representation of the overall model
+      (rather than that specific instance, as in `getLabel`). This method
+      accepts a boolean paramter (defaulting to false) which allows the calling
+      script to request the word as plural or singlular.
+    - `modifyListingQuery` allows the listing query to be modified, e.g. to
+      eager load relations, or apply a custom sort or conditional.
+
+Similarly to subclasses of `ModelAdminController`, decorators must be passed a
+dependency in its constructor. This should be the entity which this decorator
+represents in the admin. This class must implement the
+`Bozboz\Admin\Models\BaseInterface` class.
+
+E.g.:
 
 ```php
 use Bozboz\Admin\Models\Page;
@@ -76,13 +81,12 @@ class PageAdminDecorator extends ModelAdminDecorator
 }
 ```
 
-Controllers will generally do all its communicating of models through a decorator - they won't deal directly with a model instance.
+### Saving Many-To-Many relationships
 
-## Saving Many-To-Many relationships
-
-As the mapping between the two models is stored inside a join table, there's a bit more leg work to get them working within the admin module.
-
-Define a `getSyncRelations` method on the respective ModelAdminDecorator subtype (e.g. if you're setting up a relationship between BlogPost and BlogCategory and wish to handle the relationship when creating/editing existing BlogPosts, do the following inside the BlogPostDecorator class):
+As the mapping between the two models is stored inside a join table, there's a
+small amount of additional to get this data synced in the admin. A decorator
+must define a `getSyncRelations` method, which returns an array of relations
+which should be synced. E.g.
 
 ```
 public function getSyncRelations()
@@ -91,43 +95,75 @@ public function getSyncRelations()
 }
 ```
 
-Add BelongsToManyField instance to the ModelAdminDecorator subtype's `getFields` implementation:
+Additionally, for this relationship to be interacted with in the admin, an
+instance of the `BelongsToManyField` should be returned by the decorator's
+`getFields` method:
 
 ```
-public function getFields()
+public function getFields($instance)
 {
     return [
-        new BelongsToManyField($this, $instance->foos(), ['label' => 'Some label'],
-            function(\Illuminate\Database\Eloquent\Builder $builder)
-            {
-                return $builder->where('status', '=', 1);
-            }
-        )
+        ..
+        new BelongsToManyField(new FooDecorator(new Foo)), $instance->foos());
     ];
 }
 ```
 
-# Traits
+### Filtering the listing
 
-- DynamicSlugTrait: Automatically generates a value for a model's slug. `use` the trait on the respective model and define a `getSlugSourceField` implementation which returns the name of the property from which to derive the slug. 
+TODO
 
-# Editing Admin Theme
 
-The admin theme uses *gulp* and *bower* for download and compiling assets for the theme. To be able to compile the assets you need to run:
+## Models
 
-```
-$ npm install
-$ bower install
-```
+All models within this package extend `Bozboz\Admin\Models\Base`
+(an implementation of `Bozboz\Admin\Models\BaseInterface`).
 
-From there, a simple `gulp` will compile all css and js - however, during development a `gulp watch` can be run
 
-# Field subtypes
+## Validators
 
-## DateTimeField
+Validation rules for a model are stored in seperate validator service classes.
+Validation subclasses should extend the
+`Bozboz\Admin\Services\Validators\Validator` class. It is the responsiblity of a
+model wishing to be validated to define its own Validator subtype in which to
+define the validation rules to validate the model's data.
 
-Uses the datetimepicker addon which extends the functionality of the jQuery UI DatePicker. Documentation can be found [here](http://trentrichardson.com/examples/timepicker/).
+### "rules" property
 
-When instantiating a DateTimeField object, it is possible to override the default datetimepicker configuration by passing in an array mapped to the 'options' key.
-This will be json encoded and merged in with the defaults when the DOM is rendered. When passing in values that are defined as JS Date objects within the datetimepicker
-documentation, please define these as epoch values (e.g. `time()` or `$dateTime->format('U')`). 
+These are rules that should be applied in all validation instances.
+
+### "storeRules" property
+
+Rules that should only be applied when storing a new model instance. Will be
+merged with the "rules" property.
+
+### "updateRules" property
+
+Rules that should only be applied when updating an existing model instance.
+Will be merged with the "rules" property.
+
+
+## Traits
+
+### DynamicSlugTrait
+Automatically generates a value for a model's slug. `use` the trait on the
+respective model and define a `getSlugSourceField` method which returns the name
+of the property from which to derive the slug.
+
+
+## Fields
+
+### DateTimeField
+
+Uses the datetimepicker addon which extends the functionality of the jQuery UI
+DatePicker. Documentation can be found
+[here](http://trentrichardson.com/examples/timepicker/).
+
+When instantiating a DateTimeField object, it is possible to override the
+default datetimepicker configuration by passing in an array mapped to the
+'options' key.
+
+This will be json encoded and merged in with the defaults when the DOM is
+rendered. When passing in values that are defined as JS Date objects within the
+datetimepicker documentation, please define these as epoch values (e.g. `time()`
+or `$dateTime->format('U')`).
