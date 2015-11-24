@@ -23,6 +23,7 @@ var ACCESS_PRIVATE = {{ Media::ACCESS_PRIVATE }};
 		formData: {
 			'is_private[]': ( settings.mediaAccess === ACCESS_PRIVATE ? 1 : 0 )
 		},
+		dropZone: '.js-file-upload-{{ $id }}',
 		progressall: function (e, data) {
 			var progress = parseInt(data.loaded / data.total * 100, 10);
 			$(this).parent().nextAll('.js-progress').find('.progress-bar').css(
