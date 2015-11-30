@@ -1,5 +1,7 @@
 <?php namespace Bozboz\Admin\Services\Validators;
 
+use Illuminate\Support\Arr;
+
 abstract class Validator
 {
 	protected $errors;
@@ -33,24 +35,28 @@ abstract class Validator
 		return $this->errors;
 	}
 
-	/**
-	 * Transform "unique:{table}" into "unique:{table},{attribute},{id}"
-	 */
-	public function updateUniques($id)
-	{
-		foreach ($this->getUpdateRules() as $attribute => $validationRules) {
-			if (strpos($validationRules, 'unique') !== false) {
-				$regexReplacement = 'unique:$1,' . $attribute . ',' . $id;
-				$this->updateRules[$attribute] = preg_replace('/unique:(\w++)(?=\b)/', $regexReplacement, $validationRules);
-			}
-		}
-	}
-
 	protected function passes($attributes, $rules)
 	{
+		$rules = $this->replacePlaceholders($attributes, $rules);
+
 		$validation = \Validator::make($attributes, $rules, $this->messages);
 		$this->errors = $validation->messages();
 
 		return $validation->passes();
+	}
+
+	protected function replacePlaceholders($attributes, $rules)
+	{
+		$find = [];
+
+		foreach(Arr::dot($attributes) as $key => $val) {
+			$find['{' . $key . '}'] = $val;
+		}
+
+		foreach($rules as $name => $rule) {
+			$rules[$name] = str_replace(array_keys($find), array_values($find), $rule);
+		}
+
+		return $rules;
 	}
 }

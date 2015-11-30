@@ -82,6 +82,7 @@ abstract class ModelAdminController extends Controller
 	{
 		$input = Input::except('after_save');
 		$modelInstance = $this->decorator->newModelInstance($input);
+		$input[$modelInstance->getKeyName()] = 'NULL';
 		$validation = $modelInstance->getValidator();
 		$input = $this->decorator->sanitiseInput($input);
 
@@ -124,8 +125,8 @@ abstract class ModelAdminController extends Controller
 	{
 		$modelInstance = $this->decorator->findInstance($id);
 		$validation = $modelInstance->getValidator();
-		$validation->updateUniques($modelInstance->getKey());
 		$input = $this->decorator->sanitiseInput(Input::except('after_save'));
+		$input[$modelInstance->getKeyName()] = $modelInstance->getKey();
 
 		if ($validation->passesUpdate($input)) {
 			$modelInstance->fill($input);
