@@ -47,3 +47,8 @@
   method of ModelAdminController. If you are overriding the index method in your
   controller, ensure you pass `$this->getReportParams()` into the `render`
   method of the report.
+
+- The `findInstanceOrFail` method has been removed from `ModelAdminDecorator`.
+  This behaviour is now standard and has been moved into the `findInstance`
+  method. Calls to `findInstance` will now throw a `ModelNotFoundException` if
+  an ID cannot be found for that model.

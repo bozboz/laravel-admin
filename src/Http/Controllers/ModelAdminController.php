@@ -105,7 +105,7 @@ abstract class ModelAdminController extends Controller
 	{
 		if ( ! $this->canEdit((int)$id)) App::abort(403);
 
-		$instance = $this->decorator->findInstanceOrFail($id);
+		$instance = $this->decorator->findInstance($id);
 		$this->decorator->injectRelations($instance);
 		$fields = $this->decorator->buildFields($instance);
 
@@ -122,7 +122,7 @@ abstract class ModelAdminController extends Controller
 
 	public function update($id)
 	{
-		$modelInstance = $this->decorator->findInstanceOrFail($id);
+		$modelInstance = $this->decorator->findInstance($id);
 		$validation = $modelInstance->getValidator();
 		$validation->updateUniques($modelInstance->getKey());
 		$input = $this->decorator->sanitiseInput(Input::except('after_save'));
@@ -147,7 +147,7 @@ abstract class ModelAdminController extends Controller
 	{
 		if ( ! $this->canDestroy((int)$id)) App::abort(403);
 
-		$instance = $this->decorator->findInstanceOrFail($id);
+		$instance = $this->decorator->findInstance($id);
 
 		$instance->delete();
 

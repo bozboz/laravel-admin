@@ -209,15 +209,6 @@ abstract class ModelAdminDecorator
 	 */
 	public function findInstance($id)
 	{
-		return $this->model->find($id);
-	}
-
-	/**
-	 * @param  int  $id
-	 * @return Bozboz\Admin\Models\BaseInterface
-	 */
-	public function findInstanceOrFail($id)
-	{
 		return $this->model->findOrFail($id);
 	}
 

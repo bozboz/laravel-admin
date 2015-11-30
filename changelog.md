@@ -10,6 +10,7 @@
 -   Consolidate migrations
 -   ModelAdminDecorator::getFields method no longer fires "admin.fields.built" event
 -   Reports\Row class no longer accepts an instance as its second argument
+-   ModelAdminDecorator::findInstance now throws a ModelNotFoundException if no matching ID is found.
 
 ### Fixed
 -   Prevent media with many relation from attempting to sync null relations
@@ -19,6 +20,7 @@
 -   Remove migrations directory from Composer autoload
 -   Remove Reports\Row::getModel method
 -   Remove Decorators\ModelAdminDecorator::getModel method
+-   Remove Decorators\ModelAdminDecorator::findInstanceOrFail method
 -   Remove Services\Validator::passesEdit() method
 -   Remove Reports\Report::overrideView() method
 -   Remove Pages
