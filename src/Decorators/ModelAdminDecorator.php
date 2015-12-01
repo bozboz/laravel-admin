@@ -245,7 +245,7 @@ abstract class ModelAdminDecorator
 		foreach ($this->getSyncRelations() as $relationName) {
 			$instance->setAttribute(
 				$relationName . '_relationship',
-				$instance->$relationName()->getRelatedIds()
+				$instance->$relationName()->getRelatedIds()->all()
 			);
 		}
 
