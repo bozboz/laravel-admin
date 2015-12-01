@@ -60,6 +60,14 @@ Rules that should only be applied when creating a new model instance. Will be me
 
 Rules that should only be applied when updating an existing model instance. Will be merged with the "rules" property.
 
+### Unique rules
+
+Laravel's unique rule will fail on update, as the value being validated on the on the saving model will clash with the value on the entry already in the database. To get around this, Laravel offers the following, more verbose syntax for defining unique validation rules: `'unique:<table>,<field>,<id>'`.
+
+Table and field can be hard-coded in the rule, however, ID is a dynamic value. This can be represented in your validation service using curly-bracket placeholders, e.g. `'unique:pages,slug,{id}'`.
+
+The placeholder syntax works for any attribute on the model, so it can be used for Laravel's extended unique functionality, e.g. `'unique:users,email_address,{id},id,account_id,{account_id}'`
+
 ## Decorators
 
 Decorators contain information about how a model is displayed in the Admin area. If you have a model that should be accessed in the Admin area, it needs an associated decorator and controller subclass. The abstract ModelAdminDecorator class currently contains a couple of abstract methods - getColumns and getLabel - as well as a few defaults getModel, getListingModels and getFields. Similarly to ModelAdminController subclasses, subclasses of ModelAdminDecorator must, as a minimum, define their own constructor, type-hinting an Eloquent model as its argument:
