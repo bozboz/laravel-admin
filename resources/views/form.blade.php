@@ -9,7 +9,7 @@
 
 	<h2>@yield('heading')</h2>
 
-	@if ($errors)
+	@if ($errors->count())
 		<div class="alert alert-danger" role="alert">
 			<strong>There are errors in your submission.</strong> <br>
 			Please refer to the errors in the form and try again.
