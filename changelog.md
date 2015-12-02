@@ -14,6 +14,8 @@
 
 ### Fixed
 -   Prevent media with many relation from attempting to sync null relations
+-   Using the SanitisesInputTrait without a $nullable property defined will no longer error
+-   Nav selected state will now work with query string URLs
 
 ### Removed
 -   Support for Laravel 4
