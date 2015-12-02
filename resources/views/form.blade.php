@@ -9,6 +9,14 @@
 
 	<h2>@yield('heading')</h2>
 
+	@if ($errors)
+		<div class="alert alert-danger" role="alert">
+			<strong>There are errors in your submission.</strong> <br>
+			Please refer to the errors in the form and try again.
+		</div>
+		<div style="display:none;">{{ var_export($errors->toArray()) }}</div>
+	@endif
+
 	@include('admin::fields.field-group', ['attributes' => []])
 
 	<div class="form-row">
