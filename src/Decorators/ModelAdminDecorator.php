@@ -118,7 +118,7 @@ abstract class ModelAdminDecorator
 	 */
 	protected function listingPerPageLimit()
 	{
-		return Config::get('admin::listing_items_per_page');
+		return Config::get('admin.listing_items_per_page');
 	}
 
 	/**
@@ -176,7 +176,7 @@ abstract class ModelAdminDecorator
 	 */
 	public function getItemsPerPageOptions()
 	{
-		$perPage = Config::get('admin::listing_items_per_page');
+		$perPage = $this->listingPerPageLimit();
 		$range = range($perPage, $perPage*4, $perPage);
 		return array_combine($range, $range);
 	}
