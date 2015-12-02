@@ -96,7 +96,7 @@ class Menu extends Fluent
 	{
 		$pattern = sprintf($pattern, preg_quote($url, '/'));
 
-		return (bool) preg_match($pattern, $this->request->url());
+		return (bool) preg_match($pattern, $this->request->fullUrl());
 	}
 
 	/**
