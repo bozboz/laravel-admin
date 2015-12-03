@@ -47,6 +47,7 @@ abstract class ModelAdminController extends Controller
 	{
 		return [
 			'createAction' => $this->getActionName('create'),
+			'createParams' => [],
 			'editAction' => $this->getActionName('edit'),
 			'destroyAction' => $this->getActionName('destroy'),
 			'canCreate' => [$this, 'canCreate'],
