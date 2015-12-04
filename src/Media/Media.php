@@ -1,4 +1,6 @@
-<?php namespace Bozboz\Admin\Media;
+<?php
+
+namespace Bozboz\Admin\Media;
 
 use Bozboz\Admin\Base\Model;
 use Bozboz\Admin\Services\Validators\MediaValidator;

@@ -1,4 +1,6 @@
-<?php namespace Bozboz\Admin\Users;
+<?php
+
+namespace Bozboz\Admin\Users;
 
 use Bozboz\Admin\Base\Model;
 use Bozboz\Admin\Services\Validators\UserValidator;

@@ -1,4 +1,6 @@
-<?php namespace Bozboz\Admin\Base\Composers;
+<?php
+
+namespace Bozboz\Admin\Base\Composers;
 
 use Event;
 use Auth;
