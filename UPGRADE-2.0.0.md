@@ -52,3 +52,8 @@
   This behaviour is now standard and has been moved into the `findInstance`
   method. Calls to `findInstance` will now throw a `ModelNotFoundException` if
   an ID cannot be found for that model.
+
+- Typehints to `Models\BaseInterface` on `updateSyncRelations` and
+  `injectSyncRelations` methods on `Decorators\MediaAdminDecorator` have been
+  removed. Remove this typehint on any subclasses that override either of these
+  methods.
