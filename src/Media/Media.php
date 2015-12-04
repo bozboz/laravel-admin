@@ -136,7 +136,7 @@ class Media extends Model
 	 *
 	 * Media::getFilenameOrFallback($item->detailImage, '/fallback-image.jpg', 'thumb')
 	 *
-	 * @param  Bozboz\Admin\Models\Media|null  $media
+	 * @param  Bozboz\Admin\Media\Media|null  $media
 	 * @param  string  $fallback
 	 * @param  string  $size
 	 * @return string

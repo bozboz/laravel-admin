@@ -12,7 +12,7 @@ class Tag extends Model
 
 	public function media()
 	{
-		return $this->belongsToMany('Bozboz\Admin\Models\Media', 'media_mm_tags');
+		return $this->belongsToMany(Media::class, 'media_mm_tags');
 	}
 
 	public function getValidator()

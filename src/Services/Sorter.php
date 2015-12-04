@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Services;
 
-use Bozboz\Admin\Models\Sortable;
+use Bozboz\Admin\Base\Sortable;
 
 class Sorter
 {

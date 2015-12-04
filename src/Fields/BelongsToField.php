@@ -8,7 +8,7 @@ use Illuminate\Support\ViewErrorBag;
 class BelongsToField extends Field
 {
 	/**
-	 * @param  Bozboz\Admin\Decorators\ModelAdminDecorator  $decorator
+	 * @param  Bozboz\Admin\Base\ModelAdminDecorator  $decorator
 	 * @param  Illuminate\Database\Eloquent\Relations\BelongsTo  $relationship
 	 * @param  array  $attributes
 	 * @param  Closure  $callback

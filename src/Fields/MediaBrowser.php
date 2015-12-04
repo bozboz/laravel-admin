@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Fields;
 
-use Bozboz\Admin\Models\Media;
+use Bozboz\Admin\Media\Media;
 use Illuminate\Html\FormFacade as Form;
 use View;
 use Illuminate\Database\Eloquent\Relations\Relation;

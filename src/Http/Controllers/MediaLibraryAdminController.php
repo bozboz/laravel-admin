@@ -2,7 +2,7 @@
 
 use Bozboz\Admin\Reports\Report;
 use Bozboz\Admin\Media\MediaAdminDecorator;
-use Bozboz\Admin\Models\Media;
+use Bozboz\Admin\Media\Media;
 use Bozboz\Admin\Services\Uploader;
 use View, Response, Request, Input, Redirect;
 
