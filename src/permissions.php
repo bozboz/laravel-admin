@@ -12,12 +12,12 @@ $permissions->define([
 	'delete_anything' => 'Bozboz\Permissions\Rules\ModelRule',
 
 	'view_users'   => 'Bozboz\Permissions\Rules\GlobalRule',
-	'create_user'  => 'Bozboz\Permissions\Rules\GlobalRule',
+	'create_user'  => 'Bozboz\Permissions\Rules\ModelRule',
 	'edit_user'    => 'Bozboz\Permissions\Rules\ModelRule',
 	'delete_user'  => 'Bozboz\Permissions\Rules\ModelRule',
 
 	'view_media'   => 'Bozboz\Permissions\Rules\GlobalRule',
-	'create_media' => 'Bozboz\Permissions\Rules\GlobalRule',
+	'create_media' => 'Bozboz\Permissions\Rules\ModelRule',
 	'edit_media'   => 'Bozboz\Permissions\Rules\ModelRule',
 	'delete_media' => 'Bozboz\Permissions\Rules\ModelRule',
 
