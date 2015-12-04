@@ -7,7 +7,7 @@ $permissions->define([
 	'edit_profile'    => 'Bozboz\Admin\Permissions\UserRule',
 
 	'view_anything'   => 'Bozboz\Permissions\Rules\GlobalRule',
-	'create_anything' => 'Bozboz\Permissions\Rules\GlobalRule',
+	'create_anything' => 'Bozboz\Permissions\Rules\Rule',
 	'edit_anything'   => 'Bozboz\Permissions\Rules\Rule',
 	'delete_anything' => 'Bozboz\Permissions\Rules\Rule',
 

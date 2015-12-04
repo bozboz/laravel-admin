@@ -58,10 +58,11 @@ abstract class ModelAdminController extends Controller
 
 	public function create()
 	{
-		if ( ! $this->canCreate()) App::abort(403);
+		$instance = $this->decorator->newModelInstance();
 
-	    $instance = $this->decorator->newModelInstance();
-	    return $this->renderCreateFormFor($instance);
+		if ( ! $this->canCreate($instance)) App::abort(403);
+
+		return $this->renderCreateFormFor($instance);
 	}
 
 	protected function renderCreateFormFor($instance)
@@ -105,10 +106,11 @@ abstract class ModelAdminController extends Controller
 
 	public function edit($id)
 	{
-		if ( ! $this->canEdit((int)$id)) App::abort(403);
-
 		$instance = $this->decorator->findInstance($id);
 		$this->decorator->injectRelations($instance);
+
+		if ( ! $this->canEdit($instance)) App::abort(403);
+
 		$fields = $this->decorator->buildFields($instance);
 
 		return View::make($this->editView, array(
@@ -147,9 +149,9 @@ abstract class ModelAdminController extends Controller
 
 	public function destroy($id)
 	{
-		if ( ! $this->canDestroy((int)$id)) App::abort(403);
-
 		$instance = $this->decorator->findInstance($id);
+
+		if ( ! $this->canDestroy($instance)) App::abort(403);
 
 		$instance->delete();
 
@@ -218,37 +220,37 @@ abstract class ModelAdminController extends Controller
 		return $this->isAllowed('view');
 	}
 
-	public function canCreate()
+	public function canCreate($instance = null)
 	{
-		return $this->isAllowed('create');
+		return $this->isAllowed('create', $instance);
 	}
 
-	public function canEdit($id)
+	public function canEdit($instance)
 	{
-		return $this->isAllowed('edit', $id);
+		return $this->isAllowed('edit', $instance);
 	}
 
-	public function canDestroy($id)
+	public function canDestroy($instance)
 	{
-		return $this->isAllowed('delete', $id);
+		return $this->isAllowed('delete', $instance);
 	}
 
-	private function isAllowed($action, $id = null)
+	private function isAllowed($action, $instance = null)
 	{
 		$stack = new RuleStack;
 
 		$stack->add($action . '_anything');
 
-		$this->{$action . 'Permissions'}($stack, $id);
+		$this->{$action . 'Permissions'}($stack, $instance);
 
 		return $stack->isAllowed();
 	}
 
 	protected function viewPermissions($stack) { }
 
-	protected function createPermissions($stack) { }
+	protected function createPermissions($stack, $instance) { }
 
-	protected function editPermissions($stack, $id) { }
+	protected function editPermissions($stack, $instance) { }
 
-	protected function deletePermissions($stack, $id) { }
+	protected function deletePermissions($stack, $instance) { }
 }

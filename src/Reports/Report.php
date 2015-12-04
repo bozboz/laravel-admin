@@ -51,7 +51,7 @@ class Report implements BaseInterface
 			return $this->renderedColumns[$id];
 		}
 
-		return new Row($id, $this->getColumnsFromInstance($instance));
+		return new Row($id, $this->getColumnsFromInstance($instance), $instance);
 	}
 
 	protected function getColumnsFromInstance($instance)
