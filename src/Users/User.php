@@ -1,20 +1,21 @@
-<?php namespace Bozboz\Admin\Models;
+<?php namespace Bozboz\Admin\Users;
 
+use Bozboz\Admin\Base\Model;
 use Bozboz\Admin\Services\Validators\UserValidator;
+use Bozboz\Permissions\Permission;
+use Bozboz\Permissions\UserInterface as Permissions;
 use Hash;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Bozboz\Permissions\UserInterface as Permissions;
-use Bozboz\Permissions\Permission;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 
-class User extends Base implements AuthenticatableContract,
-                                   AuthorizableContract,
-                                   CanResetPasswordContract,
-                                   Permissions
+class User extends Model implements AuthenticatableContract,
+                                    AuthorizableContract,
+                                    CanResetPasswordContract,
+                                    Permissions
 {
     use Authenticatable, Authorizable, CanResetPassword;
 

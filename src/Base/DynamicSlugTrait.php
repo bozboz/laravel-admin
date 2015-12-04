@@ -1,4 +1,6 @@
-<?php namespace Bozboz\Admin\Traits;
+<?php
+
+namespace Bozboz\Admin\Base;
 
 use Str;
 

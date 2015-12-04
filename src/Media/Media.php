@@ -1,12 +1,13 @@
-<?php namespace Bozboz\Admin\Models;
+<?php namespace Bozboz\Admin\Media;
 
+use Bozboz\Admin\Base\Model;
 use Bozboz\Admin\Services\Validators\MediaValidator;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Collection;
 use Input, Config, Str;
 use Whoops\Exception\ErrorException;
 
-class Media extends Base
+class Media extends Model
 {
 	const ACCESS_BOTH = 0;
 	const ACCESS_PUBLIC = 1;
@@ -35,7 +36,7 @@ class Media extends Base
 
 	public function tags()
 	{
-		return $this->belongsToMany('Bozboz\Admin\Models\Tag', 'media_mm_tags');
+		return $this->belongsToMany(Tag::class, 'media_mm_tags');
 	}
 
 	public function getValidator()
@@ -49,7 +50,7 @@ class Media extends Base
 	 * @param  Illuminate\Database\Eloquent\Model  $model
 	 * @return Illuminate\Database\Eloquent\Relations\MorphToMany
 	 */
-	public static function forModel(Model $model, $foreignKey = null)
+	public static function forModel(Eloquent $model, $foreignKey = null)
 	{
 		if ($foreignKey) return $model->belongsTo(get_class(), $foreignKey);
 

@@ -1,8 +1,10 @@
 <?php
 
-namespace Bozboz\Admin\Models;
+namespace Bozboz\Admin\Media;
 
-class Tag extends Base
+use Bozboz\Admin\Base\Model;
+
+class Tag extends Model
 {
 	protected $table = 'media_tags';
 

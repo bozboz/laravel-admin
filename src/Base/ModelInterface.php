@@ -1,8 +1,8 @@
 <?php
 
-namespace Bozboz\Admin\Models;
+namespace Bozboz\Admin\Base;
 
-interface BaseInterface
+interface ModelInterface
 {
 	/**
 	 * Get the Validator used by this model.

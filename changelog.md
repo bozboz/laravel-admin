@@ -26,7 +26,7 @@
 -   Remove Services\Validator::passesEdit() method
 -   Remove Reports\Report::overrideView() method
 -   Remove Pages
-
+-   Remove Meta namespace
 
 ## Version 1.2.0 (FUTURE)
 

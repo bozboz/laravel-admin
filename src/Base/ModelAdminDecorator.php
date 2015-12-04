@@ -1,9 +1,11 @@
-<?php namespace Bozboz\Admin\Decorators;
+<?php
 
-use Event, Str, Config;
-use Bozboz\Admin\Models\BaseInterface;
-use Bozboz\Admin\Models\Sortable;
+namespace Bozboz\Admin\Base;
+
+use Bozboz\Admin\Base\ModelInterface;
+use Bozboz\Admin\Base\Sortable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Fluent;
 
@@ -15,9 +17,9 @@ abstract class ModelAdminDecorator
 	protected $model;
 
 	/**
-	 * @param  Bozboz\Admin\Models\BaseInterface  $model
+	 * @param  Bozboz\Admin\Base\ModelInterface  $model
 	 */
-	public function __construct(BaseInterface $model)
+	public function __construct(ModelInterface $model)
 	{
 		$this->model = $model;
 	}

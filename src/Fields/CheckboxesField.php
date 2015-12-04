@@ -20,6 +20,10 @@ class CheckboxesField extends Field
 			$html .= '<label class="checkbox">' . $checkbox . ' ' . $option->name . '</label>';
 		}
 
+		if ($this->options->isEmpty()) {
+			$html .= 'No options available';
+		}
+
 		return $html;
 	}
 }

@@ -4,7 +4,7 @@ use Closure;
 use Illuminate\Html\FormFacade as Form;
 use Illuminate\Html\HtmlFacade as HTML;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Bozboz\Admin\Decorators\ModelAdminDecorator;
+use Bozboz\Admin\Base\ModelAdminDecorator;
 
 /**
  * Render HTML that represents a Illuminate\Database\Eloquent\Relations\BelongsToMany instance

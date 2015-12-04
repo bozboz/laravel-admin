@@ -1,7 +1,7 @@
 <?php namespace Bozboz\Admin\Fields;
 
 use Closure, Form;
-use Bozboz\Admin\Decorators\ModelAdminDecorator;
+use Bozboz\Admin\Base\ModelAdminDecorator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\ViewErrorBag;
 

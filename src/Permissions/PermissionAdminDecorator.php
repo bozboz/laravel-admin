@@ -2,12 +2,13 @@
 
 namespace Bozboz\Admin\Permissions;
 
-use Bozboz\Admin\Decorators\ModelAdminDecorator;
+use Bozboz\Admin\Base\ModelAdminDecorator;
 use Bozboz\Admin\Fields\BelongsToField;
 use Bozboz\Admin\Fields\SelectField;
 use Bozboz\Admin\Fields\TextField;
-use Bozboz\Admin\Models\User;
 use Bozboz\Admin\Reports\Filters\ArrayListingFilter;
+use Bozboz\Admin\Users\User;
+use Bozboz\Admin\Users\UserAdminDecorator;
 use Bozboz\Permissions\Handler;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -48,7 +49,7 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 				'class' => 'select2'
 			]),
 			new TextField('param'),
-			new BelongsToField(app('Bozboz\Admin\Decorators\UserAdminDecorator'), $instance->user()),
+			new BelongsToField(app(UserAdminDecorator::class), $instance->user()),
 		];
 	}
 
