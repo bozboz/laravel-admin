@@ -240,7 +240,7 @@ abstract class ModelAdminDecorator
 	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
 	 * @return void
 	 */
-	public function injectRelations(BaseInterface $instance)
+	public function injectRelations($instance)
 	{
 		foreach ($this->getSyncRelations() as $relationName) {
 			$instance->setAttribute(
@@ -264,7 +264,7 @@ abstract class ModelAdminDecorator
 	 * @param  array  $formInput
 	 * @return void
 	 */
-	public function updateRelations(BaseInterface $instance, $formInput)
+	public function updateRelations($instance, $formInput)
 	{
 		foreach ($this->getSyncRelations() as $relationship) {
 			if (isset($formInput[$relationship . '_relationship'])) {
