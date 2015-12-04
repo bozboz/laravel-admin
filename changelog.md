@@ -39,6 +39,7 @@
 -   Add nicer error page when you edit a resource that doesn't exist
 -   Add basic permissions (bozboz/permissions package)
 -   Ability to edit currently authenticated user's password
+-   Add a default `getValidator` method on `Models\Base` which returns an EmptyValidator object.
 
 ### Changed
 -   $editRules and passesEdit() method on Validator changed to $updateRules and passesUpdate()
