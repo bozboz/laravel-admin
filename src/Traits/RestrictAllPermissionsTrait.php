@@ -16,18 +16,18 @@ trait RestrictAllPermissionsTrait
 		$stack->add($this->getRestrictRule());
 	}
 
-	protected function createPermissions($stack)
+	protected function createPermissions($stack, $instance)
 	{
-		$stack->add($this->getRestrictRule());
+		$stack->add($this->getRestrictRule(), $instance);
 	}
 
-	protected function editPermissions($stack, $id)
+	protected function editPermissions($stack, $instance)
 	{
-		$stack->add($this->getRestrictRule(), $id);
+		$stack->add($this->getRestrictRule(), $instance);
 	}
 
-	protected function deletePermissions($stack, $id)
+	protected function deletePermissions($stack, $instance)
 	{
-		$stack->add($this->getRestrictRule(), $id);
+		$stack->add($this->getRestrictRule(), $instance);
 	}
 }

@@ -15,19 +15,19 @@ class UserAdminController extends ModelAdminController
 		$stack->add('view_users');
 	}
 
-	public function createPermissions($stack)
+	public function createPermissions($stack, $instance)
 	{
-		$stack->add('create_user');
+		$stack->add('create_user', $instance);
 	}
 
-	public function editPermissions($stack, $id)
+	public function editPermissions($stack, $instance)
 	{
-		$stack->add('edit_user', (int)$id);
-		$stack->add('edit_profile', (int)$id);
+		$stack->add('edit_user', $instance);
+		$stack->add('edit_profile', $instance);
 	}
 
-	public function deletePermissions($stack, $id)
+	public function deletePermissions($stack, $instance)
 	{
-		$stack->add('delete_user', (int)$id);
+		$stack->add('delete_user', $instance);
 	}
 }
