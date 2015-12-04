@@ -66,7 +66,7 @@ class CSVReport implements BaseInterface
 	/**
 	 * Render columns for CSV from an instance
 	 *
-	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @param  Bozboz\Admin\Base\Model  $instance
 	 * @return array
 	 */
 	protected function getColumnsFromInstance($instance)
