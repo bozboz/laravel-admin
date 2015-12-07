@@ -12,8 +12,15 @@ class FieldGroup extends Field
 	public function __construct($name, $fields, $attributes=[])
 	{
 		$this->legend = $name;
-		$this->fields = $fields;
+		$this->fields = $this->getFilteredCollectionOfFields($fields);
 		$this->attributes = $attributes;
+	}
+
+	private function getFilteredCollectionOfFields($fields)
+	{
+		if (is_array($fields)) $fields = collect($fields);
+
+		return $fields->filter();
 	}
 
 	public function getJavascript()
