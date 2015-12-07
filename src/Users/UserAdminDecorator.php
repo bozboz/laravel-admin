@@ -1,15 +1,14 @@
 <?php
 
-namespace Bozboz\Admin\Decorators;
+namespace Bozboz\Admin\Users;
 
-use Illuminate\Database\Eloquent\Builder;
-
-use Bozboz\Admin\Fields\TextField;
+use Bozboz\Admin\Base\ModelAdminDecorator;
 use Bozboz\Admin\Fields\EmailField;
 use Bozboz\Admin\Fields\HiddenField;
 use Bozboz\Admin\Fields\PasswordField;
-use Bozboz\Admin\Models\User;
+use Bozboz\Admin\Fields\TextField;
 use Bozboz\Permissions\Permission;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class UserAdminDecorator extends ModelAdminDecorator

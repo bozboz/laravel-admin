@@ -1,8 +1,10 @@
 <?php
 
-namespace Bozboz\Admin\Models;
+namespace Bozboz\Admin\Media;
 
-class Tag extends Base
+use Bozboz\Admin\Base\Model;
+
+class Tag extends Model
 {
 	protected $table = 'media_tags';
 
@@ -10,7 +12,7 @@ class Tag extends Base
 
 	public function media()
 	{
-		return $this->belongsToMany('Bozboz\Admin\Models\Media', 'media_mm_tags');
+		return $this->belongsToMany(Media::class, 'media_mm_tags');
 	}
 
 	public function getValidator()

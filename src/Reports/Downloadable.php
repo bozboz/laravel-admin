@@ -5,7 +5,7 @@ namespace Bozboz\Admin\Reports;
 interface Downloadable
 {
 	/**
-	 * @param  Bozboz\Admin\Models\Base  $instance
+	 * @param  Bozboz\Admin\Base\Model  $instance
 	 * @return array
 	 */
 	public function getColumnsForCSV($instance);

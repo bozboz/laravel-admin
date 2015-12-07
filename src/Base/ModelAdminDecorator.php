@@ -1,23 +1,25 @@
-<?php namespace Bozboz\Admin\Decorators;
+<?php
 
-use Event, Str, Config;
-use Bozboz\Admin\Models\BaseInterface;
-use Bozboz\Admin\Models\Sortable;
+namespace Bozboz\Admin\Base;
+
+use Bozboz\Admin\Base\ModelInterface;
+use Bozboz\Admin\Base\Sortable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Fluent;
 
 abstract class ModelAdminDecorator
 {
 	/**
-	 * @var Bozboz\Admin\Models\BaseInterface
+	 * @var Bozboz\Admin\Base\ModelInterface
 	 */
 	protected $model;
 
 	/**
-	 * @param  Bozboz\Admin\Models\BaseInterface  $model
+	 * @param  Bozboz\Admin\Base\ModelInterface  $model
 	 */
-	public function __construct(BaseInterface $model)
+	public function __construct(ModelInterface $model)
 	{
 		$this->model = $model;
 	}
@@ -25,7 +27,7 @@ abstract class ModelAdminDecorator
 	/**
 	 * Return the label identifying the instance
 	 *
-	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
+	 * @param  Bozboz\Admin\Base\ModelInterface  $instance
 	 * @return mixed
 	 */
 	abstract public function getLabel($instance);
@@ -33,7 +35,7 @@ abstract class ModelAdminDecorator
 	/**
 	 * Return the fields displayed on a create/edit screen
 	 *
-	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
+	 * @param  Bozboz\Admin\Base\ModelInterface  $instance
 	 * @return array
 	 */
 	abstract public function getFields($instance);
@@ -41,7 +43,7 @@ abstract class ModelAdminDecorator
 	/**
 	 * Return the columns to be displayed on an overview screen
 	 *
-	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
+	 * @param  Bozboz\Admin\Base\ModelInterface  $instance
 	 * @return array
 	 */
 	public function getColumns($instance)
@@ -184,7 +186,7 @@ abstract class ModelAdminDecorator
 	/**
 	 * Build an array of fields
 	 *
-	 * @param  Bozboz/Admin/Models/BaseInterface  $instance
+	 * @param  Bozboz\Admin\Base\ModelInterface  $instance
 	 * @return array
 	 */
 	public function buildFields($instance)
@@ -196,7 +198,7 @@ abstract class ModelAdminDecorator
 
 	/**
 	 * @param  array  $attributes
-	 * @return Bozboz\Admin\Models\BaseInterface
+	 * @return Bozboz\Admin\Base\ModelInterface
 	 */
 	public function newModelInstance($attributes = array())
 	{
@@ -205,7 +207,7 @@ abstract class ModelAdminDecorator
 
 	/**
 	 * @param  int  $id
-	 * @return Bozboz\Admin\Models\BaseInterface
+	 * @return Bozboz\Admin\Base\ModelInterface
 	 */
 	public function findInstance($id)
 	{
@@ -237,7 +239,7 @@ abstract class ModelAdminDecorator
 	/**
 	 * Set the related IDs as an attribute on the $instance.
 	 *
-	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
+	 * @param  Bozboz\Admin\Base\ModelInterface  $instance
 	 * @return void
 	 */
 	public function injectRelations($instance)
@@ -260,7 +262,7 @@ abstract class ModelAdminDecorator
 	/**
 	 * Update the many-to-many relationship mappings after a form submission.
 	 *
-	 * @param  Bozboz\Admin\Models\BaseInterface  $instance
+	 * @param  Bozboz\Admin\Base\ModelInterface  $instance
 	 * @param  array  $formInput
 	 * @return void
 	 */

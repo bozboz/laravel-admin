@@ -1,8 +1,10 @@
-<?php namespace Bozboz\Admin\Composers;
+<?php
+
+namespace Bozboz\Admin\Base\Composers;
 
 use Event;
 use Auth;
-use Bozboz\Admin\Components\Menu;
+use Bozboz\Admin\Base\Components\Menu;
 
 class Nav
 {

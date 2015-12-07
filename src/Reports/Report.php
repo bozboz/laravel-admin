@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Reports;
 
-use Bozboz\Admin\Decorators\ModelAdminDecorator;
+use Bozboz\Admin\Base\ModelAdminDecorator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 

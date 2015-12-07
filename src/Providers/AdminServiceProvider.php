@@ -44,7 +44,7 @@ class AdminServiceProvider extends PermissionServiceProvider
 
 		$this->app['view']->composer(
 			'admin::partials.nav',
-			'Bozboz\Admin\Composers\Nav'
+			'Bozboz\Admin\Base\Composers\Nav'
 		);
 	}
 }

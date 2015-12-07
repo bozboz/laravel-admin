@@ -1,4 +1,6 @@
-<?php namespace Bozboz\Admin\Models;
+<?php
+
+namespace Bozboz\Admin\Base;
 
 interface Sortable
 {

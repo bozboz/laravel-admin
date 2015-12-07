@@ -1,6 +1,6 @@
 <?php
 
-namespace Bozboz\Admin\Traits;
+namespace Bozboz\Admin\Base;
 
 trait SanitisesInputTrait
 {

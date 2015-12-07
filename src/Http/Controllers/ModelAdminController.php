@@ -1,7 +1,7 @@
 <?php namespace Bozboz\Admin\Http\Controllers;
 
 use App, Input, Redirect, URL, View;
-use Bozboz\Admin\Decorators\ModelAdminDecorator;
+use Bozboz\Admin\Base\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Report;
 use Bozboz\Permissions\RuleStack;
 use Illuminate\Routing\Controller;

@@ -2,7 +2,7 @@
 
 namespace Bozboz\Admin\Providers;
 
-use Bozboz\Admin\Models\Media;
+use Bozboz\Admin\Media\Media;
 use Illuminate\Support\ServiceProvider;
 
 class MediaLibraryServiceProvider extends ServiceProvider {

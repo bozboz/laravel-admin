@@ -1,4 +1,6 @@
-<?php namespace Bozboz\Admin\Components;
+<?php
+
+namespace Bozboz\Admin\Base\Components;
 
 use Bozboz\Permissions\RuleStack;
 use Illuminate\Support\Fluent;

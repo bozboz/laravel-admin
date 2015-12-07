@@ -1,6 +1,5 @@
 <?php namespace Bozboz\Admin\Http\Controllers;
 
-use Bozboz\Admin\Models\User;
 use Illuminate\Routing\Controller;
 use Redirect, Auth, View, Input;
 use Bozboz\Permissions\Facades\Gate;

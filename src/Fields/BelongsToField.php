@@ -1,14 +1,14 @@
 <?php namespace Bozboz\Admin\Fields;
 
 use Closure, Form;
-use Bozboz\Admin\Decorators\ModelAdminDecorator;
+use Bozboz\Admin\Base\ModelAdminDecorator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\ViewErrorBag;
 
 class BelongsToField extends Field
 {
 	/**
-	 * @param  Bozboz\Admin\Decorators\ModelAdminDecorator  $decorator
+	 * @param  Bozboz\Admin\Base\ModelAdminDecorator  $decorator
 	 * @param  Illuminate\Database\Eloquent\Relations\BelongsTo  $relationship
 	 * @param  array  $attributes
 	 * @param  Closure  $callback

@@ -1,10 +1,11 @@
-<?php namespace Bozboz\Admin\Models;
+<?php
+
+namespace Bozboz\Admin\Base;
 
 use Bozboz\Admin\Services\Validators\EmptyValidator;
-use Bozboz\Admin\Traits\SanitisesInputTrait;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
-abstract class Base extends Model implements BaseInterface
+abstract class Model extends Eloquent implements ModelInterface
 {
 	use SanitisesInputTrait;
 

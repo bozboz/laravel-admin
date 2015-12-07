@@ -1,9 +1,9 @@
 <?php
 
-namespace Bozboz\Admin\Models;
+namespace Bozboz\Admin\Services;
 
 use Bozboz\Admin\Exceptions\UploadException;
-use Bozboz\Admin\Models\Media;
+use Bozboz\Admin\Media\Media;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -19,7 +19,7 @@ class Uploader
 	 * location
 	 *
 	 * @param  Symfony\Component\HttpFoundation\File\UploadedFile  $file
-	 * @param  Bozboz\Admin\Models\Media  $instance
+	 * @param  Bozboz\Admin\Media\Media  $instance
 	 * @throws Bozboz\Admin\Exceptions\UploadException
 	 * @return void
 	 */

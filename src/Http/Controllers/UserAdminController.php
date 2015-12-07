@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Http\Controllers;
 
-use Bozboz\Admin\Decorators\UserAdminDecorator;
+use Bozboz\Admin\Users\UserAdminDecorator;
 use Bozboz\Permissions\Facades\Gate;
 
 class UserAdminController extends ModelAdminController

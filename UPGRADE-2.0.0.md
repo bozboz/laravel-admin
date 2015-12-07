@@ -7,7 +7,9 @@
 	- Translate your "recipies" into templates, using the expressive API
 	  (http://image.intervention.io/use/basics#editing)
 
-- The Bozboz\MediaLibrary namespace has been removed. The full mapping of old classes to new is as follows:
+- The Bozboz\MediaLibrary namespace has been consolidated with Bozboz\Admin.
+  There have also been a number of directories inside Bozboz\Admin reorganised.
+  The full mapping of old classes to new is as follows:
 	- Bozboz\MediaLibrary\MediaLibraryServiceProvider => Bozboz\Admin\Providers\MediaLibraryServiceProvider
 	- Bozboz\MediaLibrary\Controllers\MediaLibraryAdminController => Bozboz\Admin\Http\Controllers\MediaLibraryAdminController
 	- Bozboz\MediaLibrary\Decorators\MediaAdminDecorator => Bozboz\Admin\Decorators\MediaAdminDecorator
@@ -16,6 +18,20 @@
 	- Bozboz\MediaLibrary\Models\Media => Bozboz\Admin\Models\Media
 	- Bozboz\MediaLibrary\Models\MediableTrait => Bozboz\Admin\Traits\MediableTrait
 	- Bozboz\MediaLibrary\Validators\MediaValidator => Bozboz\Admin\Services\Validators\MediaValidator
+	- Bozboz\Admin\AdminServiceProvider => Bozboz\Admin\Providers\AdminServiceProvider
+	- Bozboz\Admin\Components\Menu => Bozboz\Admin\Base\Components\Menu
+	- Bozboz\Admin\Composers\Nav => Bozboz\Admin\Base\Composers\Nav
+	- Bozboz\Admin\Decorators\ModelAdminDecorator => Bozboz\Admin\Base\ModelAdminDecorator
+	- Bozboz\Admin\Decorators\MediaAdminDecorator => Bozboz\Admin\Media\MediaAdminDecorator
+	- Bozboz\Admin\Decorators\UserAdminDecorator => Bozboz\Admin\Users\UserAdminDecorator
+	- Bozboz\Admin\Models\Base => Bozboz\Admin\Base\Model
+	- Bozboz\Admin\Models\BaseInterface => Bozboz\Admin\Base\ModelInterface
+	- Bozboz\Admin\Models\Media => Bozboz\Admin\Media\Media
+	- Bozboz\Admin\Models\Sortable => Bozboz\Admin\Base\Sortable
+	- Bozboz\Admin\Models\User => Bozboz\Admin\Users\User
+	- Bozboz\Admin\Traits\DynamicSlugTrait => Bozboz\Admin\Base\DynamicSlugTrait
+	- Bozboz\Admin\Traits\MediableTrait => Bozboz\Admin\Media\MediaTrait
+	- Bozboz\Admin\Traits\SanitisesInputTrait => Bozboz\Admin\Base\SanitisesInputTrait
 
 - Several classes in the Admin namespace have also been moved. The full mapping is as follows:
 	- Bozboz\Admin\AdminServiceProvider => Bozboz\Admin\Providers\AdminServiceProvider

@@ -2,12 +2,12 @@
 
 namespace Bozboz\Admin\Permissions;
 
-use Bozboz\Admin\Models\BaseInterface;
-use Bozboz\Admin\Models\User;
-use Bozboz\Admin\Traits\SanitisesInputTrait;
+use Bozboz\Admin\Base\ModelInterface;
+use Bozboz\Admin\Users\User;
+use Bozboz\Admin\Base\SanitisesInputTrait;
 use Bozboz\Permissions\Permission as BasePermission;
 
-class Permission extends BasePermission implements BaseInterface
+class Permission extends BasePermission implements ModelInterface
 {
 	use SanitisesInputTrait;
 
@@ -18,6 +18,6 @@ class Permission extends BasePermission implements BaseInterface
 
 	public function user()
 	{
-		return $this->belongsTo('Bozboz\Admin\Models\User');
+		return $this->belongsTo(User::class);
 	}
 }
