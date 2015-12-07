@@ -20,7 +20,7 @@ class DateTimeField extends Field
 
 	public function getInput()
 	{
-		return sprintf('<input class="form-control" type="text" id="%s">%s', $this->altName, Form::hidden($this->name, null, ['id' => $this->sanitisedName]));
+		return sprintf('<input type="text" id="%s">%s', $this->altName, Form::hidden($this->name, null, ['id' => $this->sanitisedName]));
 	}
 
 	public function getJavascript()
