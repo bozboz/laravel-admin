@@ -73,3 +73,8 @@
   `injectSyncRelations` methods on `Decorators\MediaAdminDecorator` have been
   removed. Remove this typehint on any subclasses that override either of these
   methods.
+
+- Protected method `renderCreateFormFor` on `ModelAdminController` has been
+  removed, in favour of the more generic `renderFormFor` method, which is called
+  in both the `edit()` and `create()` methods. Update calls to this method in
+  controllers with a call to `renderFormFor($instance, $this->createView, 'POST', 'store')`.
