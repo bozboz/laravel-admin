@@ -62,22 +62,7 @@ abstract class ModelAdminController extends Controller
 
 		if ( ! $this->canCreate($instance)) App::abort(403);
 
-		return $this->renderCreateFormFor($instance);
-	}
-
-	protected function renderCreateFormFor($instance)
-	{
-	    $fields = $this->decorator->buildFields($instance);
-
-	    return View::make($this->createView, array(
-	        'model' => $instance,
-	        'modelName' => $this->decorator->getHeading(),
-	        'fields' => $fields,
-	        'method' => 'POST',
-	        'action' => $this->getActionName('store'),
-	        'listingUrl' => $this->getListingUrl($instance),
-	        'javascript' => $this->consolidateJavascript($fields)
-	    ));
+		return $this->renderFormFor($instance, $this->createView, 'POST', 'store');
 	}
 
 	public function store()
@@ -107,21 +92,12 @@ abstract class ModelAdminController extends Controller
 	public function edit($id)
 	{
 		$instance = $this->decorator->findInstance($id);
+
 		$this->decorator->injectRelations($instance);
 
 		if ( ! $this->canEdit($instance)) App::abort(403);
 
-		$fields = $this->decorator->buildFields($instance);
-
-		return View::make($this->editView, array(
-			'model' => $instance,
-			'modelName' => $this->decorator->getHeading(),
-			'fields' => $fields,
-			'action' => array($this->getActionName('update'), $instance->id),
-			'listingUrl' => $this->getListingUrl($instance),
-			'method' => 'PUT',
-			'javascript' => $this->consolidateJavascript($fields)
-		));
+		return $this->renderFormFor($instance, $this->editView, 'PUT', 'update');
 	}
 
 	public function update($id)
@@ -158,6 +134,21 @@ abstract class ModelAdminController extends Controller
 		return Redirect::back()->with('model.deleted', sprintf(
 			'Successfully deleted "%s"',
 			$this->decorator->getLabel($instance)
+		));
+	}
+
+	protected function renderFormFor($instance, $view, $method, $action)
+	{
+		$fields = $this->decorator->buildFields($instance);
+
+		return View::make($view, array(
+			'model' => $instance,
+			'modelName' => $this->decorator->getHeading(),
+			'fields' => $fields,
+			'method' => $method,
+			'action' => $this->getActionName($action),
+			'listingUrl' => $this->getListingUrl($instance),
+			'javascript' => $this->consolidateJavascript($fields)
 		));
 	}
 
