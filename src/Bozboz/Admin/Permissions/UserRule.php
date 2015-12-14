@@ -7,13 +7,13 @@ use Bozboz\Permissions\UserInterface;
 
 class UserRule extends GlobalRule
 {
-	public function validFor(UserInterface $user, $param)
+	public function validFor(UserInterface $user, $instance)
 	{
-		return $this->isOwnProfile($user, $param) && $this->checkUserPermissions($user, $param);
+		return $this->isOwnProfile($user, $instance) && $this->checkUserPermissions($user, $instance);
 	}
 
-	protected function isOwnProfile(UserInterface $user, $id)
+	protected function isOwnProfile(UserInterface $user, $instance)
 	{
-		return $user->id === $id;
+		return $user->id === $instance->id;
 	}
 }

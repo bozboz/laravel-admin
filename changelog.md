@@ -12,6 +12,7 @@
 -   Add basic permissions (bozboz/permissions package)
 -   Ability to edit currently authenticated user's password
 -   Add a default `getValidator` method on `Models\Base` which returns an EmptyValidator object.
+-   `check(callable)` method added to `Reports\Row` class to assert if an action (callable) can be performed on the row
 
 ### Changed
 -   $editRules and passesEdit() method on Validator changed to $updateRules and passesUpdate()

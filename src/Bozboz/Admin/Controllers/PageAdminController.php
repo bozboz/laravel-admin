@@ -25,18 +25,18 @@ class PageAdminController extends ModelAdminController
 		$stack->add('view_pages');
 	}
 
-	public function createPermissions($stack)
+	public function createPermissions($stack, $instance)
 	{
-		$stack->add('create_page');
+		$stack->add('create_page', $instance);
 	}
 
-	public function editPermissions($stack, $id)
+	public function editPermissions($stack, $instance)
 	{
-		$stack->add('edit_page', (int)$id);
+		$stack->add('edit_page', $instance);
 	}
 
-	public function deletePermissions($stack, $id)
+	public function deletePermissions($stack, $instance)
 	{
-		$stack->add('delete_page', (int)$id);
+		$stack->add('delete_page', $instance);
 	}
 }
