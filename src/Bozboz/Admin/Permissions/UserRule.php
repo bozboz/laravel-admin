@@ -2,10 +2,10 @@
 
 namespace Bozboz\Admin\Permissions;
 
-use Bozboz\Permissions\Rules\GlobalRule;
+use Bozboz\Permissions\Rules\Rule;
 use Bozboz\Permissions\UserInterface;
 
-class UserRule extends GlobalRule
+class UserRule extends Rule
 {
 	public function validFor(UserInterface $user, $instance)
 	{
