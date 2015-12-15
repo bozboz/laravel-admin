@@ -4,17 +4,21 @@ class URLField extends TextField
 {
 	protected $baseUrl;
 
-	public function __construct($name, $routeOrAttributes, $attributes = [])
+	public function __construct($nameOrAttributes, $routeOrAttributes = null, $attributes = [])
 	{
-		if (is_array($routeOrAttributes)) {
+		if (is_array($nameOrAttributes)) {
+			$attributes = $nameOrAttributes;
+			$route = $attributes['route'];
+		} elseif (is_array($routeOrAttributes)) {
 			$attributes = $routeOrAttributes;
 			$route = $attributes['route'];
 		} else {
 			$route = $routeOrAttributes;
 		}
+
 		$this->baseUrl = route($route, '');
 
-		parent::__construct($name, $attributes);
+		parent::__construct($nameOrAttributes, $attributes);
 	}
 
 	protected function defaultAttributes()
