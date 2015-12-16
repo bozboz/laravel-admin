@@ -27,10 +27,7 @@
             "Bozboz\\Admin\\Tests\\": "tests/",
             "Bozboz\\Admin\\Database\\": "database/",
             "Bozboz\\MediaLibrary\\": "src/Bozboz/MediaLibrary"
-        },
-        "classmap": [
-            "src/migrations"
-        ]
+        }
     },
     "minimum-stability": "stable",
     "extra": {
