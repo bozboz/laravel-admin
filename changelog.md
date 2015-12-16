@@ -1,6 +1,28 @@
 # Bozboz Admin Package Changelog
 
-## Version 1.1.0 (FUTURE)
+## Version 1.1.5 (2015-12-16)
+-   Fix rendering of nested structures in NestedReport when working with kalnoy/nestedset models
+-   Fix bug where image thumbnails aren't displaying in the media browser
+
+
+## Version 1.1.4 (2015-10-25)
+-   Fix handling of nulled `parent_id` for Baum models
+
+
+## Version 1.1.3 (2015-10-22)
+-   Fix media macro for case where $subject is null
+
+
+## Version 1.1.2 (2015-10-13)
+-   Add "external_link" attribute to Page's $fillable
+
+
+## Version 1.1.1 (2015-09-17)
+-   Fix issue with HTML::media macro when passing in Media instances
+-   Add `Media::getFilenameOrFallback` method
+
+
+## Version 1.1.0 (2015-08-26)
 
 ### Added
 -   Add listingPerPageLimit method to ModelAdminDecorator
@@ -35,6 +57,14 @@
 -   Correctly display fallback image for non-image Media
 -   Fix password reset
 -   Prevent media with many relation from attempting to sync null relations
+
+
+## Version 1.0.12 (2015-12-16)
+-   Fix rendering of nested structures in NestedReport when working with kalnoy/nestedset models
+
+
+## Version 1.0.11 (2015-11-24)
+-   Fix bug where image thumbnails aren't displaying in the media browser
 
 
 ## Version 1.0.10 (2015-10-25)
