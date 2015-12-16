@@ -1,3 +1,7 @@
+# Version 1.0.12 (2015-12-16)
+-   Fix rendering of nested structures in NestedReport when working with kalnoy/nestedset models
+
+
 # Version 1.0.11 (2015-11-24)
 -   Fix bug where image thumbnails aren't displaying in the media browser
 
