@@ -9,14 +9,30 @@
 -   View can now be overridden in constructor of Report class
 -   Add items per page select to listing filters
 -   Add nicer error page when you edit a resource that doesn't exist
--   Add basic permissions (bozboz/permissions package)
+-   Add basic permissions (bozboz/permissions package) for CRUD functionality
 -   Ability to edit currently authenticated user's password
 -   Add a default `getValidator` method on `Models\Base` which returns an EmptyValidator object.
--   `check(callable)` method added to `Reports\Row` class to assert if an action (callable) can be performed on the row
+-   `Reports\Row::check(callable)` method added to assert if an action (callable) can be performed on the row
+-   `Components\Menu::gate($rule)` method added to check if a specific view permission is allowed for current user
+-   Added "list" relations, to go alongside sync relations
+-   Added Overridable methods to ModelAdminController: `canView`, `canCreate`, `canEdit`, `canDelete`
+-   Default functionality of above methods can be extended by overriding: `viewPermissions`, `createPermissions`, `editPermissions` and `deletePermissions` methods
+-   Added option to interface to change amount of results displayed per listing
+-   Nested item <li> elements in partials/nested-item view now contain a data-id attribute
 
 ### Changed
 -   $editRules and passesEdit() method on Validator changed to $updateRules and passesUpdate()
 -   Unlink media file after deleting the DB row
+-   To log into the admin, a user must now have an "admin_login" rule, as opposed to the is_admin boolean flag.
+-   Create, update and destroy actions are now passed in from the controller to the overview view
+-   If an instance is not found when editing, updating or destroying an instance, a ModelNotFoundException will now be thrown
+-   Listings of sortable models will no longer be paginated
+-   Password can now be changed when editing a user
+-   Fields\URLField can accept a route name as a string as its second argument
+-   Subclasses of Models\Base no longer need to define a getValidator method
+-   Upload functionality within `MediaLibraryAdminController` has been moved into separate `Uploader` class
+-   The drop area for uploads on the HTMLEditorField has been restricted
+-   Basic `$canEdit`/`$canDelete` boolean variables have been replaced with closures, accepting a `Reporting\Row` instance
 
 ### Deprecated
 -   Deprecate Services\Validator::passesEdit() method
