@@ -48,8 +48,8 @@ abstract methods which must be defined on the subclass:
 
 -   `getLabel` should return a suitable string representation of the model;
     typically the title of the entity
--   `getFields` should return an array of `Bozboz\Admin\Fields\Field`
-    instances, used to create/edit the entity on the relevant screens.
+-   `getFields` should return an array of `Fields\Field` instances, used to
+    create/edit the entity on the relevant screens.
 
 There are a number of optional methods to override:
 
@@ -64,8 +64,8 @@ There are a number of optional methods to override:
 
 Similarly to subclasses of `ModelAdminController`, decorators must be passed a
 dependency in its constructor. This should be the entity which this decorator
-represents in the admin. This class must implement the
-`Bozboz\Admin\Models\BaseInterface` class.
+represents in the admin. This class must implement the `Models\BaseInterface`
+class.
 
 E.g.:
 
@@ -114,7 +114,7 @@ public function getFields($instance)
 Listing filters can be specified in decorators to provide options in the admin
 to filter results returned on the admin overview screen. They should be defined
 in a `getListingFilters` method on the respective decorator. This method should
-return an array of `Bozboz\Admin\Reports\Filters\ListingFilter` subclasses.
+return an array of `Reports\Filters\ListingFilter` subclasses.
 
 The two types of listing filter out the box; `ArrayListingFilter` and
 `SearchListingFilter`.
@@ -163,17 +163,17 @@ to query however you please.
 
 ## Models
 
-All models within this package extend `Bozboz\Admin\Models\Base`
-(an implementation of `Bozboz\Admin\Models\BaseInterface`).
+All models within this package extend `Models\Base` (an implementation of
+`Models\BaseInterface`).
 
 
 ## Validators
 
 Validation rules for a model are stored in seperate validator service classes.
-Validation subclasses should extend the
-`Bozboz\Admin\Services\Validators\Validator` class. It is the responsiblity of a
-model wishing to be validated to define its own Validator subtype in which to
-define the validation rules to validate the model's data.
+Validation subclasses should extend the `Services\Validators\Validator` class.
+It is the responsiblity of a model wishing to be validated to define its own
+Validator subtype in which to define the validation rules to validate the
+model's data.
 
 ### "rules" property
 
