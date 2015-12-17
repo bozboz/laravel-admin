@@ -11,9 +11,10 @@
 
 ## Controllers
 
-`ModelAdminController` is an abstract class containing standard CRUD
+`Controllers\ModelAdminController` is an abstract class containing standard CRUD
 functionality for a model. Subclasses - as a bare minimum - must define a
-constructor which passes in an instance of `ModelAdminDecorator`. E.g.:
+constructor which passes in an instance of `Decorators\ModelAdminDecorator`.
+E.g.:
 
 ```php
 use Bozboz\Admin\Decorators\FooAdminDecorator;
@@ -36,15 +37,15 @@ Route::resource('admin/foo', 'FooAdminController');
 ```
 
 This will enable entire CRUD functionality on the model defined in the
-`ModelAdminDecorator` dependency.
+`Decorators\ModelAdminDecorator` dependency.
 
 
 ## Decorators
 
 Decorators contain information about how a model is displayed in the Admin area.
 If you have a model that should be accessed in the Admin area, it needs an
-associated decorator. The abstract `ModelAdminDecorator` class contains several
-abstract methods which must be defined on the subclass:
+associated decorator. The abstract `Decorators\ModelAdminDecorator` class
+contains several abstract methods which must be defined on the subclass:
 
 -   `getLabel` should return a suitable string representation of the model;
     typically the title of the entity
@@ -62,10 +63,10 @@ There are a number of optional methods to override:
 -   `modifyListingQuery` allows the listing query to be modified, e.g. to
     eager load relations, or apply a custom sort or conditional.
 
-Similarly to subclasses of `ModelAdminController`, decorators must be passed a
-dependency in its constructor. This should be the entity which this decorator
-represents in the admin. This class must implement the `Models\BaseInterface`
-class.
+Similarly to subclasses of `Controllers\ModelAdminController`, decorators must
+be passed a dependency in its constructor. This should be the entity which this
+decorator represents in the admin. This class must implement the
+`Models\BaseInterface` class.
 
 E.g.:
 
@@ -96,8 +97,8 @@ public function getSyncRelations()
 ```
 
 Additionally, for this relationship to be interacted with in the admin, an
-instance of the `BelongsToManyField` should be returned by the decorator's
-`getFields` method:
+instance of the `Fields\BelongsToManyField` should be returned by the
+decorator's `getFields` method:
 
 ```
 public function getFields($instance)
@@ -206,7 +207,7 @@ Uses the datetimepicker addon which extends the functionality of the jQuery UI
 DatePicker. Documentation can be found
 [here](http://trentrichardson.com/examples/timepicker/).
 
-When instantiating a DateTimeField object, it is possible to override the
+When instantiating a `DateTimeField` object, it is possible to override the
 default datetimepicker configuration by passing in an array mapped to the
 'options' key.
 
