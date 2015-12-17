@@ -35,17 +35,17 @@ class BelongsToField extends Field
 		$all = $this->generateQueryBuilder()->get();
 		$options = ['' => 'Select'];
 
-		foreach ($all as $i => $model) {
-			$options[$model->getKey()] = $this->decorator->getLabel($model);
-		}
-
 		$selected = $this->relation->first();
 
 		if ($selected && ! $all->contains($selected)) {
+			$all->push($selected);
+		}
+
+		foreach ($all as $model) {
 			$options[$model->getKey()] = $this->decorator->getLabel($model);
 		}
 
-		return Form::select($this->relation->getForeignKey(), $options, null, [
+		return Form::select($this->name, $options, null, [
 			'class' => 'form-control'
 		]);
 	}
