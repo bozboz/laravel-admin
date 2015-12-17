@@ -111,7 +111,54 @@ public function getFields($instance)
 
 ### Filtering the listing
 
-TODO
+Listing filters can be specified in decorators to provide options in the admin
+to filter results returned on the admin overview screen. They should be defined
+in a `getListingFilters` method on the respective decorator. This method should
+return an array of `Bozboz\Admin\Reports\Filters\ListingFilter` subclasses.
+
+The two types of listing filter out the box; `ArrayListingFilter` and
+`SearchListingFilter`.
+
+### Array listing filter
+This filter accepts an array of options and renders a select box. It accepts an
+optional 3rd argument which allows for custom filtering logic. If this is omitted,
+a lookup based on the filter name as done on that model based on the option
+selected. If a string is passed as the 3rd argument, this field will be used in
+the where conditional. If the argument is a callback, this will be run to filter
+the listing query.
+
+A fourth "default" value can be specified, if the default option isn't 0/empty.
+
+E.g.:
+
+```
+public function getListingFilters()
+{
+    return [
+        new ArrayListingFilter('state',
+            ['All', 'New', 'Completed', 'Failed']
+        , 'state_id', 2)
+    ];
+}
+```
+
+### Search listing filter
+This filter offers a fairly basic LIKE search of specified columns for each word
+entered. The fields it uses to search will default to the name of the filter
+(first argument), but these can optionally be specified by passing in an array
+as the second argument.
+
+The default query will perform a wildcard LIKE search for the query term on each
+column define defined on construction of the filter. E.g. a search for "foo" on
+columns "name" and "description" will produce the following SQL where condition:
+
+```
+WHERE `name` LIKE '%foo%' OR `description` LIKE '%foo%'
+```
+
+To override this default implementation, you can pass in a closure as the
+constructor's 3rd argument, which takes a query builder object, and allows you
+to query however you please.
 
 
 ## Models
