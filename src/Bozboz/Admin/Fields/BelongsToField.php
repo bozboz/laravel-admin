@@ -3,7 +3,6 @@
 use Closure, Form;
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\ViewErrorBag;
 
 class BelongsToField extends Field
 {
@@ -16,6 +15,10 @@ class BelongsToField extends Field
 	public function __construct(ModelAdminDecorator $decorator, BelongsTo $relation, array $attributes = [], Closure $callback = null)
 	{
 		parent::__construct($attributes);
+
+		if ( ! $this->name) {
+			$this->name = $relation->getForeignKey();
+		}
 
 		$this->decorator = $decorator;
 		$this->relation = $relation;
@@ -73,15 +76,6 @@ class BelongsToField extends Field
 		};
 
 		return Form::label($this->relation->getForeignKey(), $this->label ?: $defaultLabel());
-	}
-
-	public function getErrors(ViewErrorBag $errors)
-	{
-		$name = $this->relation->getForeignKey();
-
-		if ($errors->first($name)) {
-			return '<p><strong>' . $errors->first($name) . '</strong></p>';
-		}
 	}
 }
 
