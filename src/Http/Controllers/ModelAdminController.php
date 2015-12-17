@@ -146,7 +146,7 @@ abstract class ModelAdminController extends Controller
 			'modelName' => $this->decorator->getHeading(),
 			'fields' => $fields,
 			'method' => $method,
-			'action' => array($this->getActionName('update'), $instance->id),
+			'action' => [$this->getActionName($action), $instance->id],
 			'listingUrl' => $this->getListingUrl($instance),
 			'javascript' => $this->consolidateJavascript($fields)
 		));
