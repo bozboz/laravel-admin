@@ -44,13 +44,17 @@ class Row
 
 	/**
 	 * Check if underlying entity can do something, based on result of passed-in
-	 * callable.
+	 * callable or boolean value
 	 *
-	 * @param  callable  $assertion
+	 * @param  callable|boolean  $assertion
 	 * @return boolean
 	 */
-	public function check(callable $assertion)
+	public function check($assertion)
 	{
+		if ( ! is_callable($assertion)) {
+			return $assertion;
+		}
+
 		return $assertion($this->model);
 	}
 }
