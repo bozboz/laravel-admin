@@ -42,6 +42,10 @@
 -   CSVReport can now handle large data sets without running out of memory
 
 
+## Version 1.1.6 (2015-12-21)
+-   Fix issue with duplicate captions when uploading multiple files using media uploader
+
+
 ## Version 1.1.5 (2015-12-16)
 -   Fix rendering of nested structures in NestedReport when working with kalnoy/nestedset models
 -   Fix bug where image thumbnails aren't displaying in the media browser
@@ -99,6 +103,10 @@
 -   Correctly display fallback image for non-image Media
 -   Fix password reset
 -   Prevent media with many relation from attempting to sync null relations
+
+
+# Version 1.0.13 (2015-12-21)
+-   Fix issue with duplicate captions when uploading multiple files using media uploader
 
 
 ## Version 1.0.12 (2015-12-16)

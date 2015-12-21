@@ -68,14 +68,12 @@ class MediaLibraryAdminController extends ModelAdminController
 	public function store()
 	{
 		$data = [];
-		$captions = Input::get('caption', []);
-		$is_private = Input::get('is_private', []);
 
 		if (Input::hasFile('files')) {
 			foreach(Input::file('files') as $index => $file) {
 				$instance = $this->decorator->newModelInstance($file);
-				$instance->caption = array_key_exists($index, $captions) ? $captions[$index] : null;
-				$instance->private = array_key_exists($index, $is_private) && ! empty($is_private[$index]);
+				$instance->caption = Input::get('caption', '');
+				$instance->private = Input::get('is_private', false);
 				$this->uploader->upload($file, $instance);
 				$data[] = [
 					'url' => action(__CLASS__ . '@edit', $instance->id),
