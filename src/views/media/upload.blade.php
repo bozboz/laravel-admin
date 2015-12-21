@@ -163,7 +163,8 @@
 			}
 
 			data.formData = {
-				caption: caption.val()
+				caption: caption.val(),
+				is_private: data.context.find('.is-private').is(':checked')
 			};
 		});
 	});

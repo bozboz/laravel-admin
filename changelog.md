@@ -1,5 +1,9 @@
 # Bozboz Admin Package Changelog
 
+## Version 1.1.6 (2015-12-21)
+-   Fix issue with duplicate captions when uploading multiple files using media uploader
+
+
 ## Version 1.1.5 (2015-12-16)
 -   Fix rendering of nested structures in NestedReport when working with kalnoy/nestedset models
 -   Fix bug where image thumbnails aren't displaying in the media browser
