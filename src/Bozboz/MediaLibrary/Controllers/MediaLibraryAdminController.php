@@ -55,7 +55,6 @@ class MediaLibraryAdminController extends ModelAdminController
 	public function store()
 	{
 		$data = [];
-		$captions = Input::get('caption', []);
 
 		if (Input::hasFile('files')) {
 			foreach(Input::file('files') as $index => $file) {
@@ -64,10 +63,7 @@ class MediaLibraryAdminController extends ModelAdminController
 				$filename = $this->cleanFilename($file->getClientOriginalName());
 				$uploadSuccess = $file->move(public_path('media/' . $type), $filename);
 
-				if (array_key_exists($index, $captions)) {
-					$newMedia->caption = $captions[$index];
-				}
-
+				$newMedia->caption = Input::get('caption');
 				$newMedia->filename = $filename;
 				$newMedia->type = $type;
 				$newMedia->save();

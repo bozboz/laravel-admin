@@ -142,14 +142,17 @@
 		});
 
 		$('#fileupload').bind('fileuploadsubmit', function (e, data) {
-			var emptyCaptions = $('.caption').filter(function() {
-				return !this.value;
-			});
-			if (emptyCaptions.length) {
-				emptyCaptions.first().focus();
+			var caption = data.context.find('.caption');
+
+			if (caption.val() === '') {
+				caption.focus();
 				data.context.find('button').prop('disabled', false);
 				return false;
 			}
+
+			data.formData = {
+				caption: caption.val()
+			};
 		});
 	});
 </script>

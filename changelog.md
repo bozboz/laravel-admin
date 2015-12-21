@@ -1,3 +1,7 @@
+# Version 1.0.13 (2015-12-21)
+-   Fix issue with duplicate captions when uploading multiple files using media uploader
+
+
 # Version 1.0.12 (2015-12-16)
 -   Fix rendering of nested structures in NestedReport when working with kalnoy/nestedset models
 
