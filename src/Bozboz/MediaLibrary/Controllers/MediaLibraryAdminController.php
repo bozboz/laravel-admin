@@ -64,13 +64,13 @@ class MediaLibraryAdminController extends ModelAdminController
 	public function store()
 	{
 		$data = [];
-		$captions = Input::get('caption', []);
 		$is_private = Input::get('is_private', []);
 
 		if (Input::hasFile('files')) {
 			foreach(Input::file('files') as $index => $file) {
 				$newMedia = $this->decorator->newModelInstance($file);
 
+				$newMedia->caption = Input::get('caption');
 				$newMedia->filename = $this->cleanFilename($file->getClientOriginalName());
 				$newMedia->type = $this->getTypeFromFile($file);
 
@@ -79,10 +79,6 @@ class MediaLibraryAdminController extends ModelAdminController
 					$newMedia->private = true;
 				} else {
 					$uploadSuccess = $file->move(public_path($newMedia->getDirectory()), $newMedia->filename);
-				}
-
-				if (array_key_exists($index, $captions)) {
-					$newMedia->caption = $captions[$index];
 				}
 
 				if ($uploadSuccess) {
