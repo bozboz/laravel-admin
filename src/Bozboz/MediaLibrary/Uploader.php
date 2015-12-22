@@ -30,10 +30,8 @@ class Uploader
 
 		$instance->save();
 
-		$instance->filename = $this->cleanFilename($file->getClientOriginalName());
 		$instance->type = $this->getTypeFromFile($file);
-
-		$instance->filename = preg_replace('/(\.[^.]+)$/', sprintf('-%s$1', $instance->id), $instance->filename);
+		$instance->filename = $this->generateUniqueFilenameFromFile($file, $instance->id);
 
 		if ($instance->private) {
 			$destination = storage_path();
@@ -56,17 +54,20 @@ class Uploader
 	}
 
 	/**
-	 * Clean uploaded filename string
+	 * Generate a unique, clean filename from the uploaded file
 	 *
-	 * @param  string  $filename
+	 * @param  Symfony\Component\HttpFoundation\File\UploadedFile  $file
+	 * @param  string  $uniqueString
 	 * @return string
 	 */
-	protected function cleanFilename($filename)
+	protected function generateUniqueFilenameFromFile(UploadedFile $file, $uniqueString)
 	{
-		$filenameParts = explode('.', $filename);
-		$filenameParts[0] = Str::slug($filenameParts[0]);
+		$filename = $file->getClientOriginalName();
+		$extension = $file->getClientOriginalExtension();
 
-		return implode('.', $filenameParts);
+		$filenameWithoutExtension = str_replace('.' . $extension, '', $filename);
+
+		return Str::slug($filenameWithoutExtension) . '-' . $uniqueString . '.' . $extension;
 	}
 
 	/**
