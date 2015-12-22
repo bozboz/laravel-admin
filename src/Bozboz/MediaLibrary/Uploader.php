@@ -4,9 +4,9 @@ namespace Bozboz\MediaLibrary;
 
 use Bozboz\MediaLibrary\Exceptions\UploadException;
 use Bozboz\MediaLibrary\Models\Media;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use DB;
 
 class Uploader
 {
