@@ -21,7 +21,7 @@ var ACCESS_PRIVATE = {{ Media::ACCESS_PRIVATE }};
 		url: '/admin/media',
 		dataType: 'json',
 		formData: {
-			'is_private[]': ( settings.mediaAccess === ACCESS_PRIVATE ? 1 : 0 )
+			'is_private': ( settings.mediaAccess === ACCESS_PRIVATE ? 1 : 0 )
 		},
 		progressall: function (e, data) {
 			var progress = parseInt(data.loaded / data.total * 100, 10);
