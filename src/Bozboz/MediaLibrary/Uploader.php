@@ -6,6 +6,7 @@ use Bozboz\MediaLibrary\Exceptions\UploadException;
 use Bozboz\MediaLibrary\Models\Media;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use DB;
 
 class Uploader
 {
@@ -25,8 +26,14 @@ class Uploader
 	 */
 	public function upload(UploadedFile $file, Media $instance)
 	{
+		DB::beginTransaction();
+
+		$instance->save();
+
 		$instance->filename = $this->cleanFilename($file->getClientOriginalName());
 		$instance->type = $this->getTypeFromFile($file);
+
+		$instance->filename = preg_replace('/(\.[^.]+)$/', sprintf('-%s$1', $instance->id), $instance->filename);
 
 		if ($instance->private) {
 			$destination = storage_path();
@@ -36,9 +43,14 @@ class Uploader
 
 		$uploadSuccess = $file->move($destination . '/' . $instance->getDirectory(), $instance->filename);
 
-		if ( ! $uploadSuccess) throw new UploadException;
+		if ( ! $uploadSuccess) {
+			DB::rollback();
+			throw new UploadException;
+		}
 
 		$instance->save();
+
+		DB::commit();
 
 		return $instance;
 	}
