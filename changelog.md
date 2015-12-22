@@ -42,6 +42,10 @@
 -   CSVReport can now handle large data sets without running out of memory
 
 
+## Version 1.1.7 (2015-12-22)
+-   Fix uploading of inline media caused by bug in 1.1.6
+
+
 ## Version 1.1.6 (2015-12-21)
 -   Fix issue with duplicate captions when uploading multiple files using media uploader
 
