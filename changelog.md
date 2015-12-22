@@ -19,6 +19,7 @@
 -   Default functionality of above methods can be extended by overriding: `viewPermissions`, `createPermissions`, `editPermissions` and `deletePermissions` methods
 -   Added option to interface to change amount of results displayed per listing
 -   Nested item <li> elements in partials/nested-item view now contain a data-id attribute
+-   Append id to uploaded media filename to keep them unique
 
 ### Changed
 -   $editRules and passesEdit() method on Validator changed to $updateRules and passesUpdate()
