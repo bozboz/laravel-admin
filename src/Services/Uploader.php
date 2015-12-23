@@ -4,6 +4,7 @@ namespace Bozboz\Admin\Services;
 
 use Bozboz\Admin\Exceptions\UploadException;
 use Bozboz\Admin\Media\Media;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -25,8 +26,12 @@ class Uploader
 	 */
 	public function upload(UploadedFile $file, Media $instance)
 	{
-		$instance->filename = $this->cleanFilename($file->getClientOriginalName());
+		DB::beginTransaction();
+
+		$instance->save();
+
 		$instance->type = $this->getTypeFromFile($file);
+		$instance->filename = $this->generateUniqueFilenameFromFile($file, $instance->id);
 
 		if ($instance->private) {
 			$destination = storage_path();
@@ -36,25 +41,33 @@ class Uploader
 
 		$uploadSuccess = $file->move($destination . '/' . $instance->getDirectory(), $instance->filename);
 
-		if ( ! $uploadSuccess) throw new UploadException;
+		if ( ! $uploadSuccess) {
+			DB::rollback();
+			throw new UploadException;
+		}
 
 		$instance->save();
+
+		DB::commit();
 
 		return $instance;
 	}
 
 	/**
-	 * Clean uploaded filename string
+	 * Generate a unique, clean filename from the uploaded file
 	 *
-	 * @param  string  $filename
+	 * @param  Symfony\Component\HttpFoundation\File\UploadedFile  $file
+	 * @param  string  $uniqueString
 	 * @return string
 	 */
-	protected function cleanFilename($filename)
+	protected function generateUniqueFilenameFromFile(UploadedFile $file, $uniqueString)
 	{
-		$filenameParts = explode('.', $filename);
-		$filenameParts[0] = Str::slug($filenameParts[0]);
+		$filename = $file->getClientOriginalName();
+		$extension = $file->getClientOriginalExtension();
 
-		return implode('.', $filenameParts);
+		$filenameWithoutExtension = str_replace('.' . $extension, '', $filename);
+
+		return Str::slug($filenameWithoutExtension) . '-' . $uniqueString . '.' . $extension;
 	}
 
 	/**

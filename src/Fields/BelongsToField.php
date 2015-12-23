@@ -3,7 +3,6 @@
 use Closure, Form;
 use Bozboz\Admin\Base\ModelAdminDecorator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\ViewErrorBag;
 
 class BelongsToField extends Field
 {
@@ -16,6 +15,10 @@ class BelongsToField extends Field
 	public function __construct(ModelAdminDecorator $decorator, BelongsTo $relation, array $attributes = [], Closure $callback = null)
 	{
 		parent::__construct($attributes);
+
+		if ( ! $this->name) {
+			$this->name = $relation->getForeignKey();
+		}
 
 		$this->decorator = $decorator;
 		$this->relation = $relation;
@@ -32,17 +35,17 @@ class BelongsToField extends Field
 		$all = $this->generateQueryBuilder()->get();
 		$options = ['' => 'Select'];
 
-		foreach ($all as $i => $model) {
-			$options[$model->getKey()] = $this->decorator->getLabel($model);
-		}
-
 		$selected = $this->relation->first();
 
 		if ($selected && ! $all->contains($selected)) {
+			$all->push($selected);
+		}
+
+		foreach ($all as $model) {
 			$options[$model->getKey()] = $this->decorator->getLabel($model);
 		}
 
-		return Form::select($this->relation->getForeignKey(), $options, null, [
+		return Form::select($this->name, $options, null, [
 			'class' => 'form-control'
 		]);
 	}
@@ -73,15 +76,6 @@ class BelongsToField extends Field
 		};
 
 		return Form::label($this->relation->getForeignKey(), $this->label ?: $defaultLabel());
-	}
-
-	public function getErrors(ViewErrorBag $errors)
-	{
-		$name = $this->relation->getForeignKey();
-
-		if ($errors->first($name)) {
-			return '<p><strong>' . $errors->first($name) . '</strong></p>';
-		}
 	}
 }
 

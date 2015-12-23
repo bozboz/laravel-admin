@@ -37,13 +37,31 @@
 -   View can now be overridden in constructor of Report class
 -   Add items per page select to listing filters
 -   Add nicer error page when you edit a resource that doesn't exist
--   Add basic permissions (bozboz/permissions package)
+-   Add basic permissions (bozboz/permissions package) for CRUD functionality
 -   Ability to edit currently authenticated user's password
 -   Add a default `getValidator` method on `Models\Base` which returns an EmptyValidator object.
+-   `Reports\Row::check(callable)` method added to assert if an action (callable) can be performed on the row
+-   `Components\Menu::gate($rule)` method added to check if a specific view permission is allowed for current user
+-   Added "list" relations, to go alongside sync relations
+-   Added Overridable methods to ModelAdminController: `canView`, `canCreate`, `canEdit`, `canDelete`
+-   Default functionality of above methods can be extended by overriding: `viewPermissions`, `createPermissions`, `editPermissions` and `deletePermissions` methods
+-   Added option to interface to change amount of results displayed per listing
+-   Nested item <li> elements in partials/nested-item view now contain a data-id attribute
+-   Append id to uploaded media filename to keep them unique
 
 ### Changed
 -   $editRules and passesEdit() method on Validator changed to $updateRules and passesUpdate()
 -   Unlink media file after deleting the DB row
+-   To log into the admin, a user must now have an "admin_login" rule, as opposed to the is_admin boolean flag.
+-   Create, update and destroy actions are now passed in from the controller to the overview view
+-   If an instance is not found when editing, updating or destroying an instance, a ModelNotFoundException will now be thrown
+-   Listings of sortable models will no longer be paginated
+-   Password can now be changed when editing a user
+-   Fields\URLField can accept a route name as a string as its second argument
+-   Subclasses of Models\Base no longer need to define a getValidator method
+-   Upload functionality within `MediaLibraryAdminController` has been moved into separate `Uploader` class
+-   The drop area for uploads on the HTMLEditorField has been restricted
+-   Basic `$canEdit`/`$canDelete` boolean variables have been replaced with closures, accepting a `Reporting\Row` instance
 
 ### Deprecated
 -   Deprecate Services\Validator::passesEdit() method
@@ -51,6 +69,36 @@
 
 ### Fixed
 -   CSVReport can now handle large data sets without running out of memory
+
+
+## Version 1.1.7 (2015-12-22)
+-   Fix uploading of inline media caused by bug in 1.1.6
+
+
+## Version 1.1.6 (2015-12-21)
+-   Fix issue with duplicate captions when uploading multiple files using media uploader
+
+
+## Version 1.1.5 (2015-12-16)
+-   Fix rendering of nested structures in NestedReport when working with kalnoy/nestedset models
+-   Fix bug where image thumbnails aren't displaying in the media browser
+
+
+## Version 1.1.4 (2015-10-25)
+-   Fix handling of nulled `parent_id` for Baum models
+
+
+## Version 1.1.3 (2015-10-22)
+-   Fix media macro for case where $subject is null
+
+
+## Version 1.1.2 (2015-10-13)
+-   Add "external_link" attribute to Page's $fillable
+
+
+## Version 1.1.1 (2015-09-17)
+-   Fix issue with HTML::media macro when passing in Media instances
+-   Add `Media::getFilenameOrFallback` method
 
 
 ## Version 1.1.0 (2015-08-26)
@@ -88,6 +136,18 @@
 -   Correctly display fallback image for non-image Media
 -   Fix password reset
 -   Prevent media with many relation from attempting to sync null relations
+
+
+# Version 1.0.13 (2015-12-21)
+-   Fix issue with duplicate captions when uploading multiple files using media uploader
+
+
+## Version 1.0.12 (2015-12-16)
+-   Fix rendering of nested structures in NestedReport when working with kalnoy/nestedset models
+
+
+## Version 1.0.11 (2015-11-24)
+-   Fix bug where image thumbnails aren't displaying in the media browser
 
 
 ## Version 1.0.10 (2015-10-25)

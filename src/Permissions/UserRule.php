@@ -2,14 +2,14 @@
 
 namespace Bozboz\Admin\Permissions;
 
-use Bozboz\Permissions\Rules\GlobalRule;
+use Bozboz\Permissions\Rules\Rule;
 use Bozboz\Permissions\UserInterface;
 
-class UserRule extends GlobalRule
+class UserRule extends Rule
 {
 	public function validFor(UserInterface $user, $instance)
 	{
-		return $this->isOwnProfile($user, $instance) && $this->checkUserPermissions($user, null);
+		return $this->isOwnProfile($user, $instance) && $this->checkUserPermissions($user, $instance);
 	}
 
 	protected function isOwnProfile(UserInterface $user, $instance)

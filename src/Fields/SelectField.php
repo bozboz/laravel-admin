@@ -14,6 +14,6 @@ class SelectField extends Field
 		$attributes = $this->attributes;
 		unset($attributes['options']);
 
-		return Form::select($this->name, $this->options, null, $attributes);
+		return Form::select($this->name, $this->options, $this->value, $attributes);
 	}
 }

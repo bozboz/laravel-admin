@@ -21,7 +21,7 @@ var ACCESS_PRIVATE = {{ $access_private }};
 		url: '/admin/media',
 		dataType: 'json',
 		formData: {
-			'is_private[]': ( settings.mediaAccess === ACCESS_PRIVATE ? 1 : 0 ),
+			'is_private': ( settings.mediaAccess === ACCESS_PRIVATE ? 1 : 0 ),
 			'_token': $('input[name=_token]').val()
 		},
 		dropZone: '.js-file-upload-{{ $id }}',

@@ -3,7 +3,6 @@
 namespace Bozboz\Admin\Http\Controllers;
 
 use Bozboz\Admin\Permissions\PermissionAdminDecorator;
-use Illuminate\Support\Facades\View;
 
 class PermissionAdminController extends ModelAdminController
 {

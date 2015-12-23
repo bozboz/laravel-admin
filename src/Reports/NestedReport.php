@@ -10,8 +10,8 @@ class NestedReport extends Report
 		$tree = array();
 
 		foreach($this->rows as $inst) {
-			$inst->parent_id = $inst->parent_id ?: 0;
-			$this->tree[$inst->parent_id][] = $this->getRowFromInstance($inst);
+			$index = $inst->parent_id ?: 0;
+			$this->tree[$index][] = $this->getRowFromInstance($inst);
 		}
 
 		return count($this->tree)? $this->tree[0] : array();
