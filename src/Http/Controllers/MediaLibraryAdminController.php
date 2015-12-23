@@ -43,19 +43,17 @@ class MediaLibraryAdminController extends ModelAdminController
 
 	private function ajaxJSONData()
 	{
-		$data = array();
-
 		$items = $this->decorator->getListingModels();
 
-		foreach($items as $inst) {
-			$data[] = array(
+		$data = $items->map(function($inst) {
+			return [
 				'id' => $inst->id,
 				'caption' => $inst->caption ? $inst->caption : $inst->filename,
 				'filename' => $inst->filename,
 				'private' => $inst->private,
 				'type' => $inst->type
-			);
-		}
+			];
+		});
 
 		return Response::json([
 			'media' => $data,
