@@ -6,11 +6,15 @@ class Row
 	private $data;
 	private $model;
 
-	public function __construct($id, array $data, $model)
+	public function __construct($id, $modelOrData, array $data = null)
 	{
 		$this->id = $id;
-		$this->data = $data;
-		$this->model = $model;
+		if (is_array($modelOrData)) {
+			$this->data = $modelOrData;
+		} else {
+			$this->model = $modelOrData;
+			$this->data = $data;
+		}
 	}
 
 	public function getId()

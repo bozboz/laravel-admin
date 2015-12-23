@@ -9,7 +9,6 @@
 -   Remove dependancy on Base model and replace it with BaseInterface
 -   Consolidate migrations
 -   ModelAdminDecorator::getFields method no longer fires "admin.fields.built" event
--   Reports\Row class no longer accepts an instance as its second argument
 -   ModelAdminDecorator::findInstance now throws a ModelNotFoundException if no matching ID is found.
 
 ### Fixed
