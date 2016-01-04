@@ -3,6 +3,7 @@
 namespace Bozboz\Admin\Permissions;
 
 use Bozboz\Admin\Decorators\ModelAdminDecorator;
+use Bozboz\Admin\Decorators\UserAdminDecorator;
 use Bozboz\Admin\Fields\BelongsToField;
 use Bozboz\Admin\Fields\SelectField;
 use Bozboz\Admin\Fields\TextField;
@@ -15,9 +16,13 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 {
 	protected $permissions;
 
-	public function __construct(Permission $permission, Handler $permissions)
+	protected $users;
+
+	public function __construct(Permission $permission, Handler $permissions, UserAdminDecorator $users)
 	{
 		$this->permissions = $permissions;
+
+		$this->users = $users;
 
 		parent::__construct($permission);
 	}
@@ -48,7 +53,7 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 				'class' => 'select2'
 			]),
 			new TextField('param'),
-			new BelongsToField(app('Bozboz\Admin\Decorators\UserAdminDecorator'), $instance->user()),
+			new BelongsToField($this->users, $instance->user()),
 		];
 	}
 
@@ -57,7 +62,7 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 		return [
 			'Action' => $instance->action,
 			'Param' => $instance->param ?: '-',
-			'User' => link_to_action('admin.users.edit', $instance->user->first_name, [$instance->user->id])
+			'User' => link_to_action('admin.users.edit', $this->users->getLabel($instance), [$instance->user->id])
 		];
 	}
 
