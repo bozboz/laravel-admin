@@ -7,7 +7,6 @@ use Bozboz\Admin\Fields\EmailField;
 use Bozboz\Admin\Fields\HiddenField;
 use Bozboz\Admin\Fields\PasswordField;
 use Bozboz\Admin\Models\User;
-use Bozboz\Permissions\Permission;
 use Illuminate\Support\Facades\Auth;
 
 class UserAdminDecorator extends ModelAdminDecorator
@@ -27,12 +26,7 @@ class UserAdminDecorator extends ModelAdminDecorator
 
 	public function modifyListingQuery(Builder $query)
 	{
-		$query->whereHas('permissions', function($q) {
-			$q->where(function($q) {
-				$q->where('action', 'admin_login')
-				  ->orWhere('action', Permission::WILDCARD);
-			});
-		})->latest();
+		$query->hasPermission('admin_login')->latest();
 	}
 
 	public function getLabel($instance)
