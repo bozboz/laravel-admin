@@ -109,11 +109,6 @@ class User extends Base implements UserInterface, RemindableInterface, Permissio
 		return $this->hasMany(Permission::class, 'user_id');
 	}
 
-	public function getParams($action)
-	{
-		return $this->permissions()->whereAction($action)->lists('param');
-	}
-
 	public function grantPermission($action, $param = null)
 	{
 		$attributes = compact('action', 'param');
