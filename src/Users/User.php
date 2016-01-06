@@ -139,4 +139,14 @@ class User extends Model implements AuthenticatableContract,
 	{
 		$this->permissions()->whereAction($action)->whereParam($param)->delete();
 	}
+
+	public function scopeHasPermission($builder, $action)
+	{
+		$builder->whereHas('permissions', function($q) use ($action) {
+			$q->where(function($q) use ($action) {
+				$q->where('action', $action)
+				  ->orWhere('action', Permission::WILDCARD);
+			});
+		});
+	}
 }
