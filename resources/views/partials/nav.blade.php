@@ -22,18 +22,27 @@
 					</a>
 				</li>
 				@foreach($menu->getTopLevelItems() as $item => $items)
-					<li class="dropdown {{ $menu->activeClassForUrls($items) }}">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-file-text"></i>
-							{{ $item }}
-							<b class="caret"></b>
-						</a>
-						<ul class="dropdown-menu">
-							@foreach ($items as $item => $link)
-								<li class="{{ $menu->activeClassForPartialUrl($link) }}">{!! link_to($link, $item) !!}</li>
-							@endforeach
-						</ul>
-					</li>
+					@if (count($items)>1)
+						<li class="dropdown {{ $menu->activeClassForUrls($items) }}">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-file-text"></i>
+								{{ $item }}
+								<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								@foreach ($items as $item => $link)
+									<li class="{{ $menu->activeClassForPartialUrl($link) }}">{!! link_to($link, $item) !!}</li>
+								@endforeach
+							</ul>
+						</li>
+					@else
+						<li class="{{ $menu->activeClassForUrl(reset($items)) }}">
+							<a href="{!! reset($items) !!}">
+								<i class="fa fa-file-text"></i>
+								{{ $item }}
+							</a>
+						</li>
+					@endif
 				@endforeach
 				@if ($menu->gate('view_users'))
 					<li class="{{ $menu->activeClassForPartialUrl(url('admin/users')) }}">
