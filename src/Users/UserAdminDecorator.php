@@ -38,7 +38,7 @@ class UserAdminDecorator extends ModelAdminDecorator
 
 	public function getLabel($instance)
 	{
-		return $instance->getLabel();
+		return $instance->first_name ? $instance->first_name . ' ' . $instance->last_name : $instance->email;
 	}
 
 	public function getFields($instance)

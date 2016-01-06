@@ -58,7 +58,7 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 		return [
 			'Action' => $instance->action,
 			'Param' => $instance->param ?: '-',
-			'User' => link_to_route('admin.users.edit', $instance->user->getLabel(), [$instance->user->id])
+			'User' => link_to_route('admin.users.edit', $instance->user->first_name, [$instance->user->id])
 		];
 	}
 
