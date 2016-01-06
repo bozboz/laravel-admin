@@ -2,12 +2,7 @@
 
 namespace Bozboz\Admin\Permissions;
 
-<<<<<<< HEAD:src/Permissions/PermissionAdminDecorator.php
 use Bozboz\Admin\Base\ModelAdminDecorator;
-=======
-use Bozboz\Admin\Decorators\ModelAdminDecorator;
-use Bozboz\Admin\Decorators\UserAdminDecorator;
->>>>>>> origin/1.2:src/Bozboz/Admin/Permissions/PermissionAdminDecorator.php
 use Bozboz\Admin\Fields\BelongsToField;
 use Bozboz\Admin\Fields\SelectField;
 use Bozboz\Admin\Fields\TextField;
@@ -67,7 +62,7 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 		return [
 			'Action' => $instance->action,
 			'Param' => $instance->param ?: '-',
-			'User' => link_to_action('admin.users.edit', $this->users->getLabel($instance->user), [$instance->user->id])
+			'User' => link_to_route('admin.users.edit', $this->users->getLabel($instance->user), [$instance->user->id])
 		];
 	}
 

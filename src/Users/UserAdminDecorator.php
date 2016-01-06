@@ -7,7 +7,6 @@ use Bozboz\Admin\Fields\EmailField;
 use Bozboz\Admin\Fields\HiddenField;
 use Bozboz\Admin\Fields\PasswordField;
 use Bozboz\Admin\Fields\TextField;
-use Bozboz\Admin\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
