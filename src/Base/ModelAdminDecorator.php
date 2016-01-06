@@ -191,9 +191,7 @@ abstract class ModelAdminDecorator
 	 */
 	public function buildFields($instance)
 	{
-		$fieldsObj = new Fluent(array_filter($this->getFields($instance)));
-
-		return $fieldsObj->toArray();
+		return array_filter($this->getFields($instance));
 	}
 
 	/**
