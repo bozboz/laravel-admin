@@ -40,6 +40,9 @@ abstract class Validator
 		$rules = $this->replacePlaceholders($attributes, $rules);
 
 		$validation = \Validator::make($attributes, $rules, $this->messages);
+
+		$this->validating($validation);
+
 		$this->errors = $validation->messages();
 
 		return $validation->passes();
@@ -58,5 +61,10 @@ abstract class Validator
 		}
 
 		return $rules;
+	}
+
+	protected function validating($validator)
+	{
+		// override if conditional formatting is required
 	}
 }
