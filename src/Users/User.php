@@ -89,6 +89,11 @@ class User extends Model implements AuthenticatableContract,
 		return $this->email;
 	}
 
+	public function getLabel()
+	{
+		return $this->first_name ? $this->first_name . ' ' . $this->last_name : $this->email;
+	}
+
 	public function setPasswordAttribute($value)
 	{
 		if (!empty($value)) {
