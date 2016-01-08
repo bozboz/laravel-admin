@@ -7,7 +7,6 @@ use Bozboz\Admin\Base\Sortable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Fluent;
 
 abstract class ModelAdminDecorator
 {
