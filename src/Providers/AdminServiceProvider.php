@@ -22,10 +22,6 @@ class AdminServiceProvider extends PermissionServiceProvider
 		$this->loadViewsFrom($packageRoot . 'resources/views', 'admin');
 
 		$this->publishes([
-			$packageRoot . 'public' => public_path('vendor/admin'),
-		], 'public');
-
-		$this->publishes([
 			$packageRoot . 'database/migrations' => database_path('migrations')
 		], 'migrations');
 
