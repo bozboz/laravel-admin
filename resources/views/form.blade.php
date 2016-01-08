@@ -30,5 +30,9 @@
 
 @section('scripts')
 	@parent
-	{!! $javascript !!}
+	<script>
+		@foreach($fields as $field)
+			{!! $field->getJavascript() !!}
+		@endforeach
+	</script>
 @stop

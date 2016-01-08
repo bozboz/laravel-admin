@@ -148,7 +148,6 @@ abstract class ModelAdminController extends Controller
 			'method' => $method,
 			'action' => [$this->getActionName($action), $instance->id],
 			'listingUrl' => $this->getListingUrl($instance),
-			'javascript' => $this->consolidateJavascript($fields)
 		));
 	}
 
@@ -160,16 +159,6 @@ abstract class ModelAdminController extends Controller
 				return Redirect::action($reportParams['editAction'], $instance->getKey());
 			}
 		}
-	}
-
-	protected function consolidateJavascript($fields)
-	{
-		$javascript = [];
-		foreach ($fields as $field) {
-			$javascript[] = $field->getJavascript();
-		}
-
-		return '<script>' . implode(PHP_EOL, array_filter($javascript)) . '</script>' . PHP_EOL;
 	}
 
 	/**
