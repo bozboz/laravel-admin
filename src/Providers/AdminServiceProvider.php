@@ -19,23 +19,22 @@ class AdminServiceProvider extends PermissionServiceProvider
 
 		$packageRoot = __DIR__ . '/../../';
 
-		$this->loadViewsFrom($packageRoot . '/resources/views', 'admin');
+		$this->loadViewsFrom($packageRoot . 'resources/views', 'admin');
 
 		$this->publishes([
-			$packageRoot . '/public' => public_path('vendor/admin'),
+			$packageRoot . 'public' => public_path('vendor/admin'),
 		], 'public');
 
 		$this->publishes([
-			$packageRoot . '/database/migrations' => database_path('migrations')
+			$packageRoot . 'database/migrations' => database_path('migrations')
 		], 'migrations');
 
 		$this->publishes([
-			$packageRoot . '/config/admin.php' => config_path('admin.php')
+			$packageRoot . 'config/admin.php' => config_path('admin.php')
 		], 'config');
 
 		if (! $this->app->routesAreCached()) {
-			require $packageRoot . '/src/Http/routes.php';
-			require $packageRoot . '/src/Http/filters.php';
+			require $packageRoot . 'src/Http/routes.php';
 		}
 
 		$permissions = $this->app['permission.handler'];
