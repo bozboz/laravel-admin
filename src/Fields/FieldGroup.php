@@ -25,9 +25,9 @@ class FieldGroup extends Field
 
 	public function getJavascript()
 	{
-		return implode(PHP_EOL, $this->fields->map(function($field) {
+		return $this->fields->map(function($field) {
 			return $field->getJavascript();
-		}));
+		})->implode(PHP_EOL);
 	}
 
 	public function getInput()
