@@ -18,5 +18,7 @@ class GuestMiddleware
     public function handle($request, Closure $next)
     {
         if (Auth::check()) return Redirect::to('admin');
+
+        return $next($request);
     }
 }

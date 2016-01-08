@@ -25,5 +25,7 @@ class AuthMiddleware
 		if (Auth::guest()) {
 			return Redirect::guest('admin/login');
 		}
+
+		return $next($request);
     }
 }

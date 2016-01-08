@@ -26,5 +26,4 @@ Route::group(array('namespace' => 'Bozboz\Admin\Http\Controllers', 'prefix' => '
 	});
 
 	Route::controller('password', 'RemindersController');
-
 });
