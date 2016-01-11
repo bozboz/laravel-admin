@@ -40,7 +40,7 @@ class MediaBrowser extends Field
 	 */
 	protected function calculateName()
 	{
-		return $this->isManyRelation() ? 'media_relationship' : $this->relation->getForeignKey();
+		return $this->isManyRelation() ? $this->relation->getRelationName().'_relationship' : $this->relation->getForeignKey();
 	}
 
 	/**
