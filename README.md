@@ -82,12 +82,11 @@ class PageAdminDecorator extends ModelAdminDecorator
 }
 ```
 
-### Saving Many-To-Many relationships
+### Representing many-to-many relationships
 
-As the mapping between the two models is stored inside a join table, there's a
-small amount of additional to get this data synced in the admin. A decorator
-must define a `getSyncRelations` method, which returns an array of relations
-which should be synced. E.g.
+Belongs-to-many relations can also be represented in the admin, in the form of sync and list relations. Both these types use a Select2 field and allow you to manage a many-to-many relation between 2 instances.
+
+A sync relation is the more common relationship, and allows a related models to be selected from a list, and on save, creates the mapping between the model being edited and the related models. To define a sync relation, add a `getSyncRelations` method to your decorator and return an array of the relations to sync, e.g.:
 
 ```
 public function getSyncRelations()
@@ -96,16 +95,43 @@ public function getSyncRelations()
 }
 ```
 
-Additionally, for this relationship to be interacted with in the admin, an
-instance of the `Fields\BelongsToManyField` should be returned by the
-decorator's `getFields` method:
+List relations are useful when the related model can be represented by a simple string (e.g. tags). List relations are like sync relations, except they can be composed within the edit/create screen. Using select2's "tags" option, you can add new options from within the select2 input. Any new instances created will be saved when the parent model is saved.
+
+List relations are defined similarly to sync relations, except the field to save the new string into must be stated, e.g.:
+
+```
+public function getListRelations()
+{
+    return [
+        'tags' => 'name'
+    ];
+}
+```
+
+In the above example, the Tag model must contain a "name" attribute.
+
+Once any sync/list relations have been defined, to represent them in the edited model's form, you must add an instance of `BelongsToManyField` to the decorator's `getFields` method:
 
 ```
 public function getFields($instance)
 {
     return [
         ..
-        new BelongsToManyField(new FooDecorator(new Foo)), $instance->foos());
+        new BelongsToManyField(new FooDecorator(new Foo), $instance->foos());
+    ];
+}
+```
+
+Additionally, for a list relation, to enable the "tags" functionality of Select2, you must set a `data-tags` attribute in the BelongsToManyField params:
+
+```
+public function getFields($instance)
+{
+    return [
+        ..
+        new BelongsToManyField(new TagDecorator(new Tag), $instance->tags(), [
+            'data-tags' => true
+        ]);
     ];
 }
 ```
