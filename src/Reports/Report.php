@@ -84,6 +84,7 @@ class Report implements BaseInterface
 			'heading' => $this->decorator->getHeading(true),
 			'modelName' => $this->decorator->getHeading(false),
 			'identifier' => $identifier,
+			'newButtonPartial' => 'admin::partials.new',
 		];
 
 		return View::make($this->view, $params);

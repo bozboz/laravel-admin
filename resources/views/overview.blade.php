@@ -3,7 +3,7 @@
 @section('main')
 @parent
 	@section('report_header')
-		@include('admin::partials.new')
+		@include($newButtonPartial)
 		<h1>{{ $heading }}</h1>
 
 		@if (Session::has('model'))
@@ -68,7 +68,7 @@
 
 	@section('report_footer')
 		{!! $report->getFooter() !!}
-		@include('admin::partials.new')
+		@include($newButtonPartial)
 	@show
 
 	@section('scripts')
