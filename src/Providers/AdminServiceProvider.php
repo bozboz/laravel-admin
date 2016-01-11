@@ -8,6 +8,10 @@ class AdminServiceProvider extends PermissionServiceProvider
 {
 	public function register()
 	{
+		// Register middlewares
+		$this->app['router']->middleware('auth', \Bozboz\Admin\Http\Middleware\AuthMiddleware::class);
+		$this->app['router']->middleware('guest', \Bozboz\Admin\Http\Middleware\GuestMiddleware::class);
+
 		// Call the PermissionServiceProvider's register method
 		parent::register();
 	}
