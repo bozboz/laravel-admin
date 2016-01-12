@@ -75,16 +75,16 @@ abstract class ModelAdminController extends Controller
 		$input = $this->decorator->sanitiseInput($input);
 
 		if ($validation->failsStore($input)) {
-			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
-		} else {
-			$this->saveInTransaction($modelInstance, $input);
-
-			$response = $this->reEdit($modelInstance) ?: $this->getStoreResponse($modelInstance);
-			$response->with('model.created', sprintf(
-				'Successfully created "%s"',
-				$this->decorator->getLabel($modelInstance)
-			));
+			return Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
+
+		$this->saveInTransaction($modelInstance, $input);
+
+		$response = $this->reEdit($modelInstance) ?: $this->getStoreResponse($modelInstance);
+		$response->with('model.created', sprintf(
+			'Successfully created "%s"',
+			$this->decorator->getLabel($modelInstance)
+		));
 
 		return $response;
 	}
@@ -108,16 +108,16 @@ abstract class ModelAdminController extends Controller
 		$input[$modelInstance->getKeyName()] = $modelInstance->getKey();
 
 		if ($validation->failsUpdate($input)) {
-			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
-		} else {
-			$this->saveInTransaction($modelInstance, $input);
-
-			$response = $this->reEdit($modelInstance) ?: $this->getUpdateResponse($modelInstance);
-			$response->with('model.updated', sprintf(
-				'Successfully updated "%s"',
-				$this->decorator->getLabel($modelInstance)
-			));
+			return Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
+
+		$this->saveInTransaction($modelInstance, $input);
+
+		$response = $this->reEdit($modelInstance) ?: $this->getUpdateResponse($modelInstance);
+		$response->with('model.updated', sprintf(
+			'Successfully updated "%s"',
+			$this->decorator->getLabel($modelInstance)
+		));
 
 		return $response;
 	}
