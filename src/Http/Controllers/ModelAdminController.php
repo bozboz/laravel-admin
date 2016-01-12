@@ -5,6 +5,7 @@ use Bozboz\Admin\Base\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Report;
 use Bozboz\Permissions\RuleStack;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 abstract class ModelAdminController extends Controller
 {
@@ -73,17 +74,16 @@ abstract class ModelAdminController extends Controller
 		$validation = $modelInstance->getValidator();
 		$input = $this->decorator->sanitiseInput($input);
 
-		if ($validation->passesStore($input)) {
-			$modelInstance->fill($input);
-			$modelInstance->save();
-			$this->decorator->updateRelations($modelInstance, $input);
+		if ($validation->failsStore($input)) {
+			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
+		} else {
+			$this->save($modelInstance, $input);
+
 			$response = $this->reEdit($modelInstance) ?: $this->getStoreResponse($modelInstance);
 			$response->with('model.created', sprintf(
 				'Successfully created "%s"',
 				$this->decorator->getLabel($modelInstance)
 			));
-		} else {
-			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
 
 		return $response;
@@ -107,20 +107,33 @@ abstract class ModelAdminController extends Controller
 		$input = $this->decorator->sanitiseInput(Input::except('after_save'));
 		$input[$modelInstance->getKeyName()] = $modelInstance->getKey();
 
-		if ($validation->passesUpdate($input)) {
-			$modelInstance->fill($input);
-			$modelInstance->save();
-			$this->decorator->updateRelations($modelInstance, $input);
+		if ($validation->failsUpdate($input)) {
+			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
+		} else {
+			$this->save($modelInstance, $input);
+
 			$response = $this->reEdit($modelInstance) ?: $this->getUpdateResponse($modelInstance);
 			$response->with('model.updated', sprintf(
 				'Successfully updated "%s"',
 				$this->decorator->getLabel($modelInstance)
 			));
-		} else {
-			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		}
 
 		return $response;
+	}
+
+	protected function save($modelInstance, $input)
+	{
+		DB::beginTransaction();
+		try {
+			$modelInstance->fill($input);
+			$modelInstance->save();
+			$this->decorator->updateRelations($modelInstance, $input);
+		} catch (Exception $e) {
+			DB::rollback();
+			throw $e;
+		}
+		DB::commit();
 	}
 
 	public function destroy($id)

@@ -15,9 +15,19 @@ abstract class Validator
 		return $this->passes($attributes, $this->getStoreRules());
 	}
 
+	public function failsStore($attributes)
+	{
+		return !$this->passesStore($attributes);
+	}
+
 	public function passesUpdate($attributes)
 	{
 		return $this->passes($attributes, $this->getUpdateRules());
+	}
+
+	public function failsUpdate($attributes)
+	{
+		return !$this->passesUpdate($attributes);
 	}
 
 	protected function getStoreRules()
