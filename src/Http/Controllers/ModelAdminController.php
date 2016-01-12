@@ -77,7 +77,7 @@ abstract class ModelAdminController extends Controller
 		if ($validation->failsStore($input)) {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		} else {
-			$this->save($modelInstance, $input);
+			$this->saveInTransaction($modelInstance, $input);
 
 			$response = $this->reEdit($modelInstance) ?: $this->getStoreResponse($modelInstance);
 			$response->with('model.created', sprintf(
@@ -110,7 +110,7 @@ abstract class ModelAdminController extends Controller
 		if ($validation->failsUpdate($input)) {
 			$response = Redirect::back()->withErrors($validation->getErrors())->withInput();
 		} else {
-			$this->save($modelInstance, $input);
+			$this->saveInTransaction($modelInstance, $input);
 
 			$response = $this->reEdit($modelInstance) ?: $this->getUpdateResponse($modelInstance);
 			$response->with('model.updated', sprintf(
@@ -122,18 +122,23 @@ abstract class ModelAdminController extends Controller
 		return $response;
 	}
 
-	protected function save($modelInstance, $input)
+	protected function saveInTransaction($modelInstance, $input)
 	{
 		DB::beginTransaction();
 		try {
-			$modelInstance->fill($input);
-			$modelInstance->save();
-			$this->decorator->updateRelations($modelInstance, $input);
+			$this->save($modelInstance, $input);
 		} catch (Exception $e) {
 			DB::rollback();
 			throw $e;
 		}
 		DB::commit();
+	}
+
+	protected function save($modelInstance, $input)
+	{
+		$modelInstance->fill($input);
+		$modelInstance->save();
+		$this->decorator->updateRelations($modelInstance, $input);
 	}
 
 	public function destroy($id)
