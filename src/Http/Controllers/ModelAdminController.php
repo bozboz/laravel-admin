@@ -124,14 +124,9 @@ abstract class ModelAdminController extends Controller
 
 	protected function saveInTransaction($modelInstance, $input)
 	{
-		DB::beginTransaction();
-		try {
+		DB::transaction(function() use ($modelInstance, $input) {
 			$this->save($modelInstance, $input);
-		} catch (Exception $e) {
-			DB::rollback();
-			throw $e;
-		}
-		DB::commit();
+		});
 	}
 
 	protected function save($modelInstance, $input)
