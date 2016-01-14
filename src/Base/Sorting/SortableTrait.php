@@ -8,8 +8,8 @@ trait SortableTrait
 {
 	static public function bootSortableTrait()
 	{
-		static::created([new static, 'resortRowsCreated']);
-		static::deleted([new static, 'resortRowsDeleted']);
+		static::created([static::class, 'resortRowsCreated']);
+		static::deleted([static::class, 'resortRowsDeleted']);
 	}
 
 	/**
