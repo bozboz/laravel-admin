@@ -3,7 +3,7 @@
 namespace Bozboz\Admin\Base;
 
 use Bozboz\Admin\Base\ModelInterface;
-use Bozboz\Admin\Base\Sortable;
+use Bozboz\Admin\Base\Sortable as DeprecatedSortable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
@@ -319,7 +319,17 @@ abstract class ModelAdminDecorator
 	 */
 	public function isSortable()
 	{
-		return $this->model instanceof Sortable;
+		return $this->model instanceof \Bozboz\Admin\Base\Sorting\Sortable || $this->model instanceof DeprecatedSortable;
+	}
+
+	/**
+	 * Determine if underlying model is sortable
+	 *
+	 * @return boolean
+	 */
+	public function isDeprecatedSortable()
+	{
+		return $this->model instanceof DeprecatedSortable;
 	}
 
 	/**

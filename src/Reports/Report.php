@@ -80,7 +80,7 @@ class Report implements BaseInterface
 		$identifier = $this->decorator->getListingIdentifier();
 
 		$params += [
-			'sortableClass' => $this->decorator->isSortable() ? ' sortable' : '',
+			'sortableClass' => $this->getSortableClass(),
 			'report' => $this,
 			'heading' => $this->decorator->getHeading(true),
 			'modelName' => $this->decorator->getHeading(false),
@@ -89,5 +89,14 @@ class Report implements BaseInterface
 		];
 
 		return View::make($this->view, $params);
+	}
+
+	protected function getSortableClass()
+	{
+		if ($this->decorator->isDeprecatedSortable()) {
+			return ' deprecated-sortable sortable';
+		} elseif ($this->decorator->isSortable()) {
+			return ' sortable';
+		}
 	}
 }
