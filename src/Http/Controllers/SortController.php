@@ -10,12 +10,12 @@ class SortController extends Controller
 	public function sort()
 	{
 		$model = Input::get('model');
-		$factory = (new $model);
+		$factory = new $model;
 
 		if ($factory instanceof DeprecatedSortable) {
 			$items = Input::get('items');
 			$sorter = new Sorter;
-			$sorter->sort(new $model, $items);
+			$sorter->sort($factory, $items);
 			return;
 		}
 
