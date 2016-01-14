@@ -58,7 +58,7 @@ trait SortableTrait
 		if (abs($difference)) {
 			$shift = $difference / abs($difference);
 			$factory->modifySortingQuery($this)->whereBetween('sorting', [min($from, $to), max($from, $to)])->update([
-				$sortColumn => DB::raw($sortColumn.'+'.$shift)
+				$sortBy => DB::raw($sortColumn.'+'.$shift)
 			]);
 
 			$this->$sortBy = $to;
