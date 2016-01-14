@@ -11,6 +11,26 @@ trait SortableTrait
 	}
 
 	/**
+	 * Retrieve sorting value of current instance
+	 *
+	 * @return int
+	 */
+	protected function getSortingValue()
+	{
+		return $this->getAttribute($this->sortBy());
+	}
+
+	/**
+	 * Set sorting value on current instance
+	 *
+	 * @param  int  $value
+	 */
+	protected function setSortingValue($value)
+	{
+		$this->setAttribute($this->sortBy(), $value);
+	}
+
+	/**
 	 * Modify sorting query before resorting rows if table contains more than
 	 * one sorted list.
 	 *
@@ -26,14 +46,12 @@ trait SortableTrait
 	 */
 	public function resortRowsCreated(Sortable $instance)
 	{
-		$sortBy = $instance->sortBy();
-
-		if (!$instance->$sortBy) {
+		if ( ! $instance->getSortingValue()) {
 			$instance->newQuery()
 			         ->modifySortingQuery($instance)
 			         ->incrementSort();
 
-			$instance->$sortBy = 1;
+			$instance->setSortingValue(1);
 			$instance->save();
 		}
 	}
@@ -45,11 +63,9 @@ trait SortableTrait
 	 */
 	public function resortRowsDeleted(Sortable $instance)
 	{
-		$sortBy = $instance->sortBy();
-
 		$instance->newQuery()
 		         ->modifySortingQuery($instance)
-		         ->where($sortBy, '>', $instance->$sortBy)
+		         ->where($this->sortBy(), '>', $instance->getSortingValue())
 		         ->decrementSort();
 	}
 
@@ -62,20 +78,19 @@ trait SortableTrait
 	 */
 	public function sort($before, $after, $parent)
 	{
-		$sortBy = $this->sortBy();
-		$from = $this->$sortBy;
+		$from = $this->getSortingValue();
 		$to = null;
 
 		// if the node has a sibling before it, insert after it
 		if ($before) {
-			$before = $this->find($before);
-			$to = $before->$sortBy + ($from > $before->$sortBy ? 1 : 0);
+			$before = $this->find($before)->getSortingValue();
+			$to = $before + ($from > $before ? 1 : 0);
 		}
 
 		// if the node has a sibling after it, insert before it
 		if ($after) {
-			$after = $this->find($after);
-			$to = $after->$sortBy - ($from < $after->$sortBy ? 1 : 0);
+			$after = $this->find($after->getSortingValue());
+			$to = $after - ($from < $after ? 1 : 0);
 		}
 
 		if ($to) {
@@ -90,21 +105,22 @@ trait SortableTrait
 	 */
 	protected function moveMe($to)
 	{
-		$sortBy = $this->sortBy();
-
-		$from = $this->$sortBy;
+		$from = $this->getSortingValue();
 
 		$difference = $from - $to;
 
 		if ($difference) {
-			$query = $this->newQuery()->modifySortingQuery($this)->whereBetween($sortBy, [min($from, $to), max($from, $to)]);
+			$query = $this->newQuery()->modifySortingQuery($this)->whereBetween(
+				$this->sortBy(),
+				[min($from, $to), max($from, $to)]
+			);
 
 			if ($difference > 1) {
 				$query->incrementSort();
 			} else {
 				$query->decrementSort();
 			}
-			$this->$sortBy = $to;
+			$this->setSortingValue($to);
 			$this->save();
 		}
 	}
