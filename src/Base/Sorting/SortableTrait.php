@@ -15,18 +15,21 @@ trait SortableTrait
 	/**
 	 * Modify sorting query before resorting rows if table contains more than
 	 * one sorted list.
-	 * @param  Builder $query
-	 * @param  Model $instance
+	 *
+	 * @param  Illuminate\Database\Eloquent\Builder  $query
+	 * @param  Bozboz\Admin\Base\Model  $instance
 	 */
 	protected function scopeModifySortingQuery($query, $instance) {}
 
 	/**
 	 * Calculate sorting for a new row if nothing already set
-	 * @param  Model $instance
+	 *
+	 * @param  Bozboz\Admin\Base\Sorting\Sortable  $instance
 	 */
-	public function resortRowsCreated($instance)
+	public function resortRowsCreated(Sortable $instance)
 	{
 		$sortBy = $instance->sortBy();
+
 		if (!$instance->$sortBy) {
 			$instance->newQuery()
 			         ->modifySortingQuery($instance)
@@ -39,11 +42,13 @@ trait SortableTrait
 
 	/**
 	 * Re-sort rows after one has been deleted
-	 * @param  Model $instance
+	 *
+	 * @param  Bozboz\Admin\Base\Sorting\Sortable  $instance
 	 */
-	public function resortRowsDeleted($instance)
+	public function resortRowsDeleted(Sortable $instance)
 	{
 		$sortBy = $instance->sortBy();
+
 		$instance->newQuery()
 		         ->modifySortingQuery($instance)
 		         ->where($sortBy, '>', $instance->$sortBy)
@@ -52,9 +57,10 @@ trait SortableTrait
 
 	/**
 	 * Re-sort item based on a sibling either before or after it
-	 * @param  int $before instance ID
-	 * @param  int $after instance ID
-	 * @param  int $parent
+	 *
+	 * @param  int  $before
+	 * @param  int  $after
+	 * @param  int  $parent
 	 */
 	public function sort($before, $after, $parent)
 	{
@@ -81,7 +87,8 @@ trait SortableTrait
 
 	/**
 	 * Move instance from one sorting position to another
-	 * @param  int $to
+	 *
+	 * @param  int  $to
 	 */
 	protected function moveMe($to)
 	{
@@ -105,22 +112,26 @@ trait SortableTrait
 	}
 
 	/**
-	 * Increment sort values on a query.
-	 * Performs getQuery on the builder so as not to affect the updated_at
-	 * @param  Builder $query
+	 * Increment sort values on a query
+	 *
+	 * @param  Illuminate\Database\Eloquent\Builder $query
 	 */
 	public function scopeIncrementSort($query)
 	{
+		// Increment is called on the raw query builder to avoid touching the
+		// updated timestamp
 		$query->getQuery()->increment($this->sortBy());
 	}
 
 	/**
-	 * Decrement sort values on a query.
-	 * Performs getQuery on the builder so as not to affect the updated_at
-	 * @param  Builder $query
+	 * Decrement sort values on a query
+	 *
+	 * @param  Illuminate\Database\Eloquent\Builder  $query
 	 */
 	public function scopeDecrementSort($query)
 	{
+		// Decrement is called on the raw query builder to avoid touching the
+		// updated timestamp
 		$query->getQuery()->decrement($this->sortBy());
 	}
 }
