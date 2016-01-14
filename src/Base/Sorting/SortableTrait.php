@@ -2,8 +2,6 @@
 
 namespace Bozboz\Admin\Base\Sorting;
 
-use Illuminate\Support\Facades\DB;
-
 trait SortableTrait
 {
 	static public function bootSortableTrait()
