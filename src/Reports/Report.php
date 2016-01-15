@@ -74,9 +74,32 @@ class Report implements BaseInterface
 		}
 	}
 
+	public function getRowActions($params)
+	{
+		return [
+			new LinkAction([
+				'permission' => $params['canEdit'],
+				'action' => $params['editAction'],
+				'label' => 'Edit',
+				'icon' => 'fa fa-pencil',
+				'class' => 'btn-info'
+			]),
+			new FormAction([
+				'permission' => $params['canDelete'],
+				'action' => $params['destroyAction'],
+				'method' => 'DELETE',
+				'label' => 'Delete',
+				'icon' => 'fa fa-minus-square',
+				'class' => 'btn-danger',
+				'warn' => 'Are you sure you want to delete?'
+			])
+		];
+	}
 	public function render(array $params = [])
 	{
 		$identifier = $this->decorator->getListingIdentifier();
+
+		$rowActions = $this->getRowActions($params);
 
 		$params += [
 			'sortableClass' => $this->decorator->isSortable() ? ' sortable' : '',
@@ -85,6 +108,7 @@ class Report implements BaseInterface
 			'modelName' => $this->decorator->getHeading(false),
 			'identifier' => $identifier,
 			'newButtonPartial' => 'admin::partials.new',
+			'rowActions' => $rowActions
 		];
 
 		return View::make($this->view, $params);
