@@ -1,6 +1,8 @@
 @if ($row->check($permission))
-	<form class="inline-form" action="{{ URL::action($action, [$row->getId()]) }}" method="{{ $method }}">
-		<button class="{{ $class }} btn btn-sm"
+	<form class="inline-form" action="{{ $url }}" method="{{ $method }}">
+		{!! csrf_field() !!}
+		<button
+			class="{{ $class }} btn btn-sm"
 			type="submit"
 			@if (!empty($warn))
 				data-warn="{{ $warn }}"
