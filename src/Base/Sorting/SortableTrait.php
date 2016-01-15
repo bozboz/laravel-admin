@@ -44,7 +44,7 @@ trait SortableTrait
 	 *
 	 * @param  Bozboz\Admin\Base\Sorting\Sortable  $instance
 	 */
-	public istatic function resortRowsCreated(Sortable $instance)
+	public static function resortRowsCreated(Sortable $instance)
 	{
 		if ( ! $instance->getSortingValue()) {
 			$instance->newQuery()
