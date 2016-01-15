@@ -1,5 +1,5 @@
 @if ($row->check($permission))
-	<a href="{{ URL::action($action, [$row->getId()]) }}"
+	<a href="{{ $url }}"
 		class="{{ $class }} btn btn-sm"
 		@if (!empty($warn))
 			data-warn="{{ $warn }}"
