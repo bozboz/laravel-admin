@@ -38,7 +38,7 @@ trait NestedSortableTrait
 
 			// otherwise, if the node has a parent, append to it
 			if ($parent) {
-				$this->find($parent)->append($this);
+				$this->find($parent)->appendNode($this);
 				return 'Append to parent #' . $parent;
 			}
 
