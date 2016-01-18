@@ -95,15 +95,16 @@ class Report implements BaseInterface
 
 	protected function getSortableClass()
 	{
-		$class = '';
+		$classes = [];
+
 		if ($this->decorator->isSortable()) {
-			$class .= ' sortable';
+			$classes[] = 'sortable';
 		}
 
 		if ($this->decorator->isDeprecatedSortable()) {
-			$class .= ' deprecated-sortable';
+			$classes[] = 'deprecated-sortable';
 		}
 
-		return $class;
+		return $classes ? ' ' . implode(' ', $classes) : '';
 	}
 }
