@@ -77,14 +77,14 @@ class Report implements BaseInterface
 	public function getRowActions($params)
 	{
 		return [
-			new LinkAction([
+			new Actions\LinkAction([
 				'permission' => $params['canEdit'],
 				'action' => $params['editAction'],
 				'label' => 'Edit',
 				'icon' => 'fa fa-pencil',
 				'class' => 'btn-info'
 			]),
-			new FormAction([
+			new Actions\FormAction([
 				'permission' => $params['canDelete'],
 				'action' => $params['destroyAction'],
 				'method' => 'DELETE',
