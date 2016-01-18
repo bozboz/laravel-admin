@@ -1,6 +1,6 @@
 <?php
 
-namespace Bozboz\Admin\Reports;
+namespace Bozboz\Admin\Reports\Actions;
 
 class LinkAction extends Action
 {
