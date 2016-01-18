@@ -68,11 +68,11 @@
 			<strong class="error text-danger"></strong>
 		</td>
 		<td>
-			<input name="caption[]" placeholder="Caption" class="caption form-control">
+			<input name="caption" placeholder="Caption" class="caption form-control">
 		</td>
 		<td>
 			<label>Private
-				<input name="is_private[]" type="checkbox" class="is-private form-control">
+				<input name="is_private" type="checkbox" class="is-private form-control">
 			</label>
 		</td>
 		<td>
