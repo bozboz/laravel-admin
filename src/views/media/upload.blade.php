@@ -166,7 +166,7 @@
 
 			data.formData = {
 				caption: caption.val(),
-				is_private: data.context.find('.is-private').is(':checked')
+				is_private: data.context.find('.is-private').is(':checked') ? 1 : 0
 			};
 		});
 	});

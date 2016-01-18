@@ -72,7 +72,7 @@ class MediaLibraryAdminController extends ModelAdminController
 			foreach(Input::file('files') as $index => $file) {
 				$instance = $this->decorator->newModelInstance($file);
 				$instance->caption = Input::get('caption', '');
-				$instance->private = Input::get('is_private') === 'true';
+				$instance->private = (boolean)Input::get('is_private');
 				$this->uploader->upload($file, $instance);
 				$data[] = [
 					'url' => action(__CLASS__ . '@edit', $instance->id),
