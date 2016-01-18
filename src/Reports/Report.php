@@ -77,16 +77,18 @@ class Report implements BaseInterface
 
 	public function render(array $params = [])
 	{
-		$identifier = $this->decorator->getListingIdentifier();
-
 		$params += [
 			'sortableClass' => $this->getSortableClass(),
 			'report' => $this,
 			'heading' => $this->decorator->getHeading(true),
 			'modelName' => $this->decorator->getHeading(false),
-			'identifier' => $identifier,
+			'identifier' => null,
 			'newButtonPartial' => 'admin::partials.new',
 		];
+
+		if ($this->decorator->isDeprecatedSortable()) {
+			$params['identifier'] = $this->decorator->getListingIdentifier();
+		}
 
 		return View::make($this->view, $params);
 	}
