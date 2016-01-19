@@ -65,7 +65,7 @@ trait SortableTrait
 	{
 		$instance->newQuery()
 		         ->modifySortingQuery($instance)
-		         ->where($this->sortBy(), '>', $instance->getSortingValue())
+		         ->where($instance->sortBy(), '>', $instance->getSortingValue())
 		         ->decrementSort();
 	}
 
