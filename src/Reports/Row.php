@@ -6,7 +6,7 @@ class Row
 	private $data;
 	private $model;
 
-	public function __construct($id, $modelOrData, array $data = null)
+	public function __construct($id, $modelOrData, array $data = null, $actions = [])
 	{
 		$this->id = $id;
 		if (is_array($modelOrData)) {
@@ -15,6 +15,14 @@ class Row
 			$this->model = $modelOrData;
 			$this->data = $data;
 		}
+		$this->actions = $actions;
+	}
+
+	public function getActions()
+	{
+		return collect($this->actions)->filter(function($action) {
+			return $action->check($this);
+		});
 	}
 
 	public function getId()
