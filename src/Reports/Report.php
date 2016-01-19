@@ -4,7 +4,7 @@ use Bozboz\Admin\Base\ModelAdminDecorator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
-class Report implements BaseInterface
+class Report implements BaseInterface, ChecksPermissions
 {
 	protected $decorator;
 	protected $rows;
@@ -37,7 +37,7 @@ class Report implements BaseInterface
 		});
 	}
 
-	public function check($assertion)
+	public function check(callable $assertion)
 	{
 		return $assertion();
 	}

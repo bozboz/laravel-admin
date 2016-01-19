@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Reports;
 
-class Row
+class Row implements ChecksPermissions
 {
 	private $id;
 	private $data;
