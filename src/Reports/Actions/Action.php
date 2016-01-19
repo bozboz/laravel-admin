@@ -38,6 +38,12 @@ abstract class Action extends Fluent
 		return $context->check($this->permission);
 	}
 
+	/**
+	 * Generate a URL based on a defined route action
+	 *
+	 * @param  Bozboz\Admin\Reports\Row|null  $row
+	 * @return string
+	 */
 	public function getUrl($row = null)
 	{
 		$params = $row ? ['id' => $row->getId()] : [];
@@ -45,6 +51,12 @@ abstract class Action extends Fluent
 		return action($this->action, $params);
 	}
 
+	/**
+	 * Get the parameters to inject into a view
+	 *
+	 * @param  Bozboz\Admin\Reports\Row  $row
+	 * @return array
+	 */
 	public function getViewParams($row)
 	{
 		$params = $this->getAttributes() + $this->defaults;
