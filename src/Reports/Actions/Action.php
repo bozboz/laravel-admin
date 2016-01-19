@@ -24,13 +24,17 @@ abstract class Action extends Fluent
 		parent::__construct($params);
 	}
 
-	public function check($row = null)
+	/**
+	 * Request that a context object can assert the provided permission
+	 *
+	 * @param  Bozboz\Admin\Reports\Row|Bozboz\Admin\Reports\Report  $context
+	 * @return boolean
+	 */
+	public function check($context)
 	{
 		if ( ! $this->permission) return true;
 
-		$assertion = $this->permission;
-
-		return $row ? $row->check($assertion) : $assertion($row);
+		return $context->check($this->permission);
 	}
 
 	public function getUrl($row = null)
