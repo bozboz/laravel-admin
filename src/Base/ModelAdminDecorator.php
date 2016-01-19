@@ -333,8 +333,6 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
-	 * @deprecated since 2.1.0
-	 *
 	 * Return a string to identify the underlying model on the listing screen
 	 *
 	 * @return string
