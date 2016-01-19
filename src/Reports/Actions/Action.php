@@ -2,6 +2,7 @@
 
 namespace Bozboz\Admin\Reports\Actions;
 
+use Bozboz\Admin\Reports\ChecksPermissions;
 use Illuminate\Support\Fluent;
 
 abstract class Action extends Fluent
@@ -30,7 +31,7 @@ abstract class Action extends Fluent
 	 * @param  Bozboz\Admin\Reports\ChecksPermissions  $context
 	 * @return boolean
 	 */
-	public function check($context)
+	public function check(ChecksPermissions $context)
 	{
 		if ( ! $this->permission) return true;
 
