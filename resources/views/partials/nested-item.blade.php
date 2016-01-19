@@ -1,7 +1,7 @@
 			<li id="nested-item_{{ $row->getId() }}" data-id="{{ $row->getId() }}">
 				<div class="nested-group">
 					<div class="actions">
-						@foreach ($rowActions as $action)
+						@foreach ($row->getActions() as $action)
 							@include($action->getView(), $action->getViewParams($row))
 						@endforeach
 					</div>
