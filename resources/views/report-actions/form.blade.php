@@ -1,7 +1,7 @@
 @if ($row->check($permission))
 	<form class="inline-form" action="{{ $url }}" method="POST">
 		{!! csrf_field() !!}
-		<input type="hidden" name="_method" value="{{ $method }}">
+		{{ method_field($method) }}
 		<button
 			class="{{ $class }} btn btn-sm"
 			type="submit"
