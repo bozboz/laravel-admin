@@ -27,7 +27,7 @@ abstract class Action extends Fluent
 	/**
 	 * Request that a context object can assert the provided permission
 	 *
-	 * @param  Bozboz\Admin\Reports\Row|Bozboz\Admin\Reports\Report  $context
+	 * @param  Bozboz\Admin\Reports\ChecksPermissions  $context
 	 * @return boolean
 	 */
 	public function check($context)
