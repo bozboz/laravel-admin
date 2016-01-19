@@ -32,7 +32,14 @@ class Report implements BaseInterface
 
 	public function getActions()
 	{
-		return $this->reportActions;
+		return collect($this->reportActions)->filter(function($action) {
+			return $action->check($this);
+		});
+	}
+
+	public function check($assertion)
+	{
+		return $assertion();
 	}
 
 	public function getHeadings()
