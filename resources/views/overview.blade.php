@@ -3,7 +3,11 @@
 @section('main')
 @parent
 	@section('report_header')
-		@include($newButtonPartial)
+
+		@foreach($report->getActions() as $action)
+			@include($action->getView(), $action->getViewParams(null))
+		@endforeach
+
 		<h1>{{ $heading }}</h1>
 
 		@if (Session::has('model'))
@@ -44,7 +48,7 @@
 				<div class="faux-cell">{!! $value !!}</div>
 			@endforeach
 				<div class="no-wrap faux-cell">
-					@foreach ($rowActions as $action)
+					@foreach ($row->getActions() as $action)
 						@include($action->getView(), $action->getViewParams($row))
 					@endforeach
 				</div>
@@ -59,7 +63,9 @@
 
 	@section('report_footer')
 		{!! $report->getFooter() !!}
-		@include($newButtonPartial)
+		@foreach($report->getActions() as $action)
+			@include($action->getView(), $action->getViewParams(null))
+		@endforeach
 	@show
 
 	@section('scripts')

@@ -9,6 +9,8 @@ class Report implements BaseInterface
 	protected $decorator;
 	protected $rows;
 	protected $view = 'admin::overview';
+	protected $reportActions = [];
+	protected $rowActions = [];
 	protected $renderedColumns = [];
 
 	public function __construct(ModelAdminDecorator $decorator, $view = null)
@@ -16,6 +18,21 @@ class Report implements BaseInterface
 		$this->decorator = $decorator;
 		$this->view = $view ?: $this->view;
 		$this->rows = $this->decorator->getListingModels();
+	}
+
+	public function setReportActions($actions)
+	{
+		$this->reportActions = $actions;
+	}
+
+	public function setRowActions($actions)
+	{
+		$this->rowActions = $actions;
+	}
+
+	public function getActions()
+	{
+		return $this->reportActions;
 	}
 
 	public function getHeadings()
@@ -51,7 +68,7 @@ class Report implements BaseInterface
 			return $this->renderedColumns[$id];
 		}
 
-		return new Row($id, $instance, $this->getColumnsFromInstance($instance));
+		return new Row($id, $instance, $this->getColumnsFromInstance($instance), $this->rowActions);
 	}
 
 	protected function getColumnsFromInstance($instance)
@@ -61,10 +78,10 @@ class Report implements BaseInterface
 
 	public function getHeader()
 	{
-		$filters = $this->decorator->getListingFilters();
-		$perPageOptions = $this->decorator->getItemsPerPageOptions();
-
-		return View::make('admin::partials.listing-filters')->with(compact('perPageOptions'))->withFilters($filters);
+		return View::make('admin::partials.listing-filters')->with([
+			'perPageOptions' => $this->decorator->getItemsPerPageOptions(),
+			'filters' => $this->decorator->getListingFilters(),
+		]);
 	}
 
 	public function getFooter()
@@ -74,41 +91,13 @@ class Report implements BaseInterface
 		}
 	}
 
-	public function getRowActions($params)
-	{
-		return [
-			new Actions\LinkAction([
-				'permission' => $params['canEdit'],
-				'action' => $params['editAction'],
-				'label' => 'Edit',
-				'icon' => 'fa fa-pencil',
-				'class' => 'btn-info'
-			]),
-			new Actions\FormAction([
-				'permission' => $params['canDelete'],
-				'action' => $params['destroyAction'],
-				'method' => 'DELETE',
-				'label' => 'Delete',
-				'icon' => 'fa fa-minus-square',
-				'class' => 'btn-danger',
-				'warn' => 'Are you sure you want to delete?'
-			])
-		];
-	}
 	public function render(array $params = [])
 	{
-		$identifier = $this->decorator->getListingIdentifier();
-
-		$rowActions = $this->getRowActions($params);
-
 		$params += [
 			'sortableClass' => $this->decorator->isSortable() ? ' sortable' : '',
 			'report' => $this,
 			'heading' => $this->decorator->getHeading(true),
-			'modelName' => $this->decorator->getHeading(false),
-			'identifier' => $identifier,
-			'newButtonPartial' => 'admin::partials.new',
-			'rowActions' => $rowActions
+			'identifier' => $this->decorator->getListingIdentifier(),
 		];
 
 		return View::make($this->view, $params);

@@ -4,8 +4,8 @@
 	<ul class="js-mason secret-list media-view">
 	@foreach ($report->getRows() as $row)
 		<li class="masonry-item">
-			@if ($row->check($canEdit))
-				<a href="{{ URL::action($editAction, array($row->getId())) }}">
+			@if ($edit->check($row))
+				<a href="{{ $edit->getUrl($row) }}">
 					{!! $row->getColumn('image') !!}
 				</a>
 			@else
@@ -14,13 +14,8 @@
 			<div class="icons">
 				<p>{{ $row->getColumn('caption') }}</p>
 
-				@if ($row->check($canDelete))
-					{!! Form::open(['action' => array($destroyAction, $row->getId()), 'method' => 'DELETE']) !!}
-						<button data-warn="true" class="btn btn-danger btn-xs" type="submit">
-							<i class="fa fa-minus-square"></i>
-							Delete
-						</button>
-					{!! Form::close() !!}
+				@if ($destroy->check($row))
+					@include($destroy->getView(), $destroy->getViewParams($row))
 				@endif
 			</div>
 		</li>
