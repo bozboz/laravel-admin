@@ -89,7 +89,7 @@ trait SortableTrait
 
 		// if the node has a sibling after it, insert before it
 		if ($after) {
-			$after = $this->find($after->getSortingValue());
+			$after = $this->find($after)->getSortingValue();
 			$to = $after - ($from < $after ? 1 : 0);
 		}
 
