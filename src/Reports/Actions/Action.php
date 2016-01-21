@@ -16,13 +16,13 @@ abstract class Action extends Fluent
 
 	abstract public function getView();
 
-	public function __construct($action, $permission = null, $params = [])
+	public function __construct($action, $permission = null, $attributes = [])
 	{
 		$this->action = $action;
 
-		$params['permission'] = $permission;
+		$attributes['permission'] = $permission;
 
-		parent::__construct($params);
+		parent::__construct($attributes);
 	}
 
 	/**
@@ -44,11 +44,21 @@ abstract class Action extends Fluent
 	 * @param  Bozboz\Admin\Reports\Row|null  $row
 	 * @return string
 	 */
-	public function getUrl($row = null)
+	public function getUrl($row)
 	{
-		$params = $row ? ['id' => $row->getId()] : [];
+		if (is_array($this->action)) {
+			$action = $this->action[0];
+			$params = array_slice($this->action, 1);
+		} else {
+			$action = $this->action;
+			$params = [];
+		}
 
-		return action($this->action, $params);
+		if (!is_null($row)) {
+			array_push($params, $row->getId());
+		}
+
+		return action($action, $params);
 	}
 
 	/**
