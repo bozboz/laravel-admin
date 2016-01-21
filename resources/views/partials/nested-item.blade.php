@@ -2,7 +2,7 @@
 				<div class="nested-group">
 					<div class="actions">
 						@foreach ($row->getActions() as $action)
-							@include($action->getView(), $action->getViewParams($row))
+							@include($action->getView(), $action->getViewData($row))
 						@endforeach
 					</div>
 					<div class="nested-value">
