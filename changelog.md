@@ -1,6 +1,6 @@
 # Bozboz Admin Package Changelog
 
-## Version 1.2.0 (FUTURE)
+## Version 1.2.0 (21-01-2016)
 
 ### Added
 -   Add tags to Media Library
