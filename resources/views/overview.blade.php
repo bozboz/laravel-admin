@@ -5,7 +5,7 @@
 	@section('report_header')
 
 		@foreach($report->getActions() as $action)
-			@include($action->getView(), $action->getViewParams(null))
+			@include($action->getView(), $action->getViewData(null))
 		@endforeach
 
 		<h1>{{ $heading }}</h1>
@@ -49,7 +49,7 @@
 			@endforeach
 				<div class="no-wrap faux-cell">
 					@foreach ($row->getActions() as $action)
-						@include($action->getView(), $action->getViewParams($row))
+						@include($action->getView(), $action->getViewData($row))
 					@endforeach
 				</div>
 			</li>
@@ -64,7 +64,7 @@
 	@section('report_footer')
 		{!! $report->getFooter() !!}
 		@foreach($report->getActions() as $action)
-			@include($action->getView(), $action->getViewParams(null))
+			@include($action->getView(), $action->getViewData(null))
 		@endforeach
 	@show
 

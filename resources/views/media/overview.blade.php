@@ -15,7 +15,7 @@
 				<p>{{ $row->getColumn('caption') }}</p>
 
 				@if ($destroy->check($row))
-					@include($destroy->getView(), $destroy->getViewParams($row))
+					@include($destroy->getView(), $destroy->getViewData($row))
 				@endif
 			</div>
 		</li>

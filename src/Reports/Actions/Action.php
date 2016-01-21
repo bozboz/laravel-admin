@@ -57,10 +57,10 @@ abstract class Action extends Fluent
 	 * @param  Bozboz\Admin\Reports\Row  $row
 	 * @return array
 	 */
-	public function getViewParams($row)
+	public function getViewData($row)
 	{
-		$params = $this->getAttributes() + $this->defaults;
-		$params['url'] = $this->getUrl($row);
-		return $params;
+		$attributes = $this->getAttributes() + $this->defaults;
+		$attributes['url'] = $this->getUrl($row);
+		return $attributes;
 	}
 }
