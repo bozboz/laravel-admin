@@ -189,9 +189,9 @@ abstract class ModelAdminController extends Controller
 	protected function reEdit($instance)
 	{
 		if (Input::has('after_save') && Input::get('after_save') === 'continue') {
-			$reportParams = $this->getReportParams();
-			if (array_key_exists('editAction', $reportParams)) {
-				return Redirect::action($reportParams['editAction'], $instance->getKey());
+			$reportParams = $this->getRowActions();
+			if (array_key_exists('edit', $reportParams)) {
+				return Redirect::action($reportParams['edit']->action, $instance->getKey());
 			}
 		}
 	}
