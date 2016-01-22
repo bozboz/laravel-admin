@@ -6,6 +6,14 @@ use Bozboz\Admin\Reports\ChecksPermissions;
 
 class DropdownAction extends Action
 {
+	protected $defaults = [
+		'warn' => null,
+		'btnClass' => 'btn-default',
+		'dropdownClass' => '',
+		'icon' => '',
+		'label' => 'Unknown',
+	];
+
 	protected $actions;
 
 	function __construct($actions, $attributes = [])
@@ -29,6 +37,8 @@ class DropdownAction extends Action
 
 	public function getViewData($row)
 	{
-		return ['actions' => $this->actions];
+		$attributes = $this->getAttributes() + $this->defaults;
+		$attributes['actions'] = $this->actions;
+		return $attributes;
 	}
 }
