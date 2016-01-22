@@ -100,9 +100,11 @@ class Report implements BaseInterface, ChecksPermissions
 
 	public function render(array $params = [])
 	{
-		if ($this->isUsingDeprecatedParams($params)) {
+		if ($this->isUsingDeprecatedParams()) {
 			$params['newButtonPartial'] = 'admin::partials.new';
 			$params['modelName'] = $this->decorator->getHeading(false);
+		} else {
+			$params = [];
 		}
 
 		$params += [
@@ -116,8 +118,8 @@ class Report implements BaseInterface, ChecksPermissions
 		return View::make($this->view, $params);
 	}
 
-	protected function isUsingDeprecatedParams($params)
+	protected function isUsingDeprecatedParams()
 	{
-		return array_key_exists('createAction', $params);
+		return empty($this->reportActions);
 	}
 }
