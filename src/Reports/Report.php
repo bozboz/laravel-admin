@@ -100,13 +100,24 @@ class Report implements BaseInterface, ChecksPermissions
 
 	public function render(array $params = [])
 	{
+		if ($this->isUsingDeprecatedParams($params)) {
+			$params['newButtonPartial'] = 'admin::partials.new';
+			$params['modelName'] = $this->decorator->getHeading(false);
+		}
+
 		$params += [
 			'sortableClass' => $this->decorator->isSortable() ? ' sortable' : '',
 			'report' => $this,
 			'heading' => $this->decorator->getHeading(true),
 			'identifier' => $this->decorator->getListingIdentifier(),
+			'newButtonPartial' => 'admin::partials.create'
 		];
 
 		return View::make($this->view, $params);
+	}
+
+	protected function isUsingDeprecatedParams($params)
+	{
+		return array_key_exists('createAction', $params);
 	}
 }
