@@ -1,13 +1,20 @@
-<div class="btn-group pull-right space-left">
-	<button href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" aria-expanded="false">
-		<i class="fa fa-plus-square"></i>
-		New
-		<span class="caret"></span>
-		<span class="sr-only">Toggle Dropdown</span>
-	</button>
-	<ul class="dropdown-menu" role="menu">
-		@foreach($actions as $action)
-			@include ($action->getView(), $action->getViewData(null))
-		@endforeach
-	</ul>
-</div>
+@if ($actions->count()>1)
+	<div class="btn-group {{ $dropdownClass }}">
+		<button href="#" class="dropdown-toggle btn {{ $btnClass }}" data-toggle="dropdown" aria-expanded="false">
+			<i class="fa {{ $icon }}"></i>
+			{{ $label }}
+			<span class="caret"></span>
+			<span class="sr-only">Toggle Dropdown</span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			@foreach($actions as $action)
+				@include ($action->getView(), $action->getViewData(null))
+			@endforeach
+		</ul>
+	</div>
+@else
+	<a class="btn btn-primary {{ $btnClass }} {{ $dropdownClass }}" type="submit" href="{{ $actions->first()->url }}">
+		<i class="fa {{ $icon }}"></i>
+		{{ $label }}
+	</a>
+@endif
