@@ -4,9 +4,7 @@
 @parent
 	@section('report_header')
 
-		@foreach($report->getActions() as $action)
-			@include($action->getView(), $action->getViewData(null))
-		@endforeach
+		@include($newButtonPartial)
 
 		<h1>{{ $heading }}</h1>
 
@@ -63,9 +61,7 @@
 
 	@section('report_footer')
 		{!! $report->getFooter() !!}
-		@foreach($report->getActions() as $action)
-			@include($action->getView(), $action->getViewData(null))
-		@endforeach
+		@include($newButtonPartial)
 	@show
 
 	@section('scripts')

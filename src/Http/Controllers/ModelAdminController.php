@@ -31,7 +31,9 @@ abstract class ModelAdminController extends Controller
 		$report->setReportActions($this->getReportActions());
 		$report->setRowActions($this->getRowActions());
 
-		return $report->render();
+		return $report->render(
+			$this->getReportParams()
+		);
 	}
 
 	/**
@@ -42,6 +44,24 @@ abstract class ModelAdminController extends Controller
 	protected function getListingReport()
 	{
 		return new Report($this->decorator);
+	}
+
+	/**
+	 * @deprecated Return an array of params the report requires to render
+	 *
+	 * @return array
+	 */
+	protected function getReportParams()
+	{
+		return [
+			'createAction' => $this->getActionName('create'),
+			'createParams' => [],
+			'editAction' => $this->getActionName('edit'),
+			'destroyAction' => $this->getActionName('destroy'),
+			'canCreate' => [$this, 'canCreate'],
+			'canEdit' => [$this, 'canEdit'],
+			'canDelete' => [$this, 'canDestroy'],
+		];
 	}
 
 	/**
