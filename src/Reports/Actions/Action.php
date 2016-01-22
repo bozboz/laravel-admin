@@ -41,10 +41,10 @@ abstract class Action extends Fluent
 	/**
 	 * Generate a URL based on a defined route action
 	 *
-	 * @param  Bozboz\Admin\Reports\Row|null  $row
+	 * @param  int|null  $id
 	 * @return string
 	 */
-	public function getUrl($row)
+	public function getUrl($id)
 	{
 		if (is_array($this->action)) {
 			$action = $this->action[0];
@@ -54,11 +54,9 @@ abstract class Action extends Fluent
 			$params = [];
 		}
 
-		if (!is_null($row)) {
-			array_push($params, $row->getId());
-		}
+		array_push($params, $id);
 
-		return action($action, $params);
+		return action($action, array_filter($params));
 	}
 
 	/**
@@ -70,7 +68,7 @@ abstract class Action extends Fluent
 	public function getViewData($row)
 	{
 		$attributes = $this->getAttributes() + $this->defaults;
-		$attributes['url'] = $this->getUrl($row);
+		$attributes['url'] = $this->getUrl($row ? $row->getId() : null);
 		return $attributes;
 	}
 }
