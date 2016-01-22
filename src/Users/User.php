@@ -149,4 +149,14 @@ class User extends Model implements AuthenticatableContract,
 			});
 		});
 	}
+
+	public function scopeDoesntHavePermission($builder, $action)
+	{
+		$builder->whereDoesntHave('permissions', function($q) use ($action) {
+			$q->where(function($q) use ($action) {
+				$q->where('action', $action)
+				  ->orWhere('action', Permission::WILDCARD);
+			});
+		});
+	}
 }
