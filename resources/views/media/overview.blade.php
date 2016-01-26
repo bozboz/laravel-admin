@@ -5,7 +5,7 @@
 	@foreach ($report->getRows() as $row)
 		<li class="masonry-item">
 			@if ($edit->check($row))
-				<a href="{{ $edit->getUrl($row) }}">
+				<a href="{{ $edit->getUrl($row->getId()) }}">
 					{!! $row->getColumn('image') !!}
 				</a>
 			@else
