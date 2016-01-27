@@ -44,7 +44,7 @@ class TreeSelectField extends SelectField
 		}
 
 		if ($this->get('allow_none', true)) {
-			array_unshift($options, '-');
+			$options = array_merge(['' => '-'], $options);
 		}
 
 		return $options;
