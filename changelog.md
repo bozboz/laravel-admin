@@ -1,6 +1,12 @@
 # Bozboz Admin Package Changelog
 
-## Version 1.2.0 (FUTURE)
+## Version 1.3.0 (Future)
+
+### Added
+-	Add null option to TreeSelectField
+
+
+## Version 1.2.0
 
 ### Added
 -   Add tags to Media Library

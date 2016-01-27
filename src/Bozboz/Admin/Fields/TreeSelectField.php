@@ -43,6 +43,10 @@ class TreeSelectField extends SelectField
 			$options = $this->renderLevel(0);
 		}
 
+		if ($this->get('allow_none', true)) {
+			array_unshift($options, '-');
+		}
+
 		return $options;
 	}
 
