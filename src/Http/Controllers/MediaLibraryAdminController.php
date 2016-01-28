@@ -26,7 +26,7 @@ class MediaLibraryAdminController extends ModelAdminController
 			return $this->ajaxJSONData();
 		}
 
-		return parent::index()->with($this->getRowActions());
+		return parent::index();
 	}
 
 	protected function getListingReport()

@@ -42,12 +42,12 @@
 					<i class="fa fa-sort sorting-handle"></i>
 				</div>
 			@endif
-			@foreach ($row->getColumns() as $name => $value)
+			@foreach ($row->getColumns() as $value)
 				<div class="faux-cell">{!! $value !!}</div>
 			@endforeach
 				<div class="no-wrap faux-cell">
-					@foreach ($row->getActions() as $action)
-						@include($action->getView(), $action->getViewData($row))
+					@foreach ($row->filterRowActions($report->getRowActions()) as $action)
+						@include($action->getView(), $action->getViewData())
 					@endforeach
 				</div>
 			</li>

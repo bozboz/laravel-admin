@@ -72,7 +72,7 @@ abstract class ModelAdminController extends Controller
 	protected function getReportActions()
 	{
 		return [
-			'create' => new CreateAction(
+			new CreateAction(
 				$this->getActionName('create'),
 				[$this, 'canCreate']
 			)
@@ -87,11 +87,11 @@ abstract class ModelAdminController extends Controller
 	protected function getRowActions()
 	{
 		return [
-			'edit' => new EditAction(
+			new EditAction(
 				$this->getActionName('edit'),
 				[$this, 'canEdit']
 			),
-			'destroy' => new DestroyAction(
+			new DestroyAction(
 				$this->getActionName('destroy'),
 				[$this, 'canDestroy']
 			)

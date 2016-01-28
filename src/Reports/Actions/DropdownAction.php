@@ -35,7 +35,7 @@ class DropdownAction extends Action
 		return 'admin::report-actions.dropdown';
 	}
 
-	public function getViewData($row)
+	public function getViewData()
 	{
 		$attributes = $this->getAttributes() + $this->defaults;
 		$attributes['actions'] = $this->actions;

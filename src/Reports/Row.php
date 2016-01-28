@@ -6,7 +6,7 @@ class Row implements ChecksPermissions
 	private $data;
 	private $model;
 
-	public function __construct($id, $modelOrData, array $data = null, $actions = [])
+	public function __construct($id, $modelOrData, array $data = null)
 	{
 		$this->id = $id;
 		if (is_array($modelOrData)) {
@@ -15,13 +15,14 @@ class Row implements ChecksPermissions
 			$this->model = $modelOrData;
 			$this->data = $data;
 		}
-		$this->actions = $actions;
 	}
 
-	public function getActions()
+	public function filterRowActions($actions)
 	{
-		return collect($this->actions)->filter(function($action) {
+		return $actions->filter(function($action) {
 			return $action->check($this);
+		})->each(function($action) {
+			$action->setInstance($this->model);
 		});
 	}
 

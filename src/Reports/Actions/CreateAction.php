@@ -7,6 +7,6 @@ class CreateAction extends LinkAction
 	protected $attributes = [
 		'label' => 'New',
 		'icon' => 'fa fa-plus-square',
-		'class' => 'btn-success pull-right',
+		'class' => 'btn-success btn-create pull-right',
 	];
 }

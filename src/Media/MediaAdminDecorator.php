@@ -26,7 +26,6 @@ class MediaAdminDecorator extends ModelAdminDecorator
 	public function getColumns($instance)
 	{
 		return array(
-			'id' => $instance->getKey(),
 			'image' => sprintf('<img src="%s" alt="%s" width="150">',
 				$instance->getPreviewImageUrl(),
 				$this->getLabel($instance)

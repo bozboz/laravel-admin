@@ -8,7 +8,7 @@ class DestroyAction extends FormAction
 		'method' => 'DELETE',
 		'label' => 'Delete',
 		'icon' => 'fa fa-minus-square',
-		'class' => 'btn-danger',
+		'class' => 'btn-danger btn-destroy',
 		'warn' => 'Are you sure you want to delete?'
 	];
 }

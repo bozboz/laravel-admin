@@ -14,6 +14,8 @@ abstract class Action extends Fluent
 		'label' => 'Unknown',
 	];
 
+	protected $instance;
+
 	abstract public function getView();
 
 	public function __construct($action, $permission = null, $attributes = [])
@@ -38,13 +40,17 @@ abstract class Action extends Fluent
 		return $context->check($this->permission);
 	}
 
+	public function setInstance($instance)
+	{
+		$this->instance = $instance;
+	}
+
 	/**
 	 * Generate a URL based on a defined route action
 	 *
-	 * @param  int|null  $id
 	 * @return string
 	 */
-	public function getUrl($id)
+	public function getUrl()
 	{
 		if (is_array($this->action)) {
 			$action = $this->action[0];
@@ -54,7 +60,9 @@ abstract class Action extends Fluent
 			$params = [];
 		}
 
-		array_push($params, $id);
+		if ($this->instance) {
+			array_push($params, $this->instance->id);
+		}
 
 		return action($action, array_filter($params));
 	}
@@ -62,13 +70,12 @@ abstract class Action extends Fluent
 	/**
 	 * Get the parameters to inject into a view
 	 *
-	 * @param  Bozboz\Admin\Reports\Row  $row
 	 * @return array
 	 */
-	public function getViewData($row)
+	public function getViewData()
 	{
 		$attributes = $this->getAttributes() + $this->defaults;
-		$attributes['url'] = $this->getUrl($row ? $row->getId() : null);
+		$attributes['url'] = $this->getUrl();
 		return $attributes;
 	}
 }
