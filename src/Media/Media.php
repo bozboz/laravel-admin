@@ -98,7 +98,7 @@ class Media extends Model
 	 */
 	public function getDirectory()
 	{
-		return 'media/' . strtolower($this->type);
+		return '/media/' . strtolower($this->type);
 	}
 
 	public function getFilepath($type, $size)

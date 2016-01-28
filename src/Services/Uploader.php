@@ -39,7 +39,7 @@ class Uploader
 			$destination = public_path();
 		}
 
-		$uploadSuccess = $file->move($destination . '/' . $instance->getDirectory(), $instance->filename);
+		$uploadSuccess = $file->move($destination . $instance->getDirectory(), $instance->filename);
 
 		if ( ! $uploadSuccess) {
 			DB::rollback();
