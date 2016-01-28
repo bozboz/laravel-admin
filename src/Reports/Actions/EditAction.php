@@ -7,6 +7,6 @@ class EditAction extends LinkAction
 	protected $attributes = [
 		'label' => 'Edit',
 		'icon' => 'fa fa-pencil',
-		'class' => 'btn-info',
+		'class' => 'btn-info btn-edit',
 	];
 }

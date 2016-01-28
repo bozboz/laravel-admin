@@ -22,19 +22,24 @@ class Report implements BaseInterface, ChecksPermissions
 
 	public function setReportActions($actions)
 	{
-		$this->reportActions = $actions;
+		$this->reportActions = collect($actions);
 	}
 
 	public function setRowActions($actions)
 	{
-		$this->rowActions = $actions;
+		$this->rowActions = collect($actions);
 	}
 
-	public function getActions()
+	public function getReportActions()
 	{
-		return collect($this->reportActions)->filter(function($action) {
+		return $this->reportActions->filter(function($action) {
 			return $action->check($this);
 		});
+	}
+
+	public function getRowActions()
+	{
+		return $this->rowActions;
 	}
 
 	public function check(callable $assertion)
