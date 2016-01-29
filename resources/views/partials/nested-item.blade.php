@@ -1,4 +1,4 @@
-			<li id="nested-item_{{ $row->getId() }}" data-id="{{ $row->getId() }}">
+			<li class="nested__item" id="nested-item_{{ $row->getId() }}" data-id="{{ $row->getId() }}">
 				<div class="nested-group">
 					<div class="actions">
 						@if ($row->check($canEdit))
