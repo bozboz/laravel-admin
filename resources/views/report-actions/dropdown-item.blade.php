@@ -1,3 +1,3 @@
 <li>
-	<a href="{{ $url }}">{{ $label }}</a>
+	<a href="{{ $url }}" class="{{ $class or '' }}">{{ $label }}</a>
 </li>
