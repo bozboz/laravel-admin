@@ -4,5 +4,5 @@
 	'data-warn' => $warn
 ]) !!}>
 	<i class="{{ $icon }}"></i>
-	{{ $label }}
+	{!! $label !!}
 </a>
