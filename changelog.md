@@ -16,6 +16,7 @@
 -   Using the SanitisesInputTrait without a $nullable property defined will no longer error
 -   Nav selected state will now work with query string URLs
 -   Fixed issue when dealing with old/session data when using CheckboxField
+-   Fixed name on dashboard welcome message
 
 ### Removed
 -   Support for Laravel 4
