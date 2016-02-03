@@ -42,6 +42,8 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 	{
 		$rules = array_keys($this->permissions->dump());
 
+		array_unshift($rules, Permission::WILDCARD);
+
 		return array_combine($rules, $rules);
 	}
 

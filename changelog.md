@@ -1,6 +1,10 @@
 # Bozboz Admin Package Changelog
 
-## Version 1.2.0 (21-01-2016)
+## Version 1.2.1 (2016-02-03)
+-   Include wildcard in list of actions when editing a permission
+
+
+## Version 1.2.0 (2016-01-21)
 
 ### Added
 -   Add tags to Media Library
