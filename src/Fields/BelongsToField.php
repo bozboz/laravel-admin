@@ -57,7 +57,7 @@ class BelongsToField extends Field
 	 */
 	protected function generateQueryBuilder()
 	{
-		$queryBuilder = $this->relation->getRelated();
+		$queryBuilder = $this->relation->getRelated()->newQuery();
 
 		call_user_func($this->callback, $queryBuilder);
 
