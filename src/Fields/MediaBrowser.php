@@ -119,7 +119,7 @@ class MediaBrowser extends Field
 			'id' => $this->sanitiseName($this->name),
 			'access_public' => Media::ACCESS_PUBLIC,
 			'access_private' => Media::ACCESS_PRIVATE,
-		]);
+		])->render();
 	}
 
 	/**
