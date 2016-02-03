@@ -1,3 +1,7 @@
+# Version 1.0.14 (2016-02-03)
+-   Fix bad variable in NestedReport::getRows method
+
+
 # Version 1.0.13 (2015-12-21)
 -   Fix issue with duplicate captions when uploading multiple files using media uploader
 
