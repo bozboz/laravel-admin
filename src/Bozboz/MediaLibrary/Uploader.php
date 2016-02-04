@@ -5,9 +5,11 @@ namespace Bozboz\MediaLibrary;
 use Bozboz\MediaLibrary\Exceptions\UploadException;
 use Bozboz\MediaLibrary\Models\Media;
 use Guzzle\Http\Client;
+use Guzzle\Http\Exception\RequestException;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Uploader
@@ -25,37 +27,28 @@ class Uploader
 	}
 
 	/**
-	 * Tidy up filename, determine type and move uploaded file into correct
-	 * location
+	 * Tidy-up and generate a unique filename for an uploaded file, determine
+	 * type and move into correct location
 	 *
-	 * @param  Symfony\Component\HttpFoundation\File\UploadedFile  $file
+	 * @param  Symfony\Component\HttpFoundation\File\UploadedFile  $uploadedFile
 	 * @param  Bozboz\MediaLibrary\Models\Media  $instance
-	 * @throws Bozboz\MediaLibrary\Exceptions\UploadException
-	 * @return Bozboz\MediaLibrary\Models\Media
+	 * @return void
 	 */
-	public function upload(UploadedFile $file, Media $instance)
+	public function upload(UploadedFile $uploadedFile, Media $instance)
 	{
 		DB::beginTransaction();
 
 		$instance->save();
 
-		$instance->type = $this->getTypeFromFile($file);
-		$instance->filename = $this->generateUniqueFilenameFromFile($file, $instance->id);
+		$instance->filename = $this->generateUniqueFilename(
+			$uploadedFile->getClientOriginalName(),
+			$uploadedFile->getClientOriginalExtension(),
+			$instance->id
+		);
 
-		$destination = $this->getPathFromScope($instance);
-
-		$uploadSuccess = $file->move($destination . '/' . $instance->getDirectory(), $instance->filename);
-
-		if ( ! $uploadSuccess) {
-			DB::rollback();
-			throw new UploadException;
-		}
-
-		$instance->save();
+		$this->saveFile($uploadedFile, $instance);
 
 		DB::commit();
-
-		return $instance;
 	}
 
 	/**
@@ -64,48 +57,87 @@ class Uploader
 	 *
 	 * @param  string  $url
 	 * @param  Bozboz\MediaLibrary\Models\Media  $instance
-	 * @return Bozboz\MediaLibrary\Models\Media
+	 * @throws Bozboz\MediaLibrary\Exceptions\UploadException
+	 * @return void
 	 */
 	public function fromUrl($url, Media $instance)
 	{
-		$instance->filename = basename($url);
+		DB::beginTransaction();
 
-		$destination = $this->getPathFromScope($instance) . '/' . $instance->getFilename();
+		$temporaryPath = public_path('.tmp/DOWNLOADED_FILE-' . time());
 
 		try {
-			$this->client->get($url)->setResponseBody($destination)->send();
-		} catch (Exception $e) {
+			$this->client->get($url)->setResponseBody($temporaryPath)->send();
+		} catch (RequestException $e) {
+			DB::rollback();
 			throw new UploadException($e->getMessage());
 		}
 
-		return $instance;
+		$externalFile = new File($url, false);
+
+		$instance->save();
+
+		$instance->filename = $this->generateUniqueFilename(
+			$externalFile->getBasename(),
+			$externalFile->getExtension(),
+			$instance->id
+		);
+
+		$tempFile = new File($temporaryPath);
+
+		$this->saveFile($tempFile, $instance);
+
+		DB::commit();
 	}
 
 	/**
 	 * Generate a unique, clean filename from the uploaded file
 	 *
-	 * @param  Symfony\Component\HttpFoundation\File\UploadedFile  $file
+	 * @param  string  $name
+	 * @param  string  $extension
 	 * @param  string  $uniqueString
 	 * @return string
 	 */
-	protected function generateUniqueFilenameFromFile(UploadedFile $file, $uniqueString)
+	protected function generateUniqueFilename($name, $extension, $uniqueString)
 	{
-		$filename = $file->getClientOriginalName();
-		$extension = $file->getClientOriginalExtension();
-
-		$filenameWithoutExtension = str_replace('.' . $extension, '', $filename);
+		$filenameWithoutExtension = str_replace('.' . $extension, '', $name);
 
 		return Str::slug($filenameWithoutExtension) . '-' . $uniqueString . '.' . $extension;
 	}
 
 	/**
-	 * Return the sub-directory to save the uploaded file, based on the file's
-	 * mime type
+	 * Generate a type on the media instance based on the passed $file, if it
+	 * does not exist. Then move the file to the appropriate destination.
 	 *
-	 * @param  Symfony\Component\HttpFoundation\File\UploadedFile  $file
+	 * @param  Symfony\Component\HttpFoundation\File\File   $file
+	 * @param  Bozboz\MediaLibrary\Models\Media  $instance
+	 * @throws Bozboz\MediaLibrary\Exceptions\UploadException
+	 * @return void
+	 */
+	protected function saveFile(File $file, Media $instance)
+	{
+		if (empty($instance->type)) {
+			$instance->type = $this->getTypeFromFile($file);
+		}
+
+		$destination = $this->getPathFromScope($instance) . '/' . $instance->getDirectory();
+
+		try {
+			$file->move($destination, $instance->filename);
+		} catch (FileException $e) {
+			throw new UploadException($e->getMessage());
+		}
+
+		$instance->save();
+	}
+
+	/**
+	 * Return the sub-directory to save the file, based on the mime type
+	 *
+	 * @param  Symfony\Component\HttpFoundation\File\File  $file
 	 * @return string
 	 */
-	protected function getTypeFromFile(UploadedFile $file)
+	protected function getTypeFromFile(File $file)
 	{
 		$mimeType = $file->getMimeType();
 
