@@ -14,7 +14,7 @@ class Media extends Base
 	const ACCESS_PRIVATE = 2;
 
 	protected $table = 'media';
-	protected $fillable = array('filename', 'caption', 'private');
+	protected $fillable = array('filename', 'caption', 'private', 'type');
 
 	public static function boot()
 	{
