@@ -95,12 +95,10 @@ class Report implements BaseInterface
 	{
 		$classes = [];
 
-		if ($this->decorator->isSortable()) {
-			$classes[] = 'sortable';
-		}
-
 		if ($this->decorator->isDeprecatedSortable()) {
-			$classes[] = 'deprecated-sortable';
+			$classes[] = 'sortable';
+		} elseif ($this->decorator->isSortable()) {
+			$classes[] = 'js-sortable';
 		}
 
 		return $classes ? ' ' . implode(' ', $classes) : '';
