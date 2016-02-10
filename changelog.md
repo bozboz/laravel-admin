@@ -1,6 +1,6 @@
 # Bozboz Admin Package Changelog
 
-## Version 2.0.0 (FUTURE)
+## Version 2.0.0 (2016-02-10)
 
 ### Added
 -   Support for Laravel 5
