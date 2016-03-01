@@ -1,6 +1,10 @@
 # Bozboz Admin Package Changelog
 
-## Version 2.0.0 (FUTURE)
+## Version 2.0.1 (2016-03-01)
+-   Fix email validation rule when updating a user
+
+
+## Version 2.0.0 (2016-02-10)
 
 ### Added
 -   Support for Laravel 5
@@ -16,6 +20,7 @@
 -   Using the SanitisesInputTrait without a $nullable property defined will no longer error
 -   Nav selected state will now work with query string URLs
 -   Fixed issue when dealing with old/session data when using CheckboxField
+-   Fixed name on dashboard welcome message
 
 ### Removed
 -   Support for Laravel 4
@@ -29,7 +34,11 @@
 -   Remove Meta namespace
 
 
-## Version 1.2.0 (21-01-2016)
+## Version 1.2.1 (2016-02-03)
+-   Include wildcard in list of actions when editing a permission
+
+
+## Version 1.2.0 (2016-01-21)
 
 ### Added
 -   Add tags to Media Library

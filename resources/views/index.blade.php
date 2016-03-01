@@ -4,7 +4,7 @@
 	@parent
   <div class="jumbotron">
     <div class="container">
-      <h1>Hello {{ $user->name }}</h1>
+      <h1>Hello, {{ $user->first_name }}</h1>
     </div>
   </div>
   <hr>
