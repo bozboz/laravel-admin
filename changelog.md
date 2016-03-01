@@ -1,5 +1,9 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.0.1 (2016-03-01)
+-   Fix email validation rule when updating a user
+
+
 ## Version 2.0.0 (2016-02-10)
 
 ### Added
