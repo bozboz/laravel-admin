@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.0.2 (2016-03-02)
+-   Fix password reset
+
 ## Version 2.0.1 (2016-03-01)
 -   Fix email validation rule when updating a user
 
