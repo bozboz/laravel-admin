@@ -1,5 +1,9 @@
 # Bozboz Admin Package Changelog
 
+## Version 1.2.2 (2016-03-04)
+-   Fix CheckboxField
+
+
 ## Version 1.2.1 (2016-02-03)
 -   Include wildcard in list of actions when editing a permission
 
