@@ -2,7 +2,7 @@
 
 namespace Bozboz\Admin\Reports\Actions;
 
-class DropdownUnlinkedItem extends Action
+class DropdownLabelItem extends Action
 {
 	public function __construct($label)
 	{
@@ -11,7 +11,7 @@ class DropdownUnlinkedItem extends Action
 
 	public function getView()
 	{
-		return 'admin::report-actions.dropdown-unlinked-item';
+		return 'admin::report-actions.dropdown-label-item';
 	}
 
 	public function getViewData()

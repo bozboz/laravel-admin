@@ -18,7 +18,7 @@ class DropdownAction extends Action
 
 	function __construct($actions, $attributes = [])
 	{
-		$this->actions = $actions;
+		$this->actions = collect($actions);
 		$this->attributes = array_merge($this->attributes, $attributes);
 	}
 
@@ -28,6 +28,15 @@ class DropdownAction extends Action
 			return $action->check($context);
 		});
 		return $this->actions->count() > 0;
+	}
+
+	public function setInstance($instance)
+	{
+		$this->instance = $instance;
+
+		$this->actions->each(function($action) use ($instance) {
+			$action->setInstance($instance);
+		});
 	}
 
 	public function getView()
