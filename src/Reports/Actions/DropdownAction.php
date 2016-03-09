@@ -12,9 +12,11 @@ class DropdownAction extends Action
 		'dropdownClass' => '',
 		'icon' => '',
 		'label' => 'Unknown',
+		'compactSingleActionToLink' => true
 	];
 
 	protected $actions;
+	protected $currentActions;
 
 	function __construct($actions, $attributes = [])
 	{
@@ -22,12 +24,12 @@ class DropdownAction extends Action
 		$this->attributes = array_merge($this->attributes, $attributes);
 	}
 
-	public function check(ChecksPermissions $context)
+	public function check($instance)
 	{
-		$this->actions = $this->actions->filter(function ($action) use ($context) {
-			return $action->check($context);
+		$this->currentActions = $this->actions->filter(function ($action) use ($instance) {
+			return $action->check($instance);
 		});
-		return $this->actions->count() > 0;
+		return $this->currentActions->count() > 0;
 	}
 
 	public function setInstance($instance)
@@ -47,7 +49,7 @@ class DropdownAction extends Action
 	public function getViewData()
 	{
 		$attributes = $this->getAttributes() + $this->defaults;
-		$attributes['actions'] = $this->actions;
+		$attributes['actions'] = $this->currentActions;
 		return $attributes;
 	}
 }

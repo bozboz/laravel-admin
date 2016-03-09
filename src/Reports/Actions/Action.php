@@ -28,16 +28,16 @@ abstract class Action extends Fluent
 	}
 
 	/**
-	 * Request that a context object can assert the provided permission
+	 * Request that a instance can assert the provided permission
 	 *
-	 * @param  Bozboz\Admin\Reports\ChecksPermissions  $context
+	 * @param  $instance
 	 * @return boolean
 	 */
-	public function check(ChecksPermissions $context)
+	public function check($instance)
 	{
 		if ( ! $this->permission) return true;
 
-		return $context->check($this->permission);
+		return call_user_func($this->permission, $instance);
 	}
 
 	public function setInstance($instance)

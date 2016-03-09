@@ -20,7 +20,7 @@ class Row implements ChecksPermissions
 	public function filterRowActions($actions)
 	{
 		return $actions->filter(function($action) {
-			return $action->check($this);
+			return $action->check($this->model);
 		})->each(function($action) {
 			$action->setInstance($this->model);
 		});
