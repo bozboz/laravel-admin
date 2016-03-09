@@ -1,4 +1,4 @@
-			<li class="nested__item" id="nested-item_{{ $row->getId() }}" data-id="{{ $row->getId() }}">
+			<li class="nested__item js-nested-item" id="nested-item_{{ $row->getId() }}" data-id="{{ $row->getId() }}">
 				<div class="nested-group">
 					<div class="actions">
 						@if ($row->check($canEdit))
@@ -14,7 +14,7 @@
 						@endif
 					</div>
 					<div class="nested-value">
-						<i class="fa fa-sort sorting-handle"></i>
+						<i class="fa fa-sort sorting-handle js-sorting-handle"></i>
 					</div>
 				@foreach ($row->getColumns() as $name => $value)
 					<div class="nested-value">{!! $value !!}</div>

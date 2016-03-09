@@ -34,10 +34,10 @@
 			</li>
 
 		@foreach ($report->getRows() as $row)
-			<li class="faux-table-row" data-id="{{ $row->getId() }}">
+			<li class="faux-table-row js-nested-item" data-id="{{ $row->getId() }}">
 			@if ($sortableClass)
 				<div class="faux-cell cell-small">
-					<i class="fa fa-sort sorting-handle"></i>
+					<i class="fa fa-sort sorting-handle js-sorting-handle"></i>
 				</div>
 			@endif
 			@foreach ($row->getColumns() as $name => $value)
