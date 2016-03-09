@@ -33,7 +33,7 @@ abstract class Action extends Fluent
 	 * @param  $instance
 	 * @return boolean
 	 */
-	public function check($instance)
+	public function check($instance = null)
 	{
 		if ( ! $this->permission) return true;
 

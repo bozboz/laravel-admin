@@ -33,7 +33,7 @@ class Report implements BaseInterface, ChecksPermissions
 	public function getReportActions()
 	{
 		return $this->reportActions->filter(function($action) {
-			return $action->check($this);
+			return $action->check();
 		});
 	}
 

@@ -24,7 +24,7 @@ class DropdownAction extends Action
 		$this->attributes = array_merge($this->attributes, $attributes);
 	}
 
-	public function check($instance)
+	public function check($instance = null)
 	{
 		$this->currentActions = $this->actions->filter(function ($action) use ($instance) {
 			return $action->check($instance);
