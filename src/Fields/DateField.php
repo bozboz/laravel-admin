@@ -5,6 +5,12 @@ use Illuminate\Support\Str;
 
 class DateField extends Field
 {
+	public function __construct($attributesOrName, $attributes = array())
+	{
+		parent::__construct($attributesOrName, $attributes);
+		$this->normalisedName = str_replace('-', '', str_slug($this->name));
+	}
+
 	protected function getJsClass()
 	{
 		return 'js-datepicker';
@@ -13,8 +19,8 @@ class DateField extends Field
 	public function getInput()
 	{
 		return Form::text($this->name, null, [
-			'id' => $this->name,
-			'class' => 'form-control form-control--small '.$this->getJsClass()
+			'id' => $this->normalisedName,
+			'class' => 'form-control form-control--small '.$this->getJsClass().' '.$this->class,
 		]);
 	}
 
@@ -24,6 +30,6 @@ class DateField extends Field
 
 		return <<<JAVASCRIPT
 			window.datePicker = window.datePicker || {};
-			window.datePicker.{$this->name} = $jsonConfig;
+			window.datePicker.{$this->normalisedName} = $jsonConfig;
 JAVASCRIPT;
 	}}
