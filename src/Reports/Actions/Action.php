@@ -43,6 +43,7 @@ abstract class Action extends Fluent
 	public function setInstance($instance)
 	{
 		$this->instance = $instance;
+		return $this;
 	}
 
 	/**
