@@ -1,5 +1,5 @@
 @if ($compactSingleActionToLink && $actions->count()==1)
-	<a class="btn btn-primary {{ $btnClass }} {{ $dropdownClass }}" type="submit" href="{{ $actions->first()->url }}">
+	<a class="btn btn-primary {{ $btnClass }} {{ $dropdownClass }}" type="submit" href="{{ $actions->first()->getUrl() }}">
 		<i class="fa {{ $icon }}"></i>
 		{{ $label }}
 	</a>
