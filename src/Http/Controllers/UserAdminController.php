@@ -5,6 +5,8 @@ use Bozboz\Permissions\Facades\Gate;
 
 class UserAdminController extends ModelAdminController
 {
+	protected $useActions = true;
+
 	public function __construct(UserAdminDecorator $user)
 	{
 		parent::__construct($user);

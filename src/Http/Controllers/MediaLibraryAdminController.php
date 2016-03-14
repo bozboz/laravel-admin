@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MediaLibraryAdminController extends ModelAdminController
 {
+	protected $useActions = true;
 	protected $createView = 'admin::media.upload';
 	protected $uploader;
 

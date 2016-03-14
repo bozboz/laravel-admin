@@ -2,6 +2,9 @@
 
 use Bozboz\Admin\Base\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Filters\ListingFilter;
+use Bozboz\Admin\Reports\Actions\CreateAction;
+use Bozboz\Admin\Reports\Actions\DestroyAction;
+use Bozboz\Admin\Reports\Actions\EditAction;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
@@ -111,10 +114,24 @@ class Report implements BaseInterface, ChecksPermissions
 	public function render(array $params = [])
 	{
 		if ($this->isUsingDeprecatedParams()) {
-			$params['newButtonPartial'] = 'admin::partials.new';
 			$params['modelName'] = $this->decorator->getHeading(false);
-		} else {
-			$params = [];
+			$this->setRowActions([
+				new EditAction(
+					$params['editAction'],
+					$params['canEdit']
+				),
+				new DestroyAction(
+					$params['destroyAction'],
+					$params['canDelete']
+				)
+			]);
+			$this->setReportActions([
+				new CreateAction(
+					$params['createAction'],
+					$params['canCreate'],
+					['label' => 'New ' . $this->decorator->getHeading()]
+				)
+			]);
 		}
 
 		$params += [
@@ -122,7 +139,6 @@ class Report implements BaseInterface, ChecksPermissions
 			'report' => $this,
 			'heading' => $this->decorator->getHeading(true),
 			'identifier' => $this->decorator->getListingIdentifier(),
-			'newButtonPartial' => 'admin::partials.create'
 		];
 
 		return View::make($this->view, $params);

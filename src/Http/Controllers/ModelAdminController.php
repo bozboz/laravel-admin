@@ -16,6 +16,7 @@ use URL;
 
 abstract class ModelAdminController extends Controller
 {
+	protected $useActions = false;
 	protected $decorator;
 	protected $editView = 'admin::edit';
 	protected $createView = 'admin::create';
@@ -32,12 +33,12 @@ abstract class ModelAdminController extends Controller
 
 		$report = $this->getListingReport();
 
+		if ( ! $this->useActions) return $report->render($this->getReportParams());
+
 		$report->setReportActions($this->getReportActions());
 		$report->setRowActions($this->getRowActions());
 
-		return $report->render(
-			$this->getReportParams()
-		);
+		return $report->render();
 	}
 
 	/**

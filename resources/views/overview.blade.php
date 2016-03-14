@@ -4,7 +4,7 @@
 @parent
 	@section('report_header')
 
-		@include($newButtonPartial)
+		@include('admin::partials.create')
 
 		<h1>{{ $heading }}</h1>
 
@@ -61,7 +61,7 @@
 
 	@section('report_footer')
 		{!! $report->getFooter() !!}
-		@include($newButtonPartial)
+		@include('admin::partials.create')
 	@show
 
 	@section('scripts')
