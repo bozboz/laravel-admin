@@ -26,7 +26,7 @@ class Menu extends Fluent
 
 		foreach($this->getAttributes() as $item => $link) {
 			if (is_array($link)) {
-				$topLevelItems[$item] = $link;
+				$topLevelItems[$item] = isset($topLevelItems[$item]) ? $link+$topLevelItems[$item] : $link;
 			} else {
 				$topLevelItems['Content'][$item] = $link;
 			}
