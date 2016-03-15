@@ -156,7 +156,7 @@ abstract class ModelAdminController extends Controller
 
 		return View::make($view, array(
 			'model' => $instance,
-			'modelName' => $this->decorator->getHeading(),
+			'modelName' => $this->decorator->getHeadingForInstance($instance),
 			'fields' => $fields,
 			'method' => $method,
 			'action' => [$this->getActionName($action), $instance->id],

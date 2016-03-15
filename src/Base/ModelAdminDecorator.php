@@ -65,6 +65,17 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
+	 * Retrieve a more specific heading for a particular instance
+	 *
+	 * @param  Bozboz\Admin\Base\ModelInterface  $instance
+	 * @return string
+	 */
+	public function getHeadingForInstance($instance)
+	{
+		return $this->getHeading(false);
+	}
+
+	/**
 	 * Apply each defined listing filter to the passed $builder
 	 *
 	 * @param  Illuminate\Database\Eloquent\Builder  $query
