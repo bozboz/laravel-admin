@@ -47,13 +47,28 @@ trait SortableTrait
 	public static function resortRowsCreated(Sortable $instance)
 	{
 		if ( ! $instance->getSortingValue()) {
-			$instance->newQuery()
-			         ->modifySortingQuery($instance)
-			         ->incrementSort();
+			$query = $instance->newQuery()->modifySortingQuery($instance);
 
-			$instance->setSortingValue(1);
+			if ($this->sortPrependOnCreate()) {
+				$query->incrementSort();
+				$instance->setSortingValue(1);
+			} else {
+				$sortVal = $query->max($instance->sortBy()) + 1;
+				$instance->setSortingValue($sortVal);
+			}
+
 			$instance->save();
 		}
+	}
+
+	/**
+	 * If true then new rows will be prepended to the sorting, if false appended
+	 *
+	 * @return boolean
+	 */
+	protected function sortPrependOnCreate()
+	{
+		return true;
 	}
 
 	/**
