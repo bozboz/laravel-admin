@@ -9,6 +9,10 @@
         {
             "name": "Sam King",
             "email": "sam@bozboz.co.uk"
+        },
+        {
+            "name": "Jim Hollington",
+            "email": "jim@bozboz.co.uk"
         }
     ],
     "require-dev": {
