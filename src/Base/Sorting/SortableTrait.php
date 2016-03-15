@@ -49,7 +49,7 @@ trait SortableTrait
 		if ( ! $instance->getSortingValue()) {
 			$query = $instance->newQuery()->modifySortingQuery($instance);
 
-			if ($this->sortPrependOnCreate()) {
+			if ($instance->sortPrependOnCreate()) {
 				$query->incrementSort();
 				$instance->setSortingValue(1);
 			} else {
