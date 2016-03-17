@@ -25,7 +25,11 @@ class BelongsToManyField extends Field
 	 */
 	public function __construct(ModelAdminDecorator $decorator, BelongsToMany $relationship, array $attributes = [], Closure $callback = null)
 	{
-		$name = $relationship->getRelationName() . '_relationship';
+		if (array_key_exists('name', $attributes)) {
+			$name = $attributes['name'];
+		} else {
+			$name = $relationship->getRelationName() . '_relationship';
+		}
 
 		parent::__construct($name, $attributes);
 
