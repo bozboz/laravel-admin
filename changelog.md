@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.0.3 (2016-03-22)
+-   Remove unused Authorizable trait from User model.
+
 ## Version 2.0.2 (2016-03-02)
 -   Fix password reset
 
