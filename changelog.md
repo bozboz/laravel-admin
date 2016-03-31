@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.0.4 (2016-03-31)
+-   Tie to stable version of bozboz/permissions (v1.0.0)
+
 ## Version 2.0.3 (2016-03-22)
 -   Remove unused Authorizable trait from User model.
 
