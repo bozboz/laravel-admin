@@ -1,11 +1,15 @@
 <?php namespace Bozboz\Admin\Http\Controllers;
 
-use App, Input, Redirect, URL, View;
 use Bozboz\Admin\Base\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Report;
 use Bozboz\Permissions\RuleStack;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
+use URL;
 
 abstract class ModelAdminController extends Controller
 {

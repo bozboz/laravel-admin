@@ -63,8 +63,9 @@ class Report implements BaseInterface
 	{
 		$filters = $this->decorator->getListingFilters();
 		$perPageOptions = $this->decorator->getItemsPerPageOptions();
+		$perPageValue = Input::get('per-page');
 
-		return View::make('admin::partials.listing-filters')->with(compact('perPageOptions'))->withFilters($filters);
+		return View::make('admin::partials.listing-filters')->with(compact('perPageOptions', 'perPageValue'))->withFilters($filters);
 	}
 
 	public function getFooter()
