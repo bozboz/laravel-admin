@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.0.5 (2016-04-06)
+-   Replace aliased facade classes with full namespaces, for 5.2 compatiblity (Input alias removed)
+
 ## Version 2.0.4 (2016-03-31)
 -   Tie to stable version of bozboz/permissions (v1.0.0)
 
