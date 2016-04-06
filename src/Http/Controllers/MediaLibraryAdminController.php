@@ -4,7 +4,9 @@ use Bozboz\Admin\Reports\Report;
 use Bozboz\Admin\Media\MediaAdminDecorator;
 use Bozboz\Admin\Media\Media;
 use Bozboz\Admin\Services\Uploader;
-use View, Response, Request, Input, Redirect;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Request;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

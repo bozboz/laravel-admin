@@ -1,8 +1,11 @@
 <?php namespace Bozboz\Admin\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-use Redirect, Auth, View, Input;
 use Bozboz\Permissions\Facades\Gate;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
 
 class AdminController extends Controller
 {

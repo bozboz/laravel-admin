@@ -10,7 +10,7 @@
 			{!! Form::select(
 				'per-page',
 				$perPageOptions,
-				Input::get('per-page'),
+				$perPageValue,
 				[
 					'onChange' => 'this.form.submit()',
 					'class' => 'form-control select2'
