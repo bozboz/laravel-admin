@@ -27,12 +27,14 @@ var ACCESS_PRIVATE = {{ $access_private }};
 		dropZone: '.js-file-upload-{{ $id }}',
 		progressall: function (e, data) {
 			var progress = parseInt(data.loaded / data.total * 100, 10);
-			$(this).parent().nextAll('.js-progress').find('.progress-bar').css(
-				'width',
-				progress + '%'
-			);
+			$(this).parent().find('.js-progress').css({
+				width: progress + '%',
+			}).data('progress', progress + '%');
 		},
 		done: function(e, data) {
+			$(this).parent().find('.js-progress').css({
+				width: 0,
+			}).data('progress', '');
 			for (var i in data.result.files) {
 				var upload = data.result.files[i];
 				viewModel.selectedMedia.media.push({

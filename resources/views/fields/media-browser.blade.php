@@ -17,23 +17,20 @@
   </div>
 
   <span class="btn btn-success fileinput-button">
+    <span class="js-progress progress-bar"></span>
     <i class="fa fa-plus"></i>
     <span>Upload New Media</span>
     <input class="js-file-upload-{{ $id }}" type="file" name="files[]" multiple>
   </span>
 
+  <button class="btn btn-info" data-bind="click: mediaLibrary.browse"><i class="fa fa-search"></i> Browse Media</button>
   <br>
   <br>
-
-  <div class="js-progress progress">
-    <div class="progress-bar progress-bar-success"></div>
-  </div>
 
   <script>
     $('.js-media-browser-{{ $id }}').data('values', {!! $data !!});
   </script>
 
-  <button class="btn btn-info" data-bind="click: mediaLibrary.browse"><i class="fa fa-search"></i> Browse Media</button>
 
   @include('admin::fields.partials.media-modal')
 
