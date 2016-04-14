@@ -17,7 +17,7 @@
   </div>
 
   <span class="btn btn-success fileinput-button">
-    <span class="js-progress inline-progress-bar"></span>
+    <span class="js-progress inline-progress-bar" data-progress=""></span>
     <i class="fa fa-plus"></i>
     <span>Upload New Media</span>
     <input class="js-file-upload-{{ $id }}" type="file" name="files[]" multiple>
