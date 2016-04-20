@@ -78,7 +78,8 @@ abstract class ModelAdminController extends Controller
 		return [
 			new CreateAction(
 				$this->getActionName('create'),
-				[$this, 'canCreate']
+				[$this, 'canCreate'],
+				['label' => 'New ' . $this->decorator->getHeading()]
 			)
 		];
 	}
