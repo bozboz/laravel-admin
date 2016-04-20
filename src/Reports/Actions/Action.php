@@ -54,8 +54,8 @@ abstract class Action extends Fluent
 	public function getUrl()
 	{
 		if (is_array($this->action)) {
-			$action = $this->action[0];
-			$params = array_slice($this->action, 1);
+			list($action, $params) = $this->action;
+			$params = is_array($params) ? $params : [$params];
 		} else {
 			$action = $this->action;
 			$params = [];
