@@ -2,6 +2,7 @@
 
 use Bozboz\Admin\Base\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Filters\ListingFilter;
+use Bozboz\Admin\Exceptions\Deprecated;
 use Bozboz\Admin\Reports\Actions\CreateAction;
 use Bozboz\Admin\Reports\Actions\DestroyAction;
 use Bozboz\Admin\Reports\Actions\EditAction;
@@ -94,18 +95,14 @@ class Report implements BaseInterface, ChecksPermissions
 
 	public function getHeader()
 	{
-		return View::make('admin::partials.listing-filters')->with([
-			'perPageOptions' => $this->decorator->getItemsPerPageOptions(),
-			'perPageValue' => Input::get('per-page'),
-			'filters' => $this->decorator->getListingFilters(),
-		]);
+		return View::make('admin::partials.listing-filters')->withFilters(
+			$this->decorator->getListingFilters()
+		);
 	}
 
 	public function getFooter()
 	{
-		if (method_exists($this->rows, 'render')) {
-			return $this->rows->appends(Input::except('page'))->render();
-		}
+
 	}
 
 	protected function queryRows()

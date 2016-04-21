@@ -4,6 +4,7 @@ namespace Bozboz\Admin\Base;
 
 use Bozboz\Admin\Base\ModelInterface;
 use Bozboz\Admin\Base\Sortable as DeprecatedSortable;
+use Bozboz\Admin\Exceptions\Deprecated;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
@@ -105,6 +106,8 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
+	 * @deprecated
+	 *
 	 * Retrieve a full or paginated collection of instances of $this->model
 	 *
 	 * @param  boolean  $limit
@@ -112,14 +115,22 @@ abstract class ModelAdminDecorator
 	 */
 	public function getListingModels()
 	{
-		$query = $this->getModelQuery();
+		throw new Deprecated(sprintf(
+			'%s is deprecated. Use either %s or %s',
+			__FUNCTION__, 'getListingModelsPaginated', 'getListingModelsNoLimit'
+		));
+	}
 
-		if ($this->isSortable()) {
-			return $query->get();
-		}
-
-		return $query->paginate(
-			Input::get('per-page', $this->listingPerPageLimit())
+	/**
+	 * Retrieve a paginated collection of instances of $this->model
+	 *
+	 * @param  boolean  $limit
+	 * @return Illuminate\Pagination\Paginator
+	 */
+	public function getListingModelsPaginated($limit = null)
+	{
+		return $this->getModelQuery()->paginate(
+			$limit ?: $this->listingPerPageLimit()
 		);
 	}
 

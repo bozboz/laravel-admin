@@ -4,6 +4,7 @@ use Bozboz\Admin\Base\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Actions\CreateAction;
 use Bozboz\Admin\Reports\Actions\DestroyAction;
 use Bozboz\Admin\Reports\Actions\EditAction;
+use Bozboz\Admin\Reports\PaginatedReport;
 use Bozboz\Admin\Reports\Report;
 use Bozboz\Permissions\RuleStack;
 use Illuminate\Routing\Controller;
@@ -50,7 +51,11 @@ abstract class ModelAdminController extends Controller
 	 */
 	protected function getListingReport()
 	{
-		return new Report($this->decorator);
+		if ($this->decorator->isSortable()) {
+			return new Report($this->decorator);
+		} else {
+			return new PaginatedReport($this->decorator, Input::get('per-page'));
+		}
 	}
 
 	/**
