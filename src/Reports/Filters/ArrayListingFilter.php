@@ -1,7 +1,6 @@
 <?php namespace Bozboz\Admin\Reports\Filters;
 
 use Illuminate\Html\FormFacade as Form;
-use Illuminate\Support\Facades\Input;
 
 class ArrayListingFilter extends ListingFilter
 {
@@ -17,16 +16,6 @@ class ArrayListingFilter extends ListingFilter
 		$this->default = $default;
 	}
 
-	protected function defaultFilter($field)
-	{
-		return function($builder, $value) use ($field)
-		{
-			if ($value) {
-				$builder->where($field, $value);
-			}
-		};
-	}
-
 	public function __toString()
 	{
 		$html = Form::label($this->name);
@@ -40,6 +29,7 @@ class ArrayListingFilter extends ListingFilter
 
 	public function getValue()
 	{
-		return Input::get($this->name, $this->default);
+		return parent::getValue() ?: $this->default;
 	}
+
 }

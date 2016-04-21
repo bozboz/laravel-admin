@@ -1,15 +1,20 @@
 <?php namespace Bozboz\Admin\Reports\Filters;
 
 use Closure;
-use InvalidArgumentException;
-
-use Illuminate\Support\Facades\Input;
 use Illuminate\Database\Eloquent\Builder;
+use InvalidArgumentException;
 
 abstract class ListingFilter
 {
+	protected static $values = [];
+
 	protected $name;
 	protected $callback;
+
+	static public function injectValues(array $values)
+	{
+		static::$values += $values;
+	}
 
 	/**
 	 * Get a default closure which filters the builder on the provided $field
@@ -17,7 +22,15 @@ abstract class ListingFilter
 	 * @param  string  $field
 	 * @return Closure
 	 */
-	abstract protected function defaultFilter($field);
+	protected function defaultFilter($field)
+	{
+		return function($builder, $value) use ($field)
+		{
+			if ($value) {
+				$builder->where($field, $value);
+			}
+		};
+	}
 
 	/**
 	 * Render the HTML for the filter
@@ -84,12 +97,14 @@ abstract class ListingFilter
 	}
 
 	/**
-	 * Get value based on current input, or fall back to default
+	 * Get value, or fall back to default
 	 *
 	 * @return mixed
 	 */
 	public function getValue()
 	{
-		return Input::get($this->name);
+		if (array_key_exists($this->name, static::$values)) {
+			return static::$values[$this->name];
+		}
 	}
 }

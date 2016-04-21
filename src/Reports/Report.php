@@ -1,6 +1,7 @@
 <?php namespace Bozboz\Admin\Reports;
 
 use Bozboz\Admin\Base\ModelAdminDecorator;
+use Bozboz\Admin\Reports\Filters\ListingFilter;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
@@ -17,6 +18,9 @@ class Report implements BaseInterface, ChecksPermissions
 	{
 		$this->decorator = $decorator;
 		$this->view = $view ?: $this->view;
+
+		ListingFilter::injectValues(Input::all());
+
 		$this->rows = $this->decorator->getListingModels();
 	}
 
