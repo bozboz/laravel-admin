@@ -14,7 +14,7 @@ class NestedReport extends Report
 			$this->tree[$index][] = $this->getRowFromInstance($inst);
 		}
 
-		return count($this->tree)? $this->tree[0] : array();
+		return count($this->tree)? reset($this->tree) : array();
 	}
 
 	public function isRowNested(Row $row)
