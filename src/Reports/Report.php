@@ -1,11 +1,11 @@
 <?php namespace Bozboz\Admin\Reports;
 
 use Bozboz\Admin\Base\ModelAdminDecorator;
-use Bozboz\Admin\Reports\Filters\ListingFilter;
 use Bozboz\Admin\Exceptions\Deprecated;
 use Bozboz\Admin\Reports\Actions\CreateAction;
 use Bozboz\Admin\Reports\Actions\DestroyAction;
 use Bozboz\Admin\Reports\Actions\EditAction;
+use Bozboz\Admin\Reports\Filters\ListingFilter;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
