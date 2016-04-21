@@ -6,6 +6,7 @@ use Bozboz\Admin\Reports\Actions\CreateAction;
 use Bozboz\Admin\Reports\Actions\DestroyAction;
 use Bozboz\Admin\Reports\Actions\EditAction;
 use Illuminate\Support\Facades\Input;
+use Bozboz\Admin\Reports\Filters\ListingFilter;
 use Illuminate\Support\Facades\View;
 
 class Report implements BaseInterface, ChecksPermissions
@@ -21,10 +22,6 @@ class Report implements BaseInterface, ChecksPermissions
 	{
 		$this->decorator = $decorator;
 		$this->view = $view ?: $this->view;
-
-		ListingFilter::injectValues(Input::all());
-
-		$this->rows = $this->decorator->getListingModels();
 	}
 
 	public function setReportActions($actions)
@@ -111,8 +108,19 @@ class Report implements BaseInterface, ChecksPermissions
 		}
 	}
 
+	protected function queryRows()
+	{
+		try {
+			return $this->decorator->getListingModels();
+		} catch (Deprecated $e) {
+			return $this->decorator->getListingModelsNoLimit();
+		}
+	}
+
 	public function render(array $params = [])
 	{
+		$this->rows = $this->queryRows();
+
 		if ($this->isUsingDeprecatedParams()) {
 			$params['modelName'] = $this->decorator->getHeading(false);
 			$this->setRowActions([
@@ -160,5 +168,10 @@ class Report implements BaseInterface, ChecksPermissions
 	protected function isUsingDeprecatedParams()
 	{
 		return empty($this->reportActions);
+	}
+
+	public function injectValues($values)
+	{
+		ListingFilter::injectValues($values);
 	}
 }

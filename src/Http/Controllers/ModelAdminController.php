@@ -33,6 +33,8 @@ abstract class ModelAdminController extends Controller
 
 		$report = $this->getListingReport();
 
+		$report->injectValues(Input::all());
+
 		if ( ! $this->useActions) return $report->render($this->getReportParams());
 
 		$report->setReportActions($this->getReportActions());
