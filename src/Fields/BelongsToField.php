@@ -46,7 +46,7 @@ class BelongsToField extends Field
 		}
 
 		return Form::select($this->name, $options, null, [
-			'class' => 'form-control'
+			'class' => 'form-control select2'
 		]);
 	}
 
