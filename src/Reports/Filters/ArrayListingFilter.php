@@ -1,35 +1,20 @@
-<?php namespace Bozboz\Admin\Reports\Filters;
+<?php
 
-use Illuminate\Html\FormFacade as Form;
+namespace Bozboz\Admin\Reports\Filters;
 
-class ArrayListingFilter extends ListingFilter
+class ArrayListingFilter extends AbstractSelectFilter
 {
 	protected $options;
 
-	protected $default;
-
 	public function __construct($name, $options, $callback = null, $default = null)
 	{
-		parent::__construct($name, $callback);
+		parent::__construct($name, $callback, $default);
 
 		$this->options = $options;
-		$this->default = $default;
 	}
 
-	public function __toString()
+	protected function getOptions()
 	{
-		$html = Form::label($this->name);
-		$html .= Form::select($this->name, $this->options, $this->getValue(), [
-			'onChange' => 'this.form.submit()',
-			'class' => 'form-control select2'
-		]);
-
-		return $html;
+		return $this->options;
 	}
-
-	public function getValue()
-	{
-		return parent::getValue() ?: $this->default;
-	}
-
 }
