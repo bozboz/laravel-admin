@@ -32,6 +32,13 @@ abstract class ListingFilter
 		};
 	}
 
+	public function render($string)
+	{
+		$output = $this->__toString();
+
+		if ($output) return str_replace(':filter', $output, $string);
+	}
+
 	/**
 	 * Render the HTML for the filter
 	 *

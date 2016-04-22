@@ -1,8 +1,6 @@
 {!! Form::open(['method' => 'get', 'role' => 'form', 'class' => 'form-inline filter-form']) !!}
 	@foreach($filters as $filter)
-		<div class="form-group">
-			{!! $filter !!}
-		</div>
+		{!! $filter->render('<div class="form-group">:filter</div>') !!}
 	@endforeach
 	@if (isset($perPageOptions))
 		<div class="form-group" style="float: right;">
