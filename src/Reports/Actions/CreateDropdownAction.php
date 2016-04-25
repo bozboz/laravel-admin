@@ -6,7 +6,7 @@ class CreateDropdownAction extends DropdownAction
 {
 	protected $attributes = [
 		'label' => 'New',
-		'icon' => 'fa fa-plus-square',
+		'icon' => 'fa fa-plus',
 		'btnClass' => 'btn-success',
 		'dropdownClass' => 'space-left pull-right',
 	];
