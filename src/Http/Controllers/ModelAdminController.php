@@ -1,6 +1,9 @@
 <?php namespace Bozboz\Admin\Http\Controllers;
 
 use Bozboz\Admin\Base\ModelAdminDecorator;
+use Bozboz\Admin\Reports\Actions\CreateAction;
+use Bozboz\Admin\Reports\Actions\DestroyAction;
+use Bozboz\Admin\Reports\Actions\EditAction;
 use Bozboz\Admin\Reports\Report;
 use Bozboz\Permissions\RuleStack;
 use Illuminate\Routing\Controller;
@@ -28,9 +31,13 @@ abstract class ModelAdminController extends Controller
 		if ( ! $this->canView()) App::abort(403);
 
 		$report = $this->getListingReport();
-		$params = $this->getReportParams();
 
-		return $report->render($params);
+		$report->setReportActions($this->getReportActions());
+		$report->setRowActions($this->getRowActions());
+
+		return $report->render(
+			$this->getReportParams()
+		);
 	}
 
 	/**
@@ -44,7 +51,7 @@ abstract class ModelAdminController extends Controller
 	}
 
 	/**
-	 * Return an array of params the report requires to render
+	 * @deprecated Return an array of params the report requires to render
 	 *
 	 * @return array
 	 */
@@ -59,6 +66,41 @@ abstract class ModelAdminController extends Controller
 			'canEdit' => [$this, 'canEdit'],
 			'canDelete' => [$this, 'canDestroy'],
 		];
+	}
+
+	/**
+	 * Return an array of actions the report can perform
+	 *
+	 * @return array
+	 */
+	protected function getReportActions()
+	{
+		return [
+			new CreateAction(
+				$this->getActionName('create'),
+				[$this, 'canCreate']
+			)
+		];
+	}
+
+	/**
+	 * Return an array of actions each row can perform
+	 *
+	 * @return array
+	 */
+	protected function getRowActions()
+	{
+		return [
+			'edit' => new EditAction(
+				$this->getActionName('edit'),
+				[$this, 'canEdit']
+			),
+			'destroy' => new DestroyAction(
+				$this->getActionName('destroy'),
+				[$this, 'canDestroy']
+			)
+		];
+
 	}
 
 	public function create()
@@ -171,9 +213,9 @@ abstract class ModelAdminController extends Controller
 	protected function reEdit($instance)
 	{
 		if (Input::has('after_save') && Input::get('after_save') === 'continue') {
-			$reportParams = $this->getReportParams();
-			if (array_key_exists('editAction', $reportParams)) {
-				return Redirect::action($reportParams['editAction'], $instance->getKey());
+			$actions = $this->getRowActions();
+			if (array_key_exists('edit', $actions)) {
+				return Redirect::to($actions['edit']->setInstance($instance)->getUrl());
 			}
 		}
 	}

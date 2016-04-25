@@ -1,29 +1,20 @@
 @extends('admin::overview')
 
 @section('report')
-	<ul class="js-mason secret-list media-view">
-	@foreach ($report->getRows() as $row)
-		<li class="masonry-item">
-			@if ($row->check($canEdit))
-				<a href="{{ URL::action($editAction, array($row->getId())) }}">
-					{!! $row->getColumn('image') !!}
-				</a>
-			@else
-				{!! $row->getColumn('image') !!}
-			@endif
-			<div class="icons">
-				<p>{{ $row->getColumn('caption') }}</p>
-
-				@if ($row->check($canDelete))
-					{!! Form::open(['action' => array($destroyAction, $row->getId()), 'method' => 'DELETE']) !!}
-						<button data-warn="true" class="btn btn-danger btn-xs" type="submit">
-							<i class="fa fa-minus-square"></i>
-							Delete
-						</button>
-					{!! Form::close() !!}
-				@endif
-			</div>
-		</li>
-	@endforeach
-	</ul>
+	@if ($report->hasRows())
+		<ul class="js-mason secret-list media-view">
+		@foreach ($report->getRows() as $row)
+			<li class="masonry-item">
+				@foreach($row->getColumns() as $column)
+					{!! $column !!}
+				@endforeach
+				@foreach ($row->filterRowActions($report->getRowActions()) as $action)
+					@include($action->getView(), $action->getViewData())
+				@endforeach
+			</li>
+		@endforeach
+		</ul>
+	@else
+		<p>Nothing here yet. Why not add something?</p>
+	@endif
 @stop

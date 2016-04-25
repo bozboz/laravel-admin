@@ -4,11 +4,13 @@ use Bozboz\Admin\Base\ModelAdminDecorator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
-class Report implements BaseInterface
+class Report implements BaseInterface, ChecksPermissions
 {
 	protected $decorator;
 	protected $rows;
 	protected $view = 'admin::overview';
+	protected $reportActions = [];
+	protected $rowActions = [];
 	protected $renderedColumns = [];
 
 	public function __construct(ModelAdminDecorator $decorator, $view = null)
@@ -16,6 +18,33 @@ class Report implements BaseInterface
 		$this->decorator = $decorator;
 		$this->view = $view ?: $this->view;
 		$this->rows = $this->decorator->getListingModels();
+	}
+
+	public function setReportActions($actions)
+	{
+		$this->reportActions = collect($actions);
+	}
+
+	public function setRowActions($actions)
+	{
+		$this->rowActions = collect($actions);
+	}
+
+	public function getReportActions()
+	{
+		return $this->reportActions->filter(function($action) {
+			return $action->check();
+		});
+	}
+
+	public function getRowActions()
+	{
+		return $this->rowActions;
+	}
+
+	public function check(callable $assertion)
+	{
+		return $assertion();
 	}
 
 	public function getHeadings()
@@ -51,7 +80,7 @@ class Report implements BaseInterface
 			return $this->renderedColumns[$id];
 		}
 
-		return new Row($id, $instance, $this->getColumnsFromInstance($instance));
+		return new Row($id, $instance, $this->getColumnsFromInstance($instance), $this->rowActions);
 	}
 
 	protected function getColumnsFromInstance($instance)
@@ -61,11 +90,11 @@ class Report implements BaseInterface
 
 	public function getHeader()
 	{
-		$filters = $this->decorator->getListingFilters();
-		$perPageOptions = $this->decorator->getItemsPerPageOptions();
-		$perPageValue = Input::get('per-page');
-
-		return View::make('admin::partials.listing-filters')->with(compact('perPageOptions', 'perPageValue'))->withFilters($filters);
+		return View::make('admin::partials.listing-filters')->with([
+			'perPageOptions' => $this->decorator->getItemsPerPageOptions(),
+			'perPageValue' => Input::get('per-page'),
+			'filters' => $this->decorator->getListingFilters(),
+		]);
 	}
 
 	public function getFooter()
@@ -77,15 +106,19 @@ class Report implements BaseInterface
 
 	public function render(array $params = [])
 	{
-		$identifier = $this->decorator->getListingIdentifier();
+		if ($this->isUsingDeprecatedParams()) {
+			$params['newButtonPartial'] = 'admin::partials.new';
+			$params['modelName'] = $this->decorator->getHeading(false);
+		} else {
+			$params = [];
+		}
 
 		$params += [
 			'sortableClass' => $this->getSortableClass(),
 			'report' => $this,
 			'heading' => $this->decorator->getHeading(true),
-			'modelName' => $this->decorator->getHeading(false),
-			'identifier' => $identifier,
-			'newButtonPartial' => 'admin::partials.new',
+			'identifier' => $this->decorator->getListingIdentifier(),
+			'newButtonPartial' => 'admin::partials.create'
 		];
 
 		return View::make($this->view, $params);
@@ -102,5 +135,10 @@ class Report implements BaseInterface
 		}
 
 		return $classes ? ' ' . implode(' ', $classes) : '';
+	}
+
+	protected function isUsingDeprecatedParams()
+	{
+		return empty($this->reportActions);
 	}
 }

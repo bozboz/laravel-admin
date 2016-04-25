@@ -108,8 +108,8 @@ class Menu extends Fluent
 	 * @param  string  $rule
 	 * @return boolean
 	 */
-	public function gate($rule)
+	public function gate($rule, $param = null)
 	{
-		return RuleStack::with($rule)->then('view_anything')->isAllowed();
+		return RuleStack::with($rule, $param)->then('view_anything')->isAllowed();
 	}
 }

@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Reports;
 
-class Row
+class Row implements ChecksPermissions
 {
 	private $id;
 	private $data;
@@ -15,6 +15,15 @@ class Row
 			$this->model = $modelOrData;
 			$this->data = $data;
 		}
+	}
+
+	public function filterRowActions($actions)
+	{
+		return $actions->filter(function($action) {
+			return $action->check($this->model);
+		})->each(function($action) {
+			$action->setInstance($this->model);
+		});
 	}
 
 	public function getId()
