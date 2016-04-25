@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('namespace' => 'Bozboz\Admin\Http\Controllers', 'prefix' => 'admin'), function() {
+Route::group(array('middleware' => ['web'], 'namespace' => 'Bozboz\Admin\Http\Controllers', 'prefix' => 'admin'), function() {
 
 	Route::group(array('middleware' => 'auth'), function() {
 		Route::resource('users', 'UserAdminController', array('except' => array('show')));

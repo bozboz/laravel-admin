@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.1.0 (Future)
+-   Add web middleware to routes inline with changes between L5.1 and L5.2
+
 ## Version 2.0.5 (2016-04-06)
 -   Replace aliased facade classes with full namespaces, for 5.2 compatiblity (Input alias removed)
 
