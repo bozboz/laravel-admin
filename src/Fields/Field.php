@@ -28,7 +28,9 @@ abstract class Field extends Fluent
 	}
 
 	protected $attributes = array(
-		'class' => 'form-control'
+		'class' => 'form-control',
+		'hide_if_value_filled' => false,
+		'hide_if_value_empty' => false,
 	);
 
 	abstract public function getInput();
@@ -52,11 +54,28 @@ abstract class Field extends Fluent
 
 	public function render($errors)
 	{
+		if ($this->shouldHideField()) {
+			return (new HiddenField($this->attributes))->render($errors);
+		}
+
 		return View::make('admin::fields.field')->with([
 			'label' => $this->getLabel(),
 			'input' => $this->getInput(),
 			'errors' => $this->getErrors($errors),
 			'field' => $this,
 		]);
+	}
+
+	/**
+	 * Determine if field should be hidden, based on hide_if_value_* attributes
+	 *
+	 * @return boolean
+	 */
+	protected function shouldHideField()
+	{
+		$value = Form::getValueAttribute($this->name);
+
+		return ($value && $this->hide_if_value_filled) ||
+			(is_null($value) && $this->hide_if_value_empty);
 	}
 }
