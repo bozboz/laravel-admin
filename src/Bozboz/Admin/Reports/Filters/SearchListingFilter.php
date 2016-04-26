@@ -30,7 +30,7 @@ class SearchListingFilter extends ListingFilter
 		$label = Form::label($this->name);
 		$input = Form::text($this->name, $this->getValue(), ['class' => 'form-control input-sm']);
 		$submit = Form::submit('Search', ['class' => 'btn btn-sm btn-default']);
-		
+
 		return <<<HTML
 			{$label}
 			<div class="input-group">
@@ -40,12 +40,5 @@ class SearchListingFilter extends ListingFilter
 				</div>
 			</div>
 HTML;
-	}
-
-	public function getValue()
-	{
-		$value = parent::getValue();
-
-		return $value !== '' ? $value : null;
 	}
 }

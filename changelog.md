@@ -1,5 +1,9 @@
 # Bozboz Admin Package Changelog
 
+## Version 1.2.4 (2016-03-26)
+-   Fix listing filter filtering
+
+
 ## Version 1.2.3 (2016-03-26)
 -   Fix GrantAdminUserPermissions migration
 
