@@ -223,7 +223,7 @@ abstract class ModelAdminController extends Controller
 	{
 		if (Input::has('after_save') && Input::get('after_save') === 'continue') {
 			$actions = $this->getRowActions();
-			return Redirect::action($this->getEditAction($instance), $instance->id);
+			return Redirect::action($this->getEditAction(), $instance->id);
 		}
 	}
 
@@ -256,7 +256,7 @@ abstract class ModelAdminController extends Controller
 		return URL::action($this->getActionName('index'));
 	}
 
-	protected function getEditAction($instance)
+	protected function getEditAction()
 	{
 		return $this->getActionName('edit');
 	}
