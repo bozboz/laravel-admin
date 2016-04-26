@@ -12,7 +12,7 @@ class GrantAdminUserPermissions extends Migration {
 	 */
 	public function up()
 	{
-		$users = DB::table('users')->select('id')->get();
+		$users = DB::table('users')->where('is_admin', true)->select('id')->get();
 
 		foreach($users as $user) {
 			$this->grantWildCardPermissionForUser($user);

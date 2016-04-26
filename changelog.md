@@ -3,10 +3,26 @@
 ## Version 1.3.0 (Future)
 
 ### Added
--	Add null option to TreeSelectField
+-   Add null option to TreeSelectField
 
 
-## Version 1.2.0
+## Version 1.2.4 (2016-03-26)
+-   Fix listing filter filtering
+
+
+## Version 1.2.3 (2016-03-26)
+-   Fix GrantAdminUserPermissions migration
+
+
+## Version 1.2.2 (2016-03-04)
+-   Fix CheckboxField
+
+
+## Version 1.2.1 (2016-02-03)
+-   Include wildcard in list of actions when editing a permission
+
+
+## Version 1.2.0 (2016-01-21)
 
 ### Added
 -   Add tags to Media Library

@@ -61,4 +61,9 @@ class UserAdminDecorator extends ModelAdminDecorator
 	{
 		return Auth::id() === $user->id;
 	}
+
+	public function getListOfAdminUsers()
+	{
+		return $this->model->orderBy('last_name')->hasPermission('admin_login')->get();
+	}
 }
