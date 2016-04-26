@@ -100,11 +100,11 @@ abstract class ModelAdminController extends Controller
 	protected function getRowActions()
 	{
 		return [
-			'edit' => new EditAction(
-				$this->getActionName('edit'),
+			new EditAction(
+				$this->getEditAction(),
 				[$this, 'canEdit']
 			),
-			'destroy' => new DestroyAction(
+			new DestroyAction(
 				$this->getActionName('destroy'),
 				[$this, 'canDestroy']
 			)
@@ -223,9 +223,7 @@ abstract class ModelAdminController extends Controller
 	{
 		if (Input::has('after_save') && Input::get('after_save') === 'continue') {
 			$actions = $this->getRowActions();
-			if (array_key_exists('edit', $actions)) {
-				return Redirect::to($actions['edit']->setInstance($instance)->getUrl());
-			}
+			return Redirect::action($this->getEditAction($instance), $instance->id);
 		}
 	}
 
@@ -256,6 +254,11 @@ abstract class ModelAdminController extends Controller
 	protected function getListingUrl($instance)
 	{
 		return URL::action($this->getActionName('index'));
+	}
+
+	protected function getEditAction($instance)
+	{
+		return $this->getActionName('edit');
 	}
 
 	protected function getActionName($action)
