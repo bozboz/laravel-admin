@@ -1,5 +1,9 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.0.6 (2016-04-26)
+-   Fix GrantAdminUserPermissions migration
+-   Fix listing filter filtering
+
 ## Version 2.0.5 (2016-04-06)
 -   Replace aliased facade classes with full namespaces, for 5.2 compatiblity (Input alias removed)
 
