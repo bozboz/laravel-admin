@@ -1,5 +1,9 @@
 # Bozboz Admin Package Changelog
 
+## Version 1.2.3 (2016-03-26)
+-   Fix GrantAdminUserPermissions migration
+
+
 ## Version 1.2.2 (2016-03-04)
 -   Fix CheckboxField
 
