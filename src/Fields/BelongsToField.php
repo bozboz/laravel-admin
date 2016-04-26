@@ -1,7 +1,8 @@
 <?php namespace Bozboz\Admin\Fields;
 
-use Closure, Form;
 use Bozboz\Admin\Base\ModelAdminDecorator;
+use Closure;
+use Collective\Html\FormFacade as Form;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BelongsToField extends Field

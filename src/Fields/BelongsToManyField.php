@@ -1,8 +1,8 @@
 <?php namespace Bozboz\Admin\Fields;
 
 use Closure;
-use Illuminate\Html\FormFacade as Form;
-use Illuminate\Html\HtmlFacade as HTML;
+use Collective\Html\FormFacade as Form;
+use Collective\Html\HtmlFacade as HTML;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Bozboz\Admin\Base\ModelAdminDecorator;
 

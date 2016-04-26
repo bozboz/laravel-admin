@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Reports\Filters;
 
-use Illuminate\Html\FormFacade as Form;
+use Collective\Html\FormFacade as Form;
 
 class SearchListingFilter extends ListingFilter
 {

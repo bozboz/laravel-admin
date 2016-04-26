@@ -1,8 +1,8 @@
 <?php namespace Bozboz\Admin\Fields;
 
 use Bozboz\Admin\Media\Media;
-use Illuminate\Html\HtmlFacade as HTML;
-use Illuminate\Html\FormFacade as Form;
+use Collective\Html\HtmlFacade as HTML;
+use Collective\Html\FormFacade as Form;
 
 class MediaField extends Field
 {

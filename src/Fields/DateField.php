@@ -1,6 +1,6 @@
 <?php namespace Bozboz\Admin\Fields;
 
-use Form;
+use Collective\Html\FormFacade as Form;
 use Illuminate\Support\Str;
 
 class DateField extends Field
