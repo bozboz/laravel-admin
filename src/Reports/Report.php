@@ -13,9 +13,9 @@ class Report implements BaseInterface, ChecksPermissions
 {
 	protected $decorator;
 	protected $rows;
+	protected $reportActions;
+	protected $rowActions;
 	protected $view = 'admin::overview';
-	protected $reportActions = [];
-	protected $rowActions = [];
 	protected $renderedColumns = [];
 
 	public function __construct(ModelAdminDecorator $decorator, $view = null)
@@ -36,6 +36,10 @@ class Report implements BaseInterface, ChecksPermissions
 
 	public function getReportActions()
 	{
+		if ( ! $this->reportActions) {
+			$this->reportActions = collect();
+		}
+
 		return $this->reportActions->filter(function($action) {
 			return $action->check();
 		});
@@ -43,6 +47,10 @@ class Report implements BaseInterface, ChecksPermissions
 
 	public function getRowActions()
 	{
+		if ( ! $this->rowActions) {
+			$this->rowActions = collect();
+		}
+
 		return $this->rowActions;
 	}
 
@@ -117,7 +125,7 @@ class Report implements BaseInterface, ChecksPermissions
 	{
 		$this->rows = $this->queryRows();
 
-		if ($this->isUsingDeprecatedParams()) {
+		if ($this->isUsingDeprecatedParams($params)) {
 			$params['modelName'] = $this->decorator->getHeading(false);
 			$this->setRowActions([
 				new EditAction(
@@ -162,9 +170,9 @@ class Report implements BaseInterface, ChecksPermissions
 		return $classes ? ' ' . implode(' ', $classes) : '';
 	}
 
-	protected function isUsingDeprecatedParams()
+	protected function isUsingDeprecatedParams($params)
 	{
-		return empty($this->reportActions);
+		return array_key_exists('createAction', $params);
 	}
 
 	public function injectValues($values)
