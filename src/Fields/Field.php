@@ -35,6 +35,16 @@ abstract class Field extends Fluent
 
 	abstract public function getInput();
 
+	public function getHelpText()
+	{
+		if ($this->help_text) {
+			return (object) [
+				'title' => $this->help_text_title,
+				'content' => $this->help_text,
+			];
+		}
+	}
+
 	public function getLabel()
 	{
 		return Form::label($this->get('name'), $this->get('label'));
@@ -59,6 +69,7 @@ abstract class Field extends Fluent
 		}
 
 		return View::make('admin::fields.field')->with([
+			'helpText' => $this->getHelpText(),
 			'label' => $this->getLabel(),
 			'input' => $this->getInput(),
 			'errors' => $this->getErrors($errors),
