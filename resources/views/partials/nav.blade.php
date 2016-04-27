@@ -39,7 +39,7 @@
 						<li class="{{ $menu->activeClassForUrl(reset($items)) }}">
 							<a href="{!! reset($items) !!}">
 								<i class="fa fa-file-text"></i>
-								{{ $item }}
+								{{ key($items) }}
 							</a>
 						</li>
 					@endif
