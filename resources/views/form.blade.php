@@ -19,7 +19,7 @@
 
 	@include('admin::fields.field-group', ['attributes' => []])
 
-	<div class="form-row">
+	<div class="form-row discrete">
 		@include('admin::partials.save')
 		@include('admin::partials.listing')
 	</div>
