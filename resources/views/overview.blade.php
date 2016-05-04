@@ -6,7 +6,7 @@
 
 		@include($newButtonPartial)
 
-		<h1>{{ $heading }}</h1>
+		<h1>{!! $heading !!}</h1>
 
 		@if (Session::has('model'))
 			@foreach(Session::get('model') as $msg)
