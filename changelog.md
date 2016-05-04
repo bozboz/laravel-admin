@@ -1,20 +1,57 @@
 # Bozboz Admin Package Changelog
 
 ## Version 2.1.0 (Future)
--   Add web middleware to routes inline with changes between L5.1 and L5.2
+
+### Added
 -   Add help text functionality to admin fields
+-   Add `getRowActions` and `getReportActions` methods to
+    `Http\Controllers\ModelAdminController`
+-   `Base\ModelAdminDecorator::getHeadingForInstance` method
+-   `Base\ModelAdminDecorator::getListingModelsPaginated` method
+-   `NestedSortableTrait` to sort nested set models
+-   `SortableTrait` to sort non-nested set models
+-   `hide_is_value_filled` and `hide_if_value_empty` attributes added to fields
+-   `Reports\PaginatedReport` class
+-   `Reports\Filters\RelationFilter` class
+-   `failsStore` and `failsUpdate` methods added to `Services\Validators\Validator`
+
+### Changed
+-   Add web middleware to routes inline with changes between L5.1 and L5.2
+-   Improved appearance of media browser field
+-   Changed "Save and Continue" button label to "Save"
+-   `Fields\BelongsToField` now uses select2 by default
+-   The Illuminate\Html package has been replaced with the more actively
+    developed and equivilant Collective\Html package
+-   Query values from the request are now injected into the report and stored
+    statically on the `Reports\ListingFilter` class
+-   Updates/stores in `Http\Controllers\ModelAdminController` are now performed
+    in a database transaction
+
+### Fixed
+-   Allow a parameter to be passed into the `Menu::gate()` method
+-   `Fields\BelongsToManyField` can now have a custom name passed in as an attribute
+-   `Fields\DateField` now has a normalised name to prevent JS errors with hyphens
+
+### Deprecated
+-   `Base\ModelAdminDecorator::getListingModels` method
+-   `Base\Sortable` class
+
 
 ## Version 2.0.5 (2016-04-06)
 -   Replace aliased facade classes with full namespaces, for 5.2 compatiblity (Input alias removed)
 
+
 ## Version 2.0.4 (2016-03-31)
 -   Tie to stable version of bozboz/permissions (v1.0.0)
+
 
 ## Version 2.0.3 (2016-03-22)
 -   Remove unused Authorizable trait from User model.
 
+
 ## Version 2.0.2 (2016-03-02)
 -   Fix password reset
+
 
 ## Version 2.0.1 (2016-03-01)
 -   Fix email validation rule when updating a user
