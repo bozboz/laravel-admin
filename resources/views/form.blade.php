@@ -4,7 +4,7 @@
 @parent
 {!! Form::model($model, array('method' => $method, 'action' => $action, 'role' => 'form', 'files' => true)) !!}
 	<div class="form-row discrete">
-		@include('admin::partials.save')
+		@include('admin::partials.actions')
 	</div>
 
 	<h2>@yield('heading')</h2>
@@ -20,7 +20,7 @@
 	@include('admin::fields.field-group', ['attributes' => []])
 
 	<div class="form-row discrete">
-		@include('admin::partials.save')
+		@include('admin::partials.actions')
 	</div>
 
 {!! Form::close() !!}

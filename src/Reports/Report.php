@@ -151,7 +151,7 @@ class Report implements BaseInterface, ChecksPermissions
 			'report' => $this,
 			'heading' => $this->decorator->getHeading(true),
 			'identifier' => $this->decorator->getListingIdentifier(),
-			'newButtonPartial' => 'admin::partials.create',
+			'newButtonPartial' => 'admin::partials.actions',
 		];
 
 		return View::make($this->view, $params);

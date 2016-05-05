@@ -1,3 +1,3 @@
-@foreach($report->getReportActions() as $action)
+@foreach($actions as $action)
 	@include($action->getView(), $action->getViewData())
 @endforeach

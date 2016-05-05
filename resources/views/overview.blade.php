@@ -4,7 +4,7 @@
 @parent
 	@section('report_header')
 
-		@include($newButtonPartial)
+		@include($newButtonPartial, ['actions' => $report->getReportActions()])
 
 		<h1>{!! $heading !!}</h1>
 
@@ -61,7 +61,7 @@
 
 	@section('report_footer')
 		{!! $report->getFooter() !!}
-		@include($newButtonPartial)
+		@include($newButtonPartial, ['actions' => $report->getReportActions()])
 	@show
 
 	@section('scripts')
