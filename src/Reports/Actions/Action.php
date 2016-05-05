@@ -3,10 +3,11 @@
 namespace Bozboz\Admin\Reports\Actions;
 
 use Bozboz\Admin\Reports\ChecksPermissions;
-use Illuminate\Support\Fluent;
 
-abstract class Action extends Fluent
+abstract class Action
 {
+	protected $attributes = [];
+
 	protected $defaults = [
 		'warn' => null,
 		'class' => 'btn-default',
@@ -16,15 +17,17 @@ abstract class Action extends Fluent
 
 	protected $instance;
 
+	protected $permission;
+
 	abstract public function getView();
 
-	public function __construct($action, $permission = null, $attributes = [])
+	public function __construct($permission = null, $attributes = [])
 	{
-		$this->action = $action;
+		$this->permission = $permission;
 
-		$attributes['permission'] = $permission;
-
-		parent::__construct($attributes);
+		foreach ($attributes as $key => $value) {
+			$this->attributes[$key] = $value;
+		}
 	}
 
 	/**
@@ -46,37 +49,8 @@ abstract class Action extends Fluent
 		return $this;
 	}
 
-	/**
-	 * Generate a URL based on a defined route action
-	 *
-	 * @return string
-	 */
-	public function getUrl()
-	{
-		if (is_array($this->action)) {
-			list($action, $params) = $this->action;
-			$params = is_array($params) ? $params : [$params];
-		} else {
-			$action = $this->action;
-			$params = [];
-		}
-
-		if ($this->instance) {
-			array_push($params, $this->instance->id);
-		}
-
-		return action($action, array_filter($params));
-	}
-
-	/**
-	 * Get the parameters to inject into a view
-	 *
-	 * @return array
-	 */
 	public function getViewData()
 	{
-		$attributes = $this->getAttributes() + $this->defaults;
-		$attributes['url'] = $this->getUrl();
-		return $attributes;
+		return $this->attributes + $this->defaults;
 	}
 }

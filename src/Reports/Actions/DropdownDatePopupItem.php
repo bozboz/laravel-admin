@@ -2,7 +2,7 @@
 
 namespace Bozboz\Admin\Reports\Actions;
 
-class DropdownDatePopupItem extends Action
+class DropdownDatePopupItem extends FormAction
 {
     public function getView()
     {

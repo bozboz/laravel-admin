@@ -48,7 +48,7 @@ class DropdownAction extends Action
 
 	public function getViewData()
 	{
-		$attributes = $this->getAttributes() + $this->defaults;
+		$attributes = $this->attributes + $this->defaults;
 		$attributes['actions'] = $this->currentActions;
 		return $attributes;
 	}

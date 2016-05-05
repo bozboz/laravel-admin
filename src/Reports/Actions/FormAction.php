@@ -2,7 +2,7 @@
 
 namespace Bozboz\Admin\Reports\Actions;
 
-class FormAction extends Action
+class FormAction extends LinkAction
 {
 	public function getView()
 	{

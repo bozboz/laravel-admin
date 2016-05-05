@@ -2,7 +2,7 @@
 
 namespace Bozboz\Admin\Reports\Actions;
 
-class DropdownFormItem extends Action
+class DropdownFormItem extends FormAction
 {
 	public function getView()
 	{
