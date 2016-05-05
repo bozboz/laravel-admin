@@ -217,20 +217,29 @@ abstract class ModelAdminController extends Controller
 			'fields' => $fields,
 			'method' => $method,
 			'action' => [$this->getActionName($action), $instance->id],
-			'actions' => $this->getFormActions($instance),
+			'actions' => $this->collectValidFormActions($instance),
 		));
+	}
+
+	protected function collectValidFormActions($instance)
+	{
+		return collect($this->getFormActions($instance))->filter(function($action) {
+			return $action->check();
+		});
 	}
 
 	protected function getFormActions($instance)
 	{
 		return [
-			new SubmitAction([
+			new SubmitAction(null, [
 				'label' => 'Save and Exit',
+				'icon' => 'fa fa-save',
 				'name' => 'after_save',
 				'value' => 'exit',
 			]),
-			new SubmitAction([
+			new SubmitAction(null, [
 				'label' => 'Save',
+				'icon' => 'fa fa-save',
 				'name' => 'after_save',
 				'value' => 'continue',
 			]),
