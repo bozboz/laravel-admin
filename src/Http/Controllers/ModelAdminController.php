@@ -4,6 +4,8 @@ use Bozboz\Admin\Base\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Actions\CreateAction;
 use Bozboz\Admin\Reports\Actions\DestroyAction;
 use Bozboz\Admin\Reports\Actions\EditAction;
+use Bozboz\Admin\Reports\Actions\LinkAction;
+use Bozboz\Admin\Reports\Actions\SubmitAction;
 use Bozboz\Admin\Reports\PaginatedReport;
 use Bozboz\Admin\Reports\Report;
 use Bozboz\Permissions\RuleStack;
@@ -215,8 +217,33 @@ abstract class ModelAdminController extends Controller
 			'fields' => $fields,
 			'method' => $method,
 			'action' => [$this->getActionName($action), $instance->id],
-			'listingUrl' => $this->getListingUrl($instance),
+			'actions' => $this->getFormActions($instance),
 		));
+	}
+
+	protected function getFormActions($instance)
+	{
+		return [
+			new SubmitAction([
+				'label' => 'Save and Exit',
+				'name' => 'after_save',
+				'value' => 'exit',
+			]),
+			new SubmitAction([
+				'label' => 'Save',
+				'name' => 'after_save',
+				'value' => 'continue',
+			]),
+			new LinkAction(
+				$this->getListingAction($instance),
+				[$this, 'canView'],
+				[
+					'label' => 'Back to listing',
+					'icon' => 'fa fa-list-alt',
+					'class' => 'btn-default pull-right',
+				]
+			),
+		];
 	}
 
 	protected function reEdit($instance)
@@ -251,9 +278,9 @@ abstract class ModelAdminController extends Controller
 		return Redirect::action($this->getActionName('index'));
 	}
 
-	protected function getListingUrl($instance)
+	protected function getListingAction($instance)
 	{
-		return URL::action($this->getActionName('index'));
+		return $this->getActionName('index');
 	}
 
 	protected function getEditAction()

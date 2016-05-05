@@ -21,7 +21,6 @@
 
 	<div class="form-row discrete">
 		@include('admin::partials.save')
-		@include('admin::partials.listing')
 	</div>
 
 {!! Form::close() !!}
