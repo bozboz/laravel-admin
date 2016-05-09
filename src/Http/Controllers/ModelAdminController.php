@@ -272,6 +272,15 @@ abstract class ModelAdminController extends Controller
 		return Redirect::action($this->getActionName('index'));
 	}
 
+	/**
+	 * Return the listing URL for the resource. Use alternative
+	 * `getListingAction` method if needed.
+	 *
+	 * @deprecated
+	 *
+	 * @param  Bozboz\Admin\Base\Model  $instance
+	 * @return string
+	 */
 	protected function getListingUrl($instance)
 	{
 		return action($this->getListingAction($instance));
