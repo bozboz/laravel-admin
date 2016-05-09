@@ -35,6 +35,7 @@
 ### Deprecated
 -   `Base\ModelAdminDecorator::getListingModels` method
 -   `Base\Sortable` class
+-   `Http\Controllers\ModelAdminController::getReportParams` method
 
 
 ## Version 2.0.5 (2016-04-06)
