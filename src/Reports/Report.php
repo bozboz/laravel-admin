@@ -2,9 +2,6 @@
 
 use Bozboz\Admin\Base\ModelAdminDecorator;
 use Bozboz\Admin\Exceptions\Deprecated;
-use Bozboz\Admin\Reports\Actions\CreateAction;
-use Bozboz\Admin\Reports\Actions\DestroyAction;
-use Bozboz\Admin\Reports\Actions\EditAction;
 use Bozboz\Admin\Reports\Filters\ListingFilter;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
@@ -127,21 +124,22 @@ class Report implements BaseInterface, ChecksPermissions
 
 		if ($this->isUsingDeprecatedParams($params)) {
 			$params['modelName'] = $this->decorator->getHeading(false);
+			$actions = app('admin.actions');
 			$this->setRowActions([
-				new EditAction(
+				$actions->edit(
 					$params['editAction'],
 					$params['canEdit']
 				),
-				new DestroyAction(
+				$actions->destroy(
 					$params['destroyAction'],
 					$params['canDelete']
 				)
 			]);
 			$this->setReportActions([
-				new CreateAction(
+				$actions->create(
 					$params['createAction'],
 					$params['canCreate'],
-					['label' => 'New ' . $this->decorator->getHeading()]
+					'New ' . $this->decorator->getHeading()
 				)
 			]);
 		}
