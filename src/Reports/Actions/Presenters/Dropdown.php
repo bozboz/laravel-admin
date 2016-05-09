@@ -27,8 +27,17 @@ class Dropdown extends Presenter
 			'label' => $this->label,
 			'actions' => $this->actions,
 			'btnClass' => 'btn-default',
-			'dropdownClass' => '',
+			'attributes' => $this->compileAttributes(),
 		];
+	}
+
+	protected function compileAttributes()
+	{
+		$attributes = $this->attributes;
+
+		$attributes['class'] = trim($attributes['class'] . ' btn-group');
+
+		return $attributes;
 	}
 
 	public function setInstance($instance)

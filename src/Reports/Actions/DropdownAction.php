@@ -8,6 +8,9 @@ class DropdownAction extends Action
 {
 	protected $items;
 	protected $validItems;
+	protected $label;
+	protected $icon;
+	protected $attributes;
 
 	function __construct($items, $label, $icon = null, $attributes = [])
 	{

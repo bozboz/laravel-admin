@@ -1,4 +1,4 @@
-<div class="btn-group {{ $dropdownClass }}">
+<div{!! HTML::attributes($attributes) !!}>
 	<button href="#" class="dropdown-toggle btn {{ $btnClass }}" data-toggle="dropdown" aria-expanded="false">
 		<i class="fa {{ $icon }}"></i>
 		{{ $label }}
