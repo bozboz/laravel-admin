@@ -37,7 +37,7 @@ class Action
 	 *
 	 * @return boolean
 	 */
-	public function check()
+	protected function check()
 	{
 		return $this->permission->check($this->instance);
 	}

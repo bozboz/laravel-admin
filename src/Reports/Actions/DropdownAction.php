@@ -41,7 +41,7 @@ class DropdownAction extends Action
 	 *
 	 * @return boolean
 	 */
-	public function check()
+	protected function check()
 	{
 		$this->validItems = $this->items->filter(function($action) {
 			return $action->check($this->instance);
