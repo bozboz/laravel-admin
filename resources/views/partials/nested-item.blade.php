@@ -1,8 +1,8 @@
 			<li class="nested__item js-nested-item" id="nested-item_{{ $row->getId() }}" data-id="{{ $row->getId() }}">
 				<div class="nested-group">
 					<div class="actions">
-						@foreach ($row->filterRowActions($report->getRowActions()) as $action)
-							@include($action->getView(), $action->getViewData($row))
+						@foreach ($row->injectInstance($report->getRowActions()) as $action)
+							{!! $action->render() !!}
 						@endforeach
 					</div>
 					<div class="nested-value">
