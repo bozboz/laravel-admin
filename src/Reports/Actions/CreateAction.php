@@ -2,11 +2,18 @@
 
 namespace Bozboz\Admin\Reports\Actions;
 
-class CreateAction extends LinkAction
+use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
+use Bozboz\Admin\Reports\Actions\Presenters\Link;
+
+class CreateAction extends Action
 {
-	protected $attributes = [
-		'label' => 'New',
-		'icon' => 'fa fa-plus',
-		'class' => 'btn-success btn-create pull-right',
-	];
+	public function __construct($action, $permission)
+	{
+		parent::__construct(
+			new Link($action, 'New', 'fa fa-plus', [
+				'class' => 'btn-success btn-create pull-right',
+			]),
+			new IsValid($permission)
+		);
+	}
 }

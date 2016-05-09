@@ -1,8 +1,4 @@
-<a{!! HTML::attributes([
-	'href' => $url,
-	'class' => $class . ' btn btn-sm',
-	'data-warn' => $warn
-]) !!}>
+<a{!! HTML::attributes($attributes) !!}>
 	<i class="{{ $icon }}"></i>
 	{!! $label !!}
 </a>

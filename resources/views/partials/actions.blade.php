@@ -1,3 +1,3 @@
 @foreach($actions as $action)
-	@include($action->getView(), $action->getViewData())
+	{!! $action->render() !!}
 @endforeach

@@ -40,9 +40,7 @@ class Report implements BaseInterface, ChecksPermissions
 			$this->reportActions = collect();
 		}
 
-		return $this->reportActions->filter(function($action) {
-			return $action->check();
-		});
+		return $this->reportActions;
 	}
 
 	public function getRowActions()

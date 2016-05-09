@@ -1,10 +1,14 @@
 <?php namespace Bozboz\Admin\Http\Controllers;
 
 use Bozboz\Admin\Base\ModelAdminDecorator;
+use Bozboz\Admin\Reports\Actions\Action;
 use Bozboz\Admin\Reports\Actions\CreateAction;
 use Bozboz\Admin\Reports\Actions\DestroyAction;
+use Bozboz\Admin\Reports\Actions\DropdownAction;
 use Bozboz\Admin\Reports\Actions\EditAction;
-use Bozboz\Admin\Reports\Actions\LinkAction;
+use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
+use Bozboz\Admin\Reports\Actions\Presenters\Form;
+use Bozboz\Admin\Reports\Actions\Presenters\Link;
 use Bozboz\Admin\Reports\Actions\SubmitAction;
 use Bozboz\Admin\Reports\PaginatedReport;
 use Bozboz\Admin\Reports\Report;
@@ -217,40 +221,26 @@ abstract class ModelAdminController extends Controller
 			'fields' => $fields,
 			'method' => $method,
 			'action' => [$this->getActionName($action), $instance->id],
-			'actions' => $this->collectValidFormActions($instance),
+			'actions' => collect($this->getFormActions($instance)),
 		));
-	}
-
-	protected function collectValidFormActions($instance)
-	{
-		return collect($this->getFormActions($instance))->filter(function($action) {
-			return $action->check();
-		});
 	}
 
 	protected function getFormActions($instance)
 	{
 		return [
-			new SubmitAction(null, [
-				'label' => 'Save and Exit',
-				'icon' => 'fa fa-save',
+			new SubmitAction('Save and Exit', 'fa fa-save', [
 				'name' => 'after_save',
 				'value' => 'exit',
 			]),
-			new SubmitAction(null, [
-				'label' => 'Save',
-				'icon' => 'fa fa-save',
+			new SubmitAction('Save', 'fa fa-save', [
 				'name' => 'after_save',
 				'value' => 'continue',
 			]),
-			new LinkAction(
-				$this->getListingAction($instance),
-				[$this, 'canView'],
-				[
-					'label' => 'Back to listing',
-					'icon' => 'fa fa-list-alt',
+			new Action(
+				new Link($this->getListingAction($instance), 'Back to listing', 'fa fa-list-alt', [
 					'class' => 'btn-default pull-right',
-				]
+				]),
+				new IsValid([$this, 'canView'])
 			),
 		];
 	}
@@ -285,6 +275,11 @@ abstract class ModelAdminController extends Controller
 	protected function getSuccessResponse($instance)
 	{
 		return Redirect::action($this->getActionName('index'));
+	}
+
+	protected function getListingUrl($instance)
+	{
+		return action($this->getListingAction($instance));
 	}
 
 	protected function getListingAction($instance)

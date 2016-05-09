@@ -17,11 +17,9 @@ class Row implements ChecksPermissions
 		}
 	}
 
-	public function filterRowActions($actions)
+	public function injectInstance($actions)
 	{
-		return $actions->filter(function($action) {
-			return $action->check($this->model);
-		})->each(function($action) {
+		return $actions->each(function($action) {
 			$action->setInstance($this->model);
 		});
 	}

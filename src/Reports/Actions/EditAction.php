@@ -2,11 +2,16 @@
 
 namespace Bozboz\Admin\Reports\Actions;
 
-class EditAction extends LinkAction
+use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
+use Bozboz\Admin\Reports\Actions\Presenters\Link;
+
+class EditAction extends Action
 {
-	protected $attributes = [
-		'label' => 'Edit',
-		'icon' => 'fa fa-pencil',
-		'class' => 'btn-info btn-edit',
-	];
+	public function __construct($action, $permission)
+	{
+		parent::__construct(
+			new Link($action, 'Edit', 'fa fa-pencil', ['class' => 'btn-info btn-edit']),
+			new IsValid($permission)
+		);
+	}
 }

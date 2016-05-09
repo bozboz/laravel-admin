@@ -46,8 +46,8 @@
 				<div class="faux-cell">{!! $value !!}</div>
 			@endforeach
 				<div class="no-wrap faux-cell">
-					@foreach ($row->filterRowActions($report->getRowActions()) as $action)
-						@include($action->getView(), $action->getViewData())
+					@foreach ($row->injectInstance($report->getRowActions()) as $action)
+						{!! $action->render() !!}
 					@endforeach
 				</div>
 			</li>

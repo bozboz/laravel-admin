@@ -2,17 +2,18 @@
 
 namespace Bozboz\Admin\Reports\Actions;
 
+use Bozboz\Admin\Reports\Actions\Permissions\Valid;
+use Bozboz\Admin\Reports\Actions\Presenters\Button;
+
 class SubmitAction extends Action
 {
-	protected $attributes = [
-		'class' => 'btn-success',
-		'name' => null,
-		'value' => null,
-		'icon' => '',
-	];
-
-	public function getView()
+	public function __construct($label, $icon = null, $attributes = [])
 	{
-		return 'admin::report-actions.submit';
+		parent::__construct(
+			new Button($label, $icon, $attributes + [
+				'type' => 'submit',
+				'class' => 'btn-success space-left pull-right',
+			])
+		);
 	}
 }
