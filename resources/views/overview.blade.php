@@ -4,7 +4,7 @@
 @parent
 	@section('report_header')
 
-		@include($newButtonPartial)
+		@include($newButtonPartial, ['actions' => $report->getReportActions()])
 
 		<h1>{!! $heading !!}</h1>
 
@@ -46,8 +46,8 @@
 				<div class="faux-cell">{!! $value !!}</div>
 			@endforeach
 				<div class="no-wrap faux-cell">
-					@foreach ($row->filterRowActions($report->getRowActions()) as $action)
-						@include($action->getView(), $action->getViewData())
+					@foreach ($row->injectInstance($report->getRowActions()) as $action)
+						{!! $action->render() !!}
 					@endforeach
 				</div>
 			</li>
@@ -61,7 +61,7 @@
 
 	@section('report_footer')
 		{!! $report->getFooter() !!}
-		@include($newButtonPartial)
+		@include($newButtonPartial, ['actions' => $report->getReportActions()])
 	@show
 
 	@section('scripts')

@@ -2,81 +2,69 @@
 
 namespace Bozboz\Admin\Reports\Actions;
 
-use Bozboz\Admin\Reports\ChecksPermissions;
-use Illuminate\Support\Fluent;
+use Bozboz\Admin\Reports\Actions\Presenters\Presenter;
 
-abstract class Action extends Fluent
+class Action
 {
-	protected $defaults = [
-		'warn' => null,
-		'class' => 'btn-default',
-		'icon' => '',
-		'label' => 'Unknown',
-	];
-
 	protected $instance;
+	private $presenter;
+	private $permission;
 
-	abstract public function getView();
-
-	public function __construct($action, $permission = null, $attributes = [])
+	public function __construct(Presenter $presenter, $permission = null)
 	{
-		$this->action = $action;
-
-		$attributes['permission'] = $permission;
-
-		parent::__construct($attributes);
+		$this->presenter = $presenter;
+		$this->permission = $permission ?: new Permissions\Valid;
 	}
 
 	/**
-	 * Request that a instance can assert the provided permission
+	 * Check to see if an action can be rendered, and if so, output it
 	 *
-	 * @param  $instance
-	 * @return boolean
+	 * @return mixed
 	 */
-	public function check($instance = null)
+	public function render()
 	{
-		if ( ! $this->permission) return true;
-
-		return call_user_func($this->permission, $instance);
+		try {
+			if ($this->check()) {
+				return $this->output();
+			}
+		} catch (\Exception $e) {
+			return $e->getMessage();
+		}
 	}
 
+	/**
+	 * Check permission to see if action can be viewed
+	 *
+	 * @return boolean
+	 */
+	protected function check()
+	{
+		return $this->permission->check($this->instance);
+	}
+
+	/**
+	 * Delegate to the presenter to render the output for the action
+	 *
+	 * @return mixed
+	 */
+	protected function output()
+	{
+		return $this->presenter->render();
+	}
+
+	/**
+	 * Store the incoming instance to be applied to the action, and also send to
+	 * the presenter to use, for example, when generating a URL.
+	 *
+	 * @param  Illuminate\Database\Eloquent\Model  $instance
+	 * @return self
+	 */
 	public function setInstance($instance)
 	{
 		$this->instance = $instance;
+
+		$this->presenter->setInstance($instance);
+
 		return $this;
-	}
-
-	/**
-	 * Generate a URL based on a defined route action
-	 *
-	 * @return string
-	 */
-	public function getUrl()
-	{
-		if (is_array($this->action)) {
-			list($action, $params) = $this->action;
-			$params = is_array($params) ? $params : [$params];
-		} else {
-			$action = $this->action;
-			$params = [];
-		}
-
-		if ($this->instance) {
-			array_push($params, $this->instance->id);
-		}
-
-		return action($action, array_filter($params));
-	}
-
-	/**
-	 * Get the parameters to inject into a view
-	 *
-	 * @return array
-	 */
-	public function getViewData()
-	{
-		$attributes = $this->getAttributes() + $this->defaults;
-		$attributes['url'] = $this->getUrl();
-		return $attributes;
 	}
 }

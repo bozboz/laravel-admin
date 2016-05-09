@@ -40,9 +40,7 @@ class Report implements BaseInterface, ChecksPermissions
 			$this->reportActions = collect();
 		}
 
-		return $this->reportActions->filter(function($action) {
-			return $action->check();
-		});
+		return $this->reportActions;
 	}
 
 	public function getRowActions()
@@ -151,7 +149,7 @@ class Report implements BaseInterface, ChecksPermissions
 			'report' => $this,
 			'heading' => $this->decorator->getHeading(true),
 			'identifier' => $this->decorator->getListingIdentifier(),
-			'newButtonPartial' => 'admin::partials.create',
+			'newButtonPartial' => 'admin::partials.actions',
 		];
 
 		return View::make($this->view, $params);

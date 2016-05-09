@@ -2,54 +2,98 @@
 
 namespace Bozboz\Admin\Reports\Actions;
 
-use Bozboz\Admin\Reports\ChecksPermissions;
+use Bozboz\Admin\Reports\Actions\Presenters\Dropdown;
 
 class DropdownAction extends Action
 {
-	protected $defaults = [
-		'warn' => null,
-		'btnClass' => 'btn-default',
-		'dropdownClass' => '',
-		'icon' => '',
-		'label' => 'Unknown',
-		'compactSingleActionToLink' => true
-	];
+	protected $items;
+	protected $validItems;
+	protected $label;
+	protected $icon;
+	protected $attributes;
 
-	protected $actions;
-	protected $currentActions;
-
-	function __construct($actions, $attributes = [])
+	function __construct($items, $label, $icon = null, $attributes = [])
 	{
-		$this->actions = collect($actions);
-		$this->attributes = array_merge($this->attributes, $attributes);
+		$this->items = collect($items);
+		$this->validItems = collect();
+		$this->label = $label;
+		$this->icon = $icon;
+		$this->attributes = $attributes;
 	}
 
-	public function check($instance = null)
-	{
-		$this->currentActions = $this->actions->filter(function ($action) use ($instance) {
-			return $action->check($instance);
-		});
-		return $this->currentActions->count() > 0;
-	}
-
+	/**
+	 * Set the instance on each of the drop down items
+	 *
+	 * @param  Illuminate\Database\Eloquent\Model  $instance
+	 * @return void
+	 */
 	public function setInstance($instance)
 	{
 		$this->instance = $instance;
 
-		$this->actions->each(function($action) use ($instance) {
-			$action->setInstance($instance);
+		$this->items->filter(function($action) {
+			$action->setInstance($this->instance);
 		});
 	}
 
-	public function getView()
+	/**
+	 * Determine if the dropdown has any valid items
+	 *
+	 * @return boolean
+	 */
+	protected function check()
 	{
-		return 'admin::report-actions.dropdown';
+		$this->validItems = $this->items->filter(function($action) {
+			return $action->check($this->instance);
+		});
+
+		return ! $this->validItems->isEmpty();
 	}
 
-	public function getViewData()
+	/**
+	 * If the dropdown only has one valid item, output that, otherwise output a
+	 * full dropdown
+	 *
+	 * @return mixed
+	 */
+	public function output()
 	{
-		$attributes = $this->getAttributes() + $this->defaults;
-		$attributes['actions'] = $this->currentActions;
-		return $attributes;
+		if ($this->onlyContainsSingleItem()) {
+			return $this->outputFirstItem();
+		}
+
+		return $this->outputDropdown();
+	}
+
+	/**
+	 * Determine if the dropdown only contains a single item
+	 *
+	 * @return boolean
+	 */
+	private function onlyContainsSingleItem()
+	{
+		return $this->validItems->count() === 1;
+	}
+
+	/**
+	 * Output the first of the dropdown's valid items
+	 *
+	 * @return mixed
+	 */
+	private function outputFirstItem()
+	{
+		return $this->validItems->first()->output();
+	}
+
+	/**
+	 * Instantiate and render a dropdown presenter consisting of its valid items
+	 *
+	 * @return mixed
+	 */
+	private function outputDropdown()
+	{
+		$presenter = new Dropdown($this->validItems, $this->label, $this->icon, $this->attributes);
+
+		return $presenter->render();
 	}
 }
