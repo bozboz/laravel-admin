@@ -112,6 +112,8 @@ class Report implements BaseInterface, ChecksPermissions
 
 	protected function queryRows()
 	{
+		if ($this->rows) return $this->rows;
+
 		try {
 			return $this->decorator->getListingModels();
 		} catch (Deprecated $e) {
