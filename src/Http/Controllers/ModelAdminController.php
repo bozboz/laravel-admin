@@ -1,15 +1,8 @@
 <?php namespace Bozboz\Admin\Http\Controllers;
 
 use Bozboz\Admin\Base\ModelAdminDecorator;
-use Bozboz\Admin\Reports\Actions\Action;
-use Bozboz\Admin\Reports\Actions\CreateAction;
-use Bozboz\Admin\Reports\Actions\DestroyAction;
-use Bozboz\Admin\Reports\Actions\DropdownAction;
-use Bozboz\Admin\Reports\Actions\EditAction;
 use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
-use Bozboz\Admin\Reports\Actions\Presenters\Form;
 use Bozboz\Admin\Reports\Actions\Presenters\Link;
-use Bozboz\Admin\Reports\Actions\SubmitAction;
 use Bozboz\Admin\Reports\PaginatedReport;
 use Bozboz\Admin\Reports\Report;
 use Bozboz\Permissions\RuleStack;
@@ -23,8 +16,9 @@ use URL;
 
 abstract class ModelAdminController extends Controller
 {
-	protected $useActions = false;
 	protected $decorator;
+	protected $actions;
+	protected $useActions = false;
 	protected $editView = 'admin::edit';
 	protected $createView = 'admin::create';
 
@@ -32,6 +26,7 @@ abstract class ModelAdminController extends Controller
 	{
 		$this->middleware('auth');
 		$this->decorator = $decorator;
+		$this->actions = app('admin.actions');
 	}
 
 	public function index()
@@ -90,10 +85,10 @@ abstract class ModelAdminController extends Controller
 	protected function getReportActions()
 	{
 		return [
-			new CreateAction(
+			$this->actions->create(
 				$this->getActionName('create'),
 				[$this, 'canCreate'],
-				['label' => 'New ' . $this->decorator->getHeading()]
+				'New ' . $this->decorator->getHeading()
 			)
 		];
 	}
@@ -106,11 +101,11 @@ abstract class ModelAdminController extends Controller
 	protected function getRowActions()
 	{
 		return [
-			new EditAction(
+			$this->actions->edit(
 				$this->getEditAction(),
 				[$this, 'canEdit']
 			),
-			new DestroyAction(
+			$this->actions->destroy(
 				$this->getActionName('destroy'),
 				[$this, 'canDestroy']
 			)
@@ -228,15 +223,15 @@ abstract class ModelAdminController extends Controller
 	protected function getFormActions($instance)
 	{
 		return [
-			new SubmitAction('Save and Exit', 'fa fa-save', [
+			$this->actions->submit('Save and Exit', 'fa fa-save', [
 				'name' => 'after_save',
 				'value' => 'exit',
 			]),
-			new SubmitAction('Save', 'fa fa-save', [
+			$this->actions->submit('Save', 'fa fa-save', [
 				'name' => 'after_save',
 				'value' => 'continue',
 			]),
-			new Action(
+			$this->actions->custom(
 				new Link($this->getListingAction($instance), 'Back to listing', 'fa fa-list-alt', [
 					'class' => 'btn-default pull-right',
 				]),
