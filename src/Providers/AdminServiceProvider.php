@@ -4,6 +4,7 @@ namespace Bozboz\Admin\Providers;
 
 use Bozboz\Admin\Reports\ActionFactory;
 use Bozboz\Admin\Reports\Actions\Action;
+use Bozboz\Admin\Reports\Actions\DropdownAction;
 use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
 use Bozboz\Admin\Reports\Actions\Presenters\Button;
 use Bozboz\Admin\Reports\Actions\Presenters\Form;
