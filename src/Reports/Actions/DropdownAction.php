@@ -12,13 +12,14 @@ class DropdownAction extends Action
 	protected $icon;
 	protected $attributes;
 
-	function __construct($items, $label, $icon = null, $attributes = [])
+	function __construct($items, $label, $icon = null, $attributes = [], $dropdownAttributes = [])
 	{
 		$this->items = collect($items);
 		$this->validItems = collect();
 		$this->label = $label;
 		$this->icon = $icon;
 		$this->attributes = $attributes;
+		$this->dropdownAttributes = $dropdownAttributes;
 	}
 
 	/**
@@ -92,7 +93,7 @@ class DropdownAction extends Action
 	 */
 	private function outputDropdown()
 	{
-		$presenter = new Dropdown($this->validItems, $this->label, $this->icon, $this->attributes);
+		$presenter = new Dropdown($this->validItems, $this->label, $this->icon, $this->attributes, $this->dropdownAttributes);
 
 		return $presenter->render();
 	}

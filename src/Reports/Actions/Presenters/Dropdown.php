@@ -5,12 +5,17 @@ namespace Bozboz\Admin\Reports\Actions\Presenters;
 class Dropdown extends Presenter
 {
 	private $actions;
+	private $dropdownAttributes = ['class' => ''];
 
-	public function __construct($actions, $label, $icon = null, $attributes = [])
+	public function __construct($actions, $label, $icon = null, $attributes = [], $dropdownAttributes = [])
 	{
 		$this->actions = $actions;
 		$this->label = $label;
 		$this->icon = $icon;
+
+		foreach($dropdownAttributes as $key => $value) {
+			$this->dropdownAttributes[$key] = $value;
+		}
 
 		parent::__construct($attributes);
 	}
@@ -26,14 +31,25 @@ class Dropdown extends Presenter
 			'icon' => $this->icon,
 			'label' => $this->label,
 			'actions' => $this->actions,
-			'btnClass' => 'btn-default',
 			'attributes' => $this->compileAttributes(),
+			'dropdownAttributes' => $this->compileDropdownAttributes(),
 		];
 	}
-
 	protected function compileAttributes()
 	{
 		$attributes = $this->attributes;
+
+		$attributes['class'] = trim($attributes['class'] . ' dropdown-toggle btn');
+		$attributes['href'] = "#";
+		$attributes['data-toggle'] = "dropdown";
+		$attributes['aria-expanded'] = "false";
+
+		return $attributes;
+	}
+
+	protected function compileDropdownAttributes()
+	{
+		$attributes = $this->dropdownAttributes;
 
 		$attributes['class'] = trim($attributes['class'] . ' btn-group');
 

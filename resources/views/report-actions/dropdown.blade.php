@@ -1,5 +1,5 @@
-<div{!! HTML::attributes($attributes) !!}>
-	<button href="#" class="dropdown-toggle btn {{ $btnClass }}" data-toggle="dropdown" aria-expanded="false">
+<div{!! HTML::attributes($dropdownAttributes) !!}>
+	<button{!! HTML::attributes($attributes) !!}>
 		<i class="fa {{ $icon }}"></i>
 		{{ $label }}
 		<span class="caret"></span>

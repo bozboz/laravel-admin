@@ -101,8 +101,8 @@ class AdminServiceProvider extends PermissionServiceProvider
 			);
 		});
 
-		$actions->register('dropdown', function($items, $label, $icon = null, $attributes = []) {
-			return new DropdownAction($items, $label, $icon, $attributes);
+		$actions->register('dropdown', function($items, $label, $icon = null, $attributes = [], $dropdownAttributes = []) {
+			return new DropdownAction($items, $label, $icon, $attributes, $dropdownAttributes);
 		});
 
 		$actions->register('custom', function($presenter, $permission) {
