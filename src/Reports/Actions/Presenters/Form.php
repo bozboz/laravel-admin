@@ -4,13 +4,14 @@ namespace Bozboz\Admin\Reports\Actions\Presenters;
 
 class Form extends Presenter
 {
-	private $action;
+	private $url;
 	private $button;
 
-	public function __construct($action, $label, $icon = null, $attributes = [], $formAttributes = [])
+	public function __construct($url, $label, $icon = null, $attributes = [], $formAttributes = [])
 	{
+		$this->url = ($url instanceof Urls\Contract) ? $url : new Urls\Action($url);
+
 		$this->button = new Button($label, $icon, $attributes);
-		$this->action = $action;
 
 		parent::__construct($formAttributes);
 	}
@@ -33,24 +34,7 @@ class Form extends Presenter
 		return [
 			'class' => 'inline-form',
 			'method' => 'POST',
-			'url' => $this->getUrl(),
+			'url' => $this->url->compile($this->instance),
 		] + $this->attributes;
-	}
-
-	protected function getUrl()
-	{
-		if (is_array($this->action)) {
-			list($action, $params) = $this->action;
-			$params = is_array($params) ? $params : [$params];
-		} else {
-			$action = $this->action;
-			$params = [];
-		}
-
-		if ($this->instance) {
-			array_push($params, $this->instance->id);
-		}
-
-		return action($action, array_filter($params));
 	}
 }

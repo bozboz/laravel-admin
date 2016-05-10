@@ -3,6 +3,7 @@
 use Bozboz\Admin\Base\ModelAdminDecorator;
 use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
 use Bozboz\Admin\Reports\Actions\Presenters\Link;
+use Bozboz\Admin\Reports\Actions\Presenters\Urls\Url;
 use Bozboz\Admin\Reports\PaginatedReport;
 use Bozboz\Admin\Reports\Report;
 use Bozboz\Permissions\RuleStack;
@@ -12,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
-use URL;
 
 abstract class ModelAdminController extends Controller
 {
@@ -232,7 +232,7 @@ abstract class ModelAdminController extends Controller
 				'value' => 'continue',
 			]),
 			$this->actions->custom(
-				new Link($this->getListingAction($instance), 'Back to listing', 'fa fa-list-alt', [
+				new Link(new Url($this->getListingUrl($instance)), 'Back to listing', 'fa fa-list-alt', [
 					'class' => 'btn-default pull-right',
 				]),
 				new IsValid([$this, 'canView'])

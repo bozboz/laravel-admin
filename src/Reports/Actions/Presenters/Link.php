@@ -4,12 +4,12 @@ namespace Bozboz\Admin\Reports\Actions\Presenters;
 
 class Link extends Presenter
 {
-	private $action;
+	private $url;
 	private $icon;
 
-	public function __construct($action, $label, $icon = null, $attributes = [])
+	public function __construct($url, $label, $icon = null, $attributes = [])
 	{
-		$this->action = $action;
+		$this->url = ($url instanceof Urls\Contract) ? $url : new Urls\Action($url);
 		$this->label = $label;
 		$this->icon = $icon;
 
@@ -34,26 +34,9 @@ class Link extends Presenter
 	{
 		$attributes = $this->attributes;
 
-		$attributes['href'] = $this->getUrl();
+		$attributes['href'] = $this->url->compile($this->instance);
 		$attributes['class'] = trim($attributes['class'] . ' btn btn-sm');
 
 		return $attributes;
-	}
-
-	protected function getUrl()
-	{
-		if (is_array($this->action)) {
-			list($action, $params) = $this->action;
-			$params = is_array($params) ? $params : [$params];
-		} else {
-			$action = $this->action;
-			$params = [];
-		}
-
-		if ($this->instance) {
-			array_push($params, $this->instance->id);
-		}
-
-		return action($action, array_filter($params));
 	}
 }
