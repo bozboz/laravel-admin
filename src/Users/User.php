@@ -3,10 +3,8 @@
 namespace Bozboz\Admin\Users;
 
 use Bozboz\Admin\Base\Model;
-use Bozboz\Admin\Services\Validators\UserValidator;
-use Bozboz\Permissions\UserInterface as Permissions;
 use Bozboz\Permissions\EloquentPermissionsTrait;
-use Hash;
+use Bozboz\Permissions\UserInterface as HasPermissions;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -14,16 +12,11 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class User extends Model implements AuthenticatableContract,
                                     CanResetPasswordContract,
-                                    Permissions
+                                    HasPermissions,
+                                    UserInterface
 {
-    use Authenticatable, CanResetPassword, EloquentPermissionsTrait;
-
-	/**
-	 * The Model validator
-	 *
-	 * @var UserValidator
-	 */
-	protected $validator;
+    use Authenticatable, CanResetPassword, EloquentPermissionsTrait, Validates,
+        HashesPassword;
 
 	/**
 	 * Blacklisted mass assignment attributes
@@ -43,23 +36,4 @@ class User extends Model implements AuthenticatableContract,
 	 * @var array
 	 */
 	protected $hidden = array('password');
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getValidator()
-	{
-		if (empty($this->validator)) {
-			$this->validator = new UserValidator();
-		}
-
-		return $this->validator;
-	}
-
-	public function setPasswordAttribute($value)
-	{
-		if (!empty($value)) {
-			$this->attributes['password'] = Hash::make($value);
-		}
-	}
 }
