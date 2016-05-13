@@ -1,6 +1,8 @@
-<?php namespace Bozboz\Admin\Reports;
+<?php
 
-class Row implements ChecksPermissions
+namespace Bozboz\Admin\Reports;
+
+class Row
 {
 	private $id;
 	private $data;
@@ -40,6 +42,8 @@ class Row implements ChecksPermissions
 	}
 
 	/**
+	 * @deprecated
+	 *
 	 * Check if underlying entity can do something, based on result of passed-in
 	 * callable.
 	 *

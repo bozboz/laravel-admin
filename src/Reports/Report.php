@@ -6,7 +6,7 @@ use Bozboz\Admin\Reports\Filters\ListingFilter;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
-class Report implements BaseInterface, ChecksPermissions
+class Report implements BaseInterface
 {
 	protected $decorator;
 	protected $rows;
@@ -47,11 +47,6 @@ class Report implements BaseInterface, ChecksPermissions
 		}
 
 		return $this->rowActions;
-	}
-
-	public function check(callable $assertion)
-	{
-		return $assertion();
 	}
 
 	public function getHeadings()
