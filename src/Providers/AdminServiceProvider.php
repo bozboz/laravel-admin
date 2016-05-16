@@ -23,6 +23,10 @@ class AdminServiceProvider extends PermissionServiceProvider
 			return new ActionFactory;
 		});
 
+		$this->app->bind('Bozboz\Admin\Users\UserInterface', function($app) {
+			return $app['auth.driver']->user();
+		});
+
 		// Call the PermissionServiceProvider's register method
 		parent::register();
 	}

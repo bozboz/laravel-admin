@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserAdminDecorator extends ModelAdminDecorator
 {
-	public function __construct(User $user)
+	public function __construct(UserInterface $user)
 	{
 		parent::__construct($user);
 	}
