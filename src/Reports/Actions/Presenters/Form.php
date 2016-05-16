@@ -31,10 +31,11 @@ class Form extends Presenter
 
 	protected function compileFormAttributes()
 	{
-		return [
-			'class' => 'inline-form',
-			'method' => 'POST',
-			'url' => $this->url->compile($this->instance),
-		] + $this->attributes;
+		$attributes = $this->attributes;
+
+		$attributes['class'] = trim($attributes['class'] . ' inline-form');
+		$attributes['url'] = $this->url->compile($this->instance);
+
+		return $attributes;
 	}
 }
