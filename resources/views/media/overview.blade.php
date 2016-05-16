@@ -8,8 +8,8 @@
 				@foreach($row->getColumns() as $column)
 					{!! $column !!}
 				@endforeach
-				@foreach ($row->filterRowActions($report->getRowActions()) as $action)
-					@include($action->getView(), $action->getViewData())
+				@foreach ($row->injectInstance($report->getRowActions()) as $action)
+					{!! $action->render() !!}
 				@endforeach
 			</li>
 		@endforeach
