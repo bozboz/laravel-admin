@@ -46,7 +46,7 @@ class MediaLibraryAdminController extends ModelAdminController
 
 	private function ajaxJSONData()
 	{
-		$items = $this->decorator->getListingModelsNoLimit();
+		$items = $this->decorator->getListingModelsPaginated();
 
 		$data = $items->map(function($inst) {
 			return [
