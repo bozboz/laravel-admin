@@ -59,7 +59,7 @@ class DropdownAction extends Action
 	 */
 	public function output()
 	{
-		if ($this->onlyContainsSingleItem()) {
+		if ($this->onlyContainsSingleItem() && $this->compactSingleAction()) {
 			return $this->outputFirstItem();
 		}
 
@@ -74,6 +74,16 @@ class DropdownAction extends Action
 	private function onlyContainsSingleItem()
 	{
 		return $this->validItems->count() === 1;
+	}
+
+	/**
+	 * Determine if dropdown should compact single action
+	 *
+	 * @return boolean
+	 */
+	private function compactSingleAction()
+	{
+		return ! empty($this->dropdownAttributes['compactSingleAction']);
 	}
 
 	/**
