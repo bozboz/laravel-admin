@@ -40,6 +40,9 @@ class Menu extends Fluent
 	public function offsetSet($offset, $value)
 	{
 		if (is_array($value)) {
+			if (empty($value)) {
+				$this->attributes[$offset] = [];
+			}
 			foreach($value as $subItem => $url) {
 				$this->setMenuItem($offset, is_int($subItem) ? $offset : $subItem, $url);
 			}
