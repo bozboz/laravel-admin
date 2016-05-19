@@ -39,10 +39,22 @@ class Menu extends Fluent
 	 */
 	public function offsetSet($offset, $value)
 	{
+		// If the value is an array, we'll assume the intention is to set a top
+		// level group of menu items
 		if (is_array($value)) {
-			foreach($value as $subItem => $url) {
-				$this->setMenuItem($offset, is_int($subItem) ? $offset : $subItem, $url);
+			// If the value is an empty array, the user is likely just setting
+			// up a top-level label, ready to append sub-items to later
+			if (empty($value)) {
+				$this->attributes[$offset] = [];
+			// If we have an array of items, we'll create the sub-items under
+			// the parent label
+			} else {
+				foreach($value as $subItem => $url) {
+					$this->setMenuItem($offset, is_int($subItem) ? $offset : $subItem, $url);
+				}
 			}
+		// If the value is just a string, we'll assume the user wants the item
+		// to sit under the generic "Content" parent group
 		} else {
 			$this->setMenuItem('Content', $offset, $value);
 		}
