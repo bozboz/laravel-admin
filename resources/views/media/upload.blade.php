@@ -3,10 +3,7 @@
 @section('main')
 
 	<div class="form-row discrete">
-		<a href="{{ $listingUrl }}" class="pull-right btn btn-default">
-			<i class="fa fa-list-alt"></i>
-			Back to Listing
-			</a>
+		@include('admin::partials.actions')
 	</div>
 
 	<h2>Media Upload</h2>

@@ -1,13 +1,15 @@
 <?php namespace Bozboz\Admin\Http\Controllers;
 
-use Bozboz\Admin\Reports\Report;
-use Bozboz\Admin\Media\MediaAdminDecorator;
 use Bozboz\Admin\Media\Media;
+use Bozboz\Admin\Media\MediaAdminDecorator;
+use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
+use Bozboz\Admin\Reports\Actions\Presenters\Link;
+use Bozboz\Admin\Reports\Actions\Presenters\Urls\Url;
+use Bozboz\Admin\Reports\Report;
 use Bozboz\Admin\Services\Uploader;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Request;
-
+use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MediaLibraryAdminController extends ModelAdminController
@@ -140,6 +142,18 @@ class MediaLibraryAdminController extends ModelAdminController
 		} else {
 			return $this->getSuccessResponse($media);
 		}
+	}
+
+	protected function getFormActions($instance)
+	{
+		return [
+			$this->actions->custom(
+				new Link(new Url($this->getListingUrl($instance)), 'Back to listing', 'fa fa-list-alt', [
+					'class' => 'btn-default pull-right',
+				]),
+				new IsValid([$this, 'canView'])
+			),
+		];
 	}
 
 	public function viewPermissions($stack)
