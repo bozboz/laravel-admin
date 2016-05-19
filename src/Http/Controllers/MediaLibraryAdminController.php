@@ -146,6 +146,10 @@ class MediaLibraryAdminController extends ModelAdminController
 
 	protected function getFormActions($instance)
 	{
+		if ($instance->exists) {
+			return parent::getFormActions($instance);
+		}
+
 		return [
 			$this->actions->custom(
 				new Link(new Url($this->getListingUrl($instance)), 'Back to listing', 'fa fa-list-alt', [
