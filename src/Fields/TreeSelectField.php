@@ -40,7 +40,7 @@ class TreeSelectField extends SelectField
 			$this->disabled = true;
 			$options = [];
 		} else {
-			$options = $this->renderLevel(0);
+			$options = array_merge([null => '- Please Select -'], $this->renderLevel(0));
 		}
 
 		return $options;
