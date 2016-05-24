@@ -43,4 +43,26 @@ HTML;
 
 		return parent::getInput();
 	}
+
+	public function getJavascript()
+	{
+		return <<<JAVASCRIPT
+			jQuery(function($) {
+				$('[data-auto-slug-from]').each(function() {
+					var slugField = $(this);
+					var sourceField = $('[name="'+slugField.data('auto-slug-from')+'"]');
+
+					sourceField.change(function() {
+						if (slugField.val() === '') {
+							var slug = sourceField.val().toLowerCase()
+								.replace('&', 'and')
+								.replace(/[^\w]+/g, '-')
+								.replace(/^[-]+|[-]+$/g, '');
+							slugField.val(slug);
+						}
+					});
+				});
+			});
+JAVASCRIPT;
+	}
 }
