@@ -26,6 +26,7 @@
     statically on the `Reports\ListingFilter` class
 -   Updates/stores in `Http\Controllers\ModelAdminController` are now performed
     in a database transaction
+-   Allow `TreeSelectField` to select none
 
 ### Fixed
 -   Allow a parameter to be passed into the `Menu::gate()` method
