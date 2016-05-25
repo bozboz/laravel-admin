@@ -8,7 +8,19 @@
 -   Don't make caption a required field in media uploader
 -   Rework model saving so that validation errors can be thrown as exceptions deeper in the save method
 
-## Version 2.1.0 (2016-07-13)
+## Version 2.1.1 (Future)
+
+### Added
+-   Allow `URLField` to auto generate a slug from another field.
+    - __Usage:__
+    ```
+    new URLField('slug', [
+        'route' => '...',
+        'data-auto-slug-from' => 'name',
+    ]);
+    ```
+
+## Version 2.1.0 (Future)
 
 ### Added
 -   Add help text functionality to admin fields
