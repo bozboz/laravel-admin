@@ -66,10 +66,10 @@ class AdminServiceProvider extends PermissionServiceProvider
 
 	protected function registerActions($actions)
 	{
-		$actions->register('create', function($action, $permission, $label = 'New') {
+		$actions->register('create', function($action, $permission, $label = 'New', $attributes = []) {
 			return new Action(
-				new Link($action, $label, 'fa fa-plus', [
-					'class' => 'btn-success btn-create pull-right',
+				new Link($action, $label, 'fa fa-plus', $attributes + [
+					'class' => 'btn-success pull-right',
 				]),
 				new IsValid($permission)
 			);
@@ -78,7 +78,7 @@ class AdminServiceProvider extends PermissionServiceProvider
 		$actions->register('edit', function($action, $permission) {
 			return new Action(
 				new Link($action, 'Edit', 'fa fa-pencil', [
-					'class' => 'btn-info btn-edit'
+					'class' => 'btn-info'
 				]),
 				new IsValid($permission)
 			);
@@ -87,7 +87,7 @@ class AdminServiceProvider extends PermissionServiceProvider
 		$actions->register('destroy', function($action, $permission) {
 			return new Action(
 				new Form($action, 'Delete', 'fa fa-trash', [
-					'class' => 'btn-danger btn-sm btn-destroy',
+					'class' => 'btn-danger btn-sm',
 					'data-warn' => 'Are you sure you want to delete?'
 				], [
 					'method' => 'DELETE'
