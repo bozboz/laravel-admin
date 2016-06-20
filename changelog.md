@@ -1,9 +1,10 @@
 # Bozboz Admin Package Changelog
 
-## Version 1.3.0 (Future)
+## Version 1.3.0 (2016-06-20)
 
 ### Added
 -   Add null option to TreeSelectField
+-   Add the ability to add media via a URL to media library
 
 
 ## Version 1.2.5 (2016-06-20)
