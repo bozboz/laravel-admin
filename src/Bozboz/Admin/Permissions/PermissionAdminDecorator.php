@@ -85,11 +85,12 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 
 	protected function getListOfAdminUsers()
 	{
-		$users = $this->users->getListOfAdminUsers()->keyBy('id')->map(function($user) {
-			return $this->users->getLabel($user);
-		});
+		$users = [];
 
-		$users->prepend('All', '');
+		$users[''] = 'All';
+		foreach ($this->users->getListOfAdminUsers()->keyBy('id') as $i => $user) {
+			$users[$i] = $this->users->getLabel($user);
+		}
 
 		return $users;
 	}
