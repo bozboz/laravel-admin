@@ -89,6 +89,25 @@
 -   Remove Meta namespace
 
 
+## Version 1.3.0 (2016-06-20)
+
+### Added
+-   Add null option to TreeSelectField
+-   Add the ability to add media via a URL to media library
+
+
+## Version 1.2.5 (2016-06-20)
+-   Fix filtering issue on permissions screen
+
+
+## Version 1.2.4 (2016-03-26)
+-   Fix listing filter filtering
+
+
+## Version 1.2.3 (2016-03-26)
+-   Fix GrantAdminUserPermissions migration
+
+
 ## Version 1.2.2 (2016-03-04)
 -   Fix CheckboxField
 

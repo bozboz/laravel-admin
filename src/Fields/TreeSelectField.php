@@ -43,6 +43,10 @@ class TreeSelectField extends SelectField
 			$options = array_merge([null => '- Please Select -'], $this->renderLevel(0));
 		}
 
+		if ($this->get('allow_none', true)) {
+			$options = ['' => '-'] + $options;
+		}
+
 		return $options;
 	}
 
