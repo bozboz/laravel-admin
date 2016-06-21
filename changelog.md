@@ -6,6 +6,10 @@
 -   Add null option to TreeSelectField
 
 
+## Version 1.2.5 (2016-06-20)
+-   Fix filtering issue on permissions screen
+
+
 ## Version 1.2.4 (2016-03-26)
 -   Fix listing filter filtering
 
