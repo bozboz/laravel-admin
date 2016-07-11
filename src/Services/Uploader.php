@@ -4,8 +4,8 @@ namespace Bozboz\Admin\Services;
 
 use Bozboz\Admin\Exceptions\UploadException;
 use Bozboz\Admin\Media\Media;
-use Guzzle\Http\Client;
-use Guzzle\Http\Exception\RequestException;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -68,7 +68,7 @@ class Uploader
 		$temporaryPath = public_path('.tmp/DOWNLOADED_FILE-' . time());
 
 		try {
-			$this->client->get($url)->setResponseBody($temporaryPath)->send();
+			$this->client->get($url, ['sink' => $temporaryPath]);
 		} catch (RequestException $e) {
 			DB::rollback();
 			throw new UploadException($e->getMessage());

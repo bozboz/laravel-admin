@@ -26,7 +26,8 @@
         "intervention/image": "^2.3",
         "intervention/imagecache": "^2.3",
         "doctrine/dbal": "^2.5",
-        "bozboz/permissions": "~1.1@dev"
+        "bozboz/permissions": "~1.1@dev",
+        "guzzlehttp/guzzle": "6.*"
     },
     "autoload": {
         "psr-4": {
