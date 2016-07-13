@@ -1,6 +1,6 @@
 # Bozboz Admin Package Changelog
 
-## Version 2.1.0 (Future)
+## Version 2.1.0 (2016-07-13)
 
 ### Added
 -   Add help text functionality to admin fields
@@ -27,6 +27,7 @@
 -   Updates/stores in `Http\Controllers\ModelAdminController` are now performed
     in a database transaction
 -   Allow `TreeSelectField` to select none
+-   Update Guzzle dependency to latest
 
 ### Fixed
 -   Allow a parameter to be passed into the `Menu::gate()` method
