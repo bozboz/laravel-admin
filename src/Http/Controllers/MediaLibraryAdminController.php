@@ -5,7 +5,7 @@ use Bozboz\Admin\Media\MediaAdminDecorator;
 use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
 use Bozboz\Admin\Reports\Actions\Presenters\Link;
 use Bozboz\Admin\Reports\Actions\Presenters\Urls\Url;
-use Bozboz\Admin\Reports\Report;
+use Bozboz\Admin\Reports\PaginatedReport;
 use Bozboz\Admin\Services\Uploader;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
@@ -36,7 +36,7 @@ class MediaLibraryAdminController extends ModelAdminController
 
 	protected function getListingReport()
 	{
-		return new Report($this->decorator, 'admin::media.overview');
+		return new PaginatedReport($this->decorator, null, 'admin::media.overview');
 	}
 
 	public function show($id)
@@ -79,7 +79,7 @@ class MediaLibraryAdminController extends ModelAdminController
 				$data[] = [
 					'url' => action($this->getActionName('edit'), $instance->id),
 					'fullsizeUrl' => asset($instance->getFilename()),
-					'thumbnailUrl' => asset($instance->getFilename('library')),
+					'thumbnailUrl' => asset($instance->getFilename('small')),
 					'name' => $instance->caption ?: $instance->filename,
 					'deleteUrl' => action($this->getActionName('destroy'), $instance->id),
 					'deleteType' => 'DELETE',
