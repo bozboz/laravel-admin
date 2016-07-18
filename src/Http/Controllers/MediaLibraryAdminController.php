@@ -79,7 +79,7 @@ class MediaLibraryAdminController extends ModelAdminController
 				$data[] = [
 					'url' => action($this->getActionName('edit'), $instance->id),
 					'fullsizeUrl' => asset($instance->getFilename()),
-					'thumbnailUrl' => asset($instance->getFilename('library')),
+					'thumbnailUrl' => asset($instance->getFilename('small')),
 					'name' => $instance->caption ?: $instance->filename,
 					'deleteUrl' => action($this->getActionName('destroy'), $instance->id),
 					'deleteType' => 'DELETE',

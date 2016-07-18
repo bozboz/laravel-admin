@@ -143,6 +143,16 @@
 	</tr>
 {% } %}
 </script>
+<script src="/assets/js/min/admin/blueimp-tmpl/tmpl.min.js"></script>
+<script src="/assets/js/min/admin/blueimp-load-image/load-image.all.min.js"></script>
+<script src="/assets/js/min/admin/blueimp-file-upload/jquery.iframe-transport.js"></script>
+<script src="/assets/js/min/admin/blueimp-file-upload/jquery.fileupload.js"></script>
+<script src="/assets/js/min/admin/blueimp-file-upload/jquery.fileupload-process.js"></script>
+<script src="/assets/js/min/admin/blueimp-file-upload/jquery.fileupload-image.js"></script>
+<script src="/assets/js/min/admin/blueimp-file-upload/jquery.fileupload-audio.js"></script>
+<script src="/assets/js/min/admin/blueimp-file-upload/jquery.fileupload-video.js"></script>
+<script src="/assets/js/min/admin/blueimp-file-upload/jquery.fileupload-validate.js"></script>
+<script src="/assets/js/min/admin/blueimp-file-upload/jquery.fileupload-ui.js"></script>
 <script>
 	$(function () {
 		'use strict';
@@ -152,17 +162,18 @@
 		});
 
 		$('#fileupload').bind('fileuploadsubmit', function (e, data) {
-			var caption = data.context.find('.caption');
+			var form = $(data.form.context);
+			var caption = form.find('.caption');
 
-			if (caption.val() === '') {
-				caption.focus();
-				data.context.find('button').prop('disabled', false);
-				return false;
-			}
+			// if (caption.val() === '') {
+			// 	caption.focus();
+			// 	form.find('button').prop('disabled', false);
+			// 	return false;
+			// }
 
 			data.formData = {
 				caption: caption.val(),
-				is_private: data.context.find('.is-private').is(':checked') ? 1 : 0,
+				is_private: form.find('.is-private').is(':checked') ? 1 : 0,
 				_token: $('[name="_token"]').val()
 			};
 		});
