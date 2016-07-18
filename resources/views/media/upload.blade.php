@@ -166,12 +166,6 @@
 			var form = $(data.form.context);
 			var caption = form.find('.caption');
 
-			// if (caption.val() === '') {
-			// 	caption.focus();
-			// 	form.find('button').prop('disabled', false);
-			// 	return false;
-			// }
-
 			data.formData = {
 				caption: caption.val(),
 				is_private: form.find('.is-private').is(':checked') ? 1 : 0,
