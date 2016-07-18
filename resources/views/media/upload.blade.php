@@ -158,7 +158,8 @@
 		'use strict';
 
 		$('#fileupload').fileupload({
-			url: this.action
+			url: this.action,
+			maxFileSize: {{ intval(ini_get('upload_max_filesize')) * 1000000 }},
 		});
 
 		$('#fileupload').bind('fileuploadsubmit', function (e, data) {
