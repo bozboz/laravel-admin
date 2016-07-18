@@ -1,5 +1,12 @@
 # Bozboz Admin Package Changelog
 
+## Varsion 2.1.1 (future)
+-   Use paginated report for media
+-   Fix media uploader
+-   Set the max filesize in media uploader
+-   Make media caption nullable
+-   Don't make caption a required field in media uploader
+
 ## Version 2.1.0 (2016-07-13)
 
 ### Added
