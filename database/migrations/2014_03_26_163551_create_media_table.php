@@ -17,7 +17,7 @@ class CreateMediaTable extends Migration {
 			$table->increments('id');
 			$table->string('filename');
 			$table->string('type');
-			$table->string('caption');
+			$table->string('caption')->nullable();
 			$table->boolean('private');
 			$table->timestamps();
 		});
