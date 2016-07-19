@@ -6,6 +6,7 @@
 -   Set the max filesize in media uploader
 -   Make media caption nullable
 -   Don't make caption a required field in media uploader
+-   Rework model saving so that validation errors can be thrown as exceptions deeper in the save method
 
 ## Version 2.1.0 (2016-07-13)
 

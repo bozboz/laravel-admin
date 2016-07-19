@@ -1,6 +1,9 @@
-<?php namespace Bozboz\Admin\Http\Controllers;
+<?php
+
+namespace Bozboz\Admin\Http\Controllers;
 
 use Bozboz\Admin\Base\ModelAdminDecorator;
+use Bozboz\Admin\Exceptions\ValidationException;
 use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
 use Bozboz\Admin\Reports\Actions\Presenters\Link;
 use Bozboz\Admin\Reports\Actions\Presenters\Urls\Url;
@@ -130,11 +133,18 @@ abstract class ModelAdminController extends Controller
 		$validation = $modelInstance->getValidator();
 		$input = $this->decorator->sanitiseInput($input);
 
-		if ($validation->failsStore($input)) {
-			return Redirect::back()->withErrors($validation->getErrors())->withInput();
-		}
 
-		$this->saveInTransaction($modelInstance, $input);
+		try {
+			if ($validation->failsStore($input)) {
+				throw new ValidationException($validation->getErrors());
+			}
+
+			$this->saveInTransaction($modelInstance, $input);
+
+		} catch (ValidationException $e) {
+			DB::rollback();
+			return Redirect::back()->withErrors($e->getErrors())->withInput();
+		}
 
 		$response = $this->reEdit($modelInstance) ?: $this->getStoreResponse($modelInstance);
 		$response->with('model.created', sprintf(
@@ -163,11 +173,17 @@ abstract class ModelAdminController extends Controller
 		$input = $this->decorator->sanitiseInput(Input::except('after_save'));
 		$input[$modelInstance->getKeyName()] = $modelInstance->getKey();
 
-		if ($validation->failsUpdate($input)) {
-			return Redirect::back()->withErrors($validation->getErrors())->withInput();
-		}
+		try {
+			if ($validation->failsUpdate($input)) {
+				throw new ValidationException($validation->getErrors());
+			}
 
-		$this->saveInTransaction($modelInstance, $input);
+			$this->saveInTransaction($modelInstance, $input);
+
+		} catch (ValidationException $e) {
+			DB::rollback();
+			return Redirect::back()->withErrors($e->getErrors())->withInput();
+		}
 
 		$response = $this->reEdit($modelInstance) ?: $this->getUpdateResponse($modelInstance);
 		$response->with('model.updated', sprintf(
@@ -180,9 +196,9 @@ abstract class ModelAdminController extends Controller
 
 	protected function saveInTransaction($modelInstance, $input)
 	{
-		DB::transaction(function() use ($modelInstance, $input) {
-			$this->save($modelInstance, $input);
-		});
+		DB::beginTransaction();
+		$this->save($modelInstance, $input);
+		DB::commit();
 	}
 
 	protected function save($modelInstance, $input)
