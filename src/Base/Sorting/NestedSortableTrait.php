@@ -26,13 +26,13 @@ trait NestedSortableTrait
 		try {
 			// if the node has a sibling before it, insert after it
 			if ($before) {
-				$this->insertAfter($this->find($before));
+				$this->insertAfterNode($this->find($before));
 				return 'Insert after #' . $before;
 			}
 
 			// if the node has a sibling after it, insert before it
 			if ($after) {
-				$this->insertBefore($this->find($after));
+				$this->insertBeforeNode($this->find($after));
 				return 'Insert before #' . $after;
 			}
 
