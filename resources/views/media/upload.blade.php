@@ -163,7 +163,14 @@
 		});
 
 		$('#fileupload').bind('fileuploadsubmit', function (e, data) {
-			var form = $(data.form.context);
+			// Which of these works seems to keep changing and I don't have time
+			// to work out what the hell is going on so...
+			try {
+				var form = $(data.form.context);
+			} catch (e) {
+				var form = data.context;
+			}
+
 			var caption = form.find('.caption');
 
 			data.formData = {
