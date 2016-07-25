@@ -9,7 +9,6 @@ use Bozboz\Admin\Fields\HiddenField;
 use Bozboz\Admin\Fields\PasswordField;
 use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Users\RoleAdminDecorator;
-use Bozboz\Jam\Fields\BelongsTo;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
