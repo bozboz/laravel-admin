@@ -53,6 +53,11 @@ abstract class ModelAdminDecorator
 		];
 	}
 
+	public function buildColumns($instance)
+	{
+		return $this->getColumns($instnace);
+	}
+
 	/**
 	 * Retrieve a heading representing $this->model
 	 *

@@ -1,14 +1,17 @@
 # Bozboz Admin Package Changelog
 
-## Varsion 2.1.1 (future)
+## Version 2.2.0 (Future)
+
+-   Add bulk update functionality
+
+## Version 2.1.1 (Future)
 -   Use paginated report for media
 -   Fix media uploader
 -   Set the max filesize in media uploader
 -   Make media caption nullable
 -   Don't make caption a required field in media uploader
 -   Rework model saving so that validation errors can be thrown as exceptions deeper in the save method
-
-## Version 2.1.1 (Future)
+)
 
 ### Added
 -   Allow `URLField` to auto generate a slug from another field.

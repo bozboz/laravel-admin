@@ -11,9 +11,9 @@
 
 ## Controllers
 
-`Controllers\ModelAdminController` is an abstract class containing standard CRUD
+`Controllers\ModelAdminController` and `Controllers\BulkAdminController` are abstract classes containing standard CRUD
 functionality for a model. Subclasses - as a bare minimum - must define a
-constructor which passes in an instance of `Decorators\ModelAdminDecorator`.
+constructor which passes in an instance of `Decorators\ModelAdminDecorator` or `Decorators\BulkAdminDecorator`.
 E.g.:
 
 ```php

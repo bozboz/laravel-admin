@@ -87,7 +87,7 @@ class Report implements BaseInterface
 
 	protected function getColumnsFromInstance($instance)
 	{
-		return $this->decorator->getColumns($instance);
+		return $this->decorator->buildColumns($instance);
 	}
 
 	public function getHeader()

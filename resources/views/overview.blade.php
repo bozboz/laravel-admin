@@ -30,7 +30,7 @@
 				<div class="faux-cell cell-small"></div>
 			@endif
 			@foreach ($report->getHeadings() as $heading)
-				<div class="faux-cell">{{ $heading }}</div>
+				<div class="faux-cell">{!! $heading !!}</div>
 			@endforeach
 				<div class="no-wrap faux-cell"></div>
 			</li>
