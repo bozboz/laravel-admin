@@ -55,7 +55,7 @@ abstract class ModelAdminDecorator
 
 	public function buildColumns($instance)
 	{
-		return $this->getColumns($instnace);
+		return $this->getColumns($instance);
 	}
 
 	/**
