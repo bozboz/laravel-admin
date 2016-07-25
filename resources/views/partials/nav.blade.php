@@ -44,20 +44,6 @@
 						</li>
 					@endif
 				@endforeach
-				@if ($menu->gate('view_users'))
-					<li class="{{ $menu->activeClassForPartialUrl(url('admin/users')) }}">
-						<a href="{{ url('admin/users') }}">
-							<i class="fa fa-user"></i>
-							Users
-						</a>
-					</li>
-					<li class="{{ $menu->activeClassForPartialUrl(URL::route('admin.permissions.index')) }}">
-						<a href="{{ URL::route('admin.permissions.index') }}">
-							<i class="fa fa-cogs"></i>
-							Permissions
-						</a>
-					</li>
-				@endif
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">

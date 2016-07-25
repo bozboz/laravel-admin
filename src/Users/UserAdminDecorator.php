@@ -3,17 +3,22 @@
 namespace Bozboz\Admin\Users;
 
 use Bozboz\Admin\Base\ModelAdminDecorator;
+use Bozboz\Admin\Fields\BelongsToField;
 use Bozboz\Admin\Fields\EmailField;
 use Bozboz\Admin\Fields\HiddenField;
 use Bozboz\Admin\Fields\PasswordField;
 use Bozboz\Admin\Fields\TextField;
+use Bozboz\Admin\Users\RoleAdminDecorator;
+use Bozboz\Jam\Fields\BelongsTo;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class UserAdminDecorator extends ModelAdminDecorator
 {
-	public function __construct(UserInterface $user)
+	public function __construct(UserInterface $user, RoleAdminDecorator $roles)
 	{
+		$this->roles = $roles;
+
 		parent::__construct($user);
 	}
 
@@ -41,7 +46,8 @@ class UserAdminDecorator extends ModelAdminDecorator
 			new TextField('first_name'),
 			new TextField('last_name'),
 			new EmailField('email'),
-			$this->getPasswordFieldForUser($instance)
+			$this->getPasswordFieldForUser($instance),
+			new BelongsToField($this->roles, $instance->role()),
 		]);
 	}
 

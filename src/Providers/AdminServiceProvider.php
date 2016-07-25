@@ -62,6 +62,8 @@ class AdminServiceProvider extends PermissionServiceProvider
 		);
 
 		$this->registerActions($this->app['admin.actions']);
+
+		$this->buildMenu();
 	}
 
 	protected function registerActions($actions)
@@ -112,5 +114,22 @@ class AdminServiceProvider extends PermissionServiceProvider
 		$actions->register('custom', function($presenter, $permission) {
 			return new Action($presenter, $permission);
 		});
+	}
+
+	protected function buildMenu()
+	{
+		$this->app['events']->listen('admin.renderMenu', function($menu)
+		{
+			if ($menu->gate('view_users')) {
+				$menu->addTopLevelItem('Users', 'admin.users.index');
+			}
+
+			if ($menu->gate('manage_permissions')) {
+				$menu->appendToItem('Users', [
+					'Roles' => 'admin.roles.index',
+					'Permissions' => 'admin.permissions.index',
+				]);
+			}
+		}, -1);
 	}
 }

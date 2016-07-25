@@ -3,7 +3,6 @@
 namespace Bozboz\Admin\Users;
 
 use Bozboz\Admin\Base\Model;
-use Bozboz\Permissions\EloquentPermissionsTrait;
 use Bozboz\Permissions\UserInterface as HasPermissions;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -15,8 +14,7 @@ class User extends Model implements AuthenticatableContract,
                                     HasPermissions,
                                     UserInterface
 {
-    use Authenticatable, CanResetPassword, EloquentPermissionsTrait, Validates,
-        HashesPassword;
+    use Authenticatable, CanResetPassword, Validates, HashesPassword;
 
 	/**
 	 * Blacklisted mass assignment attributes
@@ -36,4 +34,28 @@ class User extends Model implements AuthenticatableContract,
 	 * @var array
 	 */
 	protected $hidden = array('password');
+
+	public function getPermissions()
+	{
+		return $this->role ? $this->role->permissions : collect();
+	}
+
+	public function role()
+	{
+		return $this->belongsTo(Role::class);
+	}
+
+	public function scopeHasPermission($builder, $action)
+	{
+		$builder->whereHas('role', function($query) use ($action) {
+			$query->hasPermission($action);
+		});
+	}
+
+	public function scopeDoesntHavePermission($builder, $action)
+	{
+		$builder->whereHas('role', function($query) use ($action) {
+			$query->doesnthavePermission($action);
+		});
+	}
 }
