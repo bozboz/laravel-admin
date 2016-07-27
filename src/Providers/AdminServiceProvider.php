@@ -24,7 +24,11 @@ class AdminServiceProvider extends PermissionServiceProvider
 		});
 
 		$this->app->bind('Bozboz\Admin\Users\UserInterface', function($app) {
-			return $app['auth.driver']->user();
+			if ($this->app->runningInConsole()) {
+				return new \Bozboz\Admin\Users\User;
+			} else {
+				return $app['auth.driver']->user();
+			}
 		});
 
 		// Call the PermissionServiceProvider's register method
