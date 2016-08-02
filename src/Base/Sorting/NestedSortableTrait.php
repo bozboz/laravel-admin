@@ -50,7 +50,7 @@ trait NestedSortableTrait
 			if ($this->retrySort) {
 				$this->retrySort = false;
 
-				$this->fixTree();
+				$this->newNestedSetQuery()->fixTree();
 				$this->sort($before, $after, $parent);
 			} else {
 				throw $e;
