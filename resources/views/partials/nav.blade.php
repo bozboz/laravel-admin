@@ -68,6 +68,14 @@
 						@endif
 						<li><a href="/"><i class="fa fa-desktop"></i> View Website</a></li>
 						<li><a href="{{ route('styleguide') }}"><i class="fa fa-book"></i> View Style Guide</a></li>
+						@if (Session::has('previous_user'))
+							<li class="divider"></li>
+							<li>
+								{{ Form::open(['route' => ['admin.previous-user', Session::get('previous_user')]]) }}
+									<button type="submit"><i class="fa fa-undo"></i> Switch back to previous user</button>
+								{{ Form::close() }}
+							</li>
+						@endif
 						<li class="divider"></li>
 						<li><a href="/admin/logout"><i class="fa fa-sign-out"></i> Log Out</a></li>
 					</ul>
