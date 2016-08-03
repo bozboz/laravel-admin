@@ -24,10 +24,10 @@ class UserAdminController extends ModelAdminController
 	{
 		if ( ! $this->canLoginAs()) return abort('403');
 
+		$session->put('previous_user', Auth::user()->id);
+
 		$user = Auth::user()->find($id);
 		Auth::login($user);
-
-		$session->put(Auth::user()->id);
 
 		return redirect('admin');
 	}
