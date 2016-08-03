@@ -6,7 +6,6 @@ use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
 use Bozboz\Admin\Reports\Actions\Presenters\Form;
 use Bozboz\Admin\Users\UserAdminDecorator;
 use Bozboz\Permissions\Facades\Gate;
-use Bozboz\Permissions\RuleStack;
 use Illuminate\Auth\AuthManager;
 
 class UserAdminController extends ModelAdminController
@@ -20,12 +19,12 @@ class UserAdminController extends ModelAdminController
 
 	public function loginAs(AuthManager $auth, $id)
 	{
-		if ( ! RuleStack::with('login_as')->isAllowed()) {
-			return abort('403');
-		}
+		if ( ! $this->canLoginAs()) return abort('403');
+
 		$user = $auth->user()->find($id);
 		$auth->login($user);
-		return redirect('/admin');
+
+		return redirect('admin');
 	}
 
 	public function getRowActions()
@@ -42,11 +41,7 @@ class UserAdminController extends ModelAdminController
 
 	public function canLoginAs()
 	{
-		$stack = new RuleStack;
-
-		$stack->add('login_as');
-
-		return $stack->isAllowed();
+		return Gate::allows('login_as');
 	}
 
 	public function viewPermissions($stack)
