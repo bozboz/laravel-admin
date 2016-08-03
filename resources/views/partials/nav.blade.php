@@ -71,7 +71,7 @@
 						@if (Session::has('previous_user'))
 							<li class="divider"></li>
 							<li>
-								{{ Form::open(['route' => ['admin.previous-user', Session::get('previous_user')]]) }}
+								{{ Form::open(['route' => 'admin.previous-user']) }}
 									<button type="submit"><i class="fa fa-undo"></i> Switch back to previous user</button>
 								{{ Form::close() }}
 							</li>

@@ -32,12 +32,11 @@ class UserAdminController extends ModelAdminController
 		return redirect('admin');
 	}
 
-	public function previousUser(Store $session, $id)
+	public function previousUser(Store $session)
 	{
-		$user = Auth::user()->find($id);
-		$previousUser = $session->pull('previous_user');
+		if ( ! $session->has('previous_user')) return abort('403');
 
-		if ($previousUser !== $user->id) return abort('403');
+		$user = Auth::user()->find($session->pull('previous_user'));
 
 		Auth::login($user);
 
