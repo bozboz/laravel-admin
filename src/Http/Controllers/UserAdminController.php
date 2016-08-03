@@ -27,6 +27,8 @@ class UserAdminController extends ModelAdminController
 		$user = Auth::user()->find($id);
 		Auth::login($user);
 
+		$session->put(Auth::user()->id);
+
 		return redirect('admin');
 	}
 
