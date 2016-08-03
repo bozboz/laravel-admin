@@ -3,6 +3,7 @@
 ## Version 2.2.0 (Future)
 
 -   Add bulk update functionality
+-   Add switch user button to users listing
 
 ## Version 2.1.1 (Future)
 -   Use paginated report for media
