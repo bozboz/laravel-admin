@@ -26,4 +26,8 @@ Route::group(array('middleware' => ['web'], 'namespace' => 'Bozboz\Admin\Http\Co
 	});
 
 	Route::controller('password', 'RemindersController');
+
+	Route::post('login-as/{user}', [
+		'uses' => 'UserAdminController@loginAs',
+	]);
 });
