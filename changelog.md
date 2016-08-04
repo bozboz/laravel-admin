@@ -5,14 +5,17 @@
 -   Add bulk update functionality
 -   Add switch user button to users listing
 
-## Version 2.1.1 (Future)
+## Version 2.1.2 (future)
+
+## Version 2.1.1 (2016-08-04)
 -   Use paginated report for media
 -   Fix media uploader
 -   Set the max filesize in media uploader
 -   Make media caption nullable
 -   Don't make caption a required field in media uploader
 -   Rework model saving so that validation errors can be thrown as exceptions deeper in the save method
-)
+-   Fix console binding of UserInterface for `php artisan routes:list`
+-   Fix nested sortable
 
 ### Added
 -   Allow `URLField` to auto generate a slug from another field.
