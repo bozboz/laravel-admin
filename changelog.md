@@ -1,11 +1,15 @@
 # Bozboz Admin Package Changelog
 
-## Varsion 2.1.1 (future)
+## Version 2.1.2 (future)
+
+## Version 2.1.1 (2016-08-04)
 -   Use paginated report for media
 -   Fix media uploader
 -   Set the max filesize in media uploader
 -   Make media caption nullable
 -   Don't make caption a required field in media uploader
+-   Fix console binding of UserInterface for `php artisan routes:list`
+-   Fix nested sortable
 
 ## Version 2.1.0 (2016-07-13)
 
