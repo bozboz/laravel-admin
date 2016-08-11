@@ -5,7 +5,10 @@
 -   Add bulk update functionality
 -   Add switch user button to users listing
 
-## Version 2.1.2 (future)
+## Version 2.1.3 (future)
+
+## Version 2.1.2 (2016-08-11)
+-   Fix tree select field ids
 
 ## Version 2.1.1 (2016-08-04)
 -   Use paginated report for media
