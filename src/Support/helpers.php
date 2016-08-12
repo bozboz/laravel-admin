@@ -11,7 +11,7 @@ if ( ! function_exists('asset_version')) {
     {
         clearstatcache();
         $filemtime = filemtime(public_path($assetPath));
-        return asset(preg_replace('/\.(.+)$/', "--$filemtime.$1", $assetPath));
+        return asset(preg_replace('/\.([^\.]+)$/', "--$filemtime.$1", $assetPath));
     }
 
 }
