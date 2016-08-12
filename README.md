@@ -248,3 +248,21 @@ This will be json encoded and merged in with the defaults when the DOM is
 rendered. When passing in values that are defined as JS Date objects within the
 datetimepicker documentation, please define these as epoch values (e.g. `time()`
 or `$dateTime->format('U')`).
+
+## Helpers
+
+* `asset_version`
+    
+    Appends the last modified time to the end of an asset filename for cache busting.
+    
+    Usage:
+        
+        {{ asset_version('assets/css/min/style.css') }}
+    
+    In order for this to work you must add the following to the `.htaccess` file:
+        
+        # Rewrite cachebusted assets
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_URI} ^.*\.(css|js)$
+        RewriteRule ^(.+)--\d+\.([^\.]+)$ $1.$2 [L]

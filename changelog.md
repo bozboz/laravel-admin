@@ -4,6 +4,7 @@
 
 -   Add bulk update functionality
 -   Add switch user button to users listing
+-   Add `asset_version` helper
 
 ## Version 2.1.3 (future)
 
