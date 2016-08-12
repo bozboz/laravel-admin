@@ -10,6 +10,7 @@ use Bozboz\Admin\Reports\Actions\Presenters\Button;
 use Bozboz\Admin\Reports\Actions\Presenters\Form;
 use Bozboz\Admin\Reports\Actions\Presenters\Link;
 use Bozboz\Permissions\Providers\PermissionServiceProvider;
+use Illuminate\Support\Facades\Blade;
 
 class AdminServiceProvider extends PermissionServiceProvider
 {
@@ -59,6 +60,7 @@ class AdminServiceProvider extends PermissionServiceProvider
 		$permissions = $this->app['permission.handler'];
 
 		require __DIR__ . '/../permissions.php';
+		require "$packageRoot/src/Support/helpers.php";
 
 		$this->app['view']->composer(
 			'admin::partials.nav',
