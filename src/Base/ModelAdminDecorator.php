@@ -245,6 +245,15 @@ abstract class ModelAdminDecorator
 	}
 
 	/**
+	 * Get the names of the sortable many-to-many relationships on the model
+	 * return array
+	 */
+	public function getSortableSyncRelations()
+	{
+		return [];
+	}
+
+	/**
 	 * Get the names (and associated attribute to use) of list-style
 	 * many-to-many relationship on the model that should be saved.
 	 *
@@ -263,7 +272,7 @@ abstract class ModelAdminDecorator
 	 */
 	public function injectRelations($instance)
 	{
-		foreach ($this->getSyncRelations() as $relationName) {
+		foreach (array_merge($this->getSyncRelations(), $this->getSortableSyncRelations()) as $relationName) {
 			$instance->setAttribute(
 				$relationName . '_relationship',
 				$instance->$relationName()->getRelatedIds()->all()
@@ -287,27 +296,42 @@ abstract class ModelAdminDecorator
 	 */
 	public function updateRelations($instance, $formInput)
 	{
-		foreach ($this->getSyncRelations() as $relationship) {
-			if (isset($formInput[$relationship . '_relationship'])) {
-				$data = @array_filter($formInput[$relationship . '_relationship']);
-				$instance->$relationship()->sync(is_array($data) ? $data : array());
-			}
+		$sync = [];
+
+		foreach($this->getSyncRelations() as $relationship) {
+			$sync[$relationship] = function($data) {
+				return $data;
+			};
+		}
+
+		foreach($this->getSortableSyncRelations() as $relationship) {
+			$sync[$relationship] = function($data) {
+				$syncData = [];
+				foreach($data as $i => $value) {
+					$syncData[$value] = [
+						'sorting' => $i
+					];
+				}
+				return $syncData;
+			};
 		}
 
 		foreach ($this->getListRelations() as $relationship => $attribute) {
-			if (isset($formInput[$relationship . '_relationship'])) {
-				$data = @array_filter($formInput[$relationship . '_relationship']);
-
-				$relation = $instance->$relationship();
+			$sync[$relationship] = function($data, $relation) use ($attribute) {
 				$model = $relation->getModel();
-
-				$toSync = array_map(function($value) use ($model, $attribute) {
+				return array_map(function($value) use ($model, $attribute) {
 					return $model->firstOrCreate([
 						$attribute => $value
 					])->id;
-				}, is_array($data) ? $data : []);
+				}, $data);
+			};
+		}
 
-				$relation->sync($toSync);
+		foreach($sync as $relationship => $callback) {
+			if (isset($formInput[$relationship . '_relationship'])) {
+				$relation = $instance->$relationship();
+				$data = $callback(@array_filter($formInput[$relationship . '_relationship']), $relation);
+				$relation->sync($data);
 			}
 		}
 	}

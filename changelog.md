@@ -2,8 +2,10 @@
 
 ## Version 2.1.3 (future)
 
+
 ## Version 2.1.2 (2016-08-11)
 -   Fix tree select field ids
+
 
 ## Version 2.1.1 (2016-08-04)
 -   Use paginated report for media
@@ -52,6 +54,23 @@
 -   `Base\ModelAdminDecorator::getListingModels` method
 -   `Base\Sortable` class
 -   `Http\Controllers\ModelAdminController::getReportParams` method
+
+
+## Version 2.0.9 (2016-08-16)
+-   Add `getSortableSyncRelations` for defining sortable belongs to mnay relations
+
+
+## Version 2.0.8 (2016-08-02)
+-   Fix to MediaBrowser field
+
+
+## Version 2.0.7 (2016-06-20)
+-   Fix filtering issue on permissions screen
+
+
+## Version 2.0.6 (2016-04-26)
+-   Fix GrantAdminUserPermissions migration
+-   Fix listing filter filtering
 
 
 ## Version 2.0.5 (2016-04-06)
@@ -104,6 +123,7 @@
 -   Remove Meta namespace
 
 
+<<<<<<< HEAD
 ## Version 1.3.0 (2016-06-20)
 
 ### Added
@@ -111,6 +131,8 @@
 -   Add the ability to add media via a URL to media library
 
 
+=======
+>>>>>>> 2.0
 ## Version 1.2.5 (2016-06-20)
 -   Fix filtering issue on permissions screen
 
