@@ -2,14 +2,26 @@
 
 ## Version 2.2.0 (Future)
 
+### Added
+-   Allow `URLField` to auto generate a slug from another field.
+    - __Usage:__
+    ```
+    new URLField('slug', [
+        'route' => '...',
+        'data-auto-slug-from' => 'name',
+    ]);
+    ```
 -   Add bulk update functionality
 -   Add switch user button to users listing
 -   Add `asset_version` helper
 
+
 ## Version 2.1.3 (future)
+
 
 ## Version 2.1.2 (2016-08-11)
 -   Fix tree select field ids
+
 
 ## Version 2.1.1 (2016-08-04)
 -   Use paginated report for media
@@ -21,15 +33,6 @@
 -   Fix console binding of UserInterface for `php artisan routes:list`
 -   Fix nested sortable
 
-### Added
--   Allow `URLField` to auto generate a slug from another field.
-    - __Usage:__
-    ```
-    new URLField('slug', [
-        'route' => '...',
-        'data-auto-slug-from' => 'name',
-    ]);
-    ```
 
 ## Version 2.1.0 (Future)
 
