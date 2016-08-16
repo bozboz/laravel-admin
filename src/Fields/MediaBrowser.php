@@ -63,7 +63,11 @@ class MediaBrowser extends Field
 		$values = Form::getValueAttribute($this->name);
 		$mediaFactory = $this->relation->getRelated();
 
-		$items = $values ? $mediaFactory->whereIn('id', (array)$values)->get()->map(function($inst) {
+		$media = $values ? $mediaFactory->find((array)$values)->keyBy('id') : collect();
+
+		$items = collect($values)->filter()->map(function($id) use ($media) {
+			return $media->get($id);
+		})->map(function($inst) {
 			return [
 				'id' => $inst->id,
 				'type' => $inst->type,
@@ -71,10 +75,10 @@ class MediaBrowser extends Field
 				'private' => $inst->private,
 				'filename' => $inst->filename
 			];
-		}) : [];
+		});
 
 		$data = [
-			'media' => $items,
+			'media' => $items->all(),
 			'mediaPath' => $mediaFactory->getFilePath('image', 'small'),
 			'mediaAccess' => $this->mediaAccess,
 		];
