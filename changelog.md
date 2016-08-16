@@ -1,6 +1,7 @@
 # Bozboz Admin Package Changelog
 
 ## Version 2.1.3 (future)
+-   Add `getSortableSyncRelations` for defining sortable belongs to mnay relations
 
 
 ## Version 2.1.2 (2016-08-11)
