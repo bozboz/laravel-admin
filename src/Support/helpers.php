@@ -9,9 +9,13 @@ if ( ! function_exists('asset_version')) {
      */
     function asset_version($assetPath)
     {
-        clearstatcache();
-        $filemtime = filemtime(public_path($assetPath));
-        return asset(preg_replace('/\.([^\.]+)$/', "--$filemtime.$1", $assetPath));
+        try {
+            clearstatcache();
+            $filemtime = filemtime(public_path($assetPath));
+            return asset(preg_replace('/\.([^\.]+)$/', "--$filemtime.$1", $assetPath));
+        } catch (Exception $e) {
+            return $assetPath;
+        }
     }
 
 }
