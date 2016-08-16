@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.0.9 (2016-08-16)
+-   Add `getSortableSyncRelations` for defining sortable belongs to mnay relations
+
 ## Version 2.0.8 (2016-08-02)
 -   Fix to MediaBrowser field
 
