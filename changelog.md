@@ -15,8 +15,12 @@
 -   Add switch user button to users listing
 -   Add `asset_version` helper
 
+### Changed
+-   Rework model saving so that validation errors can be thrown as exceptions deeper in the save method
+
 
 ## Version 2.1.3 (future)
+-   Add `getSortableSyncRelations` for defining sortable belongs to mnay relations
 
 
 ## Version 2.1.2 (2016-08-11)
@@ -29,7 +33,6 @@
 -   Set the max filesize in media uploader
 -   Make media caption nullable
 -   Don't make caption a required field in media uploader
--   Rework model saving so that validation errors can be thrown as exceptions deeper in the save method
 -   Fix console binding of UserInterface for `php artisan routes:list`
 -   Fix nested sortable
 
@@ -72,6 +75,23 @@
 -   `Base\ModelAdminDecorator::getListingModels` method
 -   `Base\Sortable` class
 -   `Http\Controllers\ModelAdminController::getReportParams` method
+
+
+## Version 2.0.9 (2016-08-16)
+-   Add `getSortableSyncRelations` for defining sortable belongs to mnay relations
+
+
+## Version 2.0.8 (2016-08-02)
+-   Fix to MediaBrowser field
+
+
+## Version 2.0.7 (2016-06-20)
+-   Fix filtering issue on permissions screen
+
+
+## Version 2.0.6 (2016-04-26)
+-   Fix GrantAdminUserPermissions migration
+-   Fix listing filter filtering
 
 
 ## Version 2.0.5 (2016-04-06)
@@ -124,6 +144,7 @@
 -   Remove Meta namespace
 
 
+<<<<<<< HEAD
 ## Version 1.3.0 (2016-06-20)
 
 ### Added
@@ -131,6 +152,8 @@
 -   Add the ability to add media via a URL to media library
 
 
+=======
+>>>>>>> 2.0
 ## Version 1.2.5 (2016-06-20)
 -   Fix filtering issue on permissions screen
 
