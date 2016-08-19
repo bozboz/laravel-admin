@@ -10,6 +10,11 @@ class BulkAdminController extends ModelAdminController
     public function bulkEdit(Request $request)
     {
         $instances = $this->decorator->findInstances($request->get('instances'));
+
+        if ($instances->count() < 1) {
+            return back()->withMessage('You must select at least one item to bulk edit.');
+        }
+
         return View::make('admin::bulk-edit', [
             'fields' => $this->decorator->buildBulkFields($instances),
             'modelName' => str_plural($this->decorator->getHeadingForInstance($instances->first())),
