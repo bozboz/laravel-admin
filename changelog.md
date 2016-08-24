@@ -56,7 +56,6 @@
 -   `Base\Sortable` class
 -   `Http\Controllers\ModelAdminController::getReportParams` method
 
-
 ## Version 2.0.9 (2016-08-16)
 -   Add `getSortableSyncRelations` for defining sortable belongs to mnay relations
 
