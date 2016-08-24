@@ -58,6 +58,8 @@
 -   Remove Pages
 -   Remove Meta namespace
 
+## Version 1.2.6 (2016-08-24)
+-   Fix CSV report headings showing every 200 rows bug
 
 ## Version 1.2.5 (2016-06-20)
 -   Fix filtering issue on permissions screen
