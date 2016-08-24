@@ -7,6 +7,8 @@ use Illuminate\Support\Fluent;
 
 class CSVReport implements BaseInterface
 {
+	private $headings = false;
+
 	protected $responseHeaders = [
 		'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
 		'Content-type'        => 'text/csv',
@@ -47,14 +49,12 @@ class CSVReport implements BaseInterface
 	{
 		$fp = fopen('php://output', 'w');
 
-		$headings = false;
-
-		$this->decorator->getListingModelsChunked(200, function($models) use ($fp, $headings) {
+		$this->decorator->getListingModelsChunked(200, function($models) use ($fp) {
 			foreach($models as $instance) {
 				$columns = $this->getColumnsFromInstance($instance);
-				if ( ! $headings) {
+				if ( ! $this->headings) {
 					fputcsv($fp, array_keys($columns));
-					$headings = true;
+					$this->headings = true;
 				}
 				fputcsv($fp, $columns);
 			}
