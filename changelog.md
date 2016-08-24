@@ -123,17 +123,15 @@
 -   Remove Pages
 -   Remove Meta namespace
 
-
-<<<<<<< HEAD
 ## Version 1.3.0 (2016-06-20)
 
 ### Added
 -   Add null option to TreeSelectField
 -   Add the ability to add media via a URL to media library
 
+## Version 1.2.6 (2016-08-24)
+-   Fix CSV report headings showing every 200 rows bug
 
-=======
->>>>>>> 2.0
 ## Version 1.2.5 (2016-06-20)
 -   Fix filtering issue on permissions screen
 
