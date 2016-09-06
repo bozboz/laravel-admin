@@ -1,6 +1,6 @@
 # Bozboz Admin Package Changelog
 
-## Version 2.1.3 (future)
+## Version 2.1.3 (2016-09-06)
 -   Add `getSortableSyncRelations` for defining sortable belongs to mnay relations
 -   Increase scope of `scopeModifySortingQuery` method on SortableTrait
 
