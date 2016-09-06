@@ -2,6 +2,7 @@
 
 ## Version 2.1.3 (future)
 -   Add `getSortableSyncRelations` for defining sortable belongs to mnay relations
+-   Increase scope of `scopeModifySortingQuery` method on SortableTrait
 
 
 ## Version 2.1.2 (2016-08-11)
