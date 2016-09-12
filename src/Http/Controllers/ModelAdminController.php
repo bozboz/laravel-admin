@@ -232,7 +232,9 @@ abstract class ModelAdminController extends Controller
 			'fields' => $fields,
 			'method' => $method,
 			'action' => [$this->getActionName($action), $instance->id],
-			'actions' => collect($this->getFormActions($instance)),
+			'actions' => collect($this->getFormActions($instance))->each(function($action) use ($instance) {
+				$action->setInstance($instance);
+			}),
 		));
 	}
 
@@ -249,7 +251,7 @@ abstract class ModelAdminController extends Controller
 			]),
 			$this->actions->custom(
 				new Link(new Url($this->getListingUrl($instance)), 'Back to listing', 'fa fa-list-alt', [
-					'class' => 'btn-default pull-right',
+					'class' => 'btn-default pull-right space-left',
 				]),
 				new IsValid([$this, 'canView'])
 			),
