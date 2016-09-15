@@ -1,25 +1,31 @@
-<?php namespace Bozboz\Admin\Http\Controllers;
+<?php
+
+namespace Bozboz\Admin\Http\Controllers;
 
 use Bozboz\Admin\Base\Sortable as DeprecatedSortable;
 use Bozboz\Admin\Services\Sorter;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Input;
+use DB;
 
 class SortController extends Controller
 {
-	public function sort()
+	public function sort(Request $request)
 	{
-		$model = Input::get('model');
+		$model = $request->get('model');
 		$factory = new $model;
 
 		if ($factory instanceof DeprecatedSortable) {
-			$items = Input::get('items');
+			$items = $request->get('items');
 			$sorter = new Sorter;
 			$sorter->sort($factory, $items);
 			return;
 		}
 
-		$instance = $factory->find(Input::get('instance'));
-		$instance->sort(Input::get('before'), Input::get('after'), Input::get('parent'));
+		DB::beginTransaction();
+		$instance = $factory->find($request->get('instance'));
+		$instance->sort($request->get('before'), $request->get('after'), $request->get('parent'));
+		DB::commit();
 	}
 }
