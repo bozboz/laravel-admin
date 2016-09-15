@@ -19,8 +19,13 @@
 -   Rework model saving so that validation errors can be thrown as exceptions deeper in the save method
 
 
-## Version 2.1.3 (future)
+## Version 2.1.4 (2016-09-15)
+-   Do sorting in transaction in case anything disasterous happens
+
+
+## Version 2.1.3 (2016-09-06)
 -   Add `getSortableSyncRelations` for defining sortable belongs to mnay relations
+-   Increase scope of `scopeModifySortingQuery` method on SortableTrait
 
 
 ## Version 2.1.2 (2016-08-11)

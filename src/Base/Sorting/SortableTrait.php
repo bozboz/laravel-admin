@@ -37,7 +37,7 @@ trait SortableTrait
 	 * @param  Illuminate\Database\Eloquent\Builder  $query
 	 * @param  Bozboz\Admin\Base\Model  $instance
 	 */
-	protected function scopeModifySortingQuery($query, $instance) {}
+	public function scopeModifySortingQuery($query, $instance) {}
 
 	/**
 	 * Calculate sorting for a new row if nothing already set
