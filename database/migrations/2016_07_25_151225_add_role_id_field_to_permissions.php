@@ -25,6 +25,7 @@ class AddRoleIdFieldToPermissions extends Migration
     public function down()
     {
         Schema::table('permissions', function (Blueprint $table) {
+            $table->dropForeign('permissions_role_id_foreign');
             $table->dropColumn('role_id');
         });
     }
