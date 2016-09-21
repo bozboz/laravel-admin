@@ -330,7 +330,7 @@ abstract class ModelAdminDecorator
 		foreach($sync as $relationship => $callback) {
 			if (isset($formInput[$relationship . '_relationship'])) {
 				$relation = $instance->$relationship();
-				$data = $callback(@array_filter($formInput[$relationship . '_relationship']), $relation);
+				$data = $callback(array_filter((array)$formInput[$relationship . '_relationship']), $relation);
 				$relation->sync($data);
 			}
 		}
