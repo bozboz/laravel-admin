@@ -3,6 +3,7 @@
 namespace Bozboz\Admin\Base\Sorting;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use LogicException;
 
 /**
@@ -24,35 +25,44 @@ trait NestedSortableTrait
 	public function sort($before, $after, $parent)
 	{
 		try {
+			DB::beginTransaction();
+
 			// if the node has a sibling before it, insert after it
 			if ($before) {
 				$this->insertAfterNode($this->find($before));
-				return 'Insert after #' . $before;
 			}
 
 			// if the node has a sibling after it, insert before it
-			if ($after) {
+			else if ($after) {
 				$this->insertBeforeNode($this->find($after));
-				return 'Insert before #' . $after;
 			}
 
 			// otherwise, if the node has a parent, append to it
-			if ($parent) {
+			else if ($parent) {
 				$this->find($parent)->appendNode($this);
-				return 'Append to parent #' . $parent;
 			}
 
 			// if it has neither, it's the first root node.
-			$this->saveAsRoot();
-			return 'Save as root';
+			else {
+				$this->saveAsRoot();
+			}
+
+			DB::commit();
 		}
 		catch (LogicException $e) {
+
+			DB::rollback();
+
 			if ($this->retrySort) {
+				Log::warning('Nested sort error (retry): ' . $e->getMessage());
+
 				$this->retrySort = false;
 
 				$this->newNestedSetQuery()->fixTree();
 				$this->sort($before, $after, $parent);
 			} else {
+				Log::error('Nested sort error (ABORT)');
+
 				throw $e;
 			}
 		}
