@@ -84,7 +84,7 @@ class MediaLibraryAdminController extends ModelAdminController
 					'id' => $instance->id,
 					'filename' => $instance->filename,
 					'type' => $instance->type,
-					'private' => $instance->private,
+					'private' => (boolean)$instance->private,
 				];
 			}
 		}
