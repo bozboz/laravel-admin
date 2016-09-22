@@ -118,10 +118,10 @@
 			{% } %}
 		</td>
 		<td>
-			{% if(file.private) { %} 
-				Private 
-			{% } else { %} 
-				Public 
+			{% if(file.private) { %}
+				Private
+			{% } else { %}
+				Public
 			{% } %}
 		</td>
 		<td>
@@ -164,7 +164,7 @@
 
 			data.formData = {
 				caption: caption.val(),
-				is_private: data.context.find('.is-private').is(':checked')
+				is_private: data.context.find('.is-private').is(':checked') ? 1 : 0
 			};
 		});
 	});
