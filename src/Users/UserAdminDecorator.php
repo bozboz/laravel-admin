@@ -25,7 +25,8 @@ class UserAdminDecorator extends ModelAdminDecorator
 	{
 		return array(
 			'id' => $instance->id,
-			'email' => $instance->email
+			'email' => $instance->email,
+			'role' => $instance->role ? $instance->role->name : null,
 		);
 	}
 
