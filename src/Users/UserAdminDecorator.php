@@ -26,7 +26,7 @@ class UserAdminDecorator extends ModelAdminDecorator
 		return array(
 			'id' => $instance->id,
 			'email' => $instance->email,
-			'role' => $instance->role ? $instance->role->name : null,
+			'role' => $instance->role ? link_to_route('admin.permissions.index', $this->roles->getLabel($instance->role), ['role' => $instance->role->id]) : null,
 		);
 	}
 
