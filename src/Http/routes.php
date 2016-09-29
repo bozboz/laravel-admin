@@ -10,6 +10,7 @@ Route::group(array('middleware' => ['web'], 'namespace' => 'Bozboz\Admin\Http\Co
 
 	Route::group(array('middleware' => 'auth'), function() {
 		Route::resource('users', 'UserAdminController', array('except' => array('show')));
+		Route::resource('roles', 'UserRoleAdminController', array('except' => array('show')));
 		Route::resource('media', 'MediaLibraryAdminController');
 
 		Route::resource('permissions', 'PermissionAdminController', array('except' => array('show')));

@@ -7,8 +7,8 @@ use Bozboz\Admin\Fields\BelongsToField;
 use Bozboz\Admin\Fields\SelectField;
 use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Reports\Filters\ArrayListingFilter;
+use Bozboz\Admin\Users\RoleAdminDecorator;
 use Bozboz\Admin\Users\User;
-use Bozboz\Admin\Users\UserAdminDecorator;
 use Bozboz\Permissions\Handler;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -16,13 +16,13 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 {
 	protected $permissions;
 
-	protected $users;
+	protected $roles;
 
-	public function __construct(Permission $permission, Handler $permissions, UserAdminDecorator $users)
+	public function __construct(Permission $permission, Handler $permissions, RoleAdminDecorator $roles)
 	{
 		$this->permissions = $permissions;
 
-		$this->users = $users;
+		$this->roles = $roles;
 
 		parent::__construct($permission);
 	}
@@ -55,7 +55,7 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 				'class' => 'select2'
 			]),
 			new TextField('param'),
-			new BelongsToField($this->users, $instance->user()),
+			new BelongsToField($this->roles, $instance->role()),
 		];
 	}
 
@@ -64,13 +64,13 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 		return [
 			'Action' => $instance->action,
 			'Param' => $instance->param ?: '-',
-			'User' => link_to_route('admin.users.edit', $this->users->getLabel($instance->user), [$instance->user->id])
+			'Role' => $instance->role ? link_to_route('admin.roles.edit', $this->roles->getLabel($instance->role), [$instance->role->id]) : null,
 		];
 	}
 
 	public function modifyListingQuery(Builder $query)
 	{
-		$query->with('user')
+		$query->with('role')
 			->orderBy('user_id')
 			->orderBy('action')
 			->orderBy('param');
@@ -79,19 +79,15 @@ class PermissionAdminDecorator extends ModelAdminDecorator
 	public function getListingFilters()
 	{
 		return [
-			new ArrayListingFilter('user', $this->getListOfAdminUsers(), 'user_id')
+			new ArrayListingFilter('role', $this->getListOfRoles(), 'role_id')
 		];
 	}
 
-	protected function getListOfAdminUsers()
+	protected function getListOfRoles()
 	{
-		$users = [];
-
-		$users[''] = 'All';
-		foreach ($this->users->getListOfAdminUsers()->keyBy('id') as $i => $user) {
-			$users[$i] = $this->users->getLabel($user);
-		}
-
-		return $users;
+		return $this->roles->getListingModelsNoLimit()->prepend([
+			'id' => null,
+			'name' => 'All',
+		])->lists('name', 'id');
 	}
 }
