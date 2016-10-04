@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Verison 2.1.5 (2016--10-04)
+-	Fix relation syncing when nothing is selected
+
 ## Version 2.1.4 (2016-09-15)
 -   Do sorting in transaction in case anything disasterous happens
 
