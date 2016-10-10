@@ -13,7 +13,7 @@
 	@show
 
 	@section('styles')
-	{!! HTML::style('/assets/css/min/admin/style.css') !!}
+	<link rel="stylesheet" type="text/css" href="{!! asset_version('assets/css/min/admin/style.css') !!}">
 	@include('admin::partials.custom-styles')
 	@show
 </head>
@@ -29,7 +29,7 @@
 		@show
 	</div>
 	@section('scripts')
-		<script src="{{ asset('/assets/js/min/admin/app.js') }}"></script>
+		<script src="{{ asset_version('assets/js/min/admin/app.js') }}"></script>
 	@show
 </body>
 </html>
