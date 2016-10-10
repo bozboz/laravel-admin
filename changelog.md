@@ -18,6 +18,7 @@
 
 ### Changed
 -   Rework model saving so that validation errors can be thrown as exceptions deeper in the save method
+-   Add cache breaker to default styles and scripts
 
 
 ## Version 2.1.4 (2016-09-15)
