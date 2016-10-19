@@ -21,6 +21,14 @@
 -   Add cache breaker to default styles and scripts
 
 
+## Version 2.1.6 (2016-10-19)
+-   Set DB to strict mode and check errors when sorting to avoid setting _lft and _rgt to null
+
+
+## Verison 2.1.5 (2016--10-04)
+-	Fix relation syncing when nothing is selected
+
+
 ## Version 2.1.4 (2016-09-15)
 -   Do sorting in transaction in case anything disasterous happens
 
