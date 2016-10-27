@@ -1,7 +1,8 @@
 # Bozboz Admin Package Changelog
 
-## Version 2.0.9 (2016-08-16)
+## Version 2.0.9 (2016-10-27)
 -   Add `getSortableSyncRelations` for defining sortable belongs to mnay relations
+-   Cherry pick media uploader fix from 2.1 (4b332ed0393ba90c3c4775254622f4f51822cafe)
 
 ## Version 2.0.8 (2016-08-02)
 -   Fix to MediaBrowser field
