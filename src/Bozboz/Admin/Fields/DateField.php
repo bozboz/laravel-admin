@@ -38,10 +38,11 @@ class DateField extends Field
 				};
 
 				//Convert a MySQL DateTime formatted string into a JS Date object
-				var stringToDate = function(dateString) {
-					var dateInfo = dateString.split('-');
-
-					return new Date(dateInfo[0], dateInfo[1] - 1, dateInfo[2]);
+				var stringToDate = function(dateTimeString) {
+					var dateTimeExploded = dateTimeString.split(' ');
+					var dateInfo = dateTimeExploded[0].split('-');
+					var timeInfo = dateTimeExploded[1] ? dateTimeExploded[1].split(':') : [0, 0, 0];
+					return new Date(dateInfo[0], dateInfo[1] - 1, dateInfo[2], timeInfo[0], timeInfo[1], timeInfo[2]);
 				};
 
 				var date = $('#$this->name').val() === '' ? null : stringToDate($('#$this->name').val())
