@@ -12,6 +12,10 @@
 -   Add the ability to add media via a URL to media library
 
 
+## Version 1.2.7 (2016-10-28)
+-   Fix DateField
+
+
 ## Version 1.2.6 (2016-08-24)
 -   Fix CSV report headings showing every 200 rows bug
 
@@ -78,8 +82,14 @@
 ### Fixed
 -   CSVReport can now handle large data sets without running out of memory
 
+
+## Version 1.1.9 (2016-10-28)
+-   Fix DateField
+
+
 ## Version 1.1.8 (2016-09-22)
 -   Fix media upload
+
 
 ## Version 1.1.7 (2015-12-22)
 -   Fix uploading of inline media caused by bug in 1.1.6
