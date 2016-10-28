@@ -1,5 +1,9 @@
 # Bozboz Admin Package Changelog
 
+## Version 1.2.7 (2016-10-28)
+-   Fix DateField
+
+
 ## Version 1.2.6 (2016-08-24)
 -   Fix CSV report headings showing every 200 rows bug
 
