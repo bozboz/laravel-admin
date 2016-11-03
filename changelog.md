@@ -15,6 +15,7 @@
 -   Add switch user button to users listing
 -   Add `asset_version` helper
 -   Add user roles
+-   Add DateFilter
 
 ### Changed
 -   Rework model saving so that validation errors can be thrown as exceptions deeper in the save method
