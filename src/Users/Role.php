@@ -19,6 +19,23 @@ class Role extends Model
 		return $this->hasMany(Permission::class);
 	}
 
+	public function getPermissionOptionsAttribute()
+	{
+		$options = collect();
+		$this->permissions->each(function($permission) use ($options) {
+			$option = $options->get($permission->action, [
+				'params' => collect(),
+				'exists' => true
+			]);
+			$option['params']->push($permission->param);
+			$options->put($permission->action, $option);
+		});
+		return $options->map(function($option) {
+			$option['params'] = $option['params']->implode(',');
+			return $option;
+		});
+	}
+
 	public function grantPermission($action, $param = null)
 	{
 		$attributes = compact('action', 'param');
