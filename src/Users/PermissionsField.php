@@ -3,6 +3,7 @@
 namespace Bozboz\Admin\Users;
 
 use Bozboz\Admin\Fields\Field;
+use Bozboz\Admin\Permissions\Permission;
 use Form;
 
 class PermissionsField extends Field
@@ -21,25 +22,28 @@ class PermissionsField extends Field
         ';
 
         foreach($this->options as $option) {
-            if ($option != '*') {
-                $name = $this->get('name') . '[' . $option . ']';
-                $checkbox = Form::checkbox(
-                    $name . '[exists]',
-                    $option
-                );
-                $params = Form::text(
-                    $name . '[params]',
-                    null,
-                    [
-                        'class' => 'form-control'
-                    ]
-                );
-
-                $html .= '<tr>
-                    <td><label>' . $checkbox . ' ' . $option . '</label></td>
-                    <td>' . $params . '</td>
-                </tr>';
+            if ($option == Permission::WILDCARD) {
+                $option = '&#42;';
             }
+            $name = $this->get('name') . '[' . $option . ']';
+            $checkbox = Form::checkbox(
+                $name . '[exists]',
+                $option,
+                null,
+                ['class' => 'js-permission-checkbox']
+            );
+            $params = Form::text(
+                $name . '[params]',
+                null,
+                [
+                    'class' => 'form-control js-parmission-params'
+                ]
+            );
+
+            $html .= '<tr>
+                <td><label>' . $checkbox . ' ' . $option . '</label></td>
+                <td>' . $params . '</td>
+            </tr>';
         }
 
         return $html . '</table>';

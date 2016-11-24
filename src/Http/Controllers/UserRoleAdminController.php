@@ -22,7 +22,7 @@ class UserRoleAdminController extends ModelAdminController
             if (array_key_exists('exists', $permission)) {
                 collect(explode(',', $permission['params']))->each(function($param) use ($modelInstance, $action) {
                     $modelInstance->permissions()->create([
-                        'action' => $action,
+                        'action' => $action == '&#42;' ? Permission::WILDCARD : $action,
                         'param' => trim($param) ?: null,
                     ]);
                 });
