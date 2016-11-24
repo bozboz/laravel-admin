@@ -4,13 +4,6 @@
 
 ### Added
 -   Allow `URLField` to auto generate a slug from another field.
-    - __Usage:__
-    ```
-    new URLField('slug', [
-        'route' => '...',
-        'data-auto-slug-from' => 'name',
-    ]);
-    ```
 -   Add bulk update functionality
 -   Add switch user button to users listing
 -   Add `asset_version` helper

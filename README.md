@@ -249,6 +249,20 @@ rendered. When passing in values that are defined as JS Date objects within the
 datetimepicker documentation, please define these as epoch values (e.g. `time()`
 or `$dateTime->format('U')`).
 
+### URLField
+
+The URLField can auto generate a slug from another field. In order to make use of this functionality you must set the `data-auto-slug-from` attribute to the name attribute of the field you wish to target.
+
+eg.
+
+```php
+<?php
+new URLField('slug', [
+    'route' => '...',
+    'data-auto-slug-from' => 'name',
+]);
+```
+
 ## Helpers
 
 * `asset_version`
