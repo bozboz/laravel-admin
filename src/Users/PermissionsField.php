@@ -18,7 +18,13 @@ class PermissionsField extends Field
     {
         $html = '<table class="table table-striped clearfix">
             <tr>
-                <th>Actions</th><th>Params</th>
+                <th>Actions</th>
+                <th>
+                    <span class="badge field-helptext" data-toggle="popover" title="" data-content="Format params as a comma separated list" data-original-title="">
+                        ?<span class="sr-only">: Format params as a comma separated list</span>
+                    </span>
+                    Params
+                </th>
         ';
 
         foreach($this->options as $option) {
