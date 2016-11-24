@@ -42,7 +42,7 @@ class PermissionsField extends Field
                 $name . '[params]',
                 null,
                 [
-                    'class' => 'form-control js-parmission-params'
+                    'class' => 'form-control js-permission-params'
                 ]
             );
 
@@ -53,5 +53,25 @@ class PermissionsField extends Field
         }
 
         return $html . '</table>';
+    }
+
+    public function getJavascript()
+    {
+        return <<<JAVASCRIPT
+            function toggleParams(checkbox)
+            {
+                if (checkbox.is(':checked')) {
+                    checkbox.closest('tr').find('.js-permission-params').fadeIn();
+                } else {
+                    checkbox.closest('tr').find('.js-permission-params').fadeOut();
+                }
+            }
+
+            $('.js-permission-checkbox').click(function() {
+                toggleParams($(this));
+            }).each(function() {
+                toggleParams($(this));
+            });
+JAVASCRIPT;
     }
 }
