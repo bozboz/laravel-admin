@@ -133,7 +133,6 @@ class AdminServiceProvider extends PermissionServiceProvider
 			if ($menu->gate('manage_permissions')) {
 				$menu->appendToItem('Users', [
 					'Roles' => 'admin.roles.index',
-					'Permissions' => 'admin.permissions.index',
 				]);
 			}
 		}, -1);
