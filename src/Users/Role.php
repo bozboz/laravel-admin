@@ -21,12 +21,14 @@ class Role extends Model
 
 	public function getPermissionOptionsAttribute()
 	{
-		return $this->permissions->groupBy('action')->map(function($permissions) {
+		$permissions = $this->permissions->groupBy('action')->map(function($permissions) {
 			return [
 				'params' => $permissions->implode('param', ','),
 				'exists' => true,
 			];
 		});
+		$permissions['&#42;'] = $permissions->get('*');
+		return $permissions;
 	}
 
 	public function grantPermission($action, $param = null)

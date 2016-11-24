@@ -38,15 +38,6 @@ class RoleAdminDecorator extends ModelAdminDecorator
 		];
 	}
 
-	public function findInstance($id)
-	{
-		$instance = parent::findInstance($id);
-		if ($instance->permissions->where('action', Permission::WILDCARD)->first()) {
-			$instance->permissions->push(new Permission(['action' => '&#42;']));
-		}
-		return $instance;
-	}
-
 	public function getLabel($instance)
 	{
 		return $instance->name;
