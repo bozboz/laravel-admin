@@ -5,7 +5,9 @@ namespace Bozboz\Admin\Users;
 use Bozboz\Admin\Base\ModelAdminDecorator;
 use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Permissions\Permission;
+use Bozboz\Admin\Reports\Filters\ArrayListingFilter;
 use Bozboz\Permissions\Handler;
+use Illuminate\Database\Eloquent\Builder;
 
 class RoleAdminDecorator extends ModelAdminDecorator
 {
@@ -22,6 +24,17 @@ class RoleAdminDecorator extends ModelAdminDecorator
 		return [
 			new TextField('name'),
 			new PermissionsField($this->getActions()),
+		];
+	}
+
+	public function getListingFilters()
+	{
+		return [
+			new ArrayListingFilter('action', ['' => 'All'] + $this->getActions(), function($query, $value) {
+				$query->whereHas('permissions', function($query) use ($value) {
+					$query->whereAction($value);
+				});
+			})
 		];
 	}
 
