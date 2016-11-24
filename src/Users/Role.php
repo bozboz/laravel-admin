@@ -21,18 +21,11 @@ class Role extends Model
 
 	public function getPermissionOptionsAttribute()
 	{
-		$options = collect();
-		$this->permissions->each(function($permission) use ($options) {
-			$option = $options->get($permission->action, [
-				'params' => collect(),
-				'exists' => true
-			]);
-			$option['params']->push($permission->param);
-			$options->put($permission->action, $option);
-		});
-		return $options->map(function($option) {
-			$option['params'] = $option['params']->implode(',');
-			return $option;
+		return $permissions->groupBy('action')->map(function($permissions) {
+			return [
+				'params' => $permissions->implode('param', ','),
+				'exists' => true,
+			];
 		});
 	}
 
