@@ -21,7 +21,7 @@ class Role extends Model
 
 	public function getPermissionOptionsAttribute()
 	{
-		return $permissions->groupBy('action')->map(function($permissions) {
+		return $this->permissions->groupBy('action')->map(function($permissions) {
 			return [
 				'params' => $permissions->implode('param', ','),
 				'exists' => true,
