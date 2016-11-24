@@ -19,6 +19,23 @@ class RoleAdminDecorator extends ModelAdminDecorator
 		$this->permissions = $permissions;
 	}
 
+	public function getColumns($instance)
+	{
+		return [
+			'Name' => $instance->name,
+			'Permissions' => $instance->permissions->map(function($permission) {
+				return $permission->action . ($permission->param ? ":{$permission->param}" : '');
+			})->implode(', '),
+		];
+	}
+
+	public function modifyListingQuery(Builder $query)
+	{
+		$query->with(['permissions' => function($query) {
+			$query->orderBy('action');
+		}])->orderBy('name');
+	}
+
 	public function getFields($instance)
 	{
 		return [
