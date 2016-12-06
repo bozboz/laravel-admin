@@ -3,22 +3,20 @@
 namespace Bozboz\Admin\Http\Middleware;
 
 use Auth;
-use Closure;
 use Redirect;
 
-class GuestMiddleware
+class GuestMiddleware extends Middleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function shouldRedirect($request)
     {
-        if (Auth::check()) return Redirect::to('admin');
-
-        return $next($request);
+        if (Auth::check()) {
+            return Redirect::to('admin');
+        }
     }
 }

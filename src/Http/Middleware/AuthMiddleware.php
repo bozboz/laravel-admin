@@ -3,29 +3,25 @@
 namespace Bozboz\Admin\Http\Middleware;
 
 use Auth;
-use Closure;
 use Redirect;
 use Bozboz\Permissions\Facades\Gate;
 
-class AuthMiddleware
+class AuthMiddleware extends Middleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function shouldRedirect($request)
     {
-		if (Auth::check() && ! Gate::allows('admin_login')) {
-			Auth::logout();
-		}
+        if (Auth::check() && ! Gate::allows('admin_login')) {
+            Auth::logout();
+        }
 
-		if (Auth::guest()) {
-			return Redirect::guest('admin/login');
-		}
-
-		return $next($request);
+        if (Auth::guest()) {
+            return Redirect::guest('admin/login');
+        }
     }
 }
