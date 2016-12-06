@@ -23,9 +23,11 @@ class RoleAdminDecorator extends ModelAdminDecorator
 	{
 		return [
 			'Name' => $instance->name,
-			'Permissions' => $instance->permissions->map(function($permission) {
-				return $permission->action . ($permission->param ? ":{$permission->param}" : '');
-			})->implode(', '),
+			'Permissions' => $instance->permissions->sortBy('action')->map(function($permission) {
+				return '<span class="badge"> '
+					. $permission->action . ($permission->param ? ":{$permission->param}" : '')
+				. '</span>';
+			})->implode(' '),
 		];
 	}
 
