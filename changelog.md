@@ -9,6 +9,7 @@
 -   Add `asset_version` helper
 -   Add user roles
 -   Add DateFilter
+-   Only activate admin auth middleware on admin urls
 
 ### Changed
 -   Rework model saving so that validation errors can be thrown as exceptions deeper in the save method
