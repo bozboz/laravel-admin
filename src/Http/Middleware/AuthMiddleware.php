@@ -16,7 +16,7 @@ class AuthMiddleware extends Middleware
      */
     public function shouldRedirect($request)
     {
-        if (Auth::check() && ! Gate::allows('admin_login')) {
+        if (! Gate::allows('admin_login')) {
             Auth::logout();
         }
 
