@@ -14,6 +14,6 @@ class UserRule extends Rule
 
 	protected function isOwnProfile(UserInterface $user, $instance)
 	{
-		return $user->id === $instance->id;
+		return $instance && $user->id === $instance->id;
 	}
 }
