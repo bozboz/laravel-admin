@@ -1,6 +1,6 @@
 # Bozboz Admin Package Changelog
 
-## Version 2.2.0 (Future)
+## Version 2.2.0 (2016-12-16)
 
 ### Added
 -   Allow `URLField` to auto generate a slug from another field.
@@ -9,12 +9,13 @@
 -   Add `asset_version` helper
 -   Add user roles
 -   Add DateFilter
--   Only activate admin auth middleware on admin urls
 
 ### Changed
 -   Rework model saving so that validation errors can be thrown as exceptions deeper in the save method
 -   Add cache breaker to default styles and scripts
-
+-   Only activate admin auth middleware on admin urls
+-   Allow a null user to be passed to UserRule
+-   Allow user role permissions to be managed form the role edit screen
 
 ## Version 2.1.6 (2016-10-19)
 -   Set DB to strict mode and check errors when sorting to avoid setting _lft and _rgt to null
@@ -47,7 +48,7 @@
 -   Fix nested sortable
 
 
-## Version 2.1.0 (Future)
+## Version 2.1.0 (2016-07-13)
 
 ### Added
 -   Add help text functionality to admin fields
