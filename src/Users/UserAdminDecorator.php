@@ -8,6 +8,7 @@ use Bozboz\Admin\Fields\EmailField;
 use Bozboz\Admin\Fields\HiddenField;
 use Bozboz\Admin\Fields\PasswordField;
 use Bozboz\Admin\Fields\TextField;
+use Bozboz\Admin\Reports\Filters\ArrayListingFilter;
 use Bozboz\Admin\Users\RoleAdminDecorator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,7 @@ class UserAdminDecorator extends ModelAdminDecorator
 
 	public function modifyListingQuery(Builder $query)
 	{
-		$query->hasPermission('admin_login')->latest();
+		$query->hasPermission('admin_login')->orderBy('email');
 	}
 
 	public function getLabel($instance)
@@ -72,5 +73,20 @@ class UserAdminDecorator extends ModelAdminDecorator
 	public function getListOfAdminUsers()
 	{
 		return $this->model->orderBy('last_name')->hasPermission('admin_login')->get();
+	}
+
+	public function getListingFilters()
+	{
+		return [
+			new ArrayListingFilter('role', $this->getListOfRoles(), 'role_id'),
+		];
+	}
+
+	protected function getListOfRoles()
+	{
+		return $this->roles->getListingModelsNoLimit()->prepend([
+			'id' => null,
+			'name' => 'All',
+		])->lists('name', 'id');
 	}
 }

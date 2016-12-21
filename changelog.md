@@ -1,5 +1,9 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.2.1 (Future)
+- Add role filter to users report
+- Sort users report by email
+
 ## Version 2.2.0 (2016-12-16)
 
 ### Added
