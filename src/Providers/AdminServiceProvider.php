@@ -32,6 +32,10 @@ class AdminServiceProvider extends PermissionServiceProvider
 			}
 		});
 
+		$this->app->singleton('admin.widgets', function($app) {
+			return new WidgetFactory;
+		});
+
 		// Call the PermissionServiceProvider's register method
 		parent::register();
 	}
