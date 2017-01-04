@@ -56,9 +56,10 @@ class UserAdminDecorator extends ModelAdminDecorator
 			new TextField('last_name'),
 			new EmailField('email'),
 			$this->getPasswordFieldForUser($instance),
-			! $availableRoles->isEmpty() && $availableRoles->keys()->contains($instance->role_id)
+			! $availableRoles->isEmpty()
+			&& ( ! $instance->role_id || $availableRoles->keys()->contains($instance->role_id))
 				? new SelectField($instance->role()->getForeignKey(), [
-					'options' => $availableRoles,
+					'options' => $availableRoles->prepend('Select', ''),
 					'label' => 'Role'
 				])
 				: null,
