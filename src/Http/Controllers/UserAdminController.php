@@ -74,10 +74,12 @@ class UserAdminController extends ModelAdminController
 	{
 		$stack->add('edit_user', $instance);
 		$stack->add('edit_profile', $instance);
+		$stack->then('assign_roles', $instance->role);
 	}
 
 	public function deletePermissions($stack, $instance)
 	{
 		$stack->add('delete_user', $instance);
+		$stack->then('assign_roles', $instance->role);
 	}
 }
