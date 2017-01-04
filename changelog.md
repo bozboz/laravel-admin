@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Verison 2.3.0 (2017-01-04)
+- Lock down user/role editing so sneaky clients can't assign themselves as Bozboz admin
+
 ## Version 2.2.1 (Future)
 - Add role filter to users report
 - Sort users report by email
