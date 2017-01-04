@@ -24,6 +24,9 @@ $permissions->define([
 	'delete_media' => 'Bozboz\Permissions\Rules\ModelRule',
 
 	'manage_permissions' => 'Bozboz\Permissions\Rules\Rule',
+
 	'assign_roles' => 'Bozboz\Permissions\Rules\ModelRule',
+	'edit_user_for_role' => 'Bozboz\Permissions\Rules\ModelRule',
+	'delete_user_for_role' => 'Bozboz\Permissions\Rules\ModelRule',
 
 ]);
