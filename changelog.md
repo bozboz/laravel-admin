@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.3.1 (Future)
+- Allow dropdown actions to present as split buttons
+
 ## Verison 2.3.0 (2017-01-04)
 - Lock down user/role editing so sneaky clients can't assign themselves as Bozboz admin
 
