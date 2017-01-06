@@ -33,7 +33,7 @@ class AdminServiceProvider extends PermissionServiceProvider
 		});
 
 		$this->app->singleton('admin.widgets', function($app) {
-			return new WidgetFactory;
+			return new \Bozboz\Admin\Dashboard\WidgetFactory;
 		});
 
 		// Call the PermissionServiceProvider's register method

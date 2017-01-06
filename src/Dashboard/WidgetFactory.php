@@ -1,6 +1,8 @@
 <?php
 
-namespace Bozboz\Admin\Dashboard\Widgets;
+namespace Bozboz\Admin\Dashboard;
+
+use Bozboz\Admin\Dashboard\Widgets\Widget;
 
 class WidgetFactory
 {
@@ -9,6 +11,11 @@ class WidgetFactory
     public function register($name, Widget $widget, $location = 'dashboard')
     {
         $this->widgets[$location][$name] = $widget;
+    }
+
+    public function get($location)
+    {
+        return $this->widgets[$location];
     }
 
     public function __call($method, $args)
