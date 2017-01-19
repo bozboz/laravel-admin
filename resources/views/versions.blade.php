@@ -3,45 +3,53 @@
 <head>
     <title>Bozboz Versions</title>
     <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
     <style type="text/css">
         html {
             width: 100%;
             height: 100%;
             position: relative;
-            background-color: #eee;
-            font-family: sans-serif;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 100%;
+            line-height: 1.42857143;
         }
-        table {
+        html, body {
+            background-color: #eee;
+        }
+        .versions {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .5);
             background-color: white;
-            border-spacing: 0;
-            border-collapse: collapse;
-
         }
-        th, td {
-            padding: .5em;
-            text-align: left;
+        .versions table {
+            margin-bottom: 0;
         }
-        th {
-            background-color: #ccc;
+        .versions th, .versions td {
+            padding: 1em 1.5em;
         }
     </style>
 </head>
 <body>
-    <table>
-        <tr>
-            <th>Package</th>
-            <th>Version</th>
-        </tr>
-        @foreach ($packages as $package)
-            <tr>
-                <td>{{ $package->name }}</td>
-                <td>{{ $package->version }}</td>
-            </tr>
-        @endforeach
-    </table>
+    <div class="versions">
+        <table class="table">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Package</th>
+                    <th>Version</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach ($packages as $package)
+                <tr>
+                    <td>{{ $package->name }}</td>
+                    <td>{{ $package->version }}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
