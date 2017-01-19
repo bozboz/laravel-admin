@@ -17,10 +17,9 @@
             background-color: #eee;
         }
         .versions {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            margin: 2em auto;
+            width: 100%;
+            max-width: 500px;
             box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .5);
             background-color: white;
         }
