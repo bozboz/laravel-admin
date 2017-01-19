@@ -3,15 +3,13 @@
 <head>
     <title>Bozboz Versions</title>
     <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
     <style type="text/css">
         html {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-            font-size: 100%;
-            line-height: 1.42857143;
+            font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #292b2c;
         }
         html, body {
             background-color: #eee;
@@ -19,15 +17,31 @@
         .versions {
             margin: 2em auto;
             width: 100%;
-            max-width: 500px;
-            box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .5);
-            background-color: white;
+            min-width: 340px;
+            max-width: 600px;
         }
-        .versions table {
+        table {
             margin-bottom: 0;
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .5);
         }
-        .versions th, .versions td {
+        th, td {
             padding: 1em 1.5em;
+        }
+        th {
+            background-color: #262626;
+            color: white;
+            text-align: left;
+            border-bottom: 3px solid rgba(0,0,0,.1);
+        }
+        td {
+            border-bottom: 1px solid rgba(0,0,0,.05);
+        }
+        tfoot td {
+            text-align: right;
+            padding: .5em 1.5em;
         }
     </style>
 </head>
@@ -48,6 +62,17 @@
                 </tr>
             @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2">
+                        @if (request()->has('all'))
+                            <a href="{{ url(request()->path()) }}">Show only Bozboz</a>
+                        @else
+                            <a href="{{ url(request()->path()) }}?all=1">Show all</a>
+                        @endif
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </body>

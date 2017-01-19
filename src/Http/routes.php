@@ -40,8 +40,11 @@ Route::group(array('middleware' => ['web'], 'namespace' => 'Bozboz\Admin\Http\Co
 
 Route::get('admin/versions', function() {
 	$json = json_decode(file_get_contents(base_path('composer.lock')));
-	$packages = collect($json->packages)->filter(function($package) {
-		return strpos($package->name, 'bozboz') === 0;
-	});
+	$packages = collect($json->packages);
+	if ( ! request()->has('all')) {
+		$packages = $packages->filter(function($package) {
+			return strpos($package->name, 'bozboz') === 0;
+		});
+	}
 	return view('admin::versions', compact('packages'));
 });
