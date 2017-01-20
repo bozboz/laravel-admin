@@ -18,7 +18,7 @@
             margin: 2em auto;
             width: 100%;
             min-width: 340px;
-            max-width: 600px;
+            max-width: 1000px;
         }
         table {
             margin-bottom: 0;
@@ -52,19 +52,27 @@
                 <tr>
                     <th>Package</th>
                     <th>Version</th>
+                    <th>Commit</th>
                 </tr>
             </thead>
             <tbody>
             @foreach ($packages as $package)
                 <tr>
-                    <td>{{ $package->name }}</td>
+                    <td>
+                        @if (property_exists($package, 'dist'))
+                            <a href="{{ $package->source->url }}" target="_blank">{{ $package->name }}</a>
+                        @else
+                            {{ $package->name }}
+                        @endif
+                    </td>
                     <td>{{ $package->version }}</td>
+                    <td>{{ $package->source->reference }}</td>
                 </tr>
             @endforeach
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="3">
                         @if (request()->has('all'))
                             <a href="{{ url(request()->path()) }}">Show only Bozboz</a>
                         @else
