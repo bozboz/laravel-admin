@@ -36,7 +36,7 @@ class MultiOptionListingFilter extends ListingFilter
 			'style' => 'min-width: 150px'
 		]);
 
-		$submit = Form::submit('Filter', ['class' => 'btn btn-sm btn-default']);
+		$submit = Form::submit('Filter', ['class' => 'btn btn-default']);
 
 		return <<<HTML
 			{$label}
