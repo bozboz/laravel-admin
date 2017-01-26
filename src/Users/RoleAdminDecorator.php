@@ -22,7 +22,7 @@ class RoleAdminDecorator extends ModelAdminDecorator
 	public function getColumns($instance)
 	{
 		return [
-			'Name' => $instance->name,
+			'Name' => str_replace(' ', '&nbsp;', $instance->name),
 			'Permissions' => $instance->permissions->sortBy('action')->map(function($permission) {
 				return '<span class="badge"> '
 					. $permission->action . ($permission->param ? ":{$permission->param}" : '')
