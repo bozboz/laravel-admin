@@ -1,6 +1,6 @@
 # Bozboz Admin Package Changelog
 
-## Version 2.3.1 (Future)
+## Version 2.3.1 (2017-01-19)
 - Allow dropdown actions to present as split buttons
 - Make param varchar on permissions table
 - Add route for displaying bozboz package versions
