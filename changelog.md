@@ -1,5 +1,11 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.3.2 (2017-02-03)
+- Don't show first option in dropdown on split button actions
+- Update tag date in changelog
+- Show commit hash on versions table
+- Allow versions page to show all package versions
+
 ## Version 2.3.1 (2017-01-19)
 - Allow dropdown actions to present as split buttons
 - Make param varchar on permissions table
