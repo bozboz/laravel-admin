@@ -3,12 +3,15 @@
 namespace Bozboz\Admin\Http\Controllers;
 
 use Auth;
+use Bozboz\Admin\Http\Controllers\RemindersController;
 use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
 use Bozboz\Admin\Reports\Actions\Presenters\Form;
+use Bozboz\Admin\Users\User;
 use Bozboz\Admin\Users\UserAdminDecorator;
 use Bozboz\Permissions\Facades\Gate;
 use Bozboz\Permissions\RuleStack;
 use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Input;
 use Session;
 
 class UserAdminController extends ModelAdminController
@@ -32,6 +35,14 @@ class UserAdminController extends ModelAdminController
 		return redirect('admin');
 	}
 
+	public function sendReset(RemindersController $remind, User $user)
+	{
+		if ( ! $this->canRemind()) return abort('403');
+
+		Input::merge(['email' => $user->email]);
+		return $remind->postRemind();
+	}
+
 	public function previousUser(Store $session)
 	{
 		if ( ! $session->has('previous_user')) return abort('403');
@@ -52,12 +63,23 @@ class UserAdminController extends ModelAdminController
 				]),
 				new IsValid([$this, 'canLoginAs'])
 			),
+			$this->actions->custom(
+				new Form($this->getActionName('sendReset'), 'Send Reset', 'fa fa-lock', [
+					'class' => 'btn-default btn-sm'
+				]),
+				new IsValid([$this, 'canRemind'])
+			),
 		], parent::getRowActions());
 	}
 
 	public function canLoginAs()
 	{
 		return Gate::allows('login_as');
+	}
+
+	public function canRemind()
+	{
+		return $this->canView();
 	}
 
 	public function viewPermissions($stack)
