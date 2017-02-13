@@ -1,6 +1,6 @@
 # Bozboz Admin Package Changelog
 
-## Version 2.3.3 (Future)
+## Version 2.3.3 (2017-02-13)
 - Add send password reset action to user listing
 
 ## Version 2.3.2 (2017-02-03)
