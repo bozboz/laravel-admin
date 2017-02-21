@@ -52,8 +52,9 @@ abstract class Field extends Fluent
 
 	public function getErrors(ViewErrorBag $errors)
 	{
-		if ($this->name && $errors->first($this->name)) {
-			return '<p><strong>' . $errors->first($this->get('name')) . '</strong></p>';
+		$dotSyntaxName = str_replace(['][', '[', ']'], ['.', '.', ''], $this->get('name'));
+		if ($dotSyntaxName && $errors->first($dotSyntaxName)) {
+			return '<p><strong>' . $errors->first($dotSyntaxName) . '</strong></p>';
 		}
 	}
 

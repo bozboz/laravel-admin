@@ -36,5 +36,10 @@
             "Bozboz\\Admin\\Database\\": "database/"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
 }
