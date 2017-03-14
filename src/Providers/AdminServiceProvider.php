@@ -9,6 +9,7 @@ use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
 use Bozboz\Admin\Reports\Actions\Presenters\Button;
 use Bozboz\Admin\Reports\Actions\Presenters\Form;
 use Bozboz\Admin\Reports\Actions\Presenters\Link;
+use Bozboz\Permissions\Facades\Gate;
 use Bozboz\Permissions\Providers\PermissionServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
@@ -134,7 +135,7 @@ class AdminServiceProvider extends PermissionServiceProvider
 				$menu->addTopLevelItem('Users', 'admin.users.index');
 			}
 
-			if ($menu->gate('manage_permissions')) {
+			if (Gate::allows('manage_permissions')) {
 				$menu->appendToItem('Users', [
 					'Roles' => 'admin.roles.index',
 				]);
