@@ -31,13 +31,13 @@ trait DynamicSlugTrait
 	public static function bootDynamicSlugTrait()
 	{
 		static::creating([new static, 'generateSlug']);
-		static::saving([new static, 'validateSlug']);
+		static::updating([new static, 'validateSlug']);
 	}
 
 	public function validateSlug($instance)
 	{
 		$slugField = $this->getSlugField();
-		if (strlen(str_replace(str_slug($instance->$slugField), '', $instance->$slugField)) > 0) {
+		if (strlen(str_replace(str_slug($instance->$slugField), '', $instance->$slugField)) > 0 && ! config('admin.ignore_invalid_slug_format')) {
 			throw new ValidationException(new MessageBag([
 				$slugField => "This field must only contain lowercase alphanumeric characters and hypens.",
 			]));
