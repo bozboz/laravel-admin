@@ -4,6 +4,7 @@
 - Allow admin field to fetch errors for array syntax field names
 - Prevent slug trait from overwriting the slug if provided on create
 - Validate slug when saving with dynamic slug trait
+- Set password reset email subject
 
 ## Version 2.3.3 (2017-02-13)
 - Add send password reset action to user listing
