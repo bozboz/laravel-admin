@@ -38,10 +38,7 @@ class PermissionsField extends Field
                 $alias
             );
 
-            try {
-                // Test that the permission can have params
-                $test = new $rule($alias);
-                $test->validFor(auth()->user(), new \Illuminate\Support\Fluent);
+            if ($this->supportsParams($alias, $rule)) {
                 $params = Form::text(
                     $name . '[params]',
                     null,
@@ -49,7 +46,7 @@ class PermissionsField extends Field
                         'class' => 'form-control'
                     ]
                 );
-            } catch (InvalidParameterException $e) {
+            } else {
                 $params = Form::hidden($name . '[params]');
             }
 
@@ -60,5 +57,23 @@ class PermissionsField extends Field
         }
 
         return $html . '</table>';
+    }
+
+    /**
+     * Test that the permission can have params
+     * @param  string $alias
+     * @param  string $rule
+     * @return boolean
+     */
+    private function supportsParams($alias, $rule)
+    {
+        try {
+            $test = new $rule($alias);
+            $test->validFor(auth()->user(), new \Illuminate\Support\Fluent);
+        } catch (InvalidParameterException $e) {
+            return false;
+        }
+
+        return true;
     }
 }
