@@ -7,6 +7,7 @@ use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Permissions\Permission;
 use Bozboz\Admin\Reports\Filters\ArrayListingFilter;
 use Bozboz\Permissions\Handler;
+use Bozboz\Permissions\Rules\GlobalRule;
 use Illuminate\Database\Eloquent\Builder;
 
 class RoleAdminDecorator extends ModelAdminDecorator
@@ -64,10 +65,10 @@ class RoleAdminDecorator extends ModelAdminDecorator
 
 	protected function getActions()
 	{
-		$rules = array_keys($this->permissions->dump());
+		$rules = $this->permissions->dump();
 
-		array_unshift($rules, Permission::WILDCARD);
+		$rules = [Permission::WILDCARD => GlobalRule::class] + $rules;
 
-		return array_combine($rules, $rules);
+		return $rules;
 	}
 }

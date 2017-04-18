@@ -4,6 +4,7 @@ namespace Bozboz\Admin\Users;
 
 use Bozboz\Admin\Fields\Field;
 use Bozboz\Admin\Permissions\Permission;
+use Bozboz\Permissions\Exceptions\InvalidParameterException;
 use Form;
 
 class PermissionsField extends Field
@@ -27,51 +28,37 @@ class PermissionsField extends Field
                 </th>
         ';
 
-        foreach($this->options as $option) {
-            if ($option == Permission::WILDCARD) {
-                $option = '&#42;';
+        foreach($this->options as $alias => $rule) {
+            if ($alias == Permission::WILDCARD) {
+                $alias = '&#42;';
             }
-            $name = $this->get('name') . '[' . $option . ']';
+            $name = $this->get('name') . '[' . $alias . ']';
             $checkbox = Form::checkbox(
                 $name . '[exists]',
-                $option,
-                null,
-                ['class' => 'js-permission-checkbox']
-            );
-            $params = Form::text(
-                $name . '[params]',
-                null,
-                [
-                    'class' => 'form-control js-permission-params'
-                ]
+                $alias
             );
 
+            try {
+                // Test that the permission can have params
+                $test = new $rule($alias);
+                $test->validFor(auth()->user(), new \Illuminate\Support\Fluent);
+                $params = Form::text(
+                    $name . '[params]',
+                    null,
+                    [
+                        'class' => 'form-control'
+                    ]
+                );
+            } catch (InvalidParameterException $e) {
+                $params = Form::hidden($name . '[params]');
+            }
+
             $html .= '<tr>
-                <td><label>' . $checkbox . ' ' . $option . '</label></td>
+                <td><label>' . $checkbox . ' ' . $alias . '</label></td>
                 <td>' . $params . '</td>
             </tr>';
         }
 
         return $html . '</table>';
-    }
-
-    public function getJavascript()
-    {
-        return <<<JAVASCRIPT
-            function toggleParams(checkbox)
-            {
-                if (checkbox.is(':checked')) {
-                    checkbox.closest('tr').find('.js-permission-params').fadeIn();
-                } else {
-                    checkbox.closest('tr').find('.js-permission-params').fadeOut();
-                }
-            }
-
-            $('.js-permission-checkbox').click(function() {
-                toggleParams($(this));
-            }).each(function() {
-                toggleParams($(this));
-            });
-JAVASCRIPT;
     }
 }
