@@ -14,6 +14,7 @@ class AddRoleIdFieldToPermissions extends Migration
     {
         Schema::table('permissions', function (Blueprint $table) {
             $table->unsignedInteger('role_id')->nullable()->after('user_id');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }
 
