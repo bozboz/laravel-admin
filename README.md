@@ -3,10 +3,15 @@
 ## Installation
 
 1. Require the package in Composer, by running `composer require bozboz/admin`
-2. Add `Bozboz\Admin\AdminServiceProvider` to the providers array in
-   app/config/app.php
+2. Add  to the providers array in config/app.php
+        
+        Bozboz\Admin\Providers\AdminServiceProvider::class,
+        Bozboz\Admin\Providers\MediaLibraryServiceProvider::class,
+
 3. Optionally, add `Bozboz\MediaLibrary\Models\Media` to the aliases array in
    app/config/app.php
+4. Set `providers.users.model` to `Bozboz\Admin\Users\User::class` in config/auth.php
+5. Run `php artisan vendor:publish && php artisan migrate` 
 
 
 ## Controllers
