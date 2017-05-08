@@ -3,10 +3,13 @@
 ## Installation
 
 1. Require the package in Composer, by running `composer require bozboz/admin`
+2. Require Intervention Image `composer require intervention/image`
 2. Add  to the providers array in config/app.php
         
         Bozboz\Admin\Providers\AdminServiceProvider::class,
         Bozboz\Admin\Providers\MediaLibraryServiceProvider::class,
+
+        Intervention\Image\ImageServiceProvider::class,
 
 3. Optionally, add `Bozboz\MediaLibrary\Models\Media` to the aliases array in
    app/config/app.php
