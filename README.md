@@ -15,6 +15,20 @@
    app/config/app.php
 4. Set `providers.users.model` to `Bozboz\Admin\Users\User::class` in config/auth.php
 5. Run `php artisan vendor:publish && php artisan migrate` 
+6. Edit `config/imagecache.php`:
+
+```php
+<?
+        ...
+        // set route to images
+        'route' => 'images', 
+        ...
+        // add path to uploaded images
+        'paths' => array(
+            ...
+            public_path('media/image'), 
+        ),
+```
 
 
 ## Controllers
