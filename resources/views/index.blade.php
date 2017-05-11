@@ -4,11 +4,12 @@
 	@parent
   <div class="jumbotron">
     <div class="container">
-      @inject('widgets', 'admin.widgets')
-      @foreach ($widgets->get('dashboard') as $widget)
-          {{ $widget->render() }}
-      @endforeach
+      <h1>Hello, {{ $user->first_name }}</h1>
     </div>
   </div>
   <hr>
+  @inject('widgets', 'admin.widgets')
+  @foreach ($widgets->get('dashboard') as $widget)
+      {!! $widget->render() !!}
+  @endforeach
  @stop

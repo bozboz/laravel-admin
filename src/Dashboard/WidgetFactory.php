@@ -15,7 +15,7 @@ class WidgetFactory
 
     public function get($location)
     {
-        return $this->widgets[$location];
+        return $this->widgets[$location] ?: [];
     }
 
     public function __call($method, $args)
