@@ -7,6 +7,8 @@ use View;
 
 abstract class Field extends Fluent
 {
+	protected $view = 'admin::fields.field';
+
 	public function __construct($attributesOrName, $attributes = array())
 	{
 		if (!is_array($attributesOrName)) {
@@ -69,7 +71,7 @@ abstract class Field extends Fluent
 			return (new HiddenField($this->attributes))->render($errors);
 		}
 
-		return View::make('admin::fields.field')->with([
+		return View::make($this->view)->with([
 			'helpText' => $this->getHelpText(),
 			'label' => $this->getLabel(),
 			'input' => $this->getInput(),

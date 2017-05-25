@@ -1,7 +1,8 @@
 # Bozboz Admin Package Changelog
 
-## Version 2.5.0 (Future)
+## Version 2.5.0 (2017-05-25)
 - Add basic widget system
+- Move helptext below form fields
 
 ## Version 2.4.0 (2017-05-04)
 - Allow admin field to fetch errors for array syntax field names
