@@ -6,6 +6,6 @@ class EmailField extends Field
 {
 	public function getInput()
 	{
-		return Form::email($this->get('name'), $this->get('value'), $this->attributes);
+		return Form::email($this->get('name'), $this->get('value'), $this->getInputAttributes());
 	}
 }

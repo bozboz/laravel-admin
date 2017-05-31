@@ -11,9 +11,17 @@ class SelectField extends Field
 			throw new InvalidArgumentException('You must define an "options" key mapping to an array');
 		}
 
-		$attributes = $this->attributes;
-		unset($attributes['options']);
-
-		return Form::select($this->name, $this->options, $this->value, $attributes);
+		return Form::select($this->name, $this->options, $this->value, $this->getInputAttributes());
 	}
+
+    /**
+     * Get the list of attrbitues that shouldn't be added to the input
+     * @return array
+     */
+    protected function getUnsafeAttributes()
+    {
+        return array_merge(parent::getUnsafeAttributes(), [
+            'options',
+        ]);
+    }
 }

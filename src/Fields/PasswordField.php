@@ -6,6 +6,6 @@ class PasswordField extends Field
 {
 	public function getInput()
 	{
-		 return Form::password($this->get('name'), $this->attributes);
+		 return Form::password($this->get('name'), $this->getInputAttributes());
 	}
 }

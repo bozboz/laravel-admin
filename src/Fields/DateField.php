@@ -18,10 +18,10 @@ class DateField extends Field
 
 	public function getInput()
 	{
-		return Form::text($this->name, null, [
-			'id' => $this->normalisedName,
-			'class' => 'form-control form-control--small '.$this->getJsClass().' '.$this->class,
-		]);
+		$this->class .= ' form-control form-control--small '.$this->getJsClass();
+		$this->id = $this->normalisedName;
+
+		return Form::text($this->name, null, $this->getInputAttributes());
 	}
 
 	public function getJavascript()
@@ -32,4 +32,17 @@ class DateField extends Field
 			window.datePicker = window.datePicker || {};
 			window.datePicker.{$this->normalisedName} = $jsonConfig;
 JAVASCRIPT;
-	}}
+	}
+
+
+	/**
+	 * Get the list of attrbitues that shouldn't be added to the input
+	 * @return array
+	 */
+	protected function getUnsafeAttributes()
+	{
+		return array_merge(parent::getUnsafeAttributes(), [
+			'normalisedName',
+		]);
+	}
+}

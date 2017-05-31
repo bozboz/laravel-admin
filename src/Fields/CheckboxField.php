@@ -6,8 +6,9 @@ class CheckboxField extends Field
 {
 	public function getInput()
 	{
+		$this->class = str_replace('form-control', '', $this->class);
 		return '<input type="hidden" name="' . $this->get('name') . '" value="">'
-		     . Form::checkbox($this->get('name'), 1, $this->getCheckedState());
+		     . Form::checkbox($this->get('name'), 1, $this->getCheckedState(), $this->getInputAttributes());
 	}
 
 	/**
@@ -19,5 +20,16 @@ class CheckboxField extends Field
 	protected function getCheckedState()
 	{
 		return $this->get('checked');
+	}
+
+	/**
+	 * Get the list of attrbitues that shouldn't be added to the input
+	 * @return array
+	 */
+	protected function getUnsafeAttributes()
+	{
+		return array_merge(parent::getUnsafeAttributes(), [
+			'checked',
+		]);
 	}
 }

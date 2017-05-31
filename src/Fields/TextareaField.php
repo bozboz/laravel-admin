@@ -8,6 +8,6 @@ class TextareaField extends Field
 
 	public function getInput()
 	{
-		return Form::textarea($this->get('name'), null, $this->attributes);
+		return Form::textarea($this->get('name'), null, $this->getInputAttributes());
 	}
 }

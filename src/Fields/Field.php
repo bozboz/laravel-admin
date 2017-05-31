@@ -37,6 +37,33 @@ abstract class Field extends Fluent
 
 	abstract public function getInput();
 
+	/**
+	 * Get the list of attrbitues that shouldn't be added to the input
+	 * @return array
+	 */
+	protected function getUnsafeAttributes()
+	{
+		return [
+			'hide_if_value_filled',
+			'hide_if_value_empty',
+			'help_text_title',
+			'help_text',
+			'label',
+		];
+	}
+
+	/**
+	 * Filter out the attributes not safe for an HTML input
+	 * @return array
+	 */
+	protected function getInputAttributes()
+	{
+		return array_diff_key(
+			$this->attributes ?: [],
+			array_combine($this->getUnsafeAttributes(), $this->getUnsafeAttributes())
+		);
+	}
+
 	public function getHelpText()
 	{
 		if ($this->help_text) {

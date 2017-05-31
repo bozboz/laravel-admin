@@ -20,4 +20,16 @@ class AddonTextField extends TextField
 
 		return $return . '</div>';
 	}
+
+	/**
+	 * Get the list of attrbitues that shouldn't be added to the input
+	 * @return array
+	 */
+	protected function getUnsafeAttributes()
+	{
+		return array_merge(parent::getUnsafeAttributes(), [
+			'data-addonPosition',
+			'data-addonText',
+		]);
+	}
 }
