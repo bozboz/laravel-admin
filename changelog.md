@@ -1,6 +1,6 @@
 # Bozboz Admin Package Changelog
 
-## Version 2.5.0 (Future)
+## Version 2.6.0 (Future)
 - Tidy up field attributes
 
 ## Version 2.5.0 (2017-05-25)
