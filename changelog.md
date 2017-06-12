@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.4.1 (2017-06-12)
+- Only validate slug when it's dirty
+
 ## Version 2.4.0 (2017-05-04)
 - Allow admin field to fetch errors for array syntax field names
 - Prevent slug trait from overwriting the slug if provided on create
