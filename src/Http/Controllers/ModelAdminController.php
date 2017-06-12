@@ -235,6 +235,7 @@ abstract class ModelAdminController extends Controller
 			'actions' => collect($this->getFormActions($instance))->each(function($action) use ($instance) {
 				$action->setInstance($instance);
 			}),
+			'previousUrl' => url()->previous(),
 		));
 	}
 
@@ -271,7 +272,7 @@ abstract class ModelAdminController extends Controller
 	 */
 	protected function getStoreResponse($instance)
 	{
-		return $this->getSuccessResponse($instance);
+		return $this->previousUrl($instance) ?: $this->getSuccessResponse($instance);
 	}
 
 	/**
@@ -279,7 +280,17 @@ abstract class ModelAdminController extends Controller
 	 */
 	protected function getUpdateResponse($instance)
 	{
-		return $this->getSuccessResponse($instance);
+		return $this->previousUrl($instance) ?: $this->getSuccessResponse($instance);
+	}
+
+	protected function previousUrl($instance)
+	{
+		if (
+			Input::has('previous_url')
+			&& starts_with(Input::get('previous_url'), $this->getSuccessResponse($instance)->getTargetUrl())
+		) {
+			return Redirect::to(Input::get('previous_url'));
+		}
 	}
 
 	/**
