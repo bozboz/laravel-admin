@@ -30,6 +30,18 @@ class TreeSelectField extends SelectField
 	}
 
 	/**
+	 * Get the list of attrbitues that shouldn't be added to the input
+	 * @return array
+	 */
+	protected function getUnsafeAttributes()
+	{
+		return array_merge(parent::getUnsafeAttributes(), [
+			'all',
+			'options',
+		]);
+	}
+
+	/**
 	 * Return options for field
 	 *
 	 * @return array

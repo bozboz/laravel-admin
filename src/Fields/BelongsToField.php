@@ -52,6 +52,19 @@ class BelongsToField extends Field
 	}
 
 	/**
+	 * Get the list of attrbitues that shouldn't be added to the input
+	 * @return array
+	 */
+	protected function getUnsafeAttributes()
+	{
+		return array_merge(parent::getUnsafeAttributes(), [
+			'decorator',
+			'relation',
+			'callback',
+		]);
+	}
+
+	/**
 	 * Generate a query builder instance from the relation
 	 *
 	 * @return Illuminate\Database\Eloquent\Builder
