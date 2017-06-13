@@ -60,10 +60,10 @@ class BelongsToManyField extends Field
 
 		$this->class .= ' select2';
 
-		$attributes = HTML::attributes(array_merge([
+		$attributes = HTML::attributes(array_merge($this->getInputAttributes(), [
 			'name' => $this->name . '[]',
-			'multiple'
-		], $this->getInputAttributes()));
+			'multiple' => 'multiple',
+		]));
 
 		return <<<HTML
 			<input name="{$this->name}" type="hidden" id="{$this->name}">
