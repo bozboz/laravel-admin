@@ -26,4 +26,15 @@ class CheckboxesField extends Field
 
 		return $html;
 	}
+
+	/**
+	 * Get the list of attrbitues that shouldn't be added to the input
+	 * @return array
+	 */
+	protected function getUnsafeAttributes()
+	{
+		return array_merge(parent::getUnsafeAttributes(), [
+			'options',
+		]);
+	}
 }

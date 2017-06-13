@@ -85,6 +85,19 @@ HTML;
 	}
 
 	/**
+	 * Get the list of attrbitues that shouldn't be added to the input
+	 * @return array
+	 */
+	protected function getUnsafeAttributes()
+	{
+		return array_merge(parent::getUnsafeAttributes(), [
+			'decorator',
+			'relationship',
+			'callback',
+		]);
+	}
+
+	/**
 	 * Construct a new query builder based on relationship
 	 *
 	 * @return Illuminate\Database\Query\Builder

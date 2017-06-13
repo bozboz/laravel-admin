@@ -3,6 +3,9 @@
 ## Version 2.7.0 (Future)
 - Redirect back to the previous URL when editing things
 
+## Version 2.6.1 (2017-06-13)
+- Fix field attributes
+
 ## Version 2.6.0 (2017-06-12)
 - Tidy up field attributes
 
