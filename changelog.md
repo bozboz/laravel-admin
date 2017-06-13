@@ -1,6 +1,9 @@
 # Bozboz Admin Package Changelog
 
 ## Version 2.6.1 (2017-06-13)
+- Fix belongs to many field
+
+## Version 2.6.1 (2017-06-13)
 - Fix field attributes
 
 ## Version 2.6.0 (2017-06-12)
