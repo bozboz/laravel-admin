@@ -19,7 +19,9 @@
 
 	@include('admin::fields.field-group', ['attributes' => []])
 
-	{{Form::hidden('redirect_back_url')}}
+	@if ( ! empty($previousUrl) || old('previous_url'))
+		{{Form::hidden('previous_url', $previousUrl)}}
+	@endif
 
 	<div class="form-row discrete">
 		@include('admin::partials.actions')

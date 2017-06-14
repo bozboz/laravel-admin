@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 
 abstract class ModelAdminController extends Controller
@@ -200,10 +199,6 @@ abstract class ModelAdminController extends Controller
 		DB::beginTransaction();
 		$this->save($modelInstance, $input);
 		DB::commit();
-
-		if (key_exists('redirect_back_url', $input)) {
-			Session::put('redirect_back_url', $input['redirect_back_url']);
-		}
 	}
 
 	protected function save($modelInstance, $input)
@@ -231,10 +226,6 @@ abstract class ModelAdminController extends Controller
 	{
 		$fields = $this->decorator->buildFields($instance);
 
-		if ( ! old('redirect_back_url')) {
-			$instance->redirect_back_url = Session::pull('redirect_back_url', url()->previous());
-		}
-
 		return View::make($view, array(
 			'model' => $instance,
 			'modelName' => $this->decorator->getHeadingForInstance($instance),
@@ -244,6 +235,7 @@ abstract class ModelAdminController extends Controller
 			'actions' => collect($this->getFormActions($instance))->each(function($action) use ($instance) {
 				$action->setInstance($instance);
 			}),
+			'previousUrl' => url()->previous(),
 		));
 	}
 
@@ -294,10 +286,10 @@ abstract class ModelAdminController extends Controller
 	protected function previousUrl($instance)
 	{
 		if (
-			Input::has('redirect_back_url')
-			&& starts_with(Input::get('redirect_back_url'), $this->getSuccessResponse($instance)->getTargetUrl())
+			Input::has('previous_url')
+			&& starts_with(Input::get('previous_url'), $this->getSuccessResponse($instance)->getTargetUrl())
 		) {
-			return Redirect::to(Input::get('redirect_back_url'));
+			return Redirect::to(Input::get('previous_url'));
 		}
 	}
 
@@ -320,12 +312,6 @@ abstract class ModelAdminController extends Controller
 	 */
 	protected function getListingUrl($instance)
 	{
-		if (
-			$instance->redirect_back_url
-			&& starts_with($instance->redirect_back_url, $this->getSuccessResponse($instance)->getTargetUrl())
-		) {
-			return $instance->redirect_back_url;
-		}
 		return action($this->getListingAction($instance));
 	}
 
