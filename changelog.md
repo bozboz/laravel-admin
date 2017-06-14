@@ -1,8 +1,5 @@
 # Bozboz Admin Package Changelog
 
-## Version 2.7.0 (Future)
-- Redirect back to the previous URL when editing things
-
 ## Version 2.6.2 (2017-06-13)
 - Fix belongs to many field
 
