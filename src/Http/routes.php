@@ -49,5 +49,10 @@ Route::get('admin/versions', function() {
 			return strpos($package->name, 'bozboz') === 0;
 		});
 	}
+
+	if (request()->has('json')) {
+		return $packages;
+	}
+
 	return view('admin::versions', compact('packages'));
 });

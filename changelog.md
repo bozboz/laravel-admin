@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Versions 2.7.0 (Future)
+- Allow admin versions to return as JSON
+
 ## Version 2.6.2 (2017-06-13)
 - Fix belongs to many field
 
