@@ -1,8 +1,9 @@
 # Bozboz Admin Package Changelog
 
-## Versions 2.7.0 (Future)
+## Versions 2.7.0 (2017-07-11)
 - Allow admin versions to return as JSON
 - Make all select fields select2
+- Allow single MediaBrowser field to handle deleted relations
 
 ## Version 2.6.2 (2017-06-13)
 - Fix belongs to many field

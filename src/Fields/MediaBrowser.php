@@ -68,6 +68,10 @@ class MediaBrowser extends Field
 		$items = collect($values)->filter()->map(function($id) use ($media) {
 			return $media->get($id);
 		})->map(function($inst) {
+			if ( ! $inst) {
+				return null;
+			}
+
 			return [
 				'id' => $inst->id,
 				'type' => $inst->type,
@@ -75,7 +79,7 @@ class MediaBrowser extends Field
 				'private' => $inst->private,
 				'filename' => $inst->filename
 			];
-		});
+		})->filter();
 
 		$data = [
 			'media' => $items->all(),
