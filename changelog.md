@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 1.4.1 (2017-07-18)
+- Set summernote to paste as plain text
+
 ## Version 1.3.2 (2016-10-28)
 -   Fix DateField
 
