@@ -11,7 +11,7 @@
 
         Intervention\Image\ImageServiceProvider::class,
 
-3. Optionally, add `Bozboz\MediaLibrary\Models\Media` to the aliases array in
+3. Optionally, add `Bozboz\Admin\Media\Media` to the aliases array in
    app/config/app.php
 4. Set `providers.users.model` to `Bozboz\Admin\Users\User::class` in config/auth.php
 5. Delete the default laravel user and password reset table migrations in `database/migrations/`
