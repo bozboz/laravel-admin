@@ -123,23 +123,23 @@ gulp.task('compile-scripts', function(){
 
 });
 
-gulp.task('compile-media-scripts', function() {
-	var scripts = [
-		basePaths.bower + 'blueimp-tmpl/js/tmpl.js',
-		basePaths.bower + 'blueimp-load-image/js/load-image.all.min.js',
-		basePaths.bower + 'blueimp-canvas-to-blob/js/canvas-to-blob.js',
-		blueImp + 'jquery.fileupload-process.js',
-		blueImp + 'jquery.fileupload-image.js',
-		blueImp + 'jquery.fileupload-validate.js',
-		blueImp + 'jquery.fileupload-ui.js'
-	];
+// gulp.task('compile-media-scripts', function() {
+// 	var scripts = [
+// 		basePaths.bower + 'blueimp-tmpl/js/tmpl.js',
+// 		basePaths.bower + 'blueimp-load-image/js/load-image.all.min.js',
+// 		basePaths.bower + 'blueimp-canvas-to-blob/js/canvas-to-blob.js',
+// 		blueImp + 'jquery.fileupload-process.js',
+// 		blueImp + 'jquery.fileupload-image.js',
+// 		blueImp + 'jquery.fileupload-validate.js',
+// 		blueImp + 'jquery.fileupload-ui.js'
+// 	];
 
-	gulp.src(scripts)
-		.pipe(plugins.concat('upload-ui.min.js'))
-		.pipe(isProduction ? plugins.uglify({outSourceMap: false}) : gutil.noop())
-		.pipe(gulp.dest(paths.scripts.dest));
+// 	gulp.src(scripts)
+// 		.pipe(plugins.concat('upload-ui.min.js'))
+// 		.pipe(isProduction ? plugins.uglify({outSourceMap: false}) : gutil.noop())
+// 		.pipe(gulp.dest(paths.scripts.dest));
 
-});
+// });
 
 gulp.task('scripts', ['compile-scripts', 'compile-media-scripts']);
 
