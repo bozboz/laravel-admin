@@ -18,15 +18,15 @@ $permissions->define([
 	'edit_user'    => 'Bozboz\Permissions\Rules\ModelRule',
 	'delete_user'  => 'Bozboz\Permissions\Rules\ModelRule',
 
-	'view_media'   => 'Bozboz\Permissions\Rules\GlobalRule',
-	'create_media' => 'Bozboz\Permissions\Rules\ModelRule',
-	'edit_media'   => 'Bozboz\Permissions\Rules\ModelRule',
-	'delete_media' => 'Bozboz\Permissions\Rules\ModelRule',
-
 	'manage_permissions' => 'Bozboz\Permissions\Rules\Rule',
 
 	'assign_roles' => 'Bozboz\Permissions\Rules\ModelRule',
 	'edit_user_for_role' => 'Bozboz\Permissions\Rules\ModelRule',
 	'delete_user_for_role' => 'Bozboz\Permissions\Rules\ModelRule',
+
+	'view_media'   => 'Bozboz\Permissions\Rules\GlobalRule',
+	'create_media' => 'Bozboz\Permissions\Rules\ModelRule',
+	'edit_media'   => 'Bozboz\Permissions\Rules\ModelRule',
+	'delete_media' => 'Bozboz\Permissions\Rules\ModelRule',
 
 ]);
