@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.7.1 (Future)
+- Fix select2 class on BelongsToField
+
 ## Versions 2.7.0 (2017-07-11)
 - Allow admin versions to return as JSON
 - Make all select fields select2

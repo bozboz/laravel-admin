@@ -46,7 +46,7 @@ class BelongsToField extends Field
 			$options[$model->getKey()] = $this->decorator->getLabel($model);
 		}
 
-		$this->class .= ' form-control select-2';
+		$this->class .= ' form-control select2';
 
 		return Form::select($this->name, $options, null, $this->getInputAttributes());
 	}
