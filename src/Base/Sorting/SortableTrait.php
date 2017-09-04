@@ -99,13 +99,13 @@ trait SortableTrait
 		// if the node has a sibling before it, insert after it
 		if ($before) {
 			$before = $this->find($before)->getSortingValue();
-			$to = $before + ($from > $before ? 1 : 0);
+			$to = $before + ($from >= $before ? 1 : 0);
 		}
 
 		// if the node has a sibling after it, insert before it
 		if ($after) {
 			$after = $this->find($after)->getSortingValue();
-			$to = $after - ($from < $after ? 1 : 0);
+			$to = $after - ($from <= $after ? 1 : 0);
 		}
 
 		if ($to) {
@@ -130,7 +130,7 @@ trait SortableTrait
 				[min($from, $to), max($from, $to)]
 			);
 
-			if ($difference > 1) {
+			if ($difference > 0) {
 				$query->incrementSort();
 			} else {
 				$query->decrementSort();
