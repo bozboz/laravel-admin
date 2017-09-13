@@ -25,6 +25,12 @@
 
 
 	<div class="main">
+		@if (session()->get('error'))
+			<div class="alert alert-danger" role="alert">
+				<p><strong>{{session()->get('error')}}</strong></p>
+			</div>
+		@endif
+
 		@section('main')
 		@show
 	</div>
