@@ -4,6 +4,7 @@
 - Fix select2 class on BelongsToField
 - Fix sort trait
 - Add error message to deafult layout
+- Fix belongs to many field repopulation after failed validation
 
 ## Versions 2.7.0 (2017-07-11)
 - Allow admin versions to return as JSON
