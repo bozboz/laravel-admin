@@ -49,11 +49,6 @@ trait NestedSortableTrait
 				$this->find($parent)->appendNode($this);
 			}
 
-			// if it has neither, it's the first root node.
-			else {
-				$this->saveAsRoot();
-			}
-
 			DB::commit();
 		}
 		catch (LogicException $e) {
