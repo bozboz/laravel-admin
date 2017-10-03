@@ -1,5 +1,9 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.8.0 (Future)
+- Allow more than 1 date filter on a listing
+- Add toggle to date filter for single date
+
 ## Version 2.7.1 (2017-09-25)
 - Fix select2 class on BelongsToField
 - Fix sort trait

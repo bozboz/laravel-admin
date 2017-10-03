@@ -8,6 +8,17 @@ use Bozboz\Admin\Reports\Filters\ListingFilter;
 
 class DateFilter extends ListingFilter
 {
+    protected $defaultOptions = [
+        'range' => true,
+    ];
+    protected $options = [];
+
+    public function __construct($name, $callback = null, $options = [])
+    {
+        parent::__construct($name, $callback);
+        $this->options = array_merge($this->defaultOptions, $options);
+    }
+
     protected function defaultFilter($field)
     {
         return function($builder, $values) use ($field)
@@ -32,42 +43,63 @@ class DateFilter extends ListingFilter
         };
     }
 
+    protected function fromFieldName()
+    {
+        return "{$this->name}_from_date";
+    }
+
+    protected function toFieldName()
+    {
+        return "{$this->name}_to_date";
+    }
+
     public function filter(Builder $builder)
     {
-        $this->call($builder, Request::only('from_date', 'to_date'));
+        $this->call($builder, [
+            'from_date' =>Request::get($this->fromFieldName()),
+            'to_date' =>Request::get($this->toFieldName()),
+        ]);
     }
 
     public function __toString()
     {
-        $fromDate = Request::get('from_date');
-        $toDate = Request::get('to_date');
+        $fromFieldName = $this->fromFieldName();
+        $toFieldName = $this->toFieldName();
+        $fromDate = Request::get($fromFieldName);
+        $toDate = Request::get($toFieldName);
 
         $label = Form::label($this->name);
 
-        return <<<HTML
+        $html = <<<HTML
             {$label}
             <div class="input-group input-group-sm">
                 <input type="text"
-                    name="from_date"
-                    class="js-date-range-filter js-from-date-filter form-control"
+                    name="{$fromFieldName}"
+                    class="js-date-range-filter js-{$fromFieldName}-filter form-control"
                     data-date="{$fromDate}"
-                    data-onchange-affect-input=".js-to-date-filter"
+                    data-onchange-affect-input=".js-{$toFieldName}-filter"
                     data-onchange-affect-boundary="minDate"
                 >
+HTML;
+            if ($this->options['range']) {
+                $html .= <<<HTML
                 <span class="input-group-addon">
                     <label for="to_date" class="sr-only">To</label>
                     To
                 </span>
                 <input type="text"
-                    name="to_date"
-                    class="js-date-range-filter js-to-date-filter form-control"
+                    name="{$toFieldName}"
+                    class="js-date-range-filter js-{$toFieldName}-filter form-control"
                     data-date="{$toDate}"
-                    data-onchange-affect-input=".js-from-date-filter"
+                    data-onchange-affect-input=".js-{$fromFieldName}-filter"
                     data-onchange-affect-boundary="maxDate"
                 >
                 <div class="input-group-btn">
                     <button type="submit" value="Filter" class="btn btn-sm btn-default">Filter</button>
                 </div>
+HTML;
+            }
+            $html .= <<<HTML
             </div>
 
             <script>
@@ -75,12 +107,12 @@ class DateFilter extends ListingFilter
                     var prettyDateFormat = 'dd/mm/yy';
                     var isoDateFormat = 'yy-mm-dd';
 
-                    $('.js-date-range-filter').each(function() {
+                    $('[name={$fromFieldName}],[name={$toFieldName}]').each(function() {
                         var altInput = $(this);
                         var input = $('<input>', {
                             type: 'text',
                             class: altInput.attr('class'),
-                            name: altInput.prop('name') + '_alt',
+                            // name: altInput.prop('name') + '_alt',
                         });
 
                         altInput.attr('class', '');
@@ -100,6 +132,16 @@ class DateFilter extends ListingFilter
                                 if (selectedDate === '') {
                                     altInput.val('');
                                 }
+                                if ( ! $(altInput.data('onchange-affect-input')).val()) {
+                                    $(altInput.data('onchange-affect-input')).datepicker( "setDate", selectedDate );
+                                }
+HTML;
+            if ( ! $this->options['range']) {
+                $html .= <<<HTML
+                                altInput.closest('form').submit();
+HTML;
+            }
+            $html .= <<<HTML
                             }
                         });
 
@@ -110,5 +152,6 @@ class DateFilter extends ListingFilter
                 });
             </script>
 HTML;
+        return $html;
     }
 }
