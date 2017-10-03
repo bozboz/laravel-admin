@@ -124,6 +124,7 @@ class Menu extends Fluent
 
 		foreach($this->getAttributes() as $item => $subItems) {
 			$key = $this->shouldInheritLabelFromSubItem($item, $subItems) ? key($subItems) : $item;
+			asort($subItems);
 			$topLevelItems[$key] = $subItems;
 		}
 
