@@ -58,4 +58,9 @@ class User extends Model implements AuthenticatableContract,
 			$query->doesnthavePermission($action);
 		});
 	}
+
+	public function getFullNameAttribute()
+	{
+		return "$this->first_name $this->last_name";
+	}
 }

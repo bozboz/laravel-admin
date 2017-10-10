@@ -2,19 +2,20 @@
 
 namespace Bozboz\Admin\Users;
 
-use Bozboz\Admin\Base\ModelAdminDecorator;
-use Bozboz\Admin\Fields\BelongsToField;
+use Bozboz\Permissions\RuleStack;
+use Bozboz\Admin\Fields\TextField;
 use Bozboz\Admin\Fields\EmailField;
 use Bozboz\Admin\Fields\HiddenField;
-use Bozboz\Admin\Fields\PasswordField;
 use Bozboz\Admin\Fields\SelectField;
-use Bozboz\Admin\Fields\TextField;
-use Bozboz\Admin\Reports\Filters\ArrayListingFilter;
-use Bozboz\Admin\Users\RoleAdminDecorator;
 use Bozboz\Permissions\Facades\Gate;
-use Bozboz\Permissions\RuleStack;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Bozboz\Admin\Fields\PasswordField;
+use Bozboz\Admin\Fields\BelongsToField;
+use Illuminate\Database\Eloquent\Builder;
+use Bozboz\Admin\Base\ModelAdminDecorator;
+use Bozboz\Admin\Users\RoleAdminDecorator;
+use Bozboz\Admin\Reports\Filters\ArrayListingFilter;
+use Bozboz\Admin\Reports\Filters\SearchListingFilter;
 
 class UserAdminDecorator extends ModelAdminDecorator
 {
@@ -28,9 +29,10 @@ class UserAdminDecorator extends ModelAdminDecorator
 	public function getColumns($instance)
 	{
 		return array(
-			'id' => $instance->id,
-			'email' => $instance->email,
-			'role' => $instance->role ? (
+			'ID' => $instance->id,
+			'Name' => $instance->full_name,
+			'Email' => $instance->email,
+			'Role' => $instance->role ? (
 				Gate::allows('manage_permissions')
 					? link_to_route('admin.roles.edit', $this->roles->getLabel($instance->role), $instance->role->id)
 					: $this->roles->getLabel($instance->role)
@@ -40,7 +42,7 @@ class UserAdminDecorator extends ModelAdminDecorator
 
 	public function modifyListingQuery(Builder $query)
 	{
-		$query->hasPermission('admin_login')->orderBy('email');
+		$query->hasPermission('admin_login')->orderBy('first_name')->orderBy('last_name');
 	}
 
 	public function getLabel($instance)
@@ -104,6 +106,15 @@ class UserAdminDecorator extends ModelAdminDecorator
 	public function getListingFilters()
 	{
 		return [
+			new SearchListingFilter('search', function($query, $value) {
+				$query->where(function($query) use ($value) {
+					$value = "%$value%";
+					$query->orWhere('email', 'like', $value)
+						  ->orWhereRaw("CONCAT(`first_name`, ' ', `last_name`) like '$value'")
+						  ->orWhere('first_name', 'like', $value)
+						  ->orWhere('last_name', 'like', $value);
+				});
+			}),
 			new ArrayListingFilter('role', $this->getListOfRoles(), 'role_id'),
 		];
 	}
