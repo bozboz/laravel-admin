@@ -36,7 +36,7 @@ class MediaLibraryAdminController extends ModelAdminController
 
 	protected function getListingReport()
 	{
-		return new PaginatedReport($this->decorator, null, 'admin::media.overview');
+		return new PaginatedReport($this->decorator, Input::get('per-page'), 'admin::media.overview');
 	}
 
 	public function show($id)
