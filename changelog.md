@@ -6,6 +6,7 @@
 - Alphabetically sort menu items
 - Add name and search filter to user listing
 - Fix per page select on media library listing
+- Fix bulk edit decorator
 
 ## Version 2.7.1 (2017-09-25)
 - Fix select2 class on BelongsToField

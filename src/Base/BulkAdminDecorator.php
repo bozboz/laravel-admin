@@ -32,8 +32,9 @@ abstract class BulkAdminDecorator extends ModelAdminDecorator
     {
         return array_merge(
             array_filter($this->getBulkFields($instances)),
-            $instances->map(function($instance) {
-                return new HiddenField('instances[]', $instance->id);
-        })->all());
+            $instances->map(function($instance, $key) {
+                return new HiddenField('instances['.$key.']', $instance->id);
+            })->all()
+        );
     }
 }
