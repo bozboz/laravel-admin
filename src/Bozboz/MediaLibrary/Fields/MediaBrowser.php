@@ -65,7 +65,7 @@ class MediaBrowser extends Field
 		$mediaFactory = $this->relation->getRelated();
 
 		$items = $values ? $mediaFactory->whereIn('id', (array)$values)
-			->orderByRaw('FIELD (id, ' . implode(',', $values) . ')')->get()->map(function($inst) {
+			->orderByRaw('FIELD (id, ' . implode(',', (array)$values) . ')')->get()->map(function($inst) {
 			return [
 				'id' => $inst->id,
 				'type' => $inst->type,

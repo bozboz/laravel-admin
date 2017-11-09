@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 1.4.3 (2017-11-09)
+- Fix media browser field
+
 ## Version 1.4.2 (2017-11-09)
 - Fix media browser sorting
 
