@@ -1,8 +1,9 @@
 <?php namespace Bozboz\MediaLibrary\Fields;
 
-use Bozboz\Admin\Fields\Field;
-use Bozboz\MediaLibrary\Models\Media;
 use Form, View;
+use Bozboz\Admin\Fields\Field;
+use Illuminate\Support\Collection;
+use Bozboz\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class MediaBrowser extends Field
@@ -63,7 +64,8 @@ class MediaBrowser extends Field
 		$values = Form::getValueAttribute($this->name);
 		$mediaFactory = $this->relation->getRelated();
 
-		$items = $values ? $mediaFactory->whereIn('id', (array)$values)->get()->map(function($inst) {
+		$items = $values ? $mediaFactory->whereIn('id', (array)$values)
+			->orderByRaw('FIELD (id, ' . implode(',', $values) . ')')->get()->map(function($inst) {
 			return [
 				'id' => $inst->id,
 				'type' => $inst->type,
@@ -84,6 +86,7 @@ class MediaBrowser extends Field
 			'name' => $this->isManyRelation() ? $this->name . '[]' : $this->name,
 			'data' => json_encode($data),
 		]);
+
 	}
 
 	/**

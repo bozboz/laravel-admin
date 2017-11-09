@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 1.4.2 (2017-11-09)
+- Fix media browser sorting
+
 ## Version 1.4.1 (2017-07-18)
 - Set summernote to paste as plain text
 
