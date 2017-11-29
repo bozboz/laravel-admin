@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.8.1 (2017-11-29)
+- Stop "£" displaying as "Â£" in Excel in CSV exports
+
 ## Version 2.8.0 (2017-11-29)
 - Allow more than 1 date filter on a listing
 - Add toggle to date filter for single date

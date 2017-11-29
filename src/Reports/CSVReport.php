@@ -49,6 +49,9 @@ class CSVReport implements BaseInterface
 	{
 		$fp = fopen('php://output', 'w');
 
+		// Necessary to stop "£" displaying as "Â£" in Excel
+		fputs($fp, "\xef\xbb\xbf");
+
 		$this->decorator->getListingModelsChunked(200, function($models) use ($fp) {
 			foreach($models as $instance) {
 				$columns = $this->getColumnsFromInstance($instance);
