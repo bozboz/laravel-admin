@@ -1,12 +1,13 @@
 # Bozboz Admin Package Changelog
 
-## Version 2.8.0 (Future)
+## Version 2.8.0 (2017-11-29)
 - Allow more than 1 date filter on a listing
 - Add toggle to date filter for single date
 - Alphabetically sort menu items
 - Add name and search filter to user listing
 - Fix per page select on media library listing
 - Fix bulk edit decorator
+- Allow a filter value of `0`
 
 ## Version 2.7.1 (2017-09-25)
 - Fix select2 class on BelongsToField

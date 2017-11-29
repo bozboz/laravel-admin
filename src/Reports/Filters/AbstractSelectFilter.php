@@ -28,7 +28,7 @@ abstract class AbstractSelectFilter extends ListingFilter
 
 	public function getValue()
 	{
-		return parent::getValue() ?: $this->default;
+		return ! is_null(parent::getValue()) ? parent::getValue() : $this->default;
 	}
 
 	abstract protected function getOptions();
