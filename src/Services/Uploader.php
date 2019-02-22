@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Intervention\Image\Image;
+use Intervention\Image\ImageManager;
 
 class Uploader
 {
@@ -20,10 +22,12 @@ class Uploader
 	];
 
 	protected $client;
+	protected $imageManager;
 
-	public function __construct(Client $client)
+	public function __construct(Client $client, ImageManager $imageManager)
 	{
 		$this->client = $client;
+		$this->imageManager = $imageManager;
 	}
 
 	/**
@@ -123,10 +127,25 @@ class Uploader
 
 		$destination = $this->getPathFromScope($instance) . '/' . $instance->getDirectory();
 
-		try {
-			$file->move($destination, $instance->filename);
-		} catch (FileException $e) {
-			throw new UploadException($e->getMessage());
+		if ($file->guessExtension() === 'jpeg') {
+
+			try {
+
+				$path = $destination . '/' . $instance->filename;
+				$image = $this->imageManager->make($file)->save($path, env('JPG_COMPRESSION', 80));
+
+			} catch (Exception $e) {
+				throw new UploadException($e->getMessage());
+			}
+
+		} else {
+
+			try {
+				$file->move($destination, $instance->filename);
+			} catch (FileException $e) {
+				throw new UploadException($e->getMessage());
+			}
+
 		}
 
 		$instance->save();
