@@ -132,7 +132,7 @@ class Uploader
 			try {
 
 				$path = $destination . '/' . $instance->filename;
-				$image = $this->imageManager->make($file)->save($path, env('JPG_COMPRESSION', 80));
+				$image = $this->imageManager->make($file)->save($path, env('JPG_COMPRESSION', 100));
 
 			} catch (Exception $e) {
 				throw new UploadException($e->getMessage());
