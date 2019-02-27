@@ -1,8 +1,5 @@
 # Bozboz Admin Package Changelog
 
-## Version 3.0.0 (2019-02-27)
-- Laravel 5.5 compatible
-
 ## Version 2.8.1 (2017-11-29)
 - Stop "£" displaying as "Â£" in Excel in CSV exports
 
