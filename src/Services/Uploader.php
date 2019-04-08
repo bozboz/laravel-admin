@@ -127,7 +127,7 @@ class Uploader
 
 		$destination = $this->getPathFromScope($instance) . '/' . $instance->getDirectory();
 
-		if ($file->guessExtension() === 'jpeg') {
+		if ($file->guessExtension() === 'jpeg' && env('JPG_COMPRESSION')) {
 
 			try {
 
