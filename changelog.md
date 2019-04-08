@@ -1,5 +1,14 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.8.4 (2019-04-08)
+- Fix: use lower case 'null' in permissions migration
+
+## Version 2.8.3 (2019-04-08)
+- ?
+
+## Version 2.8.2 (2019-03-22)
+- ?
+
 ## Version 2.8.1 (2017-11-29)
 - Stop "£" displaying as "Â£" in Excel in CSV exports
 
