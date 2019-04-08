@@ -24,7 +24,7 @@ class MigrateUserPermissions extends Migration
                 SELECT users.id,
                     GROUP_CONCAT(
                         DISTINCT
-                        CONCAT('{\"action\":\"', permissions.action, '\",\"param\":', COALESCE(permissions.param, 'NULL'), '}')
+                        CONCAT('{\"action\":\"', permissions.action, '\",\"param\":', COALESCE(permissions.param, 'null'), '}')
                         ORDER BY permissions.action, permissions.param
                     ) AS permissions
                 FROM users, permissions
