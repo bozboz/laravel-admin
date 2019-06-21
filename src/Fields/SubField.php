@@ -54,6 +54,16 @@ class SubField extends Field
     }
 
     /**
+     * Render the decorated field's javascript
+     *
+     * @return string
+     */
+    public function getJavascript()
+    {
+        return $this->decorate->getJavascript();
+    }
+
+    /**
      * Render a label for the sub field, using the decorated field's specified
      * label if defined
      *

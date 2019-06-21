@@ -3,6 +3,7 @@
 ## Version 2.9.0 (2019-05-21)
 - Allow admin menu items to have route params
 - Add radio inputs option to select field
+- Get js from sub field in SubField
 
 ## Version 2.8.4 (2019-04-08)
 - Fix: use lower case 'null' in permissions migration
