@@ -13,6 +13,10 @@ class SelectField extends Field
 
         $this->class .= ' select2';
 
+        if ($this->radio) {
+            return $this->radioFields();
+        }
+
 		return Form::select($this->name, $this->options, $this->value, $this->getInputAttributes());
 	}
 
@@ -25,5 +29,12 @@ class SelectField extends Field
         return array_merge(parent::getUnsafeAttributes(), [
             'options',
         ]);
+    }
+
+    private function radioFields()
+    {
+        return collect($this->options)->map(function ($label, $value) {
+            return Form::radio("{$this->name}", $value) . ' ' . $label;
+        })->implode('<br>');
     }
 }
