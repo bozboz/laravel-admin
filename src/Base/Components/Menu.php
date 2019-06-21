@@ -97,7 +97,12 @@ class Menu extends Fluent
 	public function appendToItem($item, array $appends)
 	{
 		foreach($appends as $label => $route) {
-			$this->setMenuItem($item, $label, $this->url->route($route));
+			if (is_array($route)) {
+				list($route, $params) = $route;
+			} else {
+				$params = null;
+			}
+			$this->setMenuItem($item, $label, $this->url->route($route, $params));
 		}
 	}
 
