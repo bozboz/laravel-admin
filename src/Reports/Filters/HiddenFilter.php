@@ -2,6 +2,7 @@
 
 namespace Bozboz\Admin\Reports\Filters;
 
+use Form;
 use Illuminate\Database\Eloquent\Builder;
 
 class HiddenFilter extends ListingFilter
@@ -20,6 +21,8 @@ class HiddenFilter extends ListingFilter
 
 	public function __toString()
 	{
-		return '';
+		if ($this->filter->getValue()) {
+			return Form::hidden($this->filter->name, $this->filter->getValue());
+		}
 	}
 }

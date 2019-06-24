@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.9.1 (2019-06-24)
+- Add hidden input for hidden filter fields
+
 ## Version 2.9.0 (2019-05-21)
 - Allow admin menu items to have route params
 - Add radio inputs option to select field
