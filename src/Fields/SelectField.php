@@ -27,7 +27,7 @@ class SelectField extends Field
     protected function getUnsafeAttributes()
     {
         return array_merge(parent::getUnsafeAttributes(), [
-            'options',
+            'options', 'value'
         ]);
     }
 

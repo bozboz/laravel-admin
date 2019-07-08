@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.10.0 (2019-07-08)
+- Allow select field to specify array values
+
 ## Version 2.9.1 (2019-06-24)
 - Add hidden input for hidden filter fields
 
