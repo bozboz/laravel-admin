@@ -31,6 +31,9 @@ class MediaField extends Field
 		$html .= HTML::image($this->media->getPreviewImageUrl(), $alt, ['style' => 'margin-bottom: 5px; display: block']);
 		$html .= '<p>' . HTML::link($this->getMediaPreviewURL(), $this->media->filename, ['target' => '_blank']) . '</p>';
 
+		$html .= Form::label('update');
+		$html .= Form::file('update');
+
 		return $html;
 	}
 

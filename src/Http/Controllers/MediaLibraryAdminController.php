@@ -67,6 +67,14 @@ class MediaLibraryAdminController extends ModelAdminController
 		]);
 	}
 
+	public function update($id)
+	{
+		if (Input::hasFile('update')) {
+			$file = Input::file('update');
+		}
+		return parent::update($id);
+	}
+
 	public function store()
 	{
 		$data = [];

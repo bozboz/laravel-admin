@@ -57,6 +57,28 @@ class Uploader
 	}
 
 	/**
+	 * Tidy-up and generate a unique filename for an uploaded file, determine
+	 * type and move into correct location
+	 *
+	 * @param  Symfony\Component\HttpFoundation\File\UploadedFile  $uploadedFile
+	 * @param  Bozboz\Admin\Media\Media  $instance
+         * @throws Bozboz\Admin\Exceptions\UploadException
+	 * @return void
+	 */
+	public function replace(UploadedFile $uploadedFile, Media $instance)
+	{
+		if (pathinfo(public_path($instance->getFilename()))['extension'] !== $uploadedFile->getClientOriginalExtension()) {
+			throw new \Exception("Cannot replace a file with a different extension", 1);
+		}
+
+		DB::beginTransaction();
+
+		$this->saveFile($uploadedFile, $instance);
+
+		DB::commit();
+	}
+
+	/**
 	 * Download and save a local copy of the passed in URL and associate with
 	 * the given media $instance
 	 *

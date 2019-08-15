@@ -63,7 +63,7 @@ class MediaBrowser extends Field
 		$values = Form::getValueAttribute($this->name);
 		$mediaFactory = $this->relation->getRelated();
 
-		$media = $values ? $mediaFactory->find((array)$values)->keyBy('id') : collect();
+		$media = $values ? $mediaFactory->find((array)$values)->load('tags')->keyBy('id') : collect();
 
 		$items = collect($values)->filter()->map(function($id) use ($media) {
 			return $media->get($id);
@@ -75,7 +75,9 @@ class MediaBrowser extends Field
 			return [
 				'id' => $inst->id,
 				'type' => $inst->type,
-				'caption' => $inst->caption ? $inst->caption : $inst->filename,
+				'caption' => $inst->caption,
+				'tags' => $inst->tags,
+				'folder_id' => $inst->folder_id,
 				'private' => $inst->private,
 				'filename' => $inst->filename
 			];
@@ -91,6 +93,7 @@ class MediaBrowser extends Field
 			'id' => $this->sanitiseName($this->name),
 			'name' => $this->isManyRelation() ? $this->name . '[]' : $this->name,
 			'data' => json_encode($data),
+			'isManyRelation' => $this->isManyRelation(),
 		]);
 	}
 
@@ -123,11 +126,11 @@ class MediaBrowser extends Field
 	 */
 	public function getJavascript()
 	{
-		return View::make('admin::fields.partials.media-js')->with([
-			'id' => $this->sanitiseName($this->name),
-			'access_public' => Media::ACCESS_PUBLIC,
-			'access_private' => Media::ACCESS_PRIVATE,
-		])->render();
+		// return View::make('admin::fields.partials.media-js')->with([
+		// 	'id' => $this->sanitiseName($this->name),
+		// 	'access_public' => Media::ACCESS_PUBLIC,
+		// 	'access_private' => Media::ACCESS_PRIVATE,
+		// ])->render();
 	}
 
 	/**

@@ -19,6 +19,25 @@ Route::group(array('middleware' => ['web'], 'namespace' => 'Bozboz\Admin\Http\Co
 		Route::get('logout', 'AdminController@getLogout');
 
 		Route::post('sort', 'SortController@sort');
+
+		Route::get('files/folder/options', 'FileFolderController@getDropdownOptions');
+		Route::post('files/folder/add', 'FileFolderController@store');
+		Route::post('files/folder/edit/{id}', 'FileFolderController@edit');
+		Route::post('files/folder/delete/{id}', 'FileFolderController@destroy');
+
+		Route::get('files.js', 'FileController@js');
+
+		Route::get('/files', 'FileController@main');
+
+		Route::get('files/tags', 'FileController@getTags');
+
+		Route::get('files/upload', 'FileController@uploader');
+		Route::post('files/upload', 'FileController@store');
+
+		Route::get('files/{type}/{id?}', 'FileController@index');
+		Route::post('files/add', 'FileController@store');
+		Route::post('files/edit/{id}', 'FileController@edit');
+		Route::post('files/delete/{id}', 'FileController@destroy');
 	});
 
 	Route::group(array('middleware' => 'guest'), function() {

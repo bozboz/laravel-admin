@@ -16,7 +16,7 @@ class Media extends Model
 	const ACCESS_PRIVATE = 2;
 
 	protected $table = 'media';
-	protected $fillable = array('filename', 'caption', 'private', 'type');
+	protected $fillable = array('filename', 'caption', 'private', 'type', 'folder_id');
 
 	public static function boot()
 	{
@@ -111,7 +111,7 @@ class Media extends Model
 		if ($this->private) {
 			$filename = asset('assets/images/admin/private-document.png');
 		} elseif ($this->type === 'image') {
-			$filename = $this->getFilename('medium');
+			$filename = file_exists(public_path($this->getFilename())) ? $this->getFilename('medium') : 'https://placehold.it/150x150?text=Image+missing';
 		} else {
 			$filename = asset('assets/images/admin/document.png');
 		}

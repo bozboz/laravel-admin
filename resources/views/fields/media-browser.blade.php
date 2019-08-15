@@ -1,5 +1,12 @@
 <input type="hidden" name="{{ str_replace('[]', '', $name) }}">
 
+<media-modal
+  id="{{$id}}"
+  name="{{ $name }}"
+  :is-many-relation="{{ $isManyRelation ? 'true' : 'false' }}"
+  :data='{!! $data !!}'
+></media-modal>
+{{--
 <div class="js-media-browser-{{ $id }}">
 
   <div data-bind="with: selectedMedia">
@@ -34,4 +41,4 @@
 
   @include('admin::fields.partials.media-modal')
 
-</div>
+</div> --}}
