@@ -61,23 +61,42 @@ class FileController extends Controller
             $records_per_page = 24;
 
             if (! request()->input('page') || request()->input('page') == 1 || request()->input('page') == 'undefined') {
-                if (request()->input('folder')) {
-                    $folders = MediaFolder::where('parent_id', request()->input('folder'))->orderBy('name')->get();
+                $query = MediaFolder::orderBy('name');
+                if (request()->input('search')) {
+                    $query->where('name', 'LIKE', '%' . request()->input('search') . '%');
                 } else {
-                    $folders = MediaFolder::whereNull('parent_id')->orderBy('name')->get();
+                    if (request()->input('folder')) {
+                        $query->where('parent_id', request()->input('folder'));
+                    } else {
+                        $query->whereNull('parent_id');
+                    }
                 }
+                $folders = $query->get();
             } else {
-                $folders = false;
+                $folders = [];
             }
 
             $query = $model::where('type', $type)
                 ->with('tags')
                 ->orderBy('id', 'desc');
 
-            if (request()->input('folder')) {
-                $query->where('folder_id', request()->input('folder'));
+            if (request()->input('search')) {
+                $query->where(function ($query) {
+                    $query->orWhere('filename', 'LIKE', '%' . request()->input('search') . '%');
+                    $query->orWhere('caption', 'LIKE', '%' . request()->input('search') . '%');
+                });
             } else {
-                $query->whereNull('folder_id');
+                if (request()->input('folder')) {
+                    $query->where('folder_id', request()->input('folder'));
+                } else {
+                    $query->whereNull('folder_id');
+                }
+            }
+
+            if (request()->input('tags')) {
+                $query->whereHas('tags', function($query) {
+                    $query->whereIn('name', request()->input('tags'));
+                });
             }
 
             $files = $query->paginate($records_per_page);
@@ -122,6 +141,8 @@ class FileController extends Controller
         $max_size = (int)ini_get('upload_max_filesize') * 1000;
         $all_ext = implode(',', $this->allExtensions());
 
+        debug($request->all());
+
         $this->validate($request, [
             'name' => 'required|unique:media,filename',
             'file' => 'required|file|mimes:' . $all_ext . '|max:' . $max_size,
@@ -135,7 +156,7 @@ class FileController extends Controller
 
         $file = $request->file('file');
 
-        app(\Bozboz\Admin\Services\Uploader::class)->upload($file, $instance);
+        app(\Bozboz\Admin\Services\Uploader::class)->upload($file, $instance, $request->input('name'));
 
         if ($request->has('tags')) {
             $tags = collect($request->input('tags'))->map(function($value) {
@@ -157,7 +178,7 @@ class FileController extends Controller
      * @param  Request $request  Request with form data: filename
      * @return boolean           True if success, otherwise - false
      */
-    public function edit($id, Request $request)
+    public function update($id, Request $request)
     {
         if (!$this->canEdit()) {
             return abort(403);
@@ -176,10 +197,7 @@ class FileController extends Controller
         ]);
 
         $instance->caption = $request->input('caption');
-
-        if ($request->has('folder_id')) {
-            $instance->folder_id = $request->input('folder_id');
-        }
+        $instance->folder_id = $request->input('folder_id') ?: null;
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');

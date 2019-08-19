@@ -39,14 +39,14 @@ class Uploader
          * @throws Bozboz\Admin\Exceptions\UploadException
 	 * @return void
 	 */
-	public function upload(UploadedFile $uploadedFile, Media $instance)
+	public function upload(UploadedFile $uploadedFile, Media $instance, $filename = null)
 	{
 		DB::beginTransaction();
 
 		$instance->save();
 
 		$instance->filename = $this->generateUniqueFilename(
-			$uploadedFile->getClientOriginalName(),
+			$filename ?: $uploadedFile->getClientOriginalName(),
 			$uploadedFile->getClientOriginalExtension(),
 			$instance->id
 		);
@@ -127,7 +127,11 @@ class Uploader
 	 */
 	protected function generateUniqueFilename($name, $extension, $uniqueString)
 	{
-		$filenameWithoutExtension = str_replace('.' . $extension, '', $name);
+		if ($extension) {
+			$filenameWithoutExtension = str_replace('.' . $extension, '', $name);
+		} else {
+			@list($filenameWithoutExtension, $extension) = preg_split('/\.(?=[^\.]*$)/', $name);
+		}
 
 		return Str::slug($filenameWithoutExtension) . '-' . $uniqueString . '.' . $extension;
 	}

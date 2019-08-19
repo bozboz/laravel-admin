@@ -1,15 +1,6 @@
 <template>
   <div>
-    <modal title="Edit file" v-model="editingFile.show" @close="cancelEditing" size="">
-      <div class="form-group">
-        <label for="caption">Caption</label>
-        <input type="text" class="form-control" id="caption" v-model="editingFile.caption">
-      </div>
-      <template v-slot:footer>
-        <button type="submit" class="btn btn-primary" @click.prevent="updateFile(editingFile)">Save</button>
-      </template>
-    </modal>
-    <modal v-model="showModal" @close="showModal = false" cancelText="Close">
+    <modal v-model="showModal" @close="showModal = false" cancelText="Close" size="lg">
       <template v-slot:header>
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" :class="{'active': tab === 'upload'}" @click="tab = 'upload'">
@@ -26,7 +17,12 @@
           </li>
         </ul>
       </template>
-      <uploader :showTitle="false" v-if="tab === 'upload'"></uploader>
+      <uploader
+        v-if="tab === 'upload'"
+        :multiple="isManyRelation"
+        :showTitle="false"
+        @uploaded="selectFile"
+      ></uploader>
       <media-browser
         v-else
         @selectFile="selectFile"
@@ -60,10 +56,22 @@
       </div>
     </slick-list>
 
-    <button @click.prevent="showModal = true"
-      class="btn btn-primary"
+    <div
       v-if="canSelect"
-    >Select Media</button>
+    >
+      <button @click.prevent="showModal = true;tab = 'upload'"
+        class="btn btn-primary"
+      >
+        <i class="fa fa-upload"></i>
+        Upload
+      </button>
+      <button @click.prevent="showModal = true;tab = 'browse'"
+        class="btn btn-info"
+      >
+        <i class="fa fa-folder-open"></i>
+        Browse Media
+      </button>
+    </div>
     <div v-else>
       <button @click.prevent="showModal = true"
         class="btn btn-info"
@@ -126,6 +134,9 @@ export default {
     }
   },
   methods: {
+    selectFiles(files) {
+      files.map(this.selectFile);
+    },
     selectFile(file) {
       const exists = this.selectedFiles.findIndex(f => f.id === file.id) >= 0;
       if (exists) {
@@ -147,42 +158,18 @@ export default {
     deselectFile(file) {
       this.selectedFiles.splice(this.selectedFiles.findIndex(f => f.id === file.id), 1);
     },
-    sort() {
-      console.log(arguments);
-    },
     editFile(file) {
-      console.log(file);
-
-      this.editingFile = file;
-      this.editingFile.show = true;
-    },
-    cancelEditing() {
-      this.editingFile = {};
-    },
-    updateFile(file) {
-      const formData = new FormData();
-      formData.append('caption', file.caption);
-      window.axios.post('/admin/files/edit/' + file.id, formData)
-        .then(response => {
-          if (response.data.success === true) {
-            this.showNotification('File successfully updated', true, () => this.updateFile(response.data.original));
-          }
-          this.editingFile = {};
-        })
-        .catch(error => {
-          console.log(error);
-          if (!error.response) {
-            return;
-          }
-
-          this.showNotification(error.response.data.message, false);
-          for (const field in error.response.data) {
-            if (error.response.data.hasOwnProperty(field)) {
-            const message = error.response.data[field];
-            this.showNotification(message, false);
-            }
-          }
-        });
+      this.$store.dispatch('EditFile/edit', {
+        file: {
+          ...file,
+          tags: (file.tags || []).map(tag => tag.name),
+          name: file.filename,
+          exists: true,
+        },
+        hiddenFields: [
+          'name', 'tags', 'folder', 'file',
+        ],
+      });
     },
     showNotification(text, success, undoAction = null) {
       const actions = [
@@ -212,16 +199,6 @@ export default {
         action: actions,
         icon: success ? 'check' : 'exclamation-triangle',
       });
-    },
-    resetModal() {
-      console.log(this, this.showModal);
-      this.showModal = false;
-
-      setTimeout(() => {
-        this.showModal = true;
-        console.log(this, this.showModal);
-
-      }, 1);
     },
   },
   mounted() {
@@ -260,8 +237,9 @@ export default {
   }
 
   .tiles {
-  display: flex;
-  flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1em;
   }
   @supports(display: grid) {
     .tiles {

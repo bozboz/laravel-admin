@@ -11,7 +11,6 @@ Route::group(array('middleware' => ['web'], 'namespace' => 'Bozboz\Admin\Http\Co
 	Route::group(array('middleware' => 'auth'), function() {
 		Route::resource('users', 'UserAdminController', array('except' => array('show')));
 		Route::resource('roles', 'UserRoleAdminController', array('except' => array('show')));
-		Route::resource('media', 'MediaLibraryAdminController');
 
 		Route::resource('permissions', 'PermissionAdminController', array('except' => array('show')));
 
@@ -20,24 +19,25 @@ Route::group(array('middleware' => ['web'], 'namespace' => 'Bozboz\Admin\Http\Co
 
 		Route::post('sort', 'SortController@sort');
 
-		Route::get('files/folder/options', 'FileFolderController@getDropdownOptions');
-		Route::post('files/folder/add', 'FileFolderController@store');
-		Route::post('files/folder/edit/{id}', 'FileFolderController@edit');
-		Route::post('files/folder/delete/{id}', 'FileFolderController@destroy');
+		Route::get('media.js', 'FileController@js');
 
-		Route::get('files.js', 'FileController@js');
+		Route::get('media', 'FileController@main')->name('admin.media.index');
+		Route::get('media/upload', 'FileController@uploader');
 
-		Route::get('/files', 'FileController@main');
+		Route::get('media/folder/options', 'FileFolderController@getDropdownOptions');
+		Route::post('media/folder/add', 'FileFolderController@store');
+		Route::post('media/folder/update/{id}', 'FileFolderController@update');
+		Route::post('media/folder/delete/{id}', 'FileFolderController@destroy');
 
-		Route::get('files/tags', 'FileController@getTags');
+		Route::get('media/tags', 'FileController@getTags');
 
-		Route::get('files/upload', 'FileController@uploader');
-		Route::post('files/upload', 'FileController@store');
+		Route::post('media/upload', 'FileController@store');
+		Route::put('media/upload', 'FileController@store');
 
-		Route::get('files/{type}/{id?}', 'FileController@index');
-		Route::post('files/add', 'FileController@store');
-		Route::post('files/edit/{id}', 'FileController@edit');
-		Route::post('files/delete/{id}', 'FileController@destroy');
+		Route::get('media/{type}/{id?}', 'FileController@index');
+		Route::post('media/add', 'FileController@store');
+		Route::post('media/update/{id}', 'FileController@update');
+		Route::post('media/delete/{id}', 'FileController@destroy');
 	});
 
 	Route::group(array('middleware' => 'guest'), function() {

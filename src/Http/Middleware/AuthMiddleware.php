@@ -21,6 +21,9 @@ class AuthMiddleware extends Middleware
         }
 
         if (Auth::guest()) {
+            if ($request->wantsJson()) {
+                return response()->json(['error' => 'Not authorized.'], 403);
+            }
             return Redirect::guest('admin/login');
         }
     }

@@ -5,12 +5,12 @@
     :transfer-data="{type: 'file', file: file}"
   >
     <div :class="['panel', `panel-${panelClass}`]">
-      <div class="panel-image" @click.prevent="$emit('select')">
+      <div class="panel-image">
         <button v-if="canDelete" class="btn btn-danger btn-sm delete-btn" title="Delete" @click.prevent="$emit('delete')">
           <i class="fa fa-trash"></i> Delete
         </button>
-        <i v-if="computedIcon" :class="['icon', 'fa', `fa-${computedIcon}`]"></i>
-        <a class="" v-if="file.type == 'image'">
+        <i v-if="computedIcon" @click="$emit('select')" :class="['icon', 'fa', `fa-${computedIcon}`]"></i>
+        <a class="" v-if="file.type == 'image'" @click="$emit('select')">
           <img class="img-responsive" width="100%" :src="'/images/medium/' + file.filename" :alt="file.filename" draggable="false">
         </a>
       </div>
@@ -34,7 +34,7 @@
         </a>
         </div>
         <div @click.prevent="$emit('select')">
-          {{ file.filename}}
+          {{ file.caption || file.filename }}
         </div>
         <slot></slot>
       </div>
@@ -82,8 +82,9 @@ export default {
 <style scoped>
   .panel {
     overflow: hidden;
-    height: calc(100% - 20px);
+    height: 100%;
     position: relative;
+    margin-bottom: 0;
   }
   .panel-heading,
   .panel-footer {

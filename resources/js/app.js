@@ -7,6 +7,7 @@ import Toasted from 'vue-toasted';
 import BozUploader from './components/Uploader';
 import BozMedia from './components/MediaBrowser';
 import MediaModal from './components/MediaModal';
+import EditModal from './components/EditModal';
 
 import store from './store';
 
@@ -49,6 +50,7 @@ const app = new Vue({
     BozUploader,
     BozMedia,
     MediaModal,
+    EditModal,
   },
 //   render: h => h(App),
 });

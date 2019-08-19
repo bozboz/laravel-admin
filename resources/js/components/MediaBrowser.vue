@@ -2,7 +2,7 @@
 <div>
   <!-- File form -->
   <div v-if="canCreate">
-    <a href="/admin/files/upload" class="btn-success pull-right btn btn-sm new-btn">New Media <i class="fa fa-plus"></i></a>
+    <a :href="'/admin/media/upload' + (currentFolder ? `?folder=${currentFolder.id}` : '')" class="btn-success pull-right btn btn-sm new-btn">New Media <i class="fa fa-plus"></i></a>
     <form id="new-folder-form" class="form-inline pull-right" style="clear:right;" action="#" method="#" @submit.prevent="newFolder">
       <label for="new_folder">New Folder</label>
       <div class="input-group">
@@ -30,6 +30,33 @@
 
   <!-- Main -->
   <div class="container-fluid" style="margin-bottom: 1em">
+    <div class="form-inline">
+      <div class="form-group">
+        <label for="search">Search</label>
+        <div class="input-group">
+          <input name="search" v-model="searchString" type="text" id="search" class="form-control input-sm">
+          <div class="input-group-btn">
+            <input v-if="searchString" @click.prevent="searchString = ''" type="button" value="×" class="btn btn-sm btn-default">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="tags">Tags</label>
+        <div class="input-group" style="min-width: 6em">
+          <multiselect
+            v-model="tagFilter"
+            placeholder=""
+            label="name"
+            track-by="name"
+            id="tags"
+            :tabindex="0"
+            :options="tags"
+            :multiple="true"
+            :taggable="false"
+          ></multiselect>
+        </div>
+      </div>
+    </div>
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" :class="{'active': isActive('image')}" @click="getFiles('image')">
         <a role="tab">
@@ -52,8 +79,10 @@
     </ul>
   </div>
 
+  <pagination v-model="pagination" @input="changePage"></pagination>
+
   <div class="tabs-details">
-    <div class="container-fluid text-center tiles">
+    <div class="text-center tiles">
     <div class="col-lg-2 col-md-3 col-sm-6" v-if="currentFolder" v-cloak>
       <drop
         @drop="moveIntoFolder({ id: currentFolder.parent_id }, ...arguments)"
@@ -89,14 +118,15 @@
         </a>
         <input class="form-control input-sm" v-if="folder === editingFolder" v-autofocus @keyup.enter="updateFolder(folder)" @blur="updateFolder(folder)" type="text" :placeholder="folder.name" v-model="folder.name">
         <div @click="editFolder(folder)" v-else title="Click to edit folder name">
-          {{ folder.name}}
+          {{ folder.caption || folder.name }}
         </div>
         </div>
       </drag>
       </drop>
     </div>
     </div>
-    <div class="container-fluid text-center tiles">
+    <hr>
+    <div class="text-center tiles">
 
       <div class="col-sm-12 col-md-4 col-md-offset-4 text-center p-5" v-if="pagination.total == 0" v-cloak>
         <figure>
@@ -109,10 +139,12 @@
         </figure>
       </div>
 
-      <div class="text-center col-sm-12" v-if="loading">
-        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-        <span class="sr-only">Loading...</span>
-      </div>
+      <transition name="fade">
+        <div class="loader" v-if="loading">
+          <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+          <span class="sr-only">Loading...</span>
+        </div>
+      </transition>
 
       <file class="col-lg-2 col-md-3 col-sm-6"
         v-for="file in files"
@@ -120,8 +152,8 @@
         :file="file"
         :canDrag="canEdit"
         :canDelete="canDelete"
-        :panelClass="file.panelClass"
-        :icon="file.icon"
+        :panelClass="highlightIds.includes(file.id) ? 'success' : 'default'"
+        :icon="highlightIds.includes(file.id) ? 'check' : null"
         @select="editFile(file)"
         @delete="prepareToDelete(file)"
       ></file>
@@ -129,38 +161,28 @@
     </div>
   </div>
 
-  <nav class="text-center" role="navigation" aria-label="pagination" v-if="pagination.last_page > 1" v-cloak>
-    <ul class="pagination">
-    <li><a @click.prevent="changePage(1)" :disabled="pagination.current_page <= 1">«</a></li>
-    <li><a @click.prevent="changePage(pagination.current_page - 1)" :disabled="pagination.current_page <= 1">‹</a></li>
-    <li v-for="page in pages" :key="page" :class="isCurrentPage(page) ? 'active' : ''">
-      <a class="pagination-link" @click.prevent="changePage(page)">
-      {{ page }}
-      </a>
-    </li>
-    <li><a @click.prevent="changePage(pagination.current_page + 1)" :disabled="pagination.current_page >= pagination.last_page">›</a></li>
-    <li><a @click.prevent="changePage(pagination.last_page)" :disabled="pagination.current_page >= pagination.last_page">»</a></li>
-    </ul>
-  </nav>
-
-  <edit-modal v-model="editingFile" @close="cancelEditing" @save="updateFile"></edit-modal>
+  <pagination v-model="pagination" @input="changePage"></pagination>
 
 </div>
 </template>
 
 
 <script>
+import _ from 'lodash';
+import Multiselect from 'vue-multiselect';
+import { mapState, mapActions } from 'vuex';
 import { Drag, Drop } from 'vue-drag-drop';
 import Modal from './Modal';
-import EditModal from './EditModal';
 import File from './File';
+import Pagination from './Pagination';
 import mediaApi from '../api/media';
 
 export default {
   components: {
+    Multiselect,
     Modal,
-    EditModal,
     File,
+    Pagination,
     Drag,
     Drop,
   },
@@ -191,58 +213,68 @@ export default {
   },
   data() {
     return {
-      folders: [],
-      folderTree: [],
       files: [],
-      file: {},
-
-      tags: [],
-
+      folders: {},
       pagination: {},
-      offset: 5,
-
+      file: {},
+      tags: [],
+      tagFilter: [],
+      pagination: {},
       currentFolder: null,
       activeTab: 'image',
-      isVideo: false,
-      loading: false,
-
       formData: {},
       fileName: '',
       attachment: '',
-
       folderName: '',
-
       editingFile: {},
       deletingFile: {},
-
       editingFolder: {},
       deletingFolder: {},
-
-      notification: false,
       showConfirm: false,
-      showEdit: false,
       modalActive: false,
       message: '',
       errors: {},
       upFolderOver: false,
+      searchString: '',
     };
   },
 
+  computed: {
+    ...mapState({
+      data: state => state.MediaList.data,
+      loading: state => state.MediaList.loading,
+    }),
+    highlightIds() {
+      return this.highlightFiles.map(file => file.id);
+    }
+  },
+
   watch: {
-    highlightFiles(newValue) {
-      this.highlight();
+    data() {
+      this.files = [ ...this.data.data.data ];
+      this.folders = [ ...this.data.folders.map(folder => ({ ...folder, over: false })) ];
+      this.pagination = { ...this.data.pagination };
+    },
+    searchString(search) {
+      if (search) {
+        this.currentFolder = null;
+      }
+      this.throttledRefresh();
+    },
+    tagFilter() {
+      this.throttledRefresh();
     },
   },
 
   methods: {
-    highlight() {
-      const highlightIds = this.highlightFiles.map(file => file.id);
-      this.files.map(file => {
-        const isHighlighted = highlightIds.includes(file.id);
-        Vue.set(file, 'panelClass', isHighlighted ? 'success' : 'default');
-        Vue.set(file, 'icon', isHighlighted ? 'check' : null);
-      });
+    changePage(pagination) {
+      this.pagination.current_page = pagination.current_page;
+      this.fetchFile(this.activeTab, pagination.current_page);
     },
+
+    throttledRefresh: _.throttle(function() {
+      this.fetchFile(this.activeTab, this.pagination.current_page)
+    }, 1000),
 
     isActive(tabItem) {
       return this.activeTab === tabItem;
@@ -252,64 +284,19 @@ export default {
       this.activeTab = tabItem;
     },
 
-    isCurrentPage(page) {
-      return this.pagination.current_page === page;
-    },
-
-    fetchFile(type, page) {
-      this.loading = true;
-      // this.files = [];
-      // this.folders = [];
-
-      mediaApi.index({
+    fetchFile(type, page = 1) {
+      this.$store.dispatch('MediaList/get', {
         type: type,
         page: page,
-        folderId: this.currentFolder ? this.currentFolder.id : ''
-      }).then(result => {
-        this.loading = false;
-        this.files = result.data.data;
-        this.folders = result.folders.map(folder => ({ ...folder, over: false }));
-        this.folderTree = result.folderTree;
-        this.pagination = result.pagination;
-        this.highlight();
-      }).catch(error => {
-        this.loading = false;
-        this.showNotification(error, false);
+        folderId: this.currentFolder ? this.currentFolder.id : '',
+        search: this.searchString,
+        tags: this.tagFilter.length ? this.tagFilter.map(tag => tag.name) : [],
       });
-
     },
 
     getFiles(type) {
       this.setActive(type);
       this.fetchFile(type);
-
-      if (this.activeTab === 'video') {
-        this.isVideo = true;
-      } else {
-        this.isVideo = false;
-      }
-    },
-
-    newFile() {
-      this.formData = new FormData();
-      this.formData.append('name', this.fileName);
-      this.formData.append('file', this.attachment);
-
-      if (this.currentFolder) {
-        this.formData.append('folder_id', this.currentFolder.id);
-      }
-
-      window.axios.post('/admin/files/add', this.formData, {headers: {'Content-Type': 'multipart/form-data'}})
-        .then(response => {
-          this.resetForm();
-          this.showNotification('File successfully upload!', true);
-          this.fetchFile(this.activeTab);
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors;
-          this.showNotification(error.response.data.message, false);
-          this.fetchFile(this.activeTab);
-        });
     },
 
     newFolder() {
@@ -320,7 +307,7 @@ export default {
         this.formData.append('parent_id', this.currentFolder.id);
       }
 
-      window.axios.post('/admin/files/folder/add', this.formData, {headers: {'Content-Type': 'multipart/form-data'}})
+      window.axios.post('/admin/media/folder/add', this.formData, {headers: {'Content-Type': 'multipart/form-data'}})
         .then(response => {
           this.folderName = '';
           this.showNotification('Folder successfully upload!', true);
@@ -350,7 +337,7 @@ export default {
 
         case 'file':
           const {folder, ...fileWithoutFolder} = data.file;
-          this.updateFile({
+          this.$store.dispatch('EditFile/update', {
             ...fileWithoutFolder,
             folder_id: targetFolder.id,
           });
@@ -360,10 +347,6 @@ export default {
           this.showNotification(`Unknown type: '${data.type}'`, false);
           break;
       }
-    },
-
-    addFile() {
-      this.attachment = this.$refs.file.files[0];
     },
 
     prepareToDelete(file) {
@@ -385,10 +368,10 @@ export default {
     deleteFile() {
       const config = {};
       if (this.deletingFolder.id) {
-        config.url = `/admin/files/folder/delete/${this.deletingFolder.id}`;
+        config.url = `/admin/media/folder/delete/${this.deletingFolder.id}`;
         config.type = 'Folder';
       } else {
-        config.url = `/admin/files/delete/${this.deletingFile.id}`;
+        config.url = `/admin/media/delete/${this.deletingFile.id}`;
         config.type = 'File';
       }
       window.axios.post(config.url)
@@ -426,7 +409,7 @@ export default {
           formData.append('parent_id', folder.parent_id);
         }
 
-        axios.post('/admin/files/folder/edit/' + folder.id, formData)
+        axios.post('/admin/media/folder/edit/' + folder.id, formData)
           .then(response => {
             if (response.data.success === true) {
               this.showNotification('Folder successfully updated', true, () => this.updateFolder(response.data.original));
@@ -452,64 +435,17 @@ export default {
         this.$emit('selectFile', file);
         return;
       }
-      this.editingFile = {
-        ...file,
-        tags: file.tags.map(tag => tag.name),
-        name: file.filename,
-        exists: true,
-      };
-
-      this.editingFile.show = true;
-    },
-
-    cancelEditing() {
-      this.editingFile = {};
-      this.showEdit = false;
-    },
-
-    updateFile(file) {
-      const formData = new FormData();
-      formData.append('caption', file.caption);
-      if (file.file) {
-        formData.set("file", file.file, file.name);
-      }
-      if (file.tags) {
-        file.tags.map(tag => {
-          formData.append('tags[]', tag.name);
-        });
-      }
-      if (file.folder && file.folder.id) {
-        formData.append('folder_id', file.folder.id);
-      }
-      if (file.folder_id) {
-        formData.append('folder_id', file.folder_id);
-      }
-
-      window.axios.post('/admin/files/edit/' + file.id, formData)
-        .then(response => {
-          if (response.data.success === true) {
-            this.showNotification('File successfully updated', true, () => this.updateFile(response.data.original));
-          }
-          this.editingFile = {};
-        })
-        .catch(error => {
-          this.showNotification(error.response.data.message, false);
-          for (const field in error.response.data) {
-            if (error.response.data.hasOwnProperty(field)) {
-              const message = error.response.data[field];
-              this.showNotification(message, false);
-            }
-          }
-        })
-        .finally(() => {
-          this.fetchFile(this.activeTab, this.pagination.current_page);
-        });
+      this.$store.dispatch('EditFile/edit', {
+        file: {
+          ...file,
+          tags: file.tags.map(tag => tag.name),
+          name: file.filename,
+          exists: true,
+        },
+      });
     },
 
     showNotification(text, success, undoAction = null) {
-      if (success === true) {
-        this.clearErrors();
-      }
 
       const actions = [
         {
@@ -540,38 +476,6 @@ export default {
       })
     },
 
-    showModal(file) {
-      this.file = file;
-      this.modalActive = true;
-    },
-
-    closeModal() {
-      this.modalActive = false;
-      this.file = {};
-    },
-
-    changePage(page) {
-      if (page > this.pagination.last_page) {
-        page = this.pagination.last_page;
-      }
-      this.pagination.current_page = page;
-      this.fetchFile(this.activeTab, page);
-    },
-
-    resetForm() {
-      this.formData = {};
-      this.fileName = '';
-      this.attachment = '';
-    },
-
-    anyError() {
-      return Object.keys(this.errors).length > 0;
-    },
-
-    clearErrors() {
-      this.errors = {};
-    },
-
     openFolder(folder) {
       this.currentFolder = folder;
       this.fetchFile(this.activeTab);
@@ -585,46 +489,13 @@ export default {
       }
       this.fetchFile(this.activeTab);
     },
-
-    addTag(name) {
-      const newTag = {name: name};
-      this.tags.push(newTag);
-      this.editingFile.tags.push(newTag);
-    },
   },
 
   mounted() {
     this.fetchFile(this.activeTab, this.pagination.current_page);
-    document.getElementById('app').style.display = 'block';
-    window.axios.get('/admin/files/tags').then(response => {
-      this.tags = response.data;
-    })
+    window.axios.get('/admin/media/tags').then(response => this.tags = response.data);
   },
 
-  computed: {
-    pages() {
-      let pages = [];
-
-      let from = this.pagination.current_page - Math.floor(this.offset / 2);
-
-      if (from < 1) {
-        from = 1;
-      }
-
-      let to = from + this.offset - 1;
-
-      if (to > this.pagination.last_page) {
-        to = this.pagination.last_page;
-      }
-
-      while (from <= to) {
-        pages.push(from);
-        from++;
-      }
-
-      return pages;
-    }
-  },
 }
 </script>
 
@@ -641,34 +512,13 @@ export default {
   .new-btn {
     margin-bottom: 1em;
   }
-  .delete-btn {
-    padding: 1px 5px;
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    text-indent: 100%;
-    overflow: hidden;
-    width: 1.5em;
-    height: 1.5em;
-    border-radius: 50%;
-    background-color: rgba(0,0,0,.25);
-    border-color: rgba(0,0,0,0);
-  }
-  .delete-btn::after {
-    content: '×';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-indent: 0;
-    font-size: 1.5em;
-  }
   .p-5 {
     padding: 3em;
   }
   .panel {
-    height: calc(100% - 20px);
+    height: 100%;
     position: relative;
+    margin-bottom: 0;
   }
   .panel::after {
     content: '';
@@ -705,13 +555,53 @@ export default {
     .tiles {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+      grid-gap: 1em;
     }
     .tiles > * {
       width: 100%;
+      padding: 0;
     }
     .tiles::before,
     .tiles::after {
       display: none;
     }
+  }
+  .loader {
+    position: fixed;
+    display: flex;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    background-color: rgba(255,255,255,.5);
+  }
+  .delete-btn {
+    padding: 1px 5px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    text-indent: 100%;
+    overflow: hidden;
+    width: 1.5em;
+    height: 1.5em;
+    font-size: 1.5em;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,.25);
+    border-color: rgba(0,0,0,0);
+    z-index: 1;
+  }
+  .delete-btn::after {
+    content: '×';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-indent: 0;
+  }
+  .delete-btn:hover {
+    background-color: #d9534f;
   }
 </style>

@@ -56,8 +56,8 @@
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a :class="{'dropdown-item': true, disabled: file.active || file.success || file.error === 'compressing'}" href="#" @click.prevent="file.active || file.success || file.error === 'compressing' ? false :  onEditFileShow(file)">Edit</a></li>
-                  <li><a :class="{'dropdown-item': true, disabled: !file.active}" href="#" @click.prevent="file.active ? $refs.upload.update(file, {error: 'cancel'}) : false">Cancel</a></li>
+                  <li><a class="dropdown-item" v-if="!file.active && !file.success && file.error !== 'compressing'" href="#" @click.prevent="file.active || file.success || file.error === 'compressing' ? false :  onEditFileShow(file)">Edit</a></li>
+                  <li><a class="dropdown-item" v-if="!file.active" href="#" @click.prevent="file.active ? $refs.upload.update(file, {error: 'cancel'}) : false">Cancel</a></li>
 
                   <li v-if="file.active" @click.prevent="$refs.upload.update(file, {active: false})">
                     <a class="dropdown-item" href="#">Abort</a>
@@ -117,27 +117,30 @@
       </button>
     </div>
   </div>
-
-  <edit-modal title="test" v-model="editFile" @close="cancelEditing" @save="onEditorFile"></edit-modal>
-
 </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import ImageCompressor from 'compressorjs'
 import FileUpload from 'vue-upload-component'
-
-import EditModal from './EditModal';
 
 export default {
   components: {
     FileUpload,
-    EditModal,
   },
   props: {
     showTitle: {
       type: Boolean,
       default: true,
+    },
+    multiple: {
+      type: Boolean,
+      default: true,
+    },
+    defaultFolder: {
+      type: Number,
+      default: null,
     },
   },
   data() {
@@ -149,7 +152,6 @@ export default {
       // extensions: /\.(gif|jpe?g|png|webp)$/i,
       minSize: 1024,
       size: 1024 * 1024 * 10,
-      multiple: true,
       directory: false,
       drop: true,
       dropDirectory: true,
@@ -164,20 +166,20 @@ export default {
       },
       autoCompress: 1024 * 1024,
       uploadAuto: false,
-      editFile: {
-        show: false,
-        name: '',
-        caption: '',
-        folder: {},
-        tags: [],
-      },
     }
   },
+  computed: {
+    ...mapState({
+      editFile: state => state.EditFile.updatedFile,
+    })
+  },
   watch: {
-    'editFile.show'(newValue, oldValue) {
-      if (!newValue && oldValue) {
-        this.$refs.upload.update(this.editFile.id, { error: this.editFile.error || '' })
+    editFile(newValue) {
+      if (!newValue) {
+        return;
       }
+      const file = { ...newValue, error: '' };
+      this.$refs.upload.update(file.id, file);
     },
   },
   methods: {
@@ -208,6 +210,9 @@ export default {
             }
           });
         }
+
+        newFile.tags = [];
+        newFile.folder_id = this.defaultFolder;
       }
       if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
         // Create a blob field
@@ -225,15 +230,15 @@ export default {
     },
     // add, update, remove File Event
     inputFile(newFile, oldFile) {
-      if (file && newFile !== oldFile) {
+      if (newFile && newFile !== oldFile) {
         this.$refs.upload.update(file, {
           caption: '',
           tags: [],
-          folder: {},
+          folder_id: this.defaultFolder,
         });
       }
     },
-    upload(file, component) {
+    async upload(file, component) {
       const formData = new FormData();
       formData.append('name', file.name);
       formData.set("file", file.file, file.filename);
@@ -249,51 +254,15 @@ export default {
         formData.append('folder_id', file.folder_id);
       }
 
-      return axios.post('upload', formData);
+      const response = await (await axios.post('/admin/media/upload', formData)).data;
+      this.$emit('uploaded', response);
+      return response;
     },
     alert(message) {
       alert(message)
     },
-    onEditFileShow(file) {
-      this.editFile = { ...file, show: true }
-      this.$refs.upload.update(file.id, { error: 'edit' });
-    },
-    cancelEditing() {
-      this.$refs.upload.update(this.editFile.id, { error: '' });
-      this.editFile = {};
-      this.$emit('endEditing');
-    },
-    onEditorFile(file) {
-      if (!this.$refs.upload.features.html5) {
-        this.alert('Your browser does not support')
-        this.editFile.error = '';
-        this.editFile.show = false
-        return
-      }
-
-      let data = {
-        filename: file.name,
-        caption: file.caption,
-      }
-      if (file.tags) {
-        data.tags = file.tags.map(tag => tag.name);
-      }
-      if (file.folder) {
-        data.folder_id = file.folder.id;
-      }
-      if (file.cropper) {
-        let binStr = atob(file.cropper.getCroppedCanvas().toDataURL(file.type).split(',')[1])
-        let arr = new Uint8Array(binStr.length)
-        for (let i = 0; i < binStr.length; i++) {
-          arr[i] = binStr.charCodeAt(i)
-        }
-        data.file = new File([arr], data.name, { type: file.type })
-        data.size = data.file.size
-      }
-      data.error = '';
-      file.show = false
-      this.$refs.upload.update(file.id, data);
-      this.$emit('endEditing');
+    onEditFileShow(editFile) {
+      this.$store.dispatch('EditFile/edit', { file: { ...editFile, show: true } });
     },
     // add folder
     onAddFolder() {

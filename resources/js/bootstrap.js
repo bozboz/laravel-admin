@@ -8,6 +8,17 @@
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.maxRedirects = 0;
+
+window.axios.interceptors.response.use((response) => {
+    return response;
+  }, (error) => {
+    if (error.response && error.response.status === 403) {
+      window.location.reload();
+    } else {
+      return Promise.reject(error);
+    }
+  });
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that

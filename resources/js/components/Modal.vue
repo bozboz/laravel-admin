@@ -1,10 +1,10 @@
 <template>
   <div>
     <transition name="fade">
-      <div v-if="value" :class="{'modal-backdrop': true, 'fade': true, in: value}"></div>
+      <div v-if="value" :class="{'modal-backdrop': true, 'fade': true, in: true}"></div>
     </transition>
     <transition name="fade-down">
-      <div v-if="value" :class="{modal: true, fade: true, in: value}" tabindex="-1" role="dialog" @click.stop.self="close" :style="{display: value ? 'block' : 'none'}">
+      <div v-if="value" class="modal fade in" tabindex="-1" role="dialog" @click.stop.self="close" style="display: block">
         <div :class="['modal-dialog', `modal-${size}`]" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -62,16 +62,26 @@ export default {
 <style>
 .fade-down-enter,
 .fade-down-leave-to {
-  opacity: 0;
-  transform: translateY(-5em);
+  opacity: 0 !important;
 }
 .fade-down-enter-to,
 .fade-down-leave {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
 }
 .fade-down-enter-active,
 .fade-down-leave-active {
-  transition: opacity 200ms, transform 200ms ease-out;
+  transition: opacity 200ms ease-out;
+}
+.fade-down-enter .modal-content,
+.fade-down-leave-to  .modal-content{
+  transform: scale(.9);
+}
+.fade-down-enter-to .modal-content,
+.fade-down-leave  .modal-content{
+  transform: scale(1);
+}
+.fade-down-enter-active .modal-content,
+.fade-down-leave-active  .modal-content{
+  transition: transform 200ms ease-out;
 }
 </style>

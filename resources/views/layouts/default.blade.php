@@ -34,10 +34,11 @@
 
 		@section('main')
 		@show
+		<edit-modal></edit-modal>
 	</div>
 	@section('scripts')
 		<script src="{{ asset_version('assets/js/min/admin/app.js') }}"></script>
-		<script src="/admin/files.js"></script>
+		<script src="/admin/media.js"></script>
 	@show
 </body>
 </html>

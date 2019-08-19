@@ -1,15 +1,15 @@
 <template>
-  <modal title="Edit file" v-model="file.show" @close="$emit('close')">
+  <modal title="Edit file" v-model="show" @close="close">
     <form @submit.prevent="onEditorFile" ref="editForm">
-      <div class="form-group">
+      <div class="form-group" v-if="!hideFields.includes('name')">
         <label for="name">Name</label>
         <input type="text" class="form-control" required id="name" :readonly="file.exists" placeholder="Please enter a file name" v-model="file.name">
       </div>
-      <div class="form-group">
+      <div class="form-group" v-if="!hideFields.includes('caption')">
         <label for="caption">Caption</label>
         <input type="text" class="form-control" id="caption" v-model="file.caption">
       </div>
-      <div class="form-group">
+      <div class="form-group" v-if="!hideFields.includes('tags')">
         <label for="tagsSelect">Tags</label>
         <multiselect
           v-model="file.tags"
@@ -25,7 +25,7 @@
           @tag="addTag"
         ></multiselect>
       </div>
-      <div class="form-group">
+      <div class="form-group" v-if="!hideFields.includes('folder')">
         <label for="folder">Folder</label>
         <multiselect
           v-model="file.folder"
@@ -42,7 +42,7 @@
           </template>
         </multiselect>
       </div>
-      <div class="form-group" v-if="file.show && file.blob && file.type && file.type.substr(0, 6) === 'image/'">
+      <div class="form-group" v-if="file.id && file.blob && file.type && file.type.substr(0, 6) === 'image/' &&  !hideFields.includes('cropper')">
         <label>Image</label>
         <div class="edit-image">
           <img :src="file.blob" ref="editImage" />
@@ -59,17 +59,17 @@
         </div>
       </div>
       <div v-if="file.exists">
-        <div class="form-group">
+        <div class="form-group" v-if="!hideFields.includes('file')">
           <label>File</label>
           <a :href="'/media/' + file.type + '/' + file.filename" target="_blank">
             {{file.filename}}
           </a>
         </div>
-        <div class="form-group">
+        <div class="form-group" v-if="!hideFields.includes('file')">
           <label for="file">Update File</label>
           <input type="file" id="file" @change="changeEditingFile">
         </div>
-        <div class="form-group" v-if="file.type === 'image'">
+        <div class="form-group" v-if="file.type === 'image' && !hideFields.includes('preview')">
           <img v-if="file.preview" class="img-responsive" :src="file.preview">
           <img v-else class="img-responsive" :src="'/media/' + file.type + '/' + file.filename" :alt="file.filename">
         </div>
@@ -84,6 +84,7 @@
 <script>
 import Cropper from 'cropperjs'
 import Multiselect from 'vue-multiselect';
+import { mapState } from 'vuex';
 
 import Modal from './Modal';
 
@@ -101,10 +102,15 @@ export default {
       },
     };
   },
-  props: {
-    value: {
-      type: Object,
-      default: {},
+  computed: {
+    ...mapState({
+      value: state => state.EditFile.file,
+      error: state => state.EditFile.error,
+      originalFile: state => state.EditFile.originalFile,
+      hideFields: state => state.EditFile.hideFields,
+    }),
+    show() {
+      return this.file && this.file.name && this.file.name.length > 0;
     },
   },
   watch: {
@@ -112,14 +118,16 @@ export default {
       if (!newValue) {
         return;
       }
-      if (newValue.folder_id) {
-        newValue.folder = this.options.folders.filter(folder => folder.id === newValue.folder_id);
+      const file = { ...newValue };
+
+      if (file.folder_id) {
+        file.folder = this.options.folders.filter(folder => folder.id === newValue.folder_id);
       }
-      if (newValue.tags) {
-        newValue.tags = newValue.tags.map(name => ({name: name}));
+      if (file.tags) {
+        file.tags = newValue.tags.map(name => ({name: name}));
       }
 
-      this.file = newValue;
+      this.file = file;
 
       this.$nextTick(() => {
         if (this.$refs.editImage) {
@@ -132,20 +140,40 @@ export default {
           }
         }
       });
+    },
+    error(error) {
+      if (!error) {
+        return;
+      }
+      this.showNotification(error.response.data.message, false);
+      for (const field in error.response.data) {
+        if (error.response.data.hasOwnProperty(field)) {
+          const message = error.response.data[field];
+          this.showNotification(message, false);
+        }
+      }
+    },
+    originalFile(original) {
+      if (!original) {
+        return;
+      }
+      this.showNotification('File successfully updated', true, () => this.update(original));
     }
   },
   mounted() {
-    window.axios.get('/admin/files/tags').then(response => this.options.tags = response.data);
-    window.axios.get('/admin/files/folder/options').then(response => this.options.folders = response.data);
+    window.axios.get('/admin/media/tags').then(response => this.options.tags = response.data);
+    window.axios.get('/admin/media/folder/options').then(response => this.options.folders = response.data);
   },
   methods: {
     onEditorFile() {
       let data = {
+        id: this.file.id,
         filename: this.file.name,
         caption: this.file.caption,
       }
-      if (this.file.tags) {
-        data.tags = this.file.tags.map(tag => tag.name);
+
+      if ({ ...this.file }.hasOwnProperty('tags')) {
+        data.tags = this.file.tags.map(tag => tag.name) || [];
       }
       if (this.file.folder) {
         data.folder_id = this.file.folder.id;
@@ -160,7 +188,12 @@ export default {
         data.file = new File([arr], data.name, { type: this.file.type })
         data.size = data.file.size
       }
-      this.$emit('save', this.file);
+
+      if (this.file.exists) {
+        this.update(data);
+      } else {
+        this.$store.dispatch('EditFile/setUpdatedFile', data);
+      }
     },
     changeEditingFile(e) {
       this.file.file = e.target.files[0];
@@ -181,6 +214,42 @@ export default {
         this.file.tags = [];
       }
       this.file.tags.push(newTag);
+    },
+    close() {
+      this.$store.dispatch('EditFile/end');
+    },
+    update(file) {
+      this.$store.dispatch('EditFile/update', file)
+    },
+    showNotification(text, success, undoAction = null) {
+      const actions = [
+        {
+          text: '×',
+          onClick: (e, toast) => toast.goAway(),
+          class: 'toast-action toast-action--dismiss',
+        },
+      ];
+
+      if (undoAction) {
+        actions.unshift({
+          text: 'Undo',
+          class: 'toast-action',
+          onClick: (e, toast) => {
+            toast.goAway(0);
+            undoAction(toast);
+          },
+        });
+      }
+
+      this.$toasted.show(text, {
+        duration: 15000,
+        type: success ? 'success' : 'error',
+        position: 'bottom-right',
+        iconPack: 'fontawesome',
+        action: actions,
+        icon: success ? 'check' : 'exclamation-triangle',
+        singleton: true,
+      })
     },
   },
 }

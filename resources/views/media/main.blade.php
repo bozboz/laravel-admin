@@ -9,11 +9,3 @@
     ></boz-media>
 </main>
 @stop
-@section('scripts')
-    @parent
-    <!--script src="{{ asset('admin/files.js') }}"></script-->
-@stop
-@section('styles')
-@parent
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-@stop
