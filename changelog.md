@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.11.0 (Future)
+- Complete rebuild of the media library
+
 ## Version 2.10.0 (2019-07-08)
 - Allow select field to specify array values
 
