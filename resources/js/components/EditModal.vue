@@ -69,7 +69,7 @@
           <label for="file">Update File</label>
           <input type="file" id="file" @change="changeEditingFile">
         </div>
-        <div class="form-group" v-if="file.type === 'image' && !hideFields.includes('preview')">
+        <div class="form-group image-preview" v-if="file.type === 'image' && !hideFields.includes('preview')">
           <img v-if="file.preview" class="img-responsive" :src="file.preview">
           <img v-else class="img-responsive" :src="'/media/' + file.type + '/' + file.filename" :alt="file.filename">
         </div>
@@ -257,3 +257,28 @@ export default {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style src="cropperjs/dist/cropper.min.css"></style>
+<style>
+.image-preview {
+  --background-color: rgba(255, 255, 255, 1);
+  --a: 0.3;
+  --b: 0.0;
+  --c: var(--a);
+  --d: var(--b);
+  --e: 0.5;
+  display: block;
+  background-color: var(--background-color);
+  background-size: 25px 25px;
+  background-image:
+                    linear-gradient(to right, rgba(0, 0, 0, var(--a)) 50%, transparent 50%, transparent),
+                    linear-gradient(to right, transparent 0%, transparent 50%, rgba(0, 0, 0, var(--b)) 50%),
+                    linear-gradient(to bottom, rgba(0, 0, 0, var(--c)) 50%, transparent 50%, transparent),
+                    linear-gradient(to bottom, transparent 0%, transparent 50%, rgba(0, 0, 0, var(--d)) 50%),
+
+                    /* draw squares to selectively shift opacity */
+                    linear-gradient(to bottom, var(--background-color) 50%, transparent 50%, transparent),
+                    linear-gradient(to right, transparent 0%, transparent 50%, rgba(0, 0, 0, var(--e)) 50%),
+                    
+                    /* b-i: l-g toggle trick */
+                    none;
+}
+</style>

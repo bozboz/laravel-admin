@@ -10,7 +10,7 @@
           <i class="fa fa-trash"></i> Delete
         </button>
         <i v-if="computedIcon" @click="$emit('select')" :class="['icon', 'fa', `fa-${computedIcon}`]"></i>
-        <a class="" v-if="file.type == 'image'" @click="$emit('select')">
+        <a class="image-preview" v-if="file.type == 'image'" @click="$emit('select')">
           <img class="img-responsive" width="100%" :src="'/images/medium/' + file.filename" :alt="file.filename" draggable="false">
         </a>
       </div>
