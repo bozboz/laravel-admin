@@ -28,7 +28,7 @@
               </div>
             </td>
           </tr>
-          <tr v-for="(file, index) in files" :key="file.id">
+          <tr v-for="(file, index) in files" :key="file.id" :class="{ danger: file.error, success: file.success, active: file.active }">
             <td>{{index+1}}</td>
             <td>
               <img v-if="file.thumb" :src="file.thumb" width="40" height="auto" />
@@ -57,7 +57,7 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" v-if="!file.active && !file.success && file.error !== 'compressing'" href="#" @click.prevent="file.active || file.success || file.error === 'compressing' ? false :  onEditFileShow(file)">Edit</a></li>
-                  <li><a class="dropdown-item" v-if="!file.active" href="#" @click.prevent="file.active ? $refs.upload.update(file, {error: 'cancel'}) : false">Cancel</a></li>
+                  <li><a class="dropdown-item" v-if="file.active" href="#" @click.prevent="file.active ? $refs.upload.update(file, {error: 'cancel'}) : false">Cancel</a></li>
 
                   <li v-if="file.active" @click.prevent="$refs.upload.update(file, {active: false})">
                     <a class="dropdown-item" href="#">Abort</a>
@@ -65,8 +65,8 @@
                   <li v-else-if="file.error && file.error !== 'compressing' && $refs.upload.features.html5">
                     <a class="dropdown-item" href="#" @click.prevent="$refs.upload.update(file, {active: true, error: '', progress: '0.00'})">Retry upload</a>
                   </li>
-                  <li v-else>
-                    <a :class="{'dropdown-item': true, disabled: file.success || file.error === 'compressing'}" href="#" @click.prevent="file.success || file.error === 'compressing' ? false : $refs.upload.update(file, {active: true})">Upload</a>
+                  <li v-else-if="!file.success && file.error !== 'compressing'">
+                    <a :class="{'dropdown-item': true}" href="#" @click.prevent="file.success || file.error === 'compressing' ? false : $refs.upload.update(file, {active: true})">Upload</a>
                   </li>
 
                   <li role="separator" class="divider"></li>
@@ -254,9 +254,22 @@ export default {
         formData.append('folder_id', file.folder_id);
       }
 
-      const response = await (await axios.post('/admin/media/upload', formData)).data;
-      this.$emit('uploaded', response);
-      return response;
+      try {
+        const response = await (await axios.post('/admin/media/upload', formData)).data;
+        this.$emit('uploaded', response);
+        return response;
+      } catch (error) {
+        if (error.response && error.response.status === 422) {
+          const errors = [error.response.data.message];
+          for (const field in error.response.data) {
+            if (error.response.data.hasOwnProperty(field)) {
+              errors.push(error.response.data[field]);
+            }
+          }
+          throw new Error(errors.join("\n"));
+        }
+        throw error;
+      }
     },
     alert(message) {
       alert(message)

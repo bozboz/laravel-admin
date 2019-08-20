@@ -17,7 +17,20 @@ class FileController extends Controller
     private $image_ext = ['jpg', 'jpeg', 'png', 'gif'];
     private $audio_ext = ['mp3', 'ogg', 'mpga'];
     private $video_ext = ['mp4', 'mpeg'];
-    private $document_ext = ['doc', 'docx', 'pdf', 'odt'];
+    private $document_ext = [
+        'doc',
+        'docx',
+        'pdf',
+        'odt',
+        'xls',
+        'xlsx',
+        'csv',
+        'ppt',
+        'pptx',
+        'xml',
+        'zip',
+        'tar',
+    ];
 
     public function main()
     {
@@ -144,7 +157,7 @@ class FileController extends Controller
         debug($request->all());
 
         $this->validate($request, [
-            'name' => 'required|unique:media,filename',
+            'name' => 'required',
             'file' => 'required|file|mimes:' . $all_ext . '|max:' . $max_size,
             'folder_id' => 'int|exists:media_folders,id',
         ]);
