@@ -409,7 +409,7 @@ export default {
           formData.append('parent_id', folder.parent_id);
         }
 
-        axios.post('/admin/media/folder/edit/' + folder.id, formData)
+        axios.post('/admin/media/folder/update/' + folder.id, formData)
           .then(response => {
             if (response.data.success === true) {
               this.showNotification('Folder successfully updated', true, () => this.updateFolder(response.data.original));

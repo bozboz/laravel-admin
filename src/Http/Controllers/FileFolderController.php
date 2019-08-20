@@ -34,7 +34,7 @@ class FileFolderController extends Controller
      * @param  Request $request  Request with form data: filename
      * @return boolean           True if success, otherwise - false
      */
-    public function edit($id, Request $request)
+    public function update($id, Request $request)
     {
         $model = MediaFolder::find($id);
 

@@ -15,23 +15,11 @@
         </a>
       </div>
       <div :class="[panelClass === 'default' ? 'panel-footer' : 'panel-heading', 'text-center']">
-        <div v-if="file.type == 'pdf'" class="document_block">
-        <a class="text-center center-block" style="font-size: 4em" @click.prevent="$emit('select')">
-        </a>
-        <a class="btn btn-sm btn-default" :href="'/media/' + file.type + '/' + file.filename" target="_blank">
-          <i class="fa fa-download" aria-hidden="true"></i>
-          &nbsp;Download
-        </a>
-        </div>
-
-        <div v-if="file.type == 'misc'" class="document_block">
-        <a class="text-center center-block" style="font-size: 4em" @click.prevent="$emit('select')">
-          <i class="fa fa-file-o"></i>
-        </a>
-        <a class="btn btn-sm btn-default" :href="'/media/' + file.type + '/' + file.filename" target="_blank">
-          <i class="fa fa-download" aria-hidden="true"></i>
-          &nbsp;Download
-        </a>
+        <div v-if="file.type !== 'image'" class="document_block">
+          <a class="btn btn-sm btn-default" :href="'/media/' + file.type + '/' + file.filename" target="_blank">
+            <i class="fa fa-download" aria-hidden="true"></i>
+            &nbsp;Download
+          </a>
         </div>
         <div @click.prevent="$emit('select')">
           {{ file.caption || file.filename }}
