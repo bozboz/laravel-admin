@@ -310,13 +310,17 @@ export default {
       window.axios.post('/admin/media/folder/add', this.formData, {headers: {'Content-Type': 'multipart/form-data'}})
         .then(response => {
           this.folderName = '';
-          this.showNotification('Folder successfully upload!', true);
+          this.showNotification('Folder created', true);
           this.fetchFile(this.activeTab);
         })
         .catch(error => {
-          this.errors = error.response.data.errors;
           this.showNotification(error.response.data.message, false);
-          this.fetchFile(this.activeTab);
+          for (const field in error.response.data) {
+            if (error.response.data.hasOwnProperty(field)) {
+              const message = error.response.data[field];
+              this.showNotification(message, false);
+            }
+          }
         });
     },
 
@@ -376,7 +380,7 @@ export default {
       }
       window.axios.post(config.url)
         .then(response => {
-          this.showNotification(`${config.type} successfully deleted!`, true);
+          this.showNotification(`${config.type} deleted`, true);
           this.fetchFile(this.activeTab, this.pagination.current_page);
         })
         .catch(error => {

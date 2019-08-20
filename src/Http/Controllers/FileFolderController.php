@@ -19,7 +19,7 @@ class FileFolderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:media_folders,name,'.$request->input('parent_id').',parent_id',
+            'name' => 'required|unique:media_folders,name,NULL,id,parent_id,'.$request->input('parent_id', 'NULL'),
         ]);
 
         return MediaFolder::create([
@@ -43,7 +43,7 @@ class FileFolderController extends Controller
         }
 
         $this->validate($request, [
-            'name' => 'required|unique:media_folders,name,'.$id.',id,parent_id,'.$request->input('parent_id', 'NULL'),
+            'name' => 'required|unique:media_folders,name,'.$id.',id,parent_id,'.($request->input('parent_id') ?: 'NULL'),
             'parent_id' => 'int|exists:media_folders,id',
         ], [
             'name.unique' => "There is already a folder called '{$request->input('name')}' in this folder",
