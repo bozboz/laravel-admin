@@ -519,11 +519,6 @@ export default {
   .p-5 {
     padding: 3em;
   }
-  .panel {
-    height: 100%;
-    position: relative;
-    margin-bottom: 0;
-  }
   .panel::after {
     content: '';
     position: absolute;
@@ -555,7 +550,15 @@ export default {
     display: flex;
     flex-wrap: wrap;
   }
+  .panel {
+    position: relative;
+    overflow: hidden;
+  }
   @supports(display: grid) {
+    .panel {
+      height: 100%;
+      margin-bottom: 0;
+    }
     .tiles {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));

@@ -106,12 +106,6 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
-  .panel {
-    overflow: hidden;
-    height: 100%;
-    position: relative;
-    margin-bottom: 0;
-  }
   .panel-danger .icon {
     opacity: .1;
   }

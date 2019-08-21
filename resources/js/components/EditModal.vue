@@ -61,17 +61,17 @@
       <div v-if="file.exists">
         <div class="form-group" v-if="!hideFields.includes('file')">
           <label>File</label>
-          <a :href="'/media/' + file.type + '/' + file.filename" target="_blank">
+          <a :href="src" target="_blank">
             {{file.filename}}
           </a>
         </div>
         <div class="form-group" v-if="!hideFields.includes('file')">
           <label for="file">Update File</label>
-          <input type="file" id="file" @change="changeEditingFile">
+          <input type="file" ref="file" id="file" @change="changeEditingFile">
+          <file-upload v-model="files" :maximum="1"></file-upload>
         </div>
         <div class="form-group image-preview" v-if="file.type === 'image' && !hideFields.includes('preview')">
-          <img v-if="file.preview" class="img-responsive" :src="file.preview">
-          <img v-else class="img-responsive" :src="'/media/' + file.type + '/' + file.filename" :alt="file.filename">
+          <img class="img-responsive" ref="preview" :src="src" :alt="file.filename">
         </div>
       </div>
     </form>
@@ -85,6 +85,7 @@
 import Cropper from 'cropperjs'
 import Multiselect from 'vue-multiselect';
 import { mapState } from 'vuex';
+import FileUpload from 'vue-upload-component';
 
 import Modal from './Modal';
 
@@ -92,10 +93,13 @@ export default {
   components: {
     Modal,
     Multiselect,
+    FileUpload,
   },
   data() {
     return {
       file: {},
+      files: [],
+      preview: null,
       options: {
         tags: [],
         folders: [],
@@ -111,6 +115,9 @@ export default {
     }),
     show() {
       return this.file && this.file.name && this.file.name.length > 0;
+    },
+    src() {
+      return this.preview || '/media/' + this.file.type + '/' + this.file.filename;
     },
   },
   watch: {
@@ -131,7 +138,7 @@ export default {
 
       this.$nextTick(() => {
         if (this.$refs.editImage) {
-          let cropper = new Cropper(this.$refs.editImage, {
+          const cropper = new Cropper(this.$refs.editImage, {
             autoCrop: false,
           });
           this.file = {
@@ -189,6 +196,10 @@ export default {
         data.size = data.file.size
       }
 
+      if (this.$refs.file.files[0]) {
+        data.file = this.$refs.file.files[0];
+      }
+
       if (this.file.exists) {
         this.update(data);
       } else {
@@ -200,7 +211,7 @@ export default {
       const reader = new FileReader();
 
       reader.onload = (e) => {
-        this.file.preview = e.target.result;
+        this.preview = e.target.result;
         this.$forceUpdate();
       }
 
@@ -259,26 +270,6 @@ export default {
 <style src="cropperjs/dist/cropper.min.css"></style>
 <style>
 .image-preview {
-  --background-color: rgba(255, 255, 255, 1);
-  --a: 0.3;
-  --b: 0.0;
-  --c: var(--a);
-  --d: var(--b);
-  --e: 0.5;
-  display: block;
-  background-color: var(--background-color);
-  background-size: 25px 25px;
-  background-image:
-                    linear-gradient(to right, rgba(0, 0, 0, var(--a)) 50%, transparent 50%, transparent),
-                    linear-gradient(to right, transparent 0%, transparent 50%, rgba(0, 0, 0, var(--b)) 50%),
-                    linear-gradient(to bottom, rgba(0, 0, 0, var(--c)) 50%, transparent 50%, transparent),
-                    linear-gradient(to bottom, transparent 0%, transparent 50%, rgba(0, 0, 0, var(--d)) 50%),
-
-                    /* draw squares to selectively shift opacity */
-                    linear-gradient(to bottom, var(--background-color) 50%, transparent 50%, transparent),
-                    linear-gradient(to right, transparent 0%, transparent 50%, rgba(0, 0, 0, var(--e)) 50%),
-                    
-                    /* b-i: l-g toggle trick */
-                    none;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC");
 }
 </style>
