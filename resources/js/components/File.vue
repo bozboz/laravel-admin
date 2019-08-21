@@ -1,20 +1,22 @@
 <template>
   <drag
     :draggable="canDrag"
-    :class="file.type == 'image' ? 'is-image' : 'is-file'"
+    :class="file.type == 'image' && !failed ? 'is-image' : 'is-file'"
     :transfer-data="{type: 'file', file: file}"
   >
-    <div :class="['panel', `panel-${panelClass}`]">
+    <div :class="['panel', `panel-${computedPanelClass}`]">
       <div class="panel-image">
         <button v-if="canDelete" class="btn btn-danger btn-sm delete-btn" title="Delete" @click.prevent="$emit('delete')">
           <i class="fa fa-trash"></i> Delete
         </button>
         <i v-if="computedIcon" @click="$emit('select')" :class="['icon', 'fa', `fa-${computedIcon}`]"></i>
-        <a class="image-preview" v-if="file.type == 'image'" @click="$emit('select')">
-          <img class="img-responsive" width="100%" :src="'/images/medium/' + file.filename" :alt="file.filename" draggable="false">
+        <a :class="{ image: true, 'image-preview': loaded && !failed, 'is-loading': !loaded, 'has-failed': failed }" v-if="file.type == 'image'" @click="$emit('select')">
+          <transition name="fade">
+            <img v-if="loaded && !failed" :src="src" :alt="file.filename" draggable="false">
+          </transition>
         </a>
       </div>
-      <div :class="[panelClass === 'default' ? 'panel-footer' : 'panel-heading', 'text-center']">
+      <div :class="[computedPanelClass === 'default' ? 'panel-footer' : 'panel-heading', 'text-center']">
         <div v-if="file.type !== 'image'" class="document_block">
           <a class="btn btn-sm btn-default" :href="'/media/' + file.type + '/' + file.filename" target="_blank">
             <i class="fa fa-download" aria-hidden="true"></i>
@@ -57,22 +59,61 @@ export default {
       default: null,
     },
   },
+  data() {
+    return {
+      loaded: false,
+      failed: false,
+    };
+  },
+  mounted() {
+    this.loaded = false;
+    if (this.file.type === 'image') {
+      this.preloadImage();
+    }
+  },
   computed: {
     computedIcon() {
       return this.icon
+        || (this.failed ? 'picture-o' : null)
         || (this.file.type === 'pdf' ? 'file-pdf-o' : null)
         || (this.file.type === 'misc' ? 'file-o' : null);
-    }
-  }
+    },
+    computedPanelClass() {
+      return this.failed ? 'danger' : this.panelClass;
+    },
+    src() {
+      return `/images/medium/${this.file.filename}`;
+    },
+  },
+  methods: {
+    preloadImage() {
+      const img = new Image;
+      img.onload = () => this.loaded = true;
+      img.onerror = () => {
+        this.loaded = true;
+        this.failed = true;
+      }
+      img.src = this.src;
+    },
+  },
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
   .panel {
     overflow: hidden;
     height: 100%;
     position: relative;
     margin-bottom: 0;
+  }
+  .panel-danger .icon {
+    opacity: .1;
   }
   .panel-heading,
   .panel-footer {
@@ -98,6 +139,7 @@ export default {
     background-color: rgba(60, 118, 61, 0.75);
     color: white;
     padding: 1em;
+    z-index: 1;
   }
   .panel-image {
     position: relative;
@@ -105,4 +147,62 @@ export default {
   .is-file .panel-image {
     min-height: 8em;
   }
+  .image {
+    display: block;
+    position: relative;
+    padding-bottom: calc(180/240*100%);
+    height: 0;
+
+    &::before {
+      position: absolute;
+      opacity: .75;
+    }
+  }
+
+  .is-loading {
+    &::before {
+      content: '';
+      animation: loading 1.5s linear infinite;
+      top: calc(50% - 1.5em);
+      left: calc(50% - 1.5em);
+      width: 3em;
+      height: 3em;
+      border-radius: 50%;
+      border: 5px solid silver;
+      border-top-color: white;
+      border-bottom-color: white;
+      animation: loading 2s linear infinite;
+    }
+  }
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .has-failed {
+    &::before {
+      content: 'IMAGE MISSING';
+      font-size: 1em;
+      bottom: 1.5em;
+      width: 100%;
+      left: 0;
+      color: black;
+      font-weight: normal;
+      opacity: .5;
+      text-align: center;
+    }
+  }
+
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
 </style>
