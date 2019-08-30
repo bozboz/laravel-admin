@@ -54,3 +54,27 @@ const app = new Vue({
   },
 //   render: h => h(App),
 });
+
+const confirmExitIfModified = (function() {
+  let formIsDirty = false;
+
+  return function(form, message) {
+    form.addEventListener('change', () => formIsDirty = true);
+    form.addEventListener('keydown', () => formIsDirty = true);
+    window.onbeforeunload = function(e) {
+      e = e || window.event;
+      if (formIsDirty) {
+        // For IE and Firefox
+        if (e) {
+          e.returnValue = message;
+        }
+        // For Safari
+        return message;
+      }
+    };
+  };
+})();
+const form = document.querySelector('.js-warn-unsaved');
+if (form) {
+  confirmExitIfModified(form, 'You have unsaved changes, are you sure you wish to exit this page?');
+}
