@@ -7,11 +7,11 @@ if ( ! function_exists('asset_version')) {
      * @param string $assetPath
      * @return string
      */
-    function asset_version($assetPath)
+    function asset_version($assetPath, $realPath = null)
     {
         try {
             clearstatcache();
-            $filemtime = filemtime(public_path($assetPath));
+            $filemtime = filemtime($realPath ?: public_path($assetPath));
             return asset(preg_replace('/\.([^\.]+)$/', "--$filemtime.$1", $assetPath));
         } catch (Exception $e) {
             return $assetPath;

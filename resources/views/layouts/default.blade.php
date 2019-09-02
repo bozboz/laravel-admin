@@ -38,7 +38,7 @@
 	</div>
 	@section('scripts')
 		<script src="{{ asset_version('assets/js/min/admin/app.js') }}"></script>
-		<script src="/admin/media.js"></script>
+		<script src="{{ asset_version('/admin/media.js', base_path('vendor/bozboz/admin/resources/js/dist/app.js')) }}"></script>
 	@show
 </body>
 </html>

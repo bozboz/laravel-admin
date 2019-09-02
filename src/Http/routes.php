@@ -19,7 +19,7 @@ Route::group(array('middleware' => ['web'], 'namespace' => 'Bozboz\Admin\Http\Co
 
 		Route::post('sort', 'SortController@sort');
 
-		Route::get('media.js', 'FileController@js');
+		Route::get('media--{version}.js', 'FileController@js');
 		Route::get('tinymce/skin/{file}', function($file) {
 			return response(file_get_contents(base_path('vendor/bozboz/admin/resources/js/tinymce/skin/'.$file)))
 				->header('Content-Type', 'text/css');
