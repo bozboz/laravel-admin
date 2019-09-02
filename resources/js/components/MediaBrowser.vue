@@ -170,7 +170,7 @@
 <script>
 import _ from 'lodash';
 import Multiselect from 'vue-multiselect';
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import { Drag, Drop } from 'vue-drag-drop';
 import Modal from './Modal';
 import File from './File';

@@ -30,6 +30,8 @@ class FileController extends Controller
         'xml',
         'zip',
         'tar',
+        'txt',
+        'rtf',
     ];
 
     public function main()
@@ -204,7 +206,7 @@ class FileController extends Controller
         $all_ext = implode(',', $this->allExtensions());
 
         $this->validate($request, [
-            'file' => 'file|mimes:' . $all_ext . '|max:' . $max_size,
+            'file' => 'file|max:' . $max_size . '|extension:' . $all_ext,
             'folder_id' => 'int|exists:media_folders,id',
             'tags' => 'array',
         ]);
@@ -251,6 +253,25 @@ class FileController extends Controller
         return response()->json($file->delete());
     }
 
+    public function resize($mode, $size, $filename)
+    {
+        list($width, $height) = explode('x', $size.'x');
+        $img = \Image::make(public_path("/media/image/{$filename}"));
+        if ($width || $height) {
+            $img->$mode($width ?: null, $height ?: null, function($constraint) {
+                $constraint->aspectRatio();
+            });
+        }
+        $folder = collect(explode('/', dirname(request()->path())))->reduce(function($path, $folder) {
+            $path .= "/$folder";
+            if (!is_dir($path)) {
+                mkdir($path, 0755);
+            }
+            return $path;
+        }, public_path());
+        $img->save("$folder/$filename");
+        return $img->response();
+    }
 
     /**
      * Get type by extension

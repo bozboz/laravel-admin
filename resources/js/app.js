@@ -8,6 +8,7 @@ import BozUploader from './components/Uploader';
 import BozMedia from './components/MediaBrowser';
 import MediaModal from './components/MediaModal';
 import EditModal from './components/EditModal';
+import TinymceEditor from './components/TinymceEditor';
 
 import store from './store';
 
@@ -18,6 +19,7 @@ import store from './store';
 */
 
 window.Vue = Vue;
+window.vuexStore = store;
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -27,9 +29,6 @@ window.Vue = Vue;
 
 Vue.use(Toasted);
 
-// loadProgressBar();
-
-// Vue.component('boz-uploader', require('./components/Uploader.vue'));
 Vue.filter('formatSize', function (size) {
   if (size > 1024 * 1024 * 1024 * 1024) {
     return (size / 1024 / 1024 / 1024 / 1024).toFixed(2) + ' TB'
@@ -43,7 +42,7 @@ Vue.filter('formatSize', function (size) {
   return size.toString() + ' B'
 });
 
-const app = new Vue({
+new Vue({
   el: '#app',
   store,
   components: {
@@ -51,8 +50,8 @@ const app = new Vue({
     BozMedia,
     MediaModal,
     EditModal,
+    TinymceEditor,
   },
-//   render: h => h(App),
 });
 
 const confirmExitIfModified = (function() {
@@ -61,6 +60,7 @@ const confirmExitIfModified = (function() {
   return function(form, message) {
     form.addEventListener('change', () => formIsDirty = true);
     form.addEventListener('keydown', () => formIsDirty = true);
+    form.addEventListener('submit', () => formIsDirty = false);
     window.onbeforeunload = function(e) {
       e = e || window.event;
       if (formIsDirty) {

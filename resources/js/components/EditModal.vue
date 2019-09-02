@@ -196,7 +196,7 @@ export default {
         data.size = data.file.size
       }
 
-      if (this.$refs.file.files[0]) {
+      if (this.$refs.file && this.$refs.file.files[0]) {
         data.file = this.$refs.file.files[0];
       }
 

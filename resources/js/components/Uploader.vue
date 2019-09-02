@@ -142,14 +142,15 @@ export default {
       type: Number,
       default: null,
     },
+    dataTransfer: {
+      default: null,
+    },
   },
   data() {
     return {
       files: [],
       accept: null, //'image/png,image/gif,image/jpeg,image/webp',
       extensions: null, //'gif,jpg,jpeg,png,webp',
-      // extensions: ['gif', 'jpg', 'jpeg','png', 'webp'],
-      // extensions: /\.(gif|jpe?g|png|webp)$/i,
       minSize: 1024,
       size: 1024 * 1024 * 10,
       directory: false,
@@ -181,6 +182,11 @@ export default {
       const file = { ...newValue, error: '' };
       this.$refs.upload.update(file.id, file);
     },
+  },
+  mounted() {
+    if (this.dataTransfer) {
+      this.$refs.upload.addDataTransfer(this.dataTransfer);
+    }
   },
   methods: {
     inputFilter(newFile, oldFile, prevent) {

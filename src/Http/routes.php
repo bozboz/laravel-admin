@@ -20,6 +20,10 @@ Route::group(array('middleware' => ['web'], 'namespace' => 'Bozboz\Admin\Http\Co
 		Route::post('sort', 'SortController@sort');
 
 		Route::get('media.js', 'FileController@js');
+		Route::get('tinymce/skin/{file}', function($file) {
+			return response(file_get_contents(base_path('vendor/bozboz/admin/resources/js/tinymce/skin/'.$file)))
+				->header('Content-Type', 'text/css');
+		})->where('file', '(.+)?');
 
 		Route::get('media', 'FileController@main')->name('admin.media.index');
 		Route::get('media/upload', 'FileController@uploader');
@@ -75,3 +79,7 @@ Route::get('admin/versions', function() {
 
 	return view('admin::versions', compact('packages'));
 });
+
+Route::get('media/image/{mode}/{size}/{filename}', 'Bozboz\Admin\Http\Controllers\FileController@resize')
+	->name('admin.image.resize')
+	->where('size', '\d+x?\d*');

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <modal v-model="showModal" @close="showModal = false" cancelText="Close" size="lg">
+    <modal v-model="modalIsShown" @close="showModal = false; $emit('close')" cancelText="Close" size="lg">
       <template v-slot:header>
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" :class="{'active': tab === 'upload'}" @click="tab = 'upload'">
@@ -21,6 +21,7 @@
         v-if="tab === 'upload'"
         :multiple="isManyRelation"
         :showTitle="false"
+        :dataTransfer="dataTransfer"
         @uploaded="selectFile"
       ></uploader>
       <media-browser
@@ -30,55 +31,57 @@
       ></media-browser>
     </modal>
 
-    <slick-list class="tiles" v-model="selectedFiles" axis="xy" :distance="5">
-      <slick-item v-for="(file, index) in selectedFiles"
-        :key="file.id"
-        :index="index"
-        class="file-drop col-lg-2 col-md-3 col-sm-6"
-      >
-        <file
-          :file="file"
-          :canDelete="true"
-          :canDrag="false"
-          class="file"
-          @delete="deselectFile(file)"
-          @select="editFile(file)"
+    <div v-if="!modalOnly">
+      <slick-list class="tiles" v-model="selectedFiles" axis="xy" :distance="5">
+        <slick-item v-for="(file, index) in selectedFiles"
+          :key="file.id"
+          :index="index"
+          class="file-drop col-lg-2 col-md-3 col-sm-6"
         >
-          <input type="hidden" :name="name" v-model="file.id">
-        </file>
-      </slick-item>
-      <div class="col-lg-2 col-md-3 col-sm-6" v-if="selectedFiles.length<1">
-        <div class="panel panel-default">
-          <div class="panel-body" style="font-size: 4em; text-align:center; color: silver">
-            <i class="fa fa-picture-o"></i>
+          <file
+            :file="file"
+            :canDelete="true"
+            :canDrag="false"
+            class="file"
+            @delete="deselectFile(file)"
+            @select="editFile(file)"
+          >
+            <input type="hidden" :name="name" v-model="file.id">
+          </file>
+        </slick-item>
+        <div class="col-lg-2 col-md-3 col-sm-6" v-if="selectedFiles.length<1">
+          <div class="panel panel-default">
+            <div class="panel-body" style="font-size: 4em; text-align:center; color: silver">
+              <i class="fa fa-picture-o"></i>
+            </div>
           </div>
         </div>
-      </div>
-    </slick-list>
+      </slick-list>
 
-    <div
-      v-if="canSelect"
-    >
-      <button @click.prevent="showModal = true;tab = 'upload'"
-        class="btn btn-primary"
+      <div
+        v-if="canSelect"
       >
-        <i class="fa fa-upload"></i>
-        Upload
-      </button>
-      <button @click.prevent="showModal = true;tab = 'browse'"
-        class="btn btn-info"
-      >
-        <i class="fa fa-folder-open"></i>
-        Browse Media
-      </button>
-    </div>
-    <div v-else>
-      <button @click.prevent="showModal = true"
-        class="btn btn-info"
-      >Change</button>
-      <button @click.prevent="deselectFile(selectedFiles[0])"
-        class="btn btn-danger"
-      >Remove</button>
+        <button @click.prevent="showModal = true;tab = 'upload'"
+          class="btn btn-primary"
+        >
+          <i class="fa fa-upload"></i>
+          Upload
+        </button>
+        <button @click.prevent="showModal = true;tab = 'browse'"
+          class="btn btn-info"
+        >
+          <i class="fa fa-folder-open"></i>
+          Browse Media
+        </button>
+      </div>
+      <div v-else>
+        <button @click.prevent="showModal = true"
+          class="btn btn-info"
+        >Change</button>
+        <button @click.prevent="deselectFile(selectedFiles[0])"
+          class="btn btn-danger"
+        >Remove</button>
+      </div>
     </div>
   </div>
 </template>
@@ -105,15 +108,27 @@ export default {
   props: {
     isManyRelation: {
       type: Boolean,
+      default: false,
     },
     data: {
       type: Object,
-      default: {
+      default: () => ({
         media: [],
-      },
+      }),
     },
     name: {
       type: String,
+    },
+    modalOnly: {
+      type: Boolean,
+      default: false,
+    },
+    show: {
+      type: Boolean,
+      default: false,
+    },
+    dataTransfer: {
+      default: null,
     },
   },
   data() {
@@ -131,13 +146,21 @@ export default {
   computed: {
     canSelect() {
       return this.isManyRelation || (!this.isManyRelation && this.selectedFiles.length === 0);
-    }
+    },
+    modalIsShown() {
+      return this.show || this.showModal;
+    },
   },
   methods: {
     selectFiles(files) {
       files.map(this.selectFile);
     },
     selectFile(file) {
+      if (this.modalOnly) {
+        this.$emit('select', file);
+        return;
+      }
+
       const exists = this.selectedFiles.findIndex(f => f.id === file.id) >= 0;
       if (exists) {
         this.deselectFile(file);

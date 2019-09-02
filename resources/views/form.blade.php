@@ -2,7 +2,7 @@
 
 @section('main')
 @parent
-{!! Form::model($model, array('method' => $method, 'action' => $action, 'role' => 'form', 'files' => true)) !!}
+{!! Form::model($model, array('method' => $method, 'action' => $action, 'role' => 'form', 'files' => true, 'class' => 'js-warn-unsaved')) !!}
 	<div class="form-row discrete">
 		@include('admin::partials.actions')
 	</div>

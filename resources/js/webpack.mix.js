@@ -20,3 +20,5 @@ mix.webpackConfig({
  */
 
 mix.js('./app.js', 'dist/').sourceMaps();
+
+mix.copyDirectory('node_modules/tinymce/skins/ui/oxide', 'tinymce/skin');
