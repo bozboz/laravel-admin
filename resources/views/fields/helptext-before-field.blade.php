@@ -1,4 +1,4 @@
-<div class="form-group{{ ($errors) ? ' bs-callout bs-callout-danger' : '' }}">
+<div {{ $enableVue ? '' : 'v-pre' }} class="form-group{{ ($errors) ? ' bs-callout bs-callout-danger' : '' }}">
     {!! $label !!}
     @if ($helpText)
         <span class="help-block"><small>

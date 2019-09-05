@@ -8,6 +8,7 @@ use View;
 abstract class Field extends Fluent
 {
 	protected $view = 'admin::fields.field';
+	protected $enableVue = false;
 
 	public function __construct($attributesOrName, $attributes = array())
 	{
@@ -104,6 +105,7 @@ abstract class Field extends Fluent
 			'input' => $this->getInput(),
 			'errors' => $this->getErrors($errors),
 			'field' => $this,
+			'enableVue' => $this->enableVue,
 		]);
 	}
 

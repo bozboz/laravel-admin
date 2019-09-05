@@ -2,6 +2,8 @@
 
 class HTMLEditorField extends TextareaField
 {
+	protected $enableVue = true;
+
 	public function getInput()
 	{
 		$this->attributes['class'] .= ' tinymce';
