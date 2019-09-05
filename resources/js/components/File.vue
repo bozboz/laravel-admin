@@ -18,7 +18,7 @@
       </div>
       <div :class="[computedPanelClass === 'default' ? 'panel-footer' : 'panel-heading', 'text-center']">
         <div v-if="file.type !== 'image'" class="document_block">
-          <a class="btn btn-sm btn-default" :href="'/media/' + file.type + '/' + file.filename" target="_blank">
+          <a class="btn btn-sm btn-default" :href="`/media/${file.type}/${file.filename}`" target="_blank">
             <i class="fa fa-download" aria-hidden="true"></i>
             &nbsp;Download
           </a>
@@ -82,7 +82,7 @@ export default {
       return this.failed ? 'danger' : this.panelClass;
     },
     src() {
-      return `/images/medium/${this.file.filename}`;
+      return `/media/image/resize/400/${this.file.filename}`;
     },
   },
   methods: {
@@ -171,9 +171,12 @@ export default {
 
   img {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
+    // background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC");
   }
 
   .has-failed {

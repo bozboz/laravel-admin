@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class MediaBrowser extends Field
 {
+	protected $enableVue = true;
+
 	private $relation;
 	private $mediaAccess;
 

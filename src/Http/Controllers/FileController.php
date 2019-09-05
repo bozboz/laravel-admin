@@ -8,6 +8,7 @@ use Bozboz\Permissions\RuleStack;
 use Illuminate\Routing\Controller;
 use Bozboz\Admin\Media\MediaFolder;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Exception\NotReadableException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class FileController extends Controller
@@ -256,7 +257,11 @@ class FileController extends Controller
     public function resize($mode, $size, $filename)
     {
         list($width, $height) = explode('x', $size.'x');
-        $img = \Image::make(public_path("/media/image/{$filename}"));
+        try {
+            $img = \Image::make(public_path("/media/image/{$filename}"));
+        } catch (NotReadableException $e) {
+            return abort(404);
+        }
         if ($width || $height) {
             $img->$mode($width ?: null, $height ?: null, function($constraint) {
                 $constraint->aspectRatio();
