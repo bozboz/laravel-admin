@@ -2,7 +2,7 @@
     <div class="tinymce">
         <tinymce :name="name" v-model="value" :init="{
             content_css: '/admin/tinymce/skin/content.min.css',
-            content_style: `blockquote { border-left: 5px solid silver; padding-left: 1em; margin-left: .25em; } ${contentStyle}`,
+            content_style: `blockquote { border-left: 5px solid silver; padding-left: 1em; margin-left: .25em; } img { max-width: 100%; } ${contentStyle}`,
             formats: formats,
             style_formats: styleFormats,
             style_formats_merge: true,
