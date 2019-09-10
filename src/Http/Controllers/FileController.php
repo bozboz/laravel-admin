@@ -207,7 +207,7 @@ class FileController extends Controller
         $all_ext = implode(',', $this->allExtensions());
 
         $this->validate($request, [
-            'file' => 'file|max:' . $max_size . '|extension:' . $all_ext,
+            'file' => 'file|max:' . $max_size . '|mimes:' . $all_ext,
             'folder_id' => 'int|exists:media_folders,id',
             'tags' => 'array',
         ]);

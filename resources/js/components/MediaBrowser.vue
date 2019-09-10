@@ -34,7 +34,7 @@
       <div class="form-group">
         <label for="search">Search</label>
         <div class="input-group">
-          <input name="search" v-model="searchString" type="text" id="search" class="form-control input-sm">
+          <input name="search" v-model="searchString" @input="pagination.current_page = 1" type="text" id="search" class="form-control input-sm">
           <div class="input-group-btn">
             <input v-if="searchString" @click.prevent="searchString = ''" type="button" value="×" class="btn btn-sm btn-default">
           </div>
