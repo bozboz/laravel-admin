@@ -76,21 +76,17 @@ class FileController extends Controller
         } else {
             $records_per_page = 24;
 
-            if (! request()->input('page') || request()->input('page') == 1 || request()->input('page') == 'undefined') {
-                $query = MediaFolder::orderBy('name');
-                if (request()->input('search')) {
-                    $query->where('name', 'LIKE', '%' . request()->input('search') . '%');
-                } else {
-                    if (request()->input('folder')) {
-                        $query->where('parent_id', request()->input('folder'));
-                    } else {
-                        $query->whereNull('parent_id');
-                    }
-                }
-                $folders = $query->get();
+            $query = MediaFolder::orderBy('name');
+            if (request()->input('search')) {
+                $query->where('name', 'LIKE', '%' . request()->input('search') . '%');
             } else {
-                $folders = [];
+                if (request()->input('folder')) {
+                    $query->where('parent_id', request()->input('folder'));
+                } else {
+                    $query->whereNull('parent_id');
+                }
             }
+            $folders = $query->get();
 
             $query = $model::where('type', $type)
                 ->with('tags')
