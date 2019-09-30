@@ -1,7 +1,8 @@
 # Bozboz Admin Package Changelog
 
-## Version 2.11.0 (Future)
+## Version 2.11.0 (2019-09-30)
 - Complete rebuild of the media library
+- Set default text editor to TinyMCE
 
 ## Version 2.10.0 (2019-07-08)
 - Allow select field to specify array values
