@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.11.1 (2019-11-18)
+- Fix validation on media file update
+
 ## Version 2.11.0 (2019-09-30)
 - Complete rebuild of the media library
 - Set default text editor to TinyMCE

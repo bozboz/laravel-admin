@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use Bozboz\Admin\Media\Media;
 use Bozboz\Permissions\RuleStack;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\MessageBag;
 use Bozboz\Admin\Media\MediaFolder;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Intervention\Image\Exception\NotReadableException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
@@ -213,7 +216,11 @@ class FileController extends Controller
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            app(\Bozboz\Admin\Services\Uploader::class)->replace($file, $instance);
+            try {
+                app(\Bozboz\Admin\Services\Uploader::class)->replace($file, $instance);
+            } catch (\Exception $e) {
+                return response()->json(new MessageBag(['file' => $e->getMessage()]), 422);
+            }
         }
 
         if ($request->has('tags')) {
