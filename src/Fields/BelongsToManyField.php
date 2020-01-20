@@ -52,7 +52,12 @@ class BelongsToManyField extends Field
 			$options[] = Form::getSelectOption(
 				$this->decorator->getLabel($inst),
 				$this->key ? $inst->{$this->key} : $inst->getKey(),
-				@array_map('intval', Form::getValueAttribute($this->name))
+				collect(Form::getValueAttribute($this->name))->map(function ($value) {
+					if (intval($value) > 0) {
+						return intval($value);
+					}
+					return $value;
+				})->all()
 			);
 		}
 

@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.11.2 (2020-01-20)
+- Fix belongs to many field value when not numeric
+
 ## Version 2.11.1 (2019-11-18)
 - Fix validation on media file update
 
