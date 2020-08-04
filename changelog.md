@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.11.3 (2020-08-04)
+- Add 'COLLAPSIBLE_CMS_ROWS' env value and collapse reports if true
+
 ## Version 2.11.2 (2020-01-20)
 - Fix belongs to many field value when not numeric
 
