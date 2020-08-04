@@ -5,7 +5,11 @@
 	@if ($report->hasRows())
 		<ol class="secret-list nested{{ $sortableClass }}" data-model="{{ $identifier }}">
 		@foreach ($report->getRows() as $row)
-			@include('admin::partials.nested-item')
+			@if (config('admin.collapsible_rows'))
+				@include('admin::partials.collapsible-nested-item')
+			@else
+				@include('admin::partials.nested-item')
+			@endif
 		@endforeach
 		</ol>
 	@else
