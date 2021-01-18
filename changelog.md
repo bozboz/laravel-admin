@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.10.1 (2021-01-18)
+- Update asset_version helper so that it's compatible with docker env
+
 ## Version 2.10.0 (2019-07-08)
 - Allow select field to specify array values
 
