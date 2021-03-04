@@ -1,5 +1,7 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.11.5 (2021-03-04)
+- Fix media.js route
 ## Version 2.11.4 (2021-01-18)
 - Update asset_version helper so that it's compatible with docker env
 
