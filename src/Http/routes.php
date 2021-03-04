@@ -19,7 +19,7 @@ Route::group(array('middleware' => ['web'], 'namespace' => 'Bozboz\Admin\Http\Co
 
 		Route::post('sort', 'SortController@sort');
 
-		Route::get('media--{version}.js', 'FileController@js');
+		Route::get('media.js', 'FileController@js');
 		Route::get('tinymce/skin/{file}', function($file) {
 			if (!file_exists(base_path('vendor/bozboz/admin/resources/js/tinymce/skin/'.$file))) {
 				return abort(404);
