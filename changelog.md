@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.13.0 (2021-06-18)
+- Get max file upload from server
+
 ## Version 2.12.0 (2021-06-18)
 - Remove extension allowed list from uploader
 

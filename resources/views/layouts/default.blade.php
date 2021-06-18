@@ -37,6 +37,9 @@
 		<edit-modal></edit-modal>
 	</div>
 	@section('scripts')
+		<script>
+			window.maxUpload = {{ file_upload_max_size() }};
+		</script>
 		<script src="{{ asset_version('assets/js/min/admin/app.js') }}"></script>
 		<script src="{{ asset_version('/admin/media.js', base_path('vendor/bozboz/admin/resources/js/dist/app.js')) }}"></script>
 	@show
