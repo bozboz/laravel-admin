@@ -45,7 +45,7 @@
             <td>{{file.size | formatSize}}</td>
             <td>{{file.speed | formatSize}}</td>
 
-            <td v-if="file.error">{{file.error}}</td>
+            <td v-if="file.error" v-html="readableErrors(file.error)"></td>
             <td v-else-if="file.success">success</td>
             <td v-else-if="file.active">active</td>
             <td v-else></td>
@@ -150,7 +150,7 @@ export default {
     return {
       files: [],
       accept: null, //'image/png,image/gif,image/jpeg,image/webp',
-      extensions: null, //'gif,jpg,jpeg,png,webp',
+      extensions: undefined,
       minSize: 1024,
       size: 1024 * 1024 * 10,
       directory: false,
@@ -300,6 +300,12 @@ export default {
         input.directory = false
         input.webkitdirectory = false
       }
+    },
+    readableErrors(error) {
+      return {
+        'extension': '<b>File type not allowed</b>',
+        'size': '<b>File too big</b>',
+      }[error] || error
     },
   }
 }

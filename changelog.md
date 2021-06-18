@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.12.0 (2021-06-18)
+- Remove extension allowed list from uploader
+
 ## Version 2.11.5 (2021-03-04)
 - Fix media.js route
 ## Version 2.11.4 (2021-01-18)
