@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.13.3 (2021-06-21)
+- Remember to commit the compiled scripts
+
 ## Version 2.13.2 (2021-06-21)
 - Add TinyMCE icons.js dependency
 
