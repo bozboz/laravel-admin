@@ -48,6 +48,7 @@ import 'tinymce/plugins/lists';
 import 'tinymce/plugins/toc';
 import 'tinymce/plugins/table';
 import 'tinymce/plugins/help';
+import 'tinymce/icons/default';
 
 import 'stickytoolbar';
 import setupMediaPlugin from '../tinymce/plugins/media-picker/plugin';
