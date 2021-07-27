@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-if="!files.length">
+          <tr v-if="(files || []).length < 1">
             <td colspan="7">
               <div class="text-center p-5">
                 <h4>Drop files anywhere to upload<br/>or</h4>

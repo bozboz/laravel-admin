@@ -8,6 +8,9 @@
             style_formats_merge: true,
             skin_url: '/admin/tinymce/skin',
             browser_spellcheck: true,
+            relative_urls: false,
+            remove_script_host: false,
+            // document_base_url: baseURL,
             plugins: 'paste link wordcount anchor code fullscreen autoresize visualblocks help mediabrowser lists toc stickytoolbar table',
             toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table | toc | link anchor mediabrowser',
         }" @onDrop="drop"></tinymce>
@@ -131,7 +134,7 @@ export default {
             this.currentNode.alt = this.editingFile.alt;
             this.currentNode.width = this.editingFile.width;
             const src = this.currentNode.src;
-            const newSrc = `/media/image/resize/${this.editingFile.width}x${this.editingFile.height}/${src.substring(src.lastIndexOf('/')+1)}`;
+            const newSrc = `${window.location.origin}/media/image/resize/${this.editingFile.width}x${this.editingFile.height}/${src.substring(src.lastIndexOf('/')+1)}`;
             this.currentNode.src = newSrc;
             this.currentNode.dataset.mceSrc = newSrc;
             this.currentNode = null;
@@ -144,9 +147,9 @@ export default {
         },
         formatMedia(file) {
             if (file.type === 'image') {
-                return `<img src="/media/image/${file.filename}" alt="${file.caption}" data-id="${file.id}" style="max-width: 100%">`;
+                return `<img src="${window.location.origin}/media/image/${file.filename}" alt="${file.caption || ''}" data-id="${file.id}" style="max-width: 100%">`;
             }
-            return `<a href="/media/${file.type}/${file.filename}" target="_blank" data-id="${file.id}">${file.caption || file.filename}</a>`;
+            return `<a href="${window.location.origin}/media/${file.type}/${file.filename}" target="_blank" data-id="${file.id}">${file.caption || file.filename}</a>`;
         },
         closeMediaModal() {
             this.showMediaModal = false;
