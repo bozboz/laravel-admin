@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.13.4 (2021-07-28)
+- Use absolute urls with domain in WYSIWYG
+
 ## Version 2.13.3 (2021-06-21)
 - Remember to commit the compiled scripts
 
