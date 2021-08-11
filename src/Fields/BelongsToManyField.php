@@ -1,10 +1,10 @@
 <?php namespace Bozboz\Admin\Fields;
 
+use Bozboz\Admin\Base\ModelAdminDecorator;
 use Closure;
 use Collective\Html\FormFacade as Form;
 use Collective\Html\HtmlFacade as HTML;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Bozboz\Admin\Base\ModelAdminDecorator;
 
 /**
  * Render HTML that represents a Illuminate\Database\Eloquent\Relations\BelongsToMany instance
@@ -46,22 +46,24 @@ class BelongsToManyField extends Field
 	 */
 	public function getInput($params = [])
 	{
-		$options = [];
-
-		foreach ($this->generateQueryBuilder()->get() as $inst) {
-			$options[] = Form::getSelectOption(
+		/**
+		 * @var Collection $selected
+		 */
+		$selected = collect(Form::getValueAttribute($this->name))->map(function ($value) {
+			if (intval($value) > 0) {
+				return intval($value);
+			}
+			return $value;
+		});
+		$options = $this->generateQueryBuilder()->get()->sort(function ($a, $b) use ($selected) {
+			return $selected->search($a->id) <=> $selected->search($b->id);
+		})->map(function ($inst) use ($selected) {
+			return (string)Form::getSelectOption(
 				$this->decorator->getLabel($inst),
 				$this->key ? $inst->{$this->key} : $inst->getKey(),
-				collect(Form::getValueAttribute($this->name))->map(function ($value) {
-					if (intval($value) > 0) {
-						return intval($value);
-					}
-					return $value;
-				})->all()
+				$selected->all()
 			);
-		}
-
-		$options = implode(PHP_EOL, $options);
+		})->implode(PHP_EOL);
 
 		$this->class .= ' select2';
 
