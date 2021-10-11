@@ -3,6 +3,14 @@
 namespace Bozboz\Admin\Http\Controllers;
 
 use Bozboz\Admin\Base\ModelAdminDecorator;
+use Bozboz\Admin\Events\AdminCreated;
+use Bozboz\Admin\Events\AdminCreating;
+use Bozboz\Admin\Events\AdminDeleted;
+use Bozboz\Admin\Events\AdminDeleting;
+use Bozboz\Admin\Events\AdminSaved;
+use Bozboz\Admin\Events\AdminSaving;
+use Bozboz\Admin\Events\AdminUpdated;
+use Bozboz\Admin\Events\AdminUpdating;
 use Bozboz\Admin\Exceptions\ValidationException;
 use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
 use Bozboz\Admin\Reports\Actions\Presenters\Link;
@@ -139,7 +147,9 @@ abstract class ModelAdminController extends Controller
 				throw new ValidationException($validation->getErrors());
 			}
 
+            event(new AdminCreating($modelInstance, $input));
 			$this->saveInTransaction($modelInstance, $input);
+            event(new AdminCreated($modelInstance, $input));
 
 		} catch (ValidationException $e) {
 			DB::rollback();
@@ -178,7 +188,9 @@ abstract class ModelAdminController extends Controller
 				throw new ValidationException($validation->getErrors());
 			}
 
+            event(new AdminUpdating($modelInstance, $input));
 			$this->saveInTransaction($modelInstance, $input);
+            event(new AdminUpdated($modelInstance, $input));
 
 		} catch (ValidationException $e) {
 			DB::rollback();
@@ -197,7 +209,9 @@ abstract class ModelAdminController extends Controller
 	protected function saveInTransaction($modelInstance, $input)
 	{
 		DB::beginTransaction();
+        event(new AdminSaving($modelInstance, $input));
 		$this->save($modelInstance, $input);
+        event(new AdminSaved($modelInstance, $input));
 		DB::commit();
 	}
 
@@ -214,7 +228,9 @@ abstract class ModelAdminController extends Controller
 
 		if ( ! $this->canDestroy($instance)) App::abort(403);
 
+        event(new AdminDeleting($instance));
 		$instance->delete();
+        event(new AdminDeleted($instance));
 
 		return Redirect::back()->with('model.deleted', sprintf(
 			'Successfully deleted "%s"',

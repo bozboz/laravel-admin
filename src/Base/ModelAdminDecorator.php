@@ -4,7 +4,10 @@ namespace Bozboz\Admin\Base;
 
 use Bozboz\Admin\Base\ModelInterface;
 use Bozboz\Admin\Base\Sortable as DeprecatedSortable;
+use Bozboz\Admin\Events\AdminFieldsAfter;
+use Bozboz\Admin\Events\AdminFieldsBefore;
 use Bozboz\Admin\Exceptions\Deprecated;
+use Bozboz\Admin\Fields\Field;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
@@ -15,6 +18,7 @@ abstract class ModelAdminDecorator
 	 * @var Bozboz\Admin\Base\ModelInterface
 	 */
 	protected $model;
+    protected $fields = [];
 
 	/**
 	 * @param  Bozboz\Admin\Base\ModelInterface  $model
@@ -217,8 +221,23 @@ abstract class ModelAdminDecorator
 	 */
 	public function buildFields($instance)
 	{
-		return array_filter($this->getFields($instance));
+        event(new AdminFieldsBefore($this, $instance));
+		$this->fields($this->getFields($instance));
+        event(new AdminFieldsAfter($this, $instance));
+        return $this->fields;
 	}
+
+    public function addField(Field $field)
+    {
+        $this->fields[] = $field;
+        return $this;
+    }
+
+    public function fields(array $fields)
+    {
+        array_map([$this, 'addField'], array_filter($fields));
+        return $this;
+    }
 
 	/**
 	 * @param  array  $attributes
