@@ -21,7 +21,7 @@ class DateField extends Field
 		$this->class .= ' form-control form-control--small '.$this->getJsClass();
 		$this->id = $this->normalisedName;
 
-		return Form::text($this->name, null, $this->getInputAttributes());
+		return Form::text($this->name, $this->value, $this->getInputAttributes());
 	}
 
 	public function getJavascript()

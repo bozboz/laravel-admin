@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.15.0 (2021-10-11)
+- Fire events when models are before and after model forms are rendered and when they are created/updated/saved/deleted
+
 ## Version 2.14.0 (2021-08-11)
 - Allow select2 fields to be sortable
 

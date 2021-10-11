@@ -11,7 +11,7 @@ class AdminUpdating
 
     public function __construct(ModelInterface $instance, array $input)
     {
-        $this->$instance = $instance;
+        $this->instance = $instance;
         $this->input = $input;
     }
 }

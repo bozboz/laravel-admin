@@ -10,6 +10,6 @@ class AdminDeleting
 
     public function __construct(ModelInterface $instance)
     {
-        $this->$instance = $instance;
+        $this->instance = $instance;
     }
 }
