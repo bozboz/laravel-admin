@@ -156,8 +156,6 @@ class FileController extends Controller
         $max_size = (int)ini_get('upload_max_filesize') * 1000;
         $all_ext = implode(',', $this->allExtensions());
 
-        debug($request->all());
-
         $this->validate($request, [
             'name' => 'required',
             'file' => 'required|file|mimes:' . $all_ext . '|max:' . $max_size,
