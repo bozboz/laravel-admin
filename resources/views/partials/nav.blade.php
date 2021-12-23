@@ -54,7 +54,9 @@
 						@endif
 						<li><a href="/"><i class="fa fa-desktop"></i> View Website</a></li>
 						<li><a href="/admin/versions"><i class="fa fa-code-fork"></i> View Package Versions</a></li>
-						<li><a href="{{ route('styleguide') }}"><i class="fa fa-book"></i> View Style Guide</a></li>
+						@if(Route::has('styleguide'))
+							<li><a href="{{ route('styleguide') }}"><i class="fa fa-book"></i> View Style Guide</a></li>
+						@endif
 						@if (Session::has('previous_user'))
 							<li class="divider"></li>
 							<li>

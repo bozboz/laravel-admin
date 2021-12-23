@@ -2,6 +2,8 @@
 
 namespace Bozboz\Admin\Providers;
 
+use Bozboz\Admin\Dashboard\Widgets\BozbozWidget;
+use Bozboz\Admin\Dashboard\Widgets\WelcomeWidget;
 use Bozboz\Admin\Reports\ActionFactory;
 use Bozboz\Admin\Reports\Actions\Action;
 use Bozboz\Admin\Reports\Actions\DropdownAction;
@@ -11,7 +13,9 @@ use Bozboz\Admin\Reports\Actions\Presenters\Form;
 use Bozboz\Admin\Reports\Actions\Presenters\Link;
 use Bozboz\Permissions\Facades\Gate;
 use Bozboz\Permissions\Providers\PermissionServiceProvider;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Str;
 
 class AdminServiceProvider extends PermissionServiceProvider
 {
@@ -37,6 +41,11 @@ class AdminServiceProvider extends PermissionServiceProvider
 			return new \Bozboz\Admin\Dashboard\WidgetFactory;
 		});
 
+        if (url()->current() === url('admin')) {
+            $this->app['admin.widgets']->register('welcome', new WelcomeWidget);
+            $this->app['admin.widgets']->register('bozboz', new BozbozWidget);
+        }
+
 		// Call the PermissionServiceProvider's register method
 		parent::register();
 	}
@@ -57,6 +66,8 @@ class AdminServiceProvider extends PermissionServiceProvider
 		$this->publishes([
 			$packageRoot . '/config/admin.php' => config_path('admin.php')
 		], 'config');
+
+        $this->mergeConfigFrom($packageRoot . '/config/admin.php', 'admin');
 
 		if (! $this->app->routesAreCached()) {
 			require $packageRoot . '/src/Http/routes.php';
