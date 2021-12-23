@@ -50,10 +50,10 @@ class BozbozWidget implements Widget
             widget.appendChild(iframe);
             container.appendChild(widget);
             iframe.src = value.iframeUrl;
+            iframe.onload = function(e) {
+                iFrameResize({}, e.target);
+            };
             document.querySelector('#bozboz-widgets').parentNode.appendChild(container);
-            setTimeout(function() {
-                iFrameResize({}, '.boz-widget iframe');
-            }, 100);
         });
     });
 </script>
