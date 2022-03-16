@@ -110,7 +110,7 @@ abstract class Field extends Fluent
 			'input' => $this->getInput(),
 			'errors' => $this->getErrors($errors),
 			'field' => $this,
-			'enableVue' => $this->enableVue,
+			'enableVue' => $this->vueEnabled(),
 		]);
 	}
 
