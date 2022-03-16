@@ -43,7 +43,7 @@ class AdminServiceProvider extends PermissionServiceProvider
 
         if (url()->current() === url('admin')) {
             $this->app['admin.widgets']->register('welcome', new WelcomeWidget);
-            $this->app['admin.widgets']->register('bozboz', new BozbozWidget);
+//            $this->app['admin.widgets']->register('bozboz', new BozbozWidget);
         }
 
 		// Call the PermissionServiceProvider's register method
