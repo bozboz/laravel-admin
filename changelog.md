@@ -1,5 +1,8 @@
 # Bozboz Admin Package Changelog
 
+## Version 2.15.2 (2022-03-16)
+- Put quotes around TinyMCE selector
+
 ## Version 2.15.1 (2021-11-02)
 - Remove debug
 

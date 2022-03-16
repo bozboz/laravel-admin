@@ -168,7 +168,7 @@ export default {
         },
     },
     mounted() {
-        const replace = document.querySelector(`[name=${this.replace}]`);
+        const replace = document.querySelector(`[name='${this.replace}']`);
         this.value = replace.value;
         this.name = this.replace;
         replace.remove();
