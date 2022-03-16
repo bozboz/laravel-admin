@@ -93,6 +93,11 @@ abstract class Field extends Fluent
 		return null;
 	}
 
+    public function vueEnabled()
+    {
+        return $this->enableVue;
+    }
+
 	public function render($errors)
 	{
 		if ($this->shouldHideField()) {

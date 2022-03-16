@@ -43,6 +43,11 @@ class SubField extends Field
         $field->name = $this->getFieldNameInBracketSyntax();
     }
 
+    public function vueEnabled()
+    {
+        return $this->decorate->vueEnabled();
+    }
+
     /**
      * Render the decorated field's input output
      *
