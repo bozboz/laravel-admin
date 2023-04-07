@@ -242,10 +242,27 @@ abstract class ModelAdminController extends Controller
 	{
 		$fields = $this->decorator->buildFields($instance);
 
+        // Make tabs
+        $tabbed_fields = [];
+
+        foreach($fields as $field) {
+            if (isset($field->tab)){
+                $tabbed_fields[$field->tab][] = $field;
+            } else {
+                $tabbed_fields["default"][] = $field;
+            }
+        }
+
+        if (count($tabbed_fields) <= 1){
+            // Only one tab so we set to false
+            $tabbed_fields = false; 
+        }
+
 		return View::make($view, array(
 			'model' => $instance,
 			'modelName' => $this->decorator->getHeadingForInstance($instance),
 			'fields' => $fields,
+			'tabbed_fields' => $tabbed_fields,
 			'method' => $method,
 			'action' => [$this->getActionName($action), $instance->id],
 			'actions' => collect($this->getFormActions($instance))->each(function($action) use ($instance) {

@@ -32,6 +32,7 @@ abstract class Field extends Fluent
 
 	protected $attributes = array(
 		'class' => 'form-control',
+        'tab' => 'default',
 		'hide_if_value_filled' => false,
 		'hide_if_value_empty' => false,
 	);
@@ -80,6 +81,11 @@ abstract class Field extends Fluent
 		return Form::label($this->get('name'), $this->get('label'));
 	}
 
+    public function getTab()
+    {
+        $this->get('tab');
+    }
+
 	public function getErrors(ViewErrorBag $errors)
 	{
 		$dotSyntaxName = str_replace(['][', '[', ']'], ['.', '.', ''], $this->get('name'));
@@ -107,6 +113,7 @@ abstract class Field extends Fluent
 		return View::make($this->view)->with([
 			'helpText' => $this->getHelpText(),
 			'label' => $this->getLabel(),
+            'tab' => $this->getTab(),
 			'input' => $this->getInput(),
 			'errors' => $this->getErrors($errors),
 			'field' => $this,

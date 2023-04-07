@@ -5,3 +5,4 @@ node_modules
 error_log
 *.map
 resources/assets/sass/_vendors.scss
+*.sw?
