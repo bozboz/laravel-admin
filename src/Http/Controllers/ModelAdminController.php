@@ -243,15 +243,26 @@ abstract class ModelAdminController extends Controller
 		$fields = $this->decorator->buildFields($instance);
 
         // Make tabs
-        $tabbed_fields = [];
+        $tabbed_fields = ["default" => []]; // Default always first tab #TODO - delete default when no fields are in it
+        if ($instance->template->tabs){
+            $tabbed_fields = array_merge($tabbed_fields, $instance->template->getTabsForForm(false));
+        }
 
         foreach($fields as $field) {
-            if (isset($field->tab)){
+            // check if field has a tab defined AND that the key is in tabs defined on template
+            if (isset($field->tab) && array_key_exists($field->tab,$tabbed_fields)){
                 $tabbed_fields[$field->tab][] = $field;
             } else {
                 $tabbed_fields["default"][] = $field;
             }
         }
+
+        // Delete any empty tabs
+        foreach ($tabbed_fields as $key => $tab){
+            if (count($tab) == 0){
+                unset($tabbed_fields[$key]);
+            }
+        } 
 
         if (count($tabbed_fields) <= 1){
             // Only one tab so we set to false
