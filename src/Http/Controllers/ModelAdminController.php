@@ -244,7 +244,7 @@ abstract class ModelAdminController extends Controller
 
         // Make tabs
         $tabbed_fields = ["default" => []]; // Default always first tab #TODO - delete default when no fields are in it
-        if ($instance->template->tabs){
+        if (isset($instance->template->tabs) && $instance->template->tabs){
             $tabbed_fields = array_merge($tabbed_fields, $instance->template->getTabsForForm(false));
         }
 
