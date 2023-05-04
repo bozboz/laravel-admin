@@ -1,5 +1,5 @@
 
-@if (!$tabbed_fields)
+@if (!isset($tabbed_fields) || !$tabbed_fields)
 <fieldset{{ HTML::attributes($attributes) }}>
 	@if (isset($legend))
 		<legend>{{ $legend }}</legend>
