@@ -94,7 +94,7 @@ class MediaBrowser extends Field
 		return View::make('admin::fields.media-browser')->with([
 			'id' => $this->sanitiseName($this->name),
 			'name' => $this->isManyRelation() ? $this->name . '[]' : $this->name,
-			'data' => json_encode($data),
+			'data' => json_encode($data, JSON_HEX_APOS), // force escaping of single quotes in json (https://stackoverflow.com/questions/17926354/php-json-encode-jquery-parsejson-single-quote-issue)
 			'isManyRelation' => $this->isManyRelation(),
 		]);
 	}
